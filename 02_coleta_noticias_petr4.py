@@ -157,8 +157,8 @@
 #   ├─────────────────────────────────────────────────────────────────────┤
 #   │ CAT-4  Oferta, Infraestrutura e Produção                            │
 #   │        Refinarias, oleodutos, plataformas offshore, terminais.      │
-#   │        Ataques, acidentes ou greves em infraestrutura crítica        │
-#   │        geram choques imediatos de oferta com impacto direto no       │
+#   │        Ataques, acidentes ou greves em infraestrutura crítica       │
+#   │        geram choques imediatos de oferta com impacto direto no      │
 #   │        preço do barril.                                             │
 #   │        Exemplo histórico: ataque às refinarias da Aramco (set/2019) │
 #   │        removeu 5% da oferta global em um único dia, gerando         │
@@ -178,7 +178,7 @@
 #   │        intervenção governamental, ministério de energia, eleições   │
 #   │        em países produtores.                                        │
 #   │        Referência: Classifica-se como "event study" clássico —      │
-#   │        anúncios de mudança de liderança geram retornos anormais      │
+#   │        anúncios de mudança de liderança geram retornos anormais     │
 #   │        documentados na literatura de finanças corporativas.         │
 #   │        Exemplo histórico: demissão do CEO José Mauro Coelho pela    │
 #   │        gestão Lula (jun/2022) derrubou PETR4 mais de 10% em um dia. │
@@ -186,10 +186,10 @@
 #   │ CAT-7  Macroeconomia, Câmbio e Energia Alternativa                  │
 #   │        Dólar, taxa de juros (Fed), recessão, PIB China, inflação,   │
 #   │        energias renováveis, veículos elétricos, ESG.                │
-#   │        O dólar e o petróleo têm correlação negativa histórica        │
-#   │        documentada: quando o USD se fortalece, o petróleo cotado     │
+#   │        O dólar e o petróleo têm correlação negativa histórica       │
+#   │        documentada: quando o USD se fortalece, o petróleo cotado    │
 #   │        em dólar tende a cair em termos relativos (Zhang et al.,     │
-#   │        2008). A demanda da China responde por ~15% do consumo        │
+#   │        2008). A demanda da China responde por ~15% do consumo       │
 #   │        global; notícias sobre o PIB chinês afetam diretamente o     │
 #   │        preço do barril (Kilian & Murphy, 2014).                     │
 #   └─────────────────────────────────────────────────────────────────────┘
@@ -504,7 +504,7 @@
 #   │                  │ as notícias com os dados de preço do PETR4.       │
 #   ├──────────────────┼───────────────────────────────────────────────────┤
 #   │ ativo            │ Identificador do ativo analisado. Sempre "PETR4"  │
-#   │                  │ neste corpus. Mantido para permitir extensão       │
+#   │                  │ neste corpus. Mantido para permitir extensão      │
 #   │                  │ futura do estudo a outros ativos.                 │
 #   ├──────────────────┼───────────────────────────────────────────────────┤
 #   │ categoria        │ Categoria temática do termo que originou a        │
@@ -522,7 +522,7 @@
 #   │                  │ Campo principal para análise de sentimento.       │
 #   ├──────────────────┼───────────────────────────────────────────────────┤
 #   │ resumo           │ Resumo/descrição do artigo. Para GDELT, onde      │
-#   │                  │ resumo não está disponível, este campo repete      │
+#   │                  │ resumo não está disponível, este campo repete     │
 #   │                  │ o título. Para NewsAPI e RSS, contém o resumo     │
 #   │                  │ editorial do artigo — mais rico semanticamente.   │
 #   ├──────────────────┼───────────────────────────────────────────────────┤
@@ -719,17 +719,17 @@
 #   ├─────────────────────────────────────────────────────────────────────┤
 #   │ Características:                                                    │
 #   │   • Fonte única: GDELT                                              │
-#   │   • 6 termos de busca centrados na empresa                         │
-#   │   • Deduplicação por comparação direta de string                   │
-#   │   • Sem retry em caso de falha de rede                             │
-#   │   • Acúmulo de dados em lista Python (risco de OOM)                │
-#   │   • Checkpoints manuais, sem retomada automática                   │
+#   │   • 6 termos de busca centrados na empresa                          │
+#   │   • Deduplicação por comparação direta de string                    │
+#   │   • Sem retry em caso de falha de rede                              │
+#   │   • Acúmulo de dados em lista Python (risco de OOM)                 │
+#   │   • Checkpoints manuais, sem retomada automática                    │
 #   │                                                                     │
 #   │ Problemas identificados na revisão:                                 │
-#   │   • Viés de cobertura (fonte única)                                │
-#   │   • Cobertura temática insuficiente (apenas notícias corporativas) │
-#   │   • Sem resumo/descrição dos artigos (apenas título)               │
-#   │   • Sem logging auditável                                          │
+#   │   • Viés de cobertura (fonte única)                                 │
+#   │   • Cobertura temática insuficiente (apenas notícias corporativas)  │
+#   │   • Sem resumo/descrição dos artigos (apenas título)                │
+#   │   • Sem logging auditável                                           │
 #   └─────────────────────────────────────────────────────────────────────┘
 #
 #   ┌─────────────────────────────────────────────────────────────────────┐
@@ -737,72 +737,72 @@
 #   │ Data: desenvolvimento pré-teste                                     │
 #   ├─────────────────────────────────────────────────────────────────────┤
 #   │ Melhorias introduzidas:                                             │
-#   │   • 3 fontes: GDELT + NewsAPI + 25 RSS feeds                       │
-#   │   • Taxonomia de 7 categorias temáticas com 152 termos             │
-#   │   • Deduplicação por hash SHA-256                                  │
-#   │   • Retry com @retry (tenacity) — backoff exponencial              │
-#   │   • Gravação linha a linha (sem acúmulo em memória)                │
-#   │   • Logging estruturado em arquivo                                 │
-#   │   • Retomada automática por leitura de hashes do CSV               │
-#   │   • Geradores Python (yield) para eficiência de memória            │
-#   │   • Coleta por janela mensal                                       │
+#   │   • 3 fontes: GDELT + NewsAPI + 25 RSS feeds                        │
+#   │   • Taxonomia de 7 categorias temáticas com 152 termos              │
+#   │   • Deduplicação por hash SHA-256                                   │
+#   │   • Retry com @retry (tenacity) — backoff exponencial               │
+#   │   • Gravação linha a linha (sem acúmulo em memória)                 │
+#   │   • Logging estruturado em arquivo                                  │
+#   │   • Retomada automática por leitura de hashes do CSV                │
+#   │   • Geradores Python (yield) para eficiência de memória             │
+#   │   • Coleta por janela mensal                                        │
 #   │                                                                     │
-#   │ PROBLEMA ENCONTRADO EM TESTE (ambiente: VS Code, Windows,          │
-#   │ Python 3.12.4, 10/06/2026):                                        │
+#   │ PROBLEMA ENCONTRADO EM TESTE (ambiente: VS Code, Windows,           │
+#   │ Python 3.12.4, 10/06/2026):                                         │
 #   │                                                                     │
-#   │   Sintoma: HTTP 429 persistente desde a primeira requisição,       │
-#   │   mesmo com 60s de espera entre tentativas. Todas as 5 tentativas  │
-#   │   falhavam para todos os termos.                                   │
+#   │   Sintoma: HTTP 429 persistente desde a primeira requisição,        │
+#   │   mesmo com 60s de espera entre tentativas. Todas as 5 tentativas   │
+#   │   falhavam para todos os termos.                                    │
 #   │                                                                     │
-#   │   Diagnóstico: Duas sessões de teste consecutivas (v1.0 e v3.0     │
-#   │   durante a mesma tarde) somaram centenas de requisições ao GDELT. │
-#   │   Isso acionou o bloqueio por VOLUME DE IP (distinto do rate limit │
-#   │   por segundo). Nesse estado, o servidor rejeita qualquer          │
-#   │   requisição do IP por horas, independente da pausa entre elas.   │
+#   │   Diagnóstico: Duas sessões de teste consecutivas (v1.0 e v3.0      │
+#   │   durante a mesma tarde) somaram centenas de requisições ao GDELT.  │
+#   │   Isso acionou o bloqueio por VOLUME DE IP (distinto do rate limit  │
+#   │   por segundo). Nesse estado, o servidor rejeita qualquer           │
+#   │   requisição do IP por horas, independente da pausa entre elas.     │
 #   │                                                                     │
-#   │   Problemas de design identificados:                               │
-#   │   1. @retry (tenacity) tratava 429 igual a timeout — inadequado    │
-#   │      para bloqueio por volume, que requer espera muito maior       │
-#   │   2. 152 termos × 84 meses = 12.768 requisições — volume          │
-#   │      incompatível com API pública sem autenticação                 │
-#   │   3. Pausa fixa de 8s criava padrão periódico detectável           │
+#   │   Problemas de design identificados:                                │
+#   │   1. @retry (tenacity) tratava 429 igual a timeout — inadequado     │
+#   │      para bloqueio por volume, que requer espera muito maior        │
+#   │   2. 152 termos × 84 meses = 12.768 requisições — volume            │
+#   │      incompatível com API pública sem autenticação                  │
+#   │   3. Pausa fixa de 8s criava padrão periódico detectável            │
 #   └─────────────────────────────────────────────────────────────────────┘
 #
 #   ┌─────────────────────────────────────────────────────────────────────┐
-#   │ VERSÃO 3.1 — Correções pós-teste (versão atual)                    │
-#   │ Data: 10/06/2026                                                   │
+#   │ VERSÃO 3.1 — Correções pós-teste (versão atual)                     │
+#   │ Data: 10/06/2026                                                    │
 #   ├─────────────────────────────────────────────────────────────────────┤
 #   │ Correções aplicadas:                                                │
 #   │                                                                     │
-#   │   Correção 1 — Tratamento diferenciado do erro 429:                │
-#   │     @retry (tenacity) substituído por retry manual em              │
-#   │     _requisicao_gdelt() e _requisicao_newsapi().                   │
-#   │     HTTP 429 → aguarda 90s antes de tentar novamente.              │
-#   │     Timeout/rede → backoff exponencial (4s→8s→16s→30s).           │
-#   │     Após 5 tentativas: retorna None, coleta continua.              │
+#   │   Correção 1 — Tratamento diferenciado do erro 429:                 │
+#   │     @retry (tenacity) substituído por retry manual em               │
+#   │     _requisicao_gdelt() e _requisicao_newsapi().                    │
+#   │     HTTP 429 → aguarda 90s antes de tentar novamente.               │
+#   │     Timeout/rede → backoff exponencial (4s→8s→16s→30s).             │
+#   │     Após 5 tentativas: retorna None, coleta continua.               │
 #   │                                                                     │
-#   │   Correção 2 — Redução de termos GDELT de 152 para 20:            │
-#   │     1-3 termos "âncora" por categoria (os mais abrangentes).       │
-#   │     Resultado: 20 × 84 = 1.680 requisições (era 12.768).          │
-#   │     Cobertura temática preservada via NewsAPI e RSS.               │
+#   │   Correção 2 — Redução de termos GDELT de 152 para 20:              │
+#   │     1-3 termos "âncora" por categoria (os mais abrangentes).        │
+#   │     Resultado: 20 × 84 = 1.680 requisições (era 12.768).            │
+#   │     Cobertura temática preservada via NewsAPI e RSS.                │
 #   │                                                                     │
-#   │   Correção 3 — Pausa com jitter aleatório (±3s):                  │
-#   │     time.sleep(PAUSA_GDELT_S + random.uniform(-3, 3))             │
-#   │     Intervalo resultante: 9s a 15s (média 12s).                   │
-#   │     Evita padrão periódico detectável por sistemas anti-bot.       │
+#   │   Correção 3 — Pausa com jitter aleatório (±3s):                    │
+#   │     time.sleep(PAUSA_GDELT_S + random.uniform(-3, 3))               │
+#   │     Intervalo resultante: 9s a 15s (média 12s).                     │
+#   │     Evita padrão periódico detectável por sistemas anti-bot.        │
 #   │                                                                     │
-#   │   Correção 4 — Pausa base aumentada para 12s (era 8s):            │
-#   │     ~250 req/hora → dentro do limite tolerado pelo GDELT.          │
+#   │   Correção 4 — Pausa base aumentada para 12s (era 8s):              │
+#   │     ~250 req/hora → dentro do limite tolerado pelo GDELT.           │
 #   │                                                                     │
-#   │   Correção 5 — PAUSA_RATE_LIMIT_S aumentada para 90s (era 60s):  │
-#   │     Mais conservador para lidar com bloqueios de sessão.           │
+#   │   Correção 5 — PAUSA_RATE_LIMIT_S aumentada para 90s (era 60s):     │
+#   │     Mais conservador para lidar com bloqueios de sessão.            │
 #   │                                                                     │
-#   │ PROCEDIMENTO PARA DIAGNÓSTICO DE BLOQUEIO DE IP:                  │
-#   │   Se 429 persistir em todas as tentativas, abra no navegador:     │
-#   │   https://api.gdeltproject.org/api/v2/doc/doc?query="Petrobras"   │
-#   │   &mode=artlist&format=json                                        │
-#   │   Se retornar 429, seu IP está bloqueado. Aguarde 2-4 horas.      │
-#   │   Se retornar JSON com artigos, o bloqueio foi liberado.           │
+#   │ PROCEDIMENTO PARA DIAGNÓSTICO DE BLOQUEIO DE IP:                    │
+#   │   Se 429 persistir em todas as tentativas, abra no navegador:       │
+#   │   https://api.gdeltproject.org/api/v2/doc/doc?query="Petrobras"     │
+#   │   &mode=artlist&format=json                                         │
+#   │   Se retornar 429, seu IP está bloqueado. Aguarde 2-4 horas.        │
+#   │   Se retornar JSON com artigos, o bloqueio foi liberado.            │
 #   └─────────────────────────────────────────────────────────────────────┘
 #
 # ==============================================================================
