@@ -1,0 +1,23 @@
+# ─── Ambiente virtual (não versionar — é específico de cada máquina) ───
+.venv/
+venv/
+env/
+
+# ─── Caches Python ───
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# ─── Dados e saídas geradas pelos scripts (grandes / regeneráveis) ───
+# O corpus completo passa de 100 MB — acima do limite do GitHub.
+# Para versionar dados grandes, use Git LFS ou os "Releases" do GitHub.
+Mestrado_PETR4/
+*.csv
+*.log
+*.png
+
+# ─── Sistema operacional / editores ───
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -872,7 +872,33 @@ DATA_FIM    = datetime(2025, 12, 31)
 #      support@newsapi.org solicitando o plano Developer para pesquisa
 #      acadêmica — é gratuito, basta mencionar a dissertação.
 #   4. Cole a chave recebida abaixo:
-NEWSAPI_KEY = "SUA_CHAVE_AQUI"   # ← substitua aqui antes de executar
+NEWSAPI_KEY = "4b1d097f0301468dbfab1e824c439fb5"   # ← substitua aqui antes de executar
+
+# ── Interruptor da fonte NewsAPI ──────────────────────────────────────────────
+# DESATIVADA POR PADRÃO (False) — decisão metodológica documentada.
+#
+# MOTIVO (verificado em teste real em 17/06/2026 com a chave acima):
+#   O plano GRATUITO da NewsAPI só permite consultar artigos dos ÚLTIMOS ~30
+#   DIAS. Ao requisitar qualquer data anterior, a API responde HTTP 426 com:
+#     "You are trying to request results too far in the past. Your plan permits
+#      you to request articles as far back as <hoje-30d>... upgrade to a paid plan."
+#
+#   Como o recorte de análise desta dissertação é 2018-2025 (todo ele com mais
+#   de 30 dias), a NewsAPI gratuita não contribui com NENHUMA notícia útil ao
+#   corpus — apenas geraria centenas de requisições HTTP 426 inúteis (1 por
+#   termo × mês), poluindo o log e desperdiçando tempo de execução. A cobertura
+#   histórica do período é garantida pelo GDELT (Mecanismo 1) e RSS (Mecanismo 3).
+#
+# COMO REATIVAR (quando houver chave com acesso histórico estendido):
+#   1. Obtenha um plano que cubra o histórico de 2018-2025. Opções:
+#        • Plano Developer acadêmico — solicitar por e-mail a support@newsapi.org
+#          (gratuito mediante justificativa de pesquisa); ou
+#        • Plano pago (Business/Advanced) com acesso ao arquivo histórico.
+#   2. Atualize NEWSAPI_KEY acima com a nova chave.
+#   3. Troque a linha abaixo para  USAR_NEWSAPI = True.
+#   Nenhuma outra alteração é necessária — a função coletar_newsapi() já trata
+#   paginação, rate limiting e datas; o Bloco 11 respeita esta flag.
+USAR_NEWSAPI = False
 
 # ── Parâmetros de requisição ──────────────────────────────────────────────────
 MAX_ARTIGOS_GDELT  = 250  # Limite máximo da API gratuita do GDELT por consulta
@@ -1881,9 +1907,16 @@ def executar_coleta_completa() -> None:
             gravar(art)
 
         # ── FONTE 2: NewsAPI ──────────────────────────────────────────────────
-        log.info("─── NewsAPI (%d termos × meses) ───", len(TERMOS_NEWSAPI))
-        for art in coletar_newsapi(TERMOS_NEWSAPI, DATA_INICIO, DATA_FIM, NEWSAPI_KEY):
-            gravar(art)
+        # Controlada pela flag USAR_NEWSAPI (Bloco 3). Desativada por padrão
+        # porque o plano gratuito não cobre o histórico 2018-2025 — ver a
+        # justificativa completa e o procedimento de reativação no Bloco 3.
+        if USAR_NEWSAPI:
+            log.info("─── NewsAPI (%d termos × meses) ───", len(TERMOS_NEWSAPI))
+            for art in coletar_newsapi(TERMOS_NEWSAPI, DATA_INICIO, DATA_FIM, NEWSAPI_KEY):
+                gravar(art)
+        else:
+            log.info("─── NewsAPI DESATIVADA (USAR_NEWSAPI=False) — plano grátis "
+                     "não cobre histórico 2018-2025. Ver Bloco 3 para reativar. ───")
 
         # ── FONTE 3: RSS Feeds ────────────────────────────────────────────────
         log.info("─── RSS Feeds (%d feeds) ───", len(RSS_FEEDS))

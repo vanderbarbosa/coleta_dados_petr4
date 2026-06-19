@@ -131,6 +131,22 @@ except FileNotFoundError:
     print("      Execute o Script 03 primeiro.")
     raise
 
+# --- ISM por categoria (Script 03 — OPCIONAL, habilita a análise de ablação) ---
+# Se o corpus foi coletado com a taxonomia (Script 02b), o Script 03 gera um
+# ISM separado por categoria. Quando presente, o Bloco 21 executa a ablação.
+caminho_ism_cat = caminho_base + "indice_sentimento_categorias_petr4.csv"
+try:
+    df_ism_cat = pd.read_csv(caminho_ism_cat, parse_dates=['Data'])
+    df_ism_cat['Data'] = pd.to_datetime(df_ism_cat['Data'])
+    df_ism_cat.set_index('Data', inplace=True)
+    COLUNAS_CATEGORIA = [c for c in df_ism_cat.columns if c.startswith('ISM_')]
+    print(f"   ✅ ISM por categoria: {len(df_ism_cat)} dias, {len(COLUNAS_CATEGORIA)} categorias")
+except FileNotFoundError:
+    df_ism_cat = None
+    COLUNAS_CATEGORIA = []
+    print(f"   ℹ️  ISM por categoria não encontrado — análise de ablação será pulada.")
+    print(f"      (Para habilitá-la, colete com o Script 02b e rode o Script 03.)")
+
 
 # ==============================================================================
 # BLOCO 5 — PRÉ-PROCESSAMENTO: ESCALA DO LOG-RETORNO
@@ -335,10 +351,21 @@ print("="*60)
 # Junta os dados financeiros com o ISM diário
 df_master = df_financeiro.join(df_ism[['Indice_Sentimento_Transformer']], how='left')
 
+# Junta também o ISM por categoria, quando disponível (habilita ablação)
+COLUNAS_CATEGORIA_LAG = []
+if df_ism_cat is not None and COLUNAS_CATEGORIA:
+    df_master = df_master.join(df_ism_cat[COLUNAS_CATEGORIA], how='left')
+
 # Aplica o deslocamento de 1 dia (lag) em todas as variáveis preditoras
 df_master['Retorno_Ontem']      = df_master['Log_Retorno_Pct'].shift(1)
 df_master['Volatilidade_Ontem'] = df_master['Volatilidade_GARCH'].shift(1)
 df_master['Sentimento_Ontem']   = df_master['Indice_Sentimento_Transformer'].shift(1)
+
+# Lag de 1 dia para cada categoria (mesma lógica anti-data-leakage)
+for col in COLUNAS_CATEGORIA:
+    col_lag = col + "_Ontem"
+    df_master[col_lag] = df_master[col].shift(1)
+    COLUNAS_CATEGORIA_LAG.append(col_lag)
 
 # Variável-Alvo: 1 = Alta (retorno positivo), 0 = Baixa (retorno negativo ou zero)
 df_master['Alvo'] = np.where(df_master['Log_Retorno_Pct'] > 0, 1, 0)
@@ -348,6 +375,8 @@ df_master.dropna(subset=['Retorno_Ontem', 'Volatilidade_Ontem', 'Alvo'], inplace
 
 # Para os dias sem ISM (sem notícias coletadas), preenchemos com zero (sentimento neutro)
 df_master['Sentimento_Ontem'].fillna(0, inplace=True)
+for col_lag in COLUNAS_CATEGORIA_LAG:
+    df_master[col_lag].fillna(0, inplace=True)
 
 print(f"✅ Matriz de atributos construída:")
 print(f"   Total de pregões no modelo : {len(df_master)}")
@@ -649,6 +678,93 @@ for _, row in importancias.iterrows():
 
 
 # ==============================================================================
+# BLOCO 19b — ANÁLISE DE ABLAÇÃO POR CATEGORIA DE NOTÍCIA
+# ==============================================================================
+# Responde à pergunta de pesquisa: "Qual CATEGORIA de notícia é mais informativa
+# para prever a direção do PETR4?". A técnica de ablação:
+#   1. Treina o modelo COMPLETO: preços + GARCH + sentimento das 7 categorias.
+#   2. Remove UMA categoria por vez, retreina e mede a acurácia.
+#   3. A queda de acurácia ao remover a categoria X = importância de X.
+#      Quanto MAIOR a queda, mais informativa é aquela categoria.
+#
+# Só executa se o ISM por categoria estiver disponível (Script 02b → 03).
+
+df_ablacao = None
+if COLUNAS_CATEGORIA_LAG:
+    print("\n" + "="*60)
+    print("ANÁLISE DE ABLAÇÃO POR CATEGORIA (CONTRIBUIÇÃO CIENTÍFICA)")
+    print("="*60)
+
+    features_full = ['Retorno_Ontem', 'Volatilidade_Ontem'] + COLUNAS_CATEGORIA_LAG
+
+    def treinar_xgb_acuracia(lista_features):
+        """Treina XGBoost com o conjunto de features dado e retorna a acurácia no teste."""
+        X = df_master[lista_features].values
+        X_tr, X_te = X[:corte], X[corte:]
+        modelo = XGBClassifier(
+            n_estimators=100, max_depth=3, learning_rate=0.1,
+            subsample=0.8, colsample_bytree=0.8, eval_metric='logloss',
+            random_state=42, verbosity=0,
+        )
+        modelo.fit(X_tr, Y_treino)
+        return accuracy_score(Y_teste, modelo.predict(X_te)) * 100
+
+    # Modelo completo (todas as categorias)
+    acc_full = treinar_xgb_acuracia(features_full)
+    print(f"\n   Modelo COMPLETO (todas as {len(COLUNAS_CATEGORIA_LAG)} categorias): "
+          f"{acc_full:.2f}% de acurácia")
+    print(f"\n   Impacto de remover cada categoria (queda = importância):")
+
+    linhas_ablacao = []
+    for col_lag in COLUNAS_CATEGORIA_LAG:
+        features_sem = [f for f in features_full if f != col_lag]
+        acc_sem = treinar_xgb_acuracia(features_sem)
+        impacto = acc_full - acc_sem  # queda ao remover esta categoria
+        nome_cat = col_lag.replace('ISM_', '').replace('_Ontem', '')
+        linhas_ablacao.append({
+            'Categoria'          : nome_cat,
+            'Acuracia_sem_ela'   : round(acc_sem, 2),
+            'Impacto_pp'         : round(impacto, 2),  # pontos percentuais
+        })
+
+    df_ablacao = (pd.DataFrame(linhas_ablacao)
+                  .sort_values('Impacto_pp', ascending=False)
+                  .reset_index(drop=True))
+    df_ablacao.insert(0, 'Acuracia_completo', round(acc_full, 2))
+
+    for _, r in df_ablacao.iterrows():
+        seta = '↓' if r['Impacto_pp'] > 0 else ('↑' if r['Impacto_pp'] < 0 else '·')
+        bar = '█' * int(abs(r['Impacto_pp']) * 2)
+        print(f"   {r['Categoria']:24s}: {seta} {r['Impacto_pp']:+5.2f} pp  {bar}")
+
+    print(f"\n   📌 Categoria mais informativa: {df_ablacao.iloc[0]['Categoria']} "
+          f"(remover custa {df_ablacao.iloc[0]['Impacto_pp']:.2f} pp de acurácia)")
+
+    # Gráfico de barras da ablação
+    try:
+        fig, ax = plt.subplots(figsize=(11, 6))
+        cores = ['#d7191c' if v > 0 else '#2c7bb6' for v in df_ablacao['Impacto_pp']]
+        ax.barh(df_ablacao['Categoria'], df_ablacao['Impacto_pp'], color=cores, alpha=0.8)
+        ax.axvline(0, color='black', linewidth=0.8)
+        ax.set_xlabel('Queda de acurácia ao remover a categoria (pontos percentuais)')
+        ax.set_title('Análise de Ablação: Importância de Cada Categoria de Notícia\n'
+                     'na Previsão de Direção do PETR4 (XGBoost Data Fusion)',
+                     fontweight='bold')
+        ax.invert_yaxis()
+        ax.grid(True, axis='x', alpha=0.3)
+        plt.tight_layout()
+        caminho_graf_ablacao = caminho_base + "grafico_ablacao_categorias.png"
+        plt.savefig(caminho_graf_ablacao, dpi=150, bbox_inches='tight')
+        plt.show()
+        print(f"   💾 Gráfico de ablação salvo: {caminho_graf_ablacao}")
+    except Exception as e:
+        print(f"   ⚠️  Não foi possível gerar o gráfico de ablação: {e}")
+else:
+    print("\nℹ️  Análise de ablação pulada (ISM por categoria indisponível).")
+    print("   Para habilitá-la: colete com o Script 02b e rode o Script 03.")
+
+
+# ==============================================================================
 # BLOCO 20 — SALVAMENTO DOS RESULTADOS
 # ==============================================================================
 
@@ -662,6 +778,12 @@ df_master[['Log_Retorno_Pct', 'Volatilidade_GARCH', 'Indice_Sentimento_Transform
            'Retorno_Ontem', 'Volatilidade_Ontem', 'Sentimento_Ontem', 'Alvo']].to_csv(
     caminho_master, encoding='utf-8'
 )
+
+# Salva a tabela de ablação por categoria (quando disponível)
+if df_ablacao is not None:
+    caminho_ablacao = caminho_base + "resultados_ablacao_categorias_petr4.csv"
+    df_ablacao.to_csv(caminho_ablacao, index=False, encoding='utf-8')
+    print(f"\n   💾 Tabela de ablação por categoria: {caminho_ablacao}")
 
 print("\n" + "="*60)
 print("✅ MODELAGEM CONCLUÍDA COM SUCESSO!")

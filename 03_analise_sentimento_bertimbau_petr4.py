@@ -153,21 +153,89 @@ print("✅ Modelo carregado e pronto para análise.")
 
 
 # ==============================================================================
-# BLOCO 6 — LEITURA DO CORPUS DE NOTÍCIAS
+# BLOCO 6 — LEITURA E NORMALIZAÇÃO DO CORPUS DE NOTÍCIAS
 # ==============================================================================
+# Este script aceita DOIS formatos de corpus, detectando o schema
+# automaticamente (não requer edição manual):
+#
+#   (A) Schema WordPress/multi-fonte (Scripts 02 e 02b) — colunas minúsculas:
+#       data_publicacao, titulo, resumo, fonte_coleta, dominio, url, idioma...
+#       → traz a HORA EXATA de publicação (essencial para o Lead-Lag das 17h).
+#
+#   (B) Schema GDELT simples (versão antiga do Script 02) — colunas capitalizadas:
+#       Data_Coleta, Titulo, Resumo, Fonte, URL, Idioma...
+#
+# Internamente o script padroniza tudo para as colunas canônicas
+# 'Data_Coleta' (datetime com hora) e 'Titulo', usadas nos blocos seguintes.
 
-caminho_noticias = caminho_base + "base_textual_petr4_2018_2025.csv"
+# Ordem de preferência: o corpus mais novo (com timestamp real) vem primeiro.
+CANDIDATOS_CORPUS = [
+    "base_textual_petr4_wordpress_2018_2025.csv",  # Script 02b — coleta completa
+    "base_textual_wordpress_TESTE.csv",            # Script 02b — teste rápido
+    "base_textual_petr4_2018_2025.csv",            # Script 02 (multi-fonte ou GDELT)
+]
+
+caminho_noticias = None
+for nome in CANDIDATOS_CORPUS:
+    if os.path.exists(caminho_base + nome):
+        caminho_noticias = caminho_base + nome
+        break
+
+if caminho_noticias is None:
+    print("❌ Nenhum arquivo de corpus encontrado em:", caminho_base)
+    print("   Esperado um destes:", CANDIDATOS_CORPUS)
+    print("   Execute o Script 02 ou 02b primeiro para gerar o corpus.")
+    raise FileNotFoundError("Corpus de notícias não encontrado.")
 
 print(f"\n📖 Lendo corpus de notícias: {caminho_noticias}")
+df_noticias = pd.read_csv(caminho_noticias)
+print(f"✅ Corpus carregado: {len(df_noticias)} notícias")
 
-try:
-    df_noticias = pd.read_csv(caminho_noticias, parse_dates=['Data_Coleta'])
-    print(f"✅ Corpus carregado: {len(df_noticias)} notícias")
+# --- Normalização de nomes de coluna (mapeia qualquer schema → canônico) ---
+MAPA_COLUNAS = {
+    'data_publicacao': 'Data_Coleta',  # WordPress/multi-fonte (com hora exata)
+    'titulo'         : 'Titulo',
+    'resumo'         : 'Resumo',
+    'fonte_coleta'   : 'Fonte',
+    'url'            : 'URL',
+    'idioma'         : 'Idioma',
+}
+df_noticias.rename(
+    columns={k: v for k, v in MAPA_COLUNAS.items() if k in df_noticias.columns},
+    inplace=True,
+)
 
-except FileNotFoundError:
-    print(f"❌ Arquivo não encontrado: {caminho_noticias}")
-    print("   Execute o Script 02 primeiro para gerar o corpus de notícias.")
-    raise
+# Se não houver 'Fonte' mas houver 'dominio' (WordPress), usa o domínio como fonte
+if 'Fonte' not in df_noticias.columns and 'dominio' in df_noticias.columns:
+    df_noticias.rename(columns={'dominio': 'Fonte'}, inplace=True)
+
+# Validação das colunas mínimas obrigatórias
+for col_obrig in ('Data_Coleta', 'Titulo'):
+    if col_obrig not in df_noticias.columns:
+        raise KeyError(
+            f"Coluna obrigatória '{col_obrig}' ausente no corpus. "
+            f"Colunas encontradas: {list(df_noticias.columns)}"
+        )
+
+# Converte a data de publicação para datetime (preservando a HORA).
+# errors='coerce' transforma datas inválidas em NaT (sem derrubar a execução).
+df_noticias['Data_Coleta'] = pd.to_datetime(df_noticias['Data_Coleta'], errors='coerce')
+n_antes = len(df_noticias)
+df_noticias.dropna(subset=['Data_Coleta', 'Titulo'], inplace=True)
+n_descartadas = n_antes - len(df_noticias)
+
+# Diagnóstico do timestamp: confirma se o corpus tem HORA real (não meia-noite).
+# Um corpus com hora real é pré-requisito para o alinhamento Lead-Lag (Seção 3.1.2).
+tem_hora = (df_noticias['Data_Coleta'].dt.hour != 0).any() or \
+           (df_noticias['Data_Coleta'].dt.minute != 0).any()
+print(f"   Schema normalizado → colunas canônicas (Data_Coleta, Titulo).")
+if n_descartadas:
+    print(f"   {n_descartadas} linhas descartadas (data ou título inválidos).")
+if tem_hora:
+    print(f"   🕒 Timestamp com HORA EXATA detectado — alinhamento Lead-Lag das 17h será aplicado.")
+else:
+    print(f"   ⚠️  Corpus SEM hora de publicação (apenas datas). O corte das 17h não terá efeito.")
+    print(f"      Recomendado recoletar com o Script 02b (WordPress REST) para obter o timestamp.")
 
 
 # ==============================================================================
@@ -344,6 +412,51 @@ print(df_ism_diario['Indice_Sentimento_Transformer'].describe().round(4))
 
 
 # ==============================================================================
+# BLOCO 10b — ÍNDICE DE SENTIMENTO DIÁRIO POR CATEGORIA (ANÁLISE DE ABLAÇÃO)
+# ==============================================================================
+# Se o corpus tiver a coluna 'categoria' (gerada pelo Script 02/02b com a
+# taxonomia de 7 categorias), construímos um ISM SEPARADO para cada categoria.
+# Isso habilita a ANÁLISE DE ABLAÇÃO no Script 04: remover uma categoria por
+# vez e medir o impacto na previsão, respondendo "qual tipo de notícia é mais
+# informativo para prever a volatilidade do PETR4?".
+#
+# Saída: indice_sentimento_categorias_petr4.csv — uma coluna por categoria,
+# no mesmo alinhamento temporal (corte das 17h) usado no ISM agregado.
+
+df_ism_categorias = None
+if 'categoria' in df_noticias.columns and df_noticias['categoria'].notna().any():
+    print("\n📂 Construindo o ISM por categoria (para análise de ablação)...")
+
+    # Sentimento médio diário (Data_Ajustada) por categoria → formato largo (pivot)
+    df_ism_categorias = (
+        df_noticias
+        .pivot_table(
+            index='Data_Ajustada',
+            columns='categoria',
+            values='Indice_Sentimento',
+            aggfunc='mean',
+        )
+        .reset_index()
+        .rename(columns={'Data_Ajustada': 'Data'})
+    )
+
+    # Prefixa as colunas de categoria com "ISM_" para clareza no Script 04
+    df_ism_categorias.columns = [
+        c if c == 'Data' else f"ISM_{c}" for c in df_ism_categorias.columns
+    ]
+
+    cats_detectadas = [c for c in df_ism_categorias.columns if c.startswith('ISM_')]
+    print(f"   ✅ {len(cats_detectadas)} categorias com sentimento diário:")
+    for c in cats_detectadas:
+        cobertura = df_ism_categorias[c].notna().sum()
+        print(f"      {c:30s}: {cobertura} dias com notícia")
+else:
+    print("\n⚠️  Corpus sem coluna 'categoria' — ISM por categoria não gerado.")
+    print("      (Análise de ablação no Script 04 ficará indisponível;")
+    print("       recoletar com o Script 02b para obter as categorias.)")
+
+
+# ==============================================================================
 # BLOCO 11 — SALVAMENTO NO GOOGLE DRIVE
 # ==============================================================================
 
@@ -356,6 +469,12 @@ print(f"\n💾 ISM diário salvo: {caminho_ism}")
 caminho_noticias_sentimento = caminho_base + "noticias_com_sentimento.csv"
 df_noticias.to_csv(caminho_noticias_sentimento, index=False, encoding='utf-8')
 print(f"💾 Corpus com sentimento salvo: {caminho_noticias_sentimento}")
+
+# Arquivo 3: ISM por categoria (entrada da análise de ablação do Script 04)
+if df_ism_categorias is not None:
+    caminho_ism_cat = caminho_base + "indice_sentimento_categorias_petr4.csv"
+    df_ism_categorias.to_csv(caminho_ism_cat, index=False, encoding='utf-8')
+    print(f"💾 ISM por categoria salvo: {caminho_ism_cat}")
 
 print("\n" + "="*60)
 print("✅ ANÁLISE DE SENTIMENTO CONCLUÍDA COM SUCESSO!")
