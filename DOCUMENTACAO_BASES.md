@@ -24,28 +24,29 @@
 | 2024 | 26835 |
 | 2025 | 32077 |
 
-## 2. Base FILTRADA (derivada)
+## 2. Base TRATADA (derivada — filtragem LEVE)
 
-- **Arquivo:** `Mestrado_PETR4/base_textual_petr4_filtrada.csv`
-- **Filtro:** mantém notícias cujo título ou resumo contém termos de relevância
-  (petrobras, petr4, petr3, petroleira, petróleo, petroleo, brent, wti…).
-- **Total após filtro:** 41635 (20.2% da base original)
+- **Arquivo:** `Mestrado_PETR4/base_textual_petr4_tratada.csv`
+- **Filtragem leve (limpeza de qualidade):** remove apenas notícias degeneradas —
+  título vazio, com menos de 15 caracteres, ou marcadores de remoção.
+  **Não** há filtro temático: todas as 7 categorias são preservadas.
+- **Total após limpeza:** 205697 (100.0% da base original)
 - **Coluna adicional:** `conjunto` (treino / validacao / teste).
 
-### Impacto do filtro por categoria (original → filtrada)
-| Categoria | Original | Filtrada |
-|-----------|----------|----------|
-| CAT1_Empresa | 64886 | 29523 |
-| CAT2_Mercado_Petroleo | 55915 | 9551 |
-| CAT3_Geopolitica | 46414 | 470 |
-| CAT7_Macro_Energia | 26412 | 870 |
-| CAT6_Governanca | 6122 | 229 |
-| CAT5_Sancoes_Navegacao | 3620 | 356 |
-| CAT4_Infraestrutura | 2347 | 636 |
+### Notícias por categoria (original → tratada)
+| Categoria | Original | Tratada |
+|-----------|----------|---------|
+| CAT1_Empresa | 64886 | 64882 |
+| CAT2_Mercado_Petroleo | 55915 | 55910 |
+| CAT3_Geopolitica | 46414 | 46412 |
+| CAT7_Macro_Energia | 26412 | 26407 |
+| CAT6_Governanca | 6122 | 6121 |
+| CAT5_Sancoes_Navegacao | 3620 | 3619 |
+| CAT4_Infraestrutura | 2347 | 2346 |
 
-> ⚠️ O filtro reduz fortemente as categorias exógenas (geopolítica, macro), pois
-> essas notícias raramente citam "petróleo/Petrobras" no título. Para a análise
-> de ablação por categoria, considere usar também a base original (não filtrada).
+> ✅ A filtragem leve preserva a amplitude temática (incl. geopolítica e macro),
+> mantendo a base adequada para a análise de ablação por categoria. O sinal de
+> relevância vem do termo da taxonomia usado na captura (Script 02b).
 
 ## 3. Split Temporal Treino / Validação / Teste
 
@@ -61,18 +62,18 @@
 ### Distribuição global
 | Conjunto | Notícias | % |
 |----------|----------|---|
-| treino | 24909 | 59.8% |
-| validacao | 6230 | 15.0% |
-| teste | 10496 | 25.2% |
+| treino | 123030 | 59.8% |
+| validacao | 30796 | 15.0% |
+| teste | 51871 | 25.2% |
 
 ### Notícias por ano × conjunto (confirma todos os anos nos 3 conjuntos)
 | Ano | Treino | Validação | Teste |
 |-----|--------|-----------|-------|
-| 2018 | 17921 | 2774 | 705 | 1164 |
-| 2019 | 20575 | 2780 | 692 | 1186 |
-| 2020 | 19984 | 2731 | 680 | 1143 |
-| 2021 | 23332 | 3091 | 776 | 1309 |
-| 2022 | 36008 | 4435 | 1104 | 1859 |
-| 2023 | 28984 | 3532 | 875 | 1484 |
-| 2024 | 26835 | 2890 | 710 | 1221 |
-| 2025 | 32077 | 2676 | 688 | 1130 |
+| 2018 | 17921 | 10715 | 2658 | 4546 |
+| 2019 | 20575 | 12324 | 3079 | 5171 |
+| 2020 | 19984 | 11961 | 3017 | 5001 |
+| 2021 | 23332 | 13964 | 3484 | 5883 |
+| 2022 | 36008 | 21466 | 5460 | 9081 |
+| 2023 | 28984 | 17349 | 4338 | 7295 |
+| 2024 | 26835 | 16039 | 4010 | 6781 |
+| 2025 | 32077 | 19212 | 4750 | 8113 |

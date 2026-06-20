@@ -32,7 +32,7 @@ A maioria dos scripts foi escrita para rodar no **Google Colab** (montam o Googl
 | [02_coleta_noticias_gdelt_petr4.py](02_coleta_noticias_gdelt_petr4.py) | **Script 02 (versão simples)** — coleta de notícias apenas via GDELT |
 | [02_coleta_noticias_petr4.py](02_coleta_noticias_petr4.py) | **Script 02 (versão multi-fonte, v3.1)** — GDELT + NewsAPI + 25 RSS feeds, com dedup, logging e retomada |
 | [02b_coleta_noticias_wordpress_petr4.py](02b_coleta_noticias_wordpress_petr4.py) | ⭐ **Script 02b (recomendado)** — coleta via WordPress REST API de 5 portais, com **hora exata de publicação** e a **taxonomia de 7 categorias** |
-| [02c_preparar_base_treino_teste_validacao.py](02c_preparar_base_treino_teste_validacao.py) | **Script 02c** — gera a base **filtrada** e o **split treino/validação/teste (60/15/25)** a partir da base bruta (que permanece intacta) |
+| [02c_preparar_base_treino_teste_validacao.py](02c_preparar_base_treino_teste_validacao.py) | **Script 02c** — gera a base **tratada** (filtragem leve) e o **split treino/validação/teste (60/15/25)** a partir da base bruta (que permanece intacta) |
 | [02_coleta_noticias_petr4_OLD.py](02_coleta_noticias_petr4_OLD.py) | Versão 3.0 do script acima, preservada para histórico |
 | [teste_rss_feeds.py](teste_rss_feeds.py) | **Script 02a** — diagnóstico que valida quais RSS feeds estão ativos |
 | [03_analise_sentimento_bertimbau_petr4.py](03_analise_sentimento_bertimbau_petr4.py) | **Script 03** — análise de sentimento (NLP) e construção do Índice de Sentimento da Mídia (ISM) |
@@ -91,13 +91,11 @@ Fonte **recomendada** desde jun/2026, após a banca (Prof. Emerson) exigir **hor
 
 **Gera:** `base_textual_petr4_wordpress_2018_2025.csv` (consumido automaticamente pelo Script 03).
 
-### Script 02c — Preparação: Base Filtrada + Split Treino/Validação/Teste
+### Script 02c — Preparação: Base Tratada + Split Treino/Validação/Teste
 A partir da base bruta (que **permanece intacta**, jamais recoletada), gera as bases derivadas para a modelagem:
-- **Base filtrada** (`base_textual_petr4_filtrada.csv`): aplica filtro de relevância (título/resumo mencionam Petrobras/PETR4/petróleo/Brent/OPEP…). Reduz ruído de termos exógenos amplos.
+- **Base tratada** (`base_textual_petr4_tratada.csv`): **filtragem leve** (limpeza de qualidade) — remove apenas notícias degeneradas (título vazio, com menos de 15 caracteres ou marcadores de remoção). **Não** há filtro temático, então **todas as 7 categorias são preservadas** (mantém a base adequada para a ablação). Na prática, retém ~100% do corpus (só ~19 linhas removidas).
 - **Split temporal 60/15/25** treino/validação/teste, **estratificado por ano** (todos os anos nos três conjuntos) e **cronológico dentro do ano** (sem embaralhar → sem *data leakage*), por **dias inteiros** (um dia nunca é dividido). Grava a coluna `conjunto` e o mapa `definicao_split_temporal.csv` (Data → conjunto) para uso consistente no Script 04.
-- **Documentação** completa das bases (original + filtrada + split) em **[DOCUMENTACAO_BASES.md](DOCUMENTACAO_BASES.md)**, gerada automaticamente com os números reais.
-
-> ⚠️ O filtro de relevância reduz fortemente as categorias exógenas (geopolítica ~1%, macro ~3%). Para a análise de ablação por categoria, pode ser preferível usar a base original (não filtrada). Decisão documentada em [DOCUMENTACAO_BASES.md](DOCUMENTACAO_BASES.md).
+- **Documentação** completa das bases (original + tratada + split) em **[DOCUMENTACAO_BASES.md](DOCUMENTACAO_BASES.md)**, gerada automaticamente com os números reais.
 
 ### Script 03 — Análise de Sentimento `(GPU: ~15–30 min · CPU: 2–4 h)`
 Classifica cada notícia em Positivo/Neutro/Negativo usando o modelo multilíngue `cardiffnlp/twitter-xlm-roberta-base-sentiment` (referido como "BERTimbau" na dissertação). Calcula o **Índice de Sentimento da Mídia (ISM)** — média diária de `polaridade × confiança` — com **alinhamento temporal**: notícias publicadas após o fechamento da B3 (17h) são atribuídas ao próximo pregão, evitando *data leakage*. Detecta o schema do corpus automaticamente (02b ou GDELT) e, quando há coluna `categoria`, gera também um **ISM por categoria** para a análise de ablação.

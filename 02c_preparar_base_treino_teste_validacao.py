@@ -15,9 +15,13 @@
 #   A coleta (Script 02b) gera a BASE ORIGINAL com 205.716 notícias. Este script
 #   NÃO a modifica — apenas a LÊ e gera bases DERIVADAS para a modelagem:
 #
-#     1. BASE FILTRADA — aplica um filtro de relevância (notícias cujo título ou
-#        resumo mencionam Petrobras/PETR4/petróleo/Brent/OPEP etc.). Reduz ruído
-#        de termos exógenos amplos, focando o corpus no ativo.
+#     1. BASE TRATADA (FILTRAGEM LEVE) — aplica apenas uma LIMPEZA DE QUALIDADE,
+#        removendo ruído degenerado: títulos vazios, muito curtos (sem conteúdo
+#        semântico útil para análise de sentimento) e marcadores de remoção
+#        (ex.: "[Removed]"). NÃO aplica filtro temático — preserva a amplitude
+#        das 7 categorias (incl. geopolítica e macro), pois o termo da taxonomia
+#        já é o sinal de relevância usado na captura (Script 02b). Isso mantém
+#        intacta a base para a ANÁLISE DE ABLAÇÃO por categoria.
 #
 #     2. SPLIT TEMPORAL Treino/Validação/Teste — separa os dados em três conjuntos
 #        na proporção 60/15/25, ESTRATIFICADO POR ANO: dentro de cada ano, os
@@ -36,7 +40,7 @@
 #
 #   ARQUIVOS GERADOS (todos derivados; a base original permanece intacta)
 #   ─────────────────────────────────────────────────────────────────────
-#   • base_textual_petr4_filtrada.csv      — corpus filtrado + coluna 'conjunto'
+#   • base_textual_petr4_tratada.csv       — corpus com limpeza leve + coluna 'conjunto'
 #   • definicao_split_temporal.csv         — mapa Data → conjunto (para o Script 04)
 #   • DOCUMENTACAO_BASES.md                — relatório completo das bases e do split
 #
@@ -54,18 +58,16 @@ PASTA_BASE = Path("/content/drive/MyDrive/Mestrado_PETR4") if _NO_COLAB \
              else Path("./Mestrado_PETR4")
 
 ARQ_ORIGINAL = PASTA_BASE / "base_textual_petr4_wordpress_2018_2025.csv"   # INTACTA
-ARQ_FILTRADA = PASTA_BASE / "base_textual_petr4_filtrada.csv"
+ARQ_TRATADA  = PASTA_BASE / "base_textual_petr4_tratada.csv"
 ARQ_SPLITDEF = PASTA_BASE / "definicao_split_temporal.csv"
 ARQ_DOC      = Path("DOCUMENTACAO_BASES.md")   # na raiz do projeto (versionável)
 
-# ── Filtro de relevância ──────────────────────────────────────────────────────
-# Mantém a notícia se o TÍTULO ou o RESUMO contiver algum destes termos.
-APLICAR_FILTRO = True
-TERMOS_RELEVANCIA = [
-    "petrobras", "petr4", "petr3", "petroleira", "petróleo", "petroleo",
-    "brent", "wti", "opep", "barril", "combustível", "combustivel",
-    "gasolina", "diesel", "refinaria", "pré-sal", "pre-sal",
-]
+# ── Filtragem LEVE (limpeza de qualidade — NÃO é filtro temático) ─────────────
+# Remove apenas notícias degeneradas, preservando toda a amplitude temática
+# (as 7 categorias permanecem). O termo da taxonomia já garante a relevância.
+APLICAR_LIMPEZA   = True
+MIN_TITULO_CHARS  = 15     # títulos mais curtos não têm conteúdo semântico útil
+MARCADORES_INVALIDOS = ["[removed]", "[removida]", "(sem título)", "sem titulo"]
 
 # ── Proporções do split (cronológico, estratificado por ano) ──────────────────
 # Mapeamento: dentro de cada ano, em ordem de data —
@@ -93,19 +95,31 @@ print(f"   Base original: {n_original} notícias | {df['ano'].min()}–{df['ano'
 
 
 # ==============================================================================
-# BLOCO 3 — FILTRAGEM DE RELEVÂNCIA (gera base derivada)
+# BLOCO 3 — FILTRAGEM LEVE: LIMPEZA DE QUALIDADE (gera base derivada)
 # ==============================================================================
+# Remove apenas linhas degeneradas. NÃO há filtro temático — todas as 7
+# categorias são preservadas (importante para a análise de ablação).
 
-if APLICAR_FILTRO:
-    alvo = (df['titulo'].fillna('') + ' ' + df['resumo'].fillna('')).str.lower()
-    mask = alvo.apply(lambda t: any(termo in t for termo in TERMOS_RELEVANCIA))
-    df_filt = df[mask].copy()
-    print(f"\n🔎 Filtro de relevância aplicado:")
+if APLICAR_LIMPEZA:
+    titulo = df['titulo'].fillna('').astype(str).str.strip()
+    titulo_low = titulo.str.lower()
+
+    cond_vazio   = titulo == ''
+    cond_curto   = titulo.str.len() < MIN_TITULO_CHARS
+    cond_marcado = titulo_low.isin([m.lower() for m in MARCADORES_INVALIDOS])
+
+    remover = cond_vazio | cond_curto | cond_marcado
+    df_filt = df[~remover].copy()
+
+    print(f"\n🧹 Filtragem LEVE (limpeza de qualidade) aplicada:")
     print(f"   Mantidas : {len(df_filt)} ({len(df_filt)/n_original*100:.1f}%)")
-    print(f"   Removidas: {n_original-len(df_filt)} ({(n_original-len(df_filt))/n_original*100:.1f}%)")
+    print(f"   Removidas: {int(remover.sum())} ({remover.mean()*100:.1f}%)")
+    print(f"      • título vazio        : {int(cond_vazio.sum())}")
+    print(f"      • título < {MIN_TITULO_CHARS} chars   : {int((cond_curto & ~cond_vazio).sum())}")
+    print(f"      • marcador inválido   : {int(cond_marcado.sum())}")
 else:
     df_filt = df.copy()
-    print("\n🔎 Filtro DESATIVADO — base filtrada = base original.")
+    print("\n🧹 Limpeza DESATIVADA — base tratada = base original.")
 
 
 # ==============================================================================
@@ -155,7 +169,7 @@ df_filt['conjunto'] = df_filt['conjunto'].fillna('treino')
 
 # Distribuição global do split
 dist = df_filt['conjunto'].value_counts()
-print("\n📊 Distribuição do split (base filtrada):")
+print("\n📊 Distribuição do split (base tratada):")
 for nome in ['treino', 'validacao', 'teste']:
     n = int(dist.get(nome, 0))
     print(f"   {nome:10s}: {n:6d} ({n/len(df_filt)*100:4.1f}%)")
@@ -166,10 +180,10 @@ tab_ano = tab_ano.reindex(columns=['treino', 'validacao', 'teste'], fill_value=0
 print("\n📊 Notícias por ano × conjunto:")
 print(tab_ano.to_string())
 
-# Salva a base filtrada (com a coluna 'conjunto')
+# Salva a base tratada (com a coluna 'conjunto')
 colunas_saida = [c for c in df_filt.columns if c not in ('ano', 'data')]
-df_filt[colunas_saida].to_csv(ARQ_FILTRADA, index=False, encoding='utf-8')
-print(f"\n💾 Base filtrada salva: {ARQ_FILTRADA}")
+df_filt[colunas_saida].to_csv(ARQ_TRATADA, index=False, encoding='utf-8')
+print(f"\n💾 Base tratada salva: {ARQ_TRATADA}")
 
 # Salva o mapa Data → conjunto (para o Script 04 aplicar aos dias de pregão)
 mapa = (df_filt[['data', 'conjunto']]
@@ -221,22 +235,23 @@ doc = f"""# Documentação das Bases de Dados — Corpus PETR4
 |-----|----------|
 """ + "\n".join(f"| {ano} | {int(dist_ano_orig[ano])} |" for ano in dist_ano_orig.index) + f"""
 
-## 2. Base FILTRADA (derivada)
+## 2. Base TRATADA (derivada — filtragem LEVE)
 
-- **Arquivo:** `Mestrado_PETR4/base_textual_petr4_filtrada.csv`
-- **Filtro:** mantém notícias cujo título ou resumo contém termos de relevância
-  ({', '.join(TERMOS_RELEVANCIA[:8])}…).
-- **Total após filtro:** {len(df_filt)} ({len(df_filt)/n_original*100:.1f}% da base original)
+- **Arquivo:** `Mestrado_PETR4/base_textual_petr4_tratada.csv`
+- **Filtragem leve (limpeza de qualidade):** remove apenas notícias degeneradas —
+  título vazio, com menos de {MIN_TITULO_CHARS} caracteres, ou marcadores de remoção.
+  **Não** há filtro temático: todas as 7 categorias são preservadas.
+- **Total após limpeza:** {len(df_filt)} ({len(df_filt)/n_original*100:.1f}% da base original)
 - **Coluna adicional:** `conjunto` (treino / validacao / teste).
 
-### Impacto do filtro por categoria (original → filtrada)
-| Categoria | Original | Filtrada |
-|-----------|----------|----------|
+### Notícias por categoria (original → tratada)
+| Categoria | Original | Tratada |
+|-----------|----------|---------|
 {linhas_cat}
 
-> ⚠️ O filtro reduz fortemente as categorias exógenas (geopolítica, macro), pois
-> essas notícias raramente citam "petróleo/Petrobras" no título. Para a análise
-> de ablação por categoria, considere usar também a base original (não filtrada).
+> ✅ A filtragem leve preserva a amplitude temática (incl. geopolítica e macro),
+> mantendo a base adequada para a análise de ablação por categoria. O sinal de
+> relevância vem do termo da taxonomia usado na captura (Script 02b).
 
 ## 3. Split Temporal Treino / Validação / Teste
 

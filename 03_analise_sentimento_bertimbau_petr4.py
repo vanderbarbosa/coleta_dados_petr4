@@ -168,9 +168,11 @@ print("✅ Modelo carregado e pronto para análise.")
 # Internamente o script padroniza tudo para as colunas canônicas
 # 'Data_Coleta' (datetime com hora) e 'Titulo', usadas nos blocos seguintes.
 
-# Ordem de preferência: o corpus mais novo (com timestamp real) vem primeiro.
+# Ordem de preferência: a base tratada (limpa + com split treino/validação/teste)
+# vem primeiro; depois a bruta do 02b; por fim os corpora antigos.
 CANDIDATOS_CORPUS = [
-    "base_textual_petr4_wordpress_2018_2025.csv",  # Script 02b — coleta completa
+    "base_textual_petr4_tratada.csv",              # Script 02c — tratada + coluna 'conjunto'
+    "base_textual_petr4_wordpress_2018_2025.csv",  # Script 02b — coleta completa (bruta)
     "base_textual_wordpress_TESTE.csv",            # Script 02b — teste rápido
     "base_textual_petr4_2018_2025.csv",            # Script 02 (multi-fonte ou GDELT)
 ]
