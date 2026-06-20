@@ -16,6 +16,10 @@ Mestrado_PETR4/
 *.log
 *.png
 
+# ─── Documentos e artefatos gerados (regeneráveis pelos scripts) ───
+*.docx
+_doc_assets/
+
 # ─── Sistema operacional / editores ───
 .DS_Store
 Thumbs.db
