@@ -37,7 +37,8 @@ A maioria dos scripts foi escrita para rodar no **Google Colab** (montam o Googl
 | [teste_rss_feeds.py](teste_rss_feeds.py) | **Script 02a** — diagnóstico que valida quais RSS feeds estão ativos |
 | [03_analise_sentimento_bertimbau_petr4.py](03_analise_sentimento_bertimbau_petr4.py) | **Script 03** — análise de sentimento (NLP) e construção do Índice de Sentimento da Mídia (ISM) |
 | [04_modelagem_garch_svm_xgboost_petr4.py](04_modelagem_garch_svm_xgboost_petr4.py) | **Script 04** — testes estatísticos, GARCH(1,1), Data Fusion e modelos preditivos |
-| [gerar_documentacao_dissertacao.py](gerar_documentacao_dissertacao.py) | Gera o documento Word (`Documentacao_Coleta_PETR4.docx`) com todo o detalhamento da engenharia de dados (texto, código, tabelas e gráficos reais) para a dissertação |
+| [abnt_docx.py](abnt_docx.py) | Módulo reutilizável de formatação **ABNT** (NBR 14724/6023/6024/10520) para os documentos Word de cada etapa |
+| [gerar_documentacao_dissertacao.py](gerar_documentacao_dissertacao.py) | Gera o documento Word **em ABNT** da Etapa 1 (`Documentacao_Etapa1_Engenharia_de_Dados_PETR4.docx`) — texto corrido, código, tabelas e gráficos reais |
 | [GUIA_DE_EXECUCAO.md](GUIA_DE_EXECUCAO.md) | Guia passo a passo de execução (foco em Colab) |
 | `Mestrado_PETR4/` | Pasta de dados — saídas de cada script (CSV, gráficos, logs, relatórios) |
 

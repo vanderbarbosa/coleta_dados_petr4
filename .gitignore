@@ -18,7 +18,12 @@ Mestrado_PETR4/
 
 # ─── Documentos e artefatos gerados (regeneráveis pelos scripts) ───
 *.docx
+*.pdf
 _doc_assets/
+
+# ─── Material de pesquisa (artigos, PDFs, exame) — não versionar ───
+Referencial_Teorico/
+Exame_qualificacao/
 
 # ─── Sistema operacional / editores ───
 .DS_Store
