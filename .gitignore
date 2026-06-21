@@ -25,6 +25,11 @@ _doc_assets/
 Referencial_Teorico/
 Exame_qualificacao/
 
+# ─── Site (frontend Node / build) ───
+node_modules/
+site/frontend/dist/
+.vite/
+
 # ─── Sistema operacional / editores ───
 .DS_Store
 Thumbs.db

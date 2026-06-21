@@ -1,0 +1,107 @@
+:root {
+  --azul: #0b5394;
+  --azul-claro: #2c7bb6;
+  --verde: #1a9641;
+  --vermelho: #d7191c;
+  --cinza-900: #1a2027;
+  --cinza-700: #3a4754;
+  --cinza-500: #6b7884;
+  --cinza-200: #e4e9ee;
+  --cinza-100: #f3f6f9;
+  --branco: #ffffff;
+  --radius: 10px;
+  --sombra: 0 1px 3px rgba(16, 24, 40, 0.08), 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  color: var(--cinza-900);
+  background: var(--cinza-100);
+  line-height: 1.55;
+}
+a { color: var(--azul); }
+:focus-visible { outline: 3px solid #ffbf47; outline-offset: 2px; }
+
+/* Cabeçalho e navegação */
+.topo {
+  background: var(--azul);
+  color: var(--branco);
+  padding: 14px 0;
+  box-shadow: var(--sombra);
+}
+.topo .container { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.marca { font-weight: 700; font-size: 1.1rem; letter-spacing: .2px; }
+.marca small { display: block; font-weight: 400; font-size: .72rem; opacity: .85; }
+.nav { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+.nav button {
+  background: transparent; color: var(--branco); border: 0;
+  padding: 8px 14px; border-radius: var(--radius); cursor: pointer;
+  font-size: .92rem; font-weight: 500;
+}
+.nav button:hover { background: rgba(255, 255, 255, .14); }
+.nav button[aria-current="page"] { background: var(--branco); color: var(--azul); }
+
+.container { width: min(1180px, 92vw); margin: 0 auto; }
+main { padding: 28px 0 60px; }
+
+h1 { font-size: 1.7rem; margin: 0 0 4px; }
+h2 { font-size: 1.2rem; margin: 28px 0 12px; color: var(--cinza-900); }
+.sub { color: var(--cinza-500); margin: 0 0 22px; }
+
+/* Cartões e grades */
+.cartoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+.cartao {
+  background: var(--branco); border: 1px solid var(--cinza-200);
+  border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--sombra);
+}
+.cartao .num { font-size: 1.7rem; font-weight: 700; color: var(--azul); }
+.cartao .rot { color: var(--cinza-500); font-size: .85rem; }
+
+.painel {
+  background: var(--branco); border: 1px solid var(--cinza-200);
+  border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--sombra);
+  margin-bottom: 22px;
+}
+
+/* Filtros */
+.filtros { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; }
+.campo { display: flex; flex-direction: column; gap: 4px; }
+.campo label { font-size: .8rem; color: var(--cinza-700); font-weight: 600; }
+.campo input, .campo select {
+  padding: 8px 10px; border: 1px solid var(--cinza-200); border-radius: 8px;
+  font-size: .92rem; background: var(--branco); min-width: 160px;
+}
+.btn {
+  background: var(--azul); color: #fff; border: 0; border-radius: 8px;
+  padding: 9px 18px; font-weight: 600; cursor: pointer; font-size: .92rem;
+}
+.btn:hover { background: #094074; }
+.btn.sec { background: var(--cinza-100); color: var(--cinza-900); border: 1px solid var(--cinza-200); }
+
+/* Notícias */
+.noticia { padding: 14px 0; border-bottom: 1px solid var(--cinza-200); }
+.noticia:last-child { border-bottom: 0; }
+.noticia .meta { font-size: .78rem; color: var(--cinza-500); display: flex; gap: 10px; flex-wrap: wrap; }
+.tag {
+  background: var(--cinza-100); color: var(--azul); border: 1px solid var(--cinza-200);
+  border-radius: 999px; padding: 1px 9px; font-size: .72rem; font-weight: 600;
+}
+.noticia h3 { margin: 5px 0 3px; font-size: 1rem; }
+.noticia p { margin: 0; color: var(--cinza-700); font-size: .9rem; }
+
+.paginacao { display: flex; gap: 10px; align-items: center; margin-top: 16px; }
+
+/* Tabelas */
+table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--cinza-200); }
+th { color: var(--cinza-700); font-size: .8rem; text-transform: uppercase; letter-spacing: .3px; }
+
+.aviso { background: #fff8e1; border: 1px solid #ffe082; color: #7a5b00;
+  padding: 10px 14px; border-radius: 8px; font-size: .88rem; margin-bottom: 18px; }
+.carregando { color: var(--cinza-500); padding: 20px 0; }
+.prosa p { max-width: 75ch; }
+footer { border-top: 1px solid var(--cinza-200); color: var(--cinza-500);
+  font-size: .82rem; padding: 18px 0; background: var(--branco); }
