@@ -200,3 +200,50 @@ footer { border-top: 1px solid var(--linha); color: var(--tinta-3); font-size: .
 @keyframes desenhar { to { stroke-dashoffset: 0; } }
 .preco-svg .ponta { opacity: 0; animation: aparecer .4s ease 1.2s forwards; }
 @keyframes aparecer { to { opacity: 1; } }
+
+/* ───────────────── Jornada HORIZONTAL com engrenagens ───────────────── */
+.esteira { overflow-x: auto; overflow-y: hidden; padding: 6px 2px 14px; }
+.trilho { display: flex; align-items: flex-start; min-width: max-content; }
+.estacao { width: 204px; flex: 0 0 204px; display: flex; flex-direction: column; align-items: center; }
+.topo-engr { height: 96px; display: flex; align-items: center; justify-content: center; }
+
+.conector-h { flex: 0 0 44px; height: 6px; background: var(--linha); border-radius: 4px;
+  margin-top: 45px; position: relative; overflow: hidden; transition: background .4s; }
+.conector-h.feito { background: linear-gradient(90deg, #43d17a, #15924a); }
+.conector-h.ativo::after { content: ""; position: absolute; top: 0; left: -30%; width: 30%; height: 100%;
+  background: linear-gradient(90deg, transparent, #8fd3ff, transparent); animation: correr 1s linear infinite; }
+@keyframes correr { to { left: 110%; } }
+
+.engr { position: relative; width: 86px; height: 86px; display: flex; align-items: center; justify-content: center; }
+.engr .cog { width: 86px; height: 86px; display: block; }
+.engr.girando .cog { animation: girarCog 2.6s linear infinite; }
+.engr.girando.anti .cog { animation: girarCog 2.6s linear infinite reverse; }
+@keyframes girarCog { to { transform: rotate(360deg); } }
+.engr .icone { position: absolute; font-size: 1.45rem; line-height: 1; }
+.engr.ativa::after { content: ""; position: absolute; inset: -8px; border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(11,111,184,.18); animation: pulso2 1.1s ease-in-out infinite; }
+@keyframes pulso2 { 0%,100% { box-shadow: 0 0 0 4px rgba(11,111,184,.20); } 50% { box-shadow: 0 0 0 10px rgba(11,111,184,.05); } }
+
+.estacao-card { background: var(--branco); border: 1px solid var(--linha); border-radius: 12px;
+  padding: 12px 14px; box-shadow: var(--sombra); width: 192px; min-height: 118px; text-align: center;
+  margin-top: 6px; opacity: .5; transition: opacity .35s, transform .35s, border-color .35s; }
+.estacao.ativa .estacao-card, .estacao.feita .estacao-card { opacity: 1; }
+.estacao.ativa .estacao-card { border-color: #cfe0f0; transform: translateY(-3px); box-shadow: var(--sombra-2); }
+.estacao-card h4 { font-size: .85rem; margin: 0 0 8px; color: var(--tinta); line-height: 1.25; }
+.io-v { display: flex; flex-direction: column; gap: 6px; align-items: center; font-size: .8rem; }
+.io-v .chip { background: #eef3f8; border: 1px solid #d6e2ee; border-radius: 8px; padding: 3px 9px; color: var(--tinta-2); }
+.io-v .seta-v { color: var(--azul-2); font-weight: 800; }
+
+/* Veredito final (full-width abaixo da esteira) */
+.veredito-final { display: flex; align-items: center; gap: 26px; flex-wrap: wrap; padding: 22px 24px;
+  border-radius: var(--r); border: 1px solid; animation: surgir .5s ease; }
+.veredito-final.alta { background: var(--verde-bg); border-color: #bfe6cd; }
+.veredito-final.baixa { background: var(--verm-bg); border-color: #f3c9c9; }
+.veredito-final.indefinida, .veredito-final.sem_influencia { background: #eef1f4; border-color: #e0e5ea; }
+.veredito-final .grande { font-size: 2.3rem; font-weight: 800; line-height: 1.05; }
+.veredito-final.alta .grande { color: var(--verde); }
+.veredito-final.baixa .grande { color: var(--vermelho); }
+.veredito-final.indefinida .grande, .veredito-final.sem_influencia .grande { color: var(--tinta-2); }
+
+.controle-som { background: rgba(255,255,255,.16); color: #fff; border: 0; border-radius: 8px;
+  padding: 6px 12px; cursor: pointer; font-size: .85rem; font-weight: 600; }
