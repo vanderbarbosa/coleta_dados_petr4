@@ -55,7 +55,11 @@ function construirEtapas(res) {
     { icone: "📝", titulo: "Frase recebida", entrada: null, saida: { texto: "texto pronto", tipo: "neutro" } },
     { icone: "🧠", titulo: "Sentimento (FinBERT-PT-BR)", entrada: "frase", saida: { texto: `${res.sentimento.rotulo} (${res.sentimento.indice})`, tipo: tipoSent(res.sentimento.rotulo) } },
     { icone: "🏷️", titulo: "Relevância e categoria", entrada: "frase", saida: { texto: res.relevante ? res.categoria.rotulo.replace(/^CAT\d+\s*[—-]\s*/, "") : "não relevante", tipo: res.relevante ? "pos" : "neutro" } },
-    { icone: "⚖️", titulo: "Leitura econômica setorial", entrada: "categoria + sentim.", saida: { texto: TXT[res.leitura_setorial.direcao] || "—", tipo: tipoDir(res.leitura_setorial.direcao) } },
+    { icone: "⚖️", titulo: "Leitura econômica setorial",
+      entrada: res.leitura_setorial.evento && res.leitura_setorial.evento !== "neutro"
+        ? (res.leitura_setorial.evento === "resolucao" ? "evento: resolução ↑" : "evento: disrupção ↓")
+        : "categoria + sentim.",
+      saida: { texto: TXT[res.leitura_setorial.direcao] || "—", tipo: tipoDir(res.leitura_setorial.direcao) } },
     { icone: "🌳", titulo: "Modelo XGBoost (Data Fusion)", entrada: "retorno·volat·sentim.", saida: { texto: `P(alta) = ${(res.leitura_modelo.prob_alta * 100).toFixed(0)}%`, tipo: tipoDir(res.leitura_modelo.direcao) } },
     { icone: "🎯", titulo: "Veredito final", entrada: "síntese", saida: { texto: TXT[res.direcao] || "—", tipo: tipoDir(res.direcao) } },
   ];

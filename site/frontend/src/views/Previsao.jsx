@@ -76,6 +76,11 @@ export default function Previsao() {
             <span className={`tag ${res.relevante ? "verde" : "cinza"}`}>
               Relevância: {res.nivel_relevancia}
             </span>
+            {res.leitura_setorial.evento && res.leitura_setorial.evento !== "neutro" && (
+              <span className="tag">
+                Evento: {res.leitura_setorial.evento === "resolucao" ? "↑ Resolução" : "↓ Disrupção"}
+              </span>
+            )}
           </div>
 
           <div className="grade-2">

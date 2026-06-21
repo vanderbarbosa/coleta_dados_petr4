@@ -187,37 +187,86 @@ def _detectar_categoria(texto_low: str):
     return melhor, ROTULOS.get(melhor, melhor), melhor_qtd
 
 
-def _leitura_setorial(cat, polaridade):
-    """Interpretação econômica QUALITATIVA por categoria, fundamentada na
-    literatura (Kilian, 2009; Hamilton, 1983). Distingue o efeito sobre o
-    MERCADO do efeito sobre a PETR4 (produtora de petróleo) — exatamente a
-    distinção apontada pela banca."""
-    if cat == "CAT1_Empresa":
+# Palavras que indicam RESOLUÇÃO (um evento ruim TERMINANDO/melhorando) e
+# DISRUPÇÃO (um evento ruim ACONTECENDO). Resolver a ambiguidade de polaridade
+# do FinBERT (ex.: "greve termina" tem a palavra "greve", mas é positivo).
+_RESOLUCAO = [
+    "acordo", "fim da greve", "greve termina", "termina a greve", "fim da paralis",
+    "retomada", "retoma", "normaliz", "volta ao normal", "cessar-fogo", "cessar fogo",
+    "acordo de paz", "trégua", "tregua", "reabertura", "reabre", "fim do bloqueio",
+    "fim do embargo", "fim das sanç", "alívio", "alivio", "encerr", "resolv", "supera",
+    "aprova", "conclui", "avanç",
+]
+_DISRUPCAO = [
+    "greve", "paralis", "bloqueio", "ataque", "guerra", "sanç", "embargo", "interrup",
+    "acidente", "fechamento", "fecha", "invasão", "invasao", "conflito", "explos",
+    "sabotagem", "apreens", "demiss", "demite", "intervenç", "intervenc", "rompe",
+    "crise", "tensão", "tensao", "ameaç", "queda", "prejuízo", "prejuizo", "rombo",
+]
+
+_CATS_EMPRESA = {"CAT1_Empresa", "CAT6_Governanca"}
+_CATS_OFERTA_MERC = {"CAT2_Mercado_Petroleo", "CAT3_Geopolitica", "CAT5_Sancoes_Navegacao"}
+
+
+def _tipo_evento(texto_low):
+    """Classifica o evento como resolução (melhora), disrupção (piora) ou neutro."""
+    if any(k in texto_low for k in _RESOLUCAO):
+        return "resolucao"
+    if any(k in texto_low for k in _DISRUPCAO):
+        return "disrupcao"
+    return "neutro"
+
+
+def _mecanismo(cat_id, texto_low):
+    """Como a notícia transmite-se à PETR4: nível da EMPRESA (operação/valor) ou
+    do MERCADO de petróleo (preço da commodity)."""
+    if cat_id in _CATS_EMPRESA:
+        return "empresa"
+    if cat_id in _CATS_OFERTA_MERC:
+        return "oferta"
+    if cat_id == "CAT4_Infraestrutura":
+        # Infraestrutura da própria Petrobras (empresa) vs. oferta global.
+        return "empresa" if ("petrobras" in texto_low or "brasil" in texto_low) else "oferta"
+    return "macro"  # CAT7
+
+
+def _analisar_direcao(texto_low, polaridade, cat_id):
+    """Direção provável da PETR4, combinando o TIPO de evento (resolução/disrupção)
+    com o MECANISMO de transmissão (empresa/oferta), fundamentado em Kilian (2009)
+    e Hamilton (1983). Distingue o efeito sobre o mercado do efeito sobre o ativo —
+    e corrige a leitura quando o tom textual não reflete o sentido do evento.
+    Retorna (direcao, justificativa, tipo_evento)."""
+    ev = _tipo_evento(texto_low)
+    mec = _mecanismo(cat_id, texto_low)
+
+    if mec == "empresa":
+        if ev == "resolucao":
+            return "alta", ("Resolução de evento operacional ou corporativo (acordo, fim de "
+                            "paralisação, normalização) tende a FAVORECER a PETR4, ainda que o tom "
+                            "textual contenha termos negativos."), ev
+        if ev == "disrupcao":
+            return "baixa", ("Disrupção operacional, de governança ou corporativa (greve, "
+                             "intervenção, acidente, demissão) tende a PRESSIONAR a PETR4."), ev
         if polaridade > 0:
-            return "alta", "Notícia corporativa de tom positivo tende a favorecer a PETR4."
+            return "alta", "Notícia corporativa de tom positivo tende a favorecer a PETR4.", ev
         if polaridade < 0:
-            return "baixa", "Notícia corporativa de tom negativo tende a pressionar a PETR4."
-        return "neutra", "Notícia corporativa de tom neutro, sem direção clara."
-    if cat in _CATS_OFERTA:
-        if polaridade < 0:
-            return "alta", ("Choque de OFERTA com teor de disrupção (conflito, bloqueio, sanção, "
-                            "interrupção) tende a ELEVAR o preço do petróleo; como a Petrobras é "
-                            "produtora da commodity, o efeito sobre a PETR4 costuma ser FAVORÁVEL — "
-                            "ainda que o tom da notícia seja negativo para o mercado em geral "
-                            "(Kilian, 2009; Hamilton, 1983).")
-        if polaridade > 0:
-            return "baixa", ("Distensão ou aumento de oferta tende a REDUZIR o preço do petróleo, "
-                             "o que costuma ser DESFAVORÁVEL para a Petrobras.")
-        return "neutra", "Evento de oferta de tom neutro, sem direção clara."
-    if cat == "CAT6_Governanca":
-        if polaridade < 0:
-            return "baixa", "Risco de governança/intervenção estatal tende a pressionar a PETR4."
-        if polaridade > 0:
-            return "alta", "Sinal de governança favorável tende a beneficiar a PETR4."
-        return "neutra", "Notícia de governança de tom neutro."
-    # CAT7 — Macro/Energia: efeito ambíguo
+            return "baixa", "Notícia corporativa de tom negativo tende a pressionar a PETR4.", ev
+        return "neutra", "Notícia corporativa de tom neutro, sem direção clara.", ev
+
+    if mec == "oferta":
+        if ev == "disrupcao":
+            return "alta", ("Choque de OFERTA (conflito, bloqueio, sanção, ataque, interrupção) tende "
+                            "a ELEVAR o preço do petróleo; como a Petrobras é produtora da commodity, "
+                            "o efeito sobre a PETR4 costuma ser FAVORÁVEL — ainda que o tom seja "
+                            "negativo para o mercado em geral (Kilian, 2009; Hamilton, 1983)."), ev
+        if ev == "resolucao":
+            return "baixa", ("Distensão ou normalização da oferta (cessar-fogo, acordo, aumento de "
+                             "produção) tende a REDUZIR o preço do petróleo, DESFAVORÁVEL à "
+                             "Petrobras."), ev
+        return "neutra", "Evento de mercado de petróleo de tom neutro, sem direção clara.", ev
+
     return "contextual", ("Fator macroeconômico (câmbio, juros, demanda, transição energética) de "
-                          "efeito ambíguo, dependente do contexto.")
+                          "efeito ambíguo, dependente do contexto."), ev
 
 
 def _carregar_preditor():
@@ -283,13 +332,13 @@ def prever(entrada: EntradaPrevisao):
     else:
         dir_modelo = "indefinida"
 
-    # 4) Leitura ECONÔMICA SETORIAL (qualitativa, fundamentada na literatura)
+    # 4) Leitura ECONÔMICA SETORIAL (evento × mecanismo, fundamentada na literatura)
     if relevante:
-        dir_setorial, just_setorial = _leitura_setorial(cat_id, polaridade)
+        dir_setorial, just_setorial, evento_tipo = _analisar_direcao(alvo, polaridade, cat_id)
     else:
-        dir_setorial, just_setorial = "sem_influencia", \
+        dir_setorial, just_setorial, evento_tipo = "sem_influencia", \
             "A notícia não casa com nenhum termo da taxonomia (Petrobras, mercado de petróleo, " \
-            "geopolítica, infraestrutura, sanções, governança ou macroeconomia)."
+            "geopolítica, infraestrutura, sanções, governança ou macroeconomia).", "neutro"
 
     # 5) Veredito-síntese: prioriza a leitura econômica quando relevante (mais
     #    interpretável); o número estatístico do modelo é exibido em paralelo.
@@ -309,7 +358,7 @@ def prever(entrada: EntradaPrevisao):
         "categoria": {"id": cat_id, "rotulo": cat_rotulo, "termos_casados": qtd_termos},
         "direcao": direcao,
         "explicacao": explica,
-        "leitura_setorial": {"direcao": dir_setorial, "justificativa": just_setorial},
+        "leitura_setorial": {"direcao": dir_setorial, "justificativa": just_setorial, "evento": evento_tipo},
         "leitura_modelo": {
             "direcao": dir_modelo, "prob_alta": round(prob_alta, 4),
             "nota": "Modelo estatístico baseado em sentimento agregado; sua acurácia (~53%) e o uso "
