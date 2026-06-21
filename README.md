@@ -123,7 +123,7 @@ Núcleo da dissertação:
 2. **GARCH(1,1)** com distribuição t-Student → volatilidade condicional.
 3. **Data Fusion** — combina `Retorno(t-1)` + `Volatilidade GARCH(t-1)` + `Sentimento ISM(t-1)`.
 4. **4 modelos** — SVM e XGBoost, *com* e *sem* sentimento (baseline).
-5. **Walk-Forward Validation** cronológica (80% treino / 20% teste cego).
+5. **Split treino/validação/teste 60/15/25** cronológico (sem *data leakage*): treino ajusta, validação seleciona hiperparâmetros, teste é avaliado uma única vez. Protocolo configurável (`PROTOCOLO_SPLIT`): `cronologico` (padrão) ou `estratificado` (lê `definicao_split_temporal.csv`).
 6. **Análise de ablação por categoria** *(quando há ISM por categoria do Script 02b/03)* — treina o modelo completo com as 7 categorias e remove uma por vez, medindo a queda de acurácia. A maior queda indica a categoria de notícia mais informativa para prever a direção do PETR4.
 
 **Gera:** `resultados_modelos_petr4.csv` (Tabela 4.3), `base_master_petr4.csv`, `grafico_volatilidade_garch.png`, `grafico_dispersao_sentimento_volatilidade.png`, `relatorio_testes_estatisticos.txt` e (se houver categorias) `resultados_ablacao_categorias_petr4.csv` + `grafico_ablacao_categorias.png`.

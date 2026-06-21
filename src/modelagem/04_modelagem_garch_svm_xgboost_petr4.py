@@ -17,7 +17,9 @@
 #   2. Executa os testes estatísticos de pré-requisito (Jarque-Bera, ADF, ARCH-LM)
 #   3. Modela a volatilidade histórica com GARCH(1,1) (Seção 3.3)
 #   4. Funde as variáveis em uma Matriz de Atributos (Data Fusion — Seção 3.4)
-#   5. Treina e avalia SVM e XGBoost com Walk-Forward Validation (Seção 3.5)
+#   5. Treina SVM e XGBoost com split treino/validação/teste (60/15/25, Seção 3.5):
+#      treino ajusta os modelos, validação seleciona hiperparâmetros, teste é
+#      avaliado uma única vez (out-of-sample, sem data leakage)
 #   6. Gera a Tabela 4.3 da dissertação: comparativo com e sem sentimento
 #   7. Salva todos os resultados para inclusão no documento
 #
@@ -450,34 +452,69 @@ print(f"   Data Fusion (com sentimento): {len(features_data_fusion)} variáveis"
 
 
 # ==============================================================================
-# BLOCO 12 — WALK-FORWARD VALIDATION (SEÇÃO 3.5)
+# BLOCO 12 — PARTICIONAMENTO TREINO / VALIDAÇÃO / TESTE (SEÇÃO 3.5)
 # ==============================================================================
-# Conforme a Figura 3.3 da dissertação, usamos validação em janelas deslizantes:
-# • Janela de treino inicial : primeiros 80% dos dados cronologicamente
-# • Janela de teste          : últimos 20% dos dados (nunca vistos pelo modelo)
-# • Para publicação final    : implementar o walk-forward completo por janelas
+# Atende à exigência da banca quanto à validade temporal (sem data leakage).
+# Dois protocolos estão disponíveis (configuráveis em PROTOCOLO_SPLIT):
 #
-# NOTA: Para os resultados preliminares, usamos a divisão 80/20 cronológica
-# (equivalente ao Walk 1 da Figura 3.3). Isso já é academicamente válido e
-# é chamado de "Out-of-Sample Test" na literatura financeira.
+#   • "cronologico" (PADRÃO): treino = 60% mais antigos, validação = 15%
+#     seguintes, teste = 25% mais recentes. Corte estritamente temporal — o
+#     teste nunca participa do treino nem da seleção. É o protocolo
+#     cientificamente mais defensável para séries temporais financeiras e o
+#     que elimina o lookahead criticado na qualificação.
+#
+#   • "estratificado": usa o mapa definicao_split_temporal.csv (Script 02c),
+#     que distribui 60/15/25 dentro de CADA ano. Garante todos os anos (regimes
+#     de mercado) nos três conjuntos, mas introduz leve lookahead entre anos —
+#     recomendado apenas como ANÁLISE DE SENSIBILIDADE.
+#
+# Papel de cada conjunto: TREINO ajusta os modelos; VALIDAÇÃO seleciona os
+# hiperparâmetros; TESTE é avaliado uma ÚNICA vez (out-of-sample).
+
+PROTOCOLO_SPLIT = "cronologico"          # "cronologico" (padrão) ou "estratificado"
+PROP_TREINO, PROP_VALIDACAO = 0.60, 0.15  # teste = 25% (1 - treino - validação)
 
 print("\n" + "="*60)
-print("WALK-FORWARD VALIDATION (SEÇÃO 3.5)")
+print("PARTICIONAMENTO TREINO / VALIDAÇÃO / TESTE (SEÇÃO 3.5)")
 print("="*60)
 
-# Ponto de corte temporal (80% treino, 20% teste)
 n_total = len(Y)
-corte   = int(n_total * 0.80)
+datas   = df_master.index
 
-# Datas de referência para o relatório
-data_inicio_treino = df_master.index[0].date()
-data_fim_treino    = df_master.index[corte-1].date()
-data_inicio_teste  = df_master.index[corte].date()
-data_fim_teste     = df_master.index[-1].date()
+if PROTOCOLO_SPLIT == "estratificado":
+    caminho_split = caminho_base + "definicao_split_temporal.csv"
+    if os.path.exists(caminho_split):
+        _mapa = pd.read_csv(caminho_split, parse_dates=['Data'])
+        _d2c  = dict(zip(_mapa['Data'].dt.date, _mapa['conjunto']))
+        _conj = np.array([_d2c.get(d.date(), 'treino') for d in datas])
+        idx_tr = np.where(_conj == 'treino')[0]
+        idx_va = np.where(_conj == 'validacao')[0]
+        idx_te = np.where(_conj == 'teste')[0]
+        print("   Protocolo: ESTRATIFICADO por ano (definicao_split_temporal.csv)")
+    else:
+        print(f"   ⚠️  {caminho_split} não encontrado — usando protocolo cronológico.")
+        PROTOCOLO_SPLIT = "cronologico"
 
-print(f"   Total de pregões      : {n_total}")
-print(f"   Janela de TREINO      : {data_inicio_treino} até {data_fim_treino} ({corte} pregões)")
-print(f"   Janela de TESTE (cega): {data_inicio_teste} até {data_fim_teste} ({n_total - corte} pregões)")
+if PROTOCOLO_SPLIT == "cronologico":
+    c1 = int(n_total * PROP_TREINO)
+    c2 = int(n_total * (PROP_TREINO + PROP_VALIDACAO))
+    idx_tr = np.arange(0, c1)
+    idx_va = np.arange(c1, c2)
+    idx_te = np.arange(c2, n_total)
+    print("   Protocolo: CRONOLÓGICO (sem data leakage)")
+
+Y_treino, Y_val, Y_teste = Y[idx_tr], Y[idx_va], Y[idx_te]
+
+# Datas de referência para relatórios e salvamento
+data_inicio_treino = datas[idx_tr[0]].date()
+data_fim_treino    = datas[idx_tr[-1]].date()
+data_inicio_teste  = datas[idx_te[0]].date()
+data_fim_teste     = datas[idx_te[-1]].date()
+
+print(f"   Total de pregões : {n_total}")
+print(f"   TREINO    : {len(idx_tr):4d} pregões ({len(idx_tr)/n_total*100:4.1f}%)")
+print(f"   VALIDAÇÃO : {len(idx_va):4d} pregões ({len(idx_va)/n_total*100:4.1f}%)")
+print(f"   TESTE     : {len(idx_te):4d} pregões ({len(idx_te)/n_total*100:4.1f}%)")
 
 
 # ==============================================================================
@@ -514,123 +551,67 @@ def avaliar_modelo(nome, previsoes, Y_teste, Y_proba=None):
 
 
 # ==============================================================================
-# BLOCO 14 — TREINAMENTO E AVALIAÇÃO: MODELO 1 — SVM BASELINE
+# BLOCO 13b — FUNÇÃO UNIFICADA: TREINO + SELEÇÃO NA VALIDAÇÃO + TESTE
 # ==============================================================================
+# Encapsula o protocolo correto: ajusta o modelo no TREINO, escolhe o melhor
+# hiperparâmetro pela AUC-ROC na VALIDAÇÃO e avalia uma ÚNICA vez no TESTE.
+# O scaler (quando usado) é ajustado apenas no treino — evita data leakage.
 
-print("\n" + "─"*60)
-print("MODELO 1 — SVM | Apenas Preços Históricos (Baseline)")
-print("─"*60)
+def treinar_e_avaliar(nome, criar_modelo, X, grade, normalizar):
+    X_tr, X_va, X_te = X[idx_tr], X[idx_va], X[idx_te]
+    if normalizar:
+        sc = StandardScaler().fit(X_tr)
+        X_tr, X_va, X_te = sc.transform(X_tr), sc.transform(X_va), sc.transform(X_te)
 
-# Divisão treino/teste
-X_bl_treino, X_bl_teste = X_baseline[:corte], X_baseline[corte:]
-Y_treino, Y_teste        = Y[:corte], Y[corte:]
+    melhor, melhor_auc, melhor_params = None, -1.0, None
+    for params in grade:                       # seleção de hiperparâmetros
+        modelo = criar_modelo(params)
+        modelo.fit(X_tr, Y_treino)
+        auc_va = roc_auc_score(Y_val, modelo.predict_proba(X_va)[:, 1])
+        if auc_va > melhor_auc:
+            melhor, melhor_auc, melhor_params = modelo, auc_va, params
 
-# Normalização: SVM é sensível à escala das variáveis
-# IMPORTANTE: o scaler é ajustado APENAS no treino (evita data leakage)
-scaler_bl = StandardScaler()
-X_bl_treino_norm = scaler_bl.fit_transform(X_bl_treino)
-X_bl_teste_norm  = scaler_bl.transform(X_bl_teste)
-
-# Treinamento
-svm_baseline = SVC(kernel='rbf', C=1.0, gamma='scale', probability=True, random_state=42)
-svm_baseline.fit(X_bl_treino_norm, Y_treino)
-
-# Avaliação
-prev_svm_bl   = svm_baseline.predict(X_bl_teste_norm)
-proba_svm_bl  = svm_baseline.predict_proba(X_bl_teste_norm)[:, 1]
-metricas_svm_bl = avaliar_modelo("SVM (Apenas Preços)", prev_svm_bl, Y_teste, proba_svm_bl)
-
-print(f"   Acurácia : {metricas_svm_bl['Acurácia']:.2f}%")
-print(f"   Precisão : {metricas_svm_bl['Precisão']:.2f}%")
-print(f"   F1-Score : {metricas_svm_bl['F1-Score']:.2f}%")
-print(f"   AUC-ROC  : {metricas_svm_bl['AUC-ROC']:.4f}")
-
-
-# ==============================================================================
-# BLOCO 15 — MODELO 2 — XGBOOST BASELINE
-# ==============================================================================
-
-print("\n" + "─"*60)
-print("MODELO 2 — XGBoost | Apenas Preços Históricos (Baseline)")
-print("─"*60)
-
-xgb_baseline = XGBClassifier(
-    n_estimators  = 100,
-    max_depth     = 3,
-    learning_rate = 0.1,
-    subsample     = 0.8,
-    colsample_bytree = 0.8,
-    eval_metric   = 'logloss',
-    random_state  = 42,
-    verbosity     = 0,
-)
-xgb_baseline.fit(X_bl_treino, Y_treino)  # XGBoost não requer normalização
-
-prev_xgb_bl   = xgb_baseline.predict(X_bl_teste)
-proba_xgb_bl  = xgb_baseline.predict_proba(X_bl_teste)[:, 1]
-metricas_xgb_bl = avaliar_modelo("XGBoost (Apenas Preços)", prev_xgb_bl, Y_teste, proba_xgb_bl)
-
-print(f"   Acurácia : {metricas_xgb_bl['Acurácia']:.2f}%")
-print(f"   Precisão : {metricas_xgb_bl['Precisão']:.2f}%")
-print(f"   F1-Score : {metricas_xgb_bl['F1-Score']:.2f}%")
-print(f"   AUC-ROC  : {metricas_xgb_bl['AUC-ROC']:.4f}")
+    prev  = melhor.predict(X_te)
+    proba = melhor.predict_proba(X_te)[:, 1]
+    met = avaliar_modelo(nome, prev, Y_teste, proba)
+    met['AUC_val'] = round(melhor_auc, 4)
+    met['_modelo'] = melhor
+    met['_params'] = melhor_params
+    print(f"   {nome}")
+    print(f"      melhor hiperparâmetro (validação): {melhor_params} | AUC_val = {melhor_auc:.4f}")
+    print(f"      TESTE → Acc {met['Acurácia']:.2f}% | Prec {met['Precisão']:.2f}% | "
+          f"F1 {met['F1-Score']:.2f}% | AUC {met['AUC-ROC']:.4f}")
+    return met
 
 
 # ==============================================================================
-# BLOCO 16 — MODELO 3 — SVM DATA FUSION (com sentimento)
+# BLOCO 14 — TREINAMENTO DOS 4 MODELOS (SVM/XGBoost × Baseline/Data Fusion)
 # ==============================================================================
 
-print("\n" + "─"*60)
-print("MODELO 3 — SVM | Data Fusion (Preços + GARCH + Sentimento)")
-print("─"*60)
+print("\n" + "="*60)
+print("TREINAMENTO E SELEÇÃO DOS MODELOS")
+print("="*60)
 
-X_df_treino, X_df_teste = X_data_fusion[:corte], X_data_fusion[corte:]
+def _criar_svm(p):
+    return SVC(kernel='rbf', C=p['C'], gamma='scale', probability=True, random_state=42)
 
-scaler_df = StandardScaler()
-X_df_treino_norm = scaler_df.fit_transform(X_df_treino)
-X_df_teste_norm  = scaler_df.transform(X_df_teste)
+def _criar_xgb(p):
+    return XGBClassifier(
+        n_estimators=100, max_depth=p['max_depth'], learning_rate=p['learning_rate'],
+        subsample=0.8, colsample_bytree=0.8, eval_metric='logloss',
+        random_state=42, verbosity=0)
 
-svm_fusion = SVC(kernel='rbf', C=1.0, gamma='scale', probability=True, random_state=42)
-svm_fusion.fit(X_df_treino_norm, Y_treino)
+# Grades de hiperparâmetros (justificadas: parcimônia + busca leve na validação)
+GRADE_SVM = [{'C': c} for c in (0.5, 1.0, 10.0)]
+GRADE_XGB = [{'max_depth': d, 'learning_rate': lr} for d in (3, 5) for lr in (0.05, 0.1)]
 
-prev_svm_df   = svm_fusion.predict(X_df_teste_norm)
-proba_svm_df  = svm_fusion.predict_proba(X_df_teste_norm)[:, 1]
-metricas_svm_df = avaliar_modelo("SVM (Data Fusion — GARCH + NLP)", prev_svm_df, Y_teste, proba_svm_df)
+metricas_svm_bl = treinar_e_avaliar("SVM (Apenas Preços)",                _criar_svm, X_baseline,    GRADE_SVM, True)
+metricas_xgb_bl = treinar_e_avaliar("XGBoost (Apenas Preços)",            _criar_xgb, X_baseline,    GRADE_XGB, False)
+metricas_svm_df = treinar_e_avaliar("SVM (Data Fusion — GARCH + NLP)",    _criar_svm, X_data_fusion, GRADE_SVM, True)
+metricas_xgb_df = treinar_e_avaliar("XGBoost (Data Fusion — GARCH + NLP)",_criar_xgb, X_data_fusion, GRADE_XGB, False)
 
-print(f"   Acurácia : {metricas_svm_df['Acurácia']:.2f}%")
-print(f"   Precisão : {metricas_svm_df['Precisão']:.2f}%")
-print(f"   F1-Score : {metricas_svm_df['F1-Score']:.2f}%")
-print(f"   AUC-ROC  : {metricas_svm_df['AUC-ROC']:.4f}")
-
-
-# ==============================================================================
-# BLOCO 17 — MODELO 4 — XGBOOST DATA FUSION (com sentimento)
-# ==============================================================================
-
-print("\n" + "─"*60)
-print("MODELO 4 — XGBoost | Data Fusion (Preços + GARCH + Sentimento)")
-print("─"*60)
-
-xgb_fusion = XGBClassifier(
-    n_estimators  = 100,
-    max_depth     = 3,
-    learning_rate = 0.1,
-    subsample     = 0.8,
-    colsample_bytree = 0.8,
-    eval_metric   = 'logloss',
-    random_state  = 42,
-    verbosity     = 0,
-)
-xgb_fusion.fit(X_df_treino, Y_treino)
-
-prev_xgb_df   = xgb_fusion.predict(X_df_teste)
-proba_xgb_df  = xgb_fusion.predict_proba(X_df_teste)[:, 1]
-metricas_xgb_df = avaliar_modelo("XGBoost (Data Fusion — GARCH + NLP)", prev_xgb_df, Y_teste, proba_xgb_df)
-
-print(f"   Acurácia : {metricas_xgb_df['Acurácia']:.2f}%")
-print(f"   Precisão : {metricas_xgb_df['Precisão']:.2f}%")
-print(f"   F1-Score : {metricas_xgb_df['F1-Score']:.2f}%")
-print(f"   AUC-ROC  : {metricas_xgb_df['AUC-ROC']:.4f}")
+# Modelo XGBoost Data Fusion selecionado (usado na importância das variáveis)
+xgb_fusion = metricas_xgb_df['_modelo']
 
 
 # ==============================================================================
@@ -644,11 +625,11 @@ print(f"Período de treino : {data_inicio_treino} até {data_fim_treino}")
 print(f"Período de teste  : {data_inicio_teste} até {data_fim_teste}")
 print()
 
+# Monta a tabela apenas com as colunas de exibição (exclui chaves internas)
+_COLS = ['Modelo', 'Acurácia', 'Precisão', 'F1-Score', 'AUC-ROC', 'AUC_val']
 df_resultados = pd.DataFrame([
-    metricas_svm_bl,
-    metricas_xgb_bl,
-    metricas_svm_df,
-    metricas_xgb_df,
+    {k: m[k] for k in _COLS}
+    for m in (metricas_svm_bl, metricas_xgb_bl, metricas_svm_df, metricas_xgb_df)
 ])
 
 print(df_resultados.to_string(index=False))
@@ -700,14 +681,13 @@ if COLUNAS_CATEGORIA_LAG:
     def treinar_xgb_acuracia(lista_features):
         """Treina XGBoost com o conjunto de features dado e retorna a acurácia no teste."""
         X = df_master[lista_features].values
-        X_tr, X_te = X[:corte], X[corte:]
         modelo = XGBClassifier(
             n_estimators=100, max_depth=3, learning_rate=0.1,
             subsample=0.8, colsample_bytree=0.8, eval_metric='logloss',
             random_state=42, verbosity=0,
         )
-        modelo.fit(X_tr, Y_treino)
-        return accuracy_score(Y_teste, modelo.predict(X_te)) * 100
+        modelo.fit(X[idx_tr], Y_treino)
+        return accuracy_score(Y_teste, modelo.predict(X[idx_te])) * 100
 
     # Modelo completo (todas as categorias)
     acc_full = treinar_xgb_acuracia(features_full)
