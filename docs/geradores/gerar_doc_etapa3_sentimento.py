@@ -165,22 +165,22 @@ abnt.paragrafo(doc,
  "mercado de petróleo, geopolítico, entre outros — para a previsão.")
 
 # 9
-abnt.secao(doc, "9", "Resultados preliminares (validação por amostra)")
+abnt.secao(doc, "9", "Resultados: distribuição de sentimento do corpus")
 if dist_label is not None:
     abnt.paragrafo(doc,
-     f"A título de validação do pipeline ponta a ponta, processou-se uma amostra de "
-     f"**{fmt(n_amostra)} notícias**. A Tabela 4 e a Figura 1 apresentam a distribuição preliminar "
-     "dos rótulos — predominantemente negativa, coerente com o viés de negatividade do noticiário "
-     "financeiro. Estes números são ILUSTRATIVOS; os resultados definitivos serão obtidos após o "
-     "processamento do corpus completo (205 mil notícias).")
-    abnt.tabela_abnt(doc, "4", "Distribuição preliminar de sentimento (amostra de validação)",
+     f"O modelo FinBERT-PT-BR foi aplicado ao corpus completo, classificando **{fmt(n_amostra)} "
+     "notícias**. A Tabela 4 e a Figura 1 apresentam a distribuição dos rótulos. Observa-se "
+     "predominância de notícias negativas, em consonância com o viés de negatividade descrito na "
+     "literatura sobre o noticiário financeiro, o que oferece suporte preliminar à hipótese de "
+     "assimetria comportamental (viés de negatividade) investigada na pesquisa.")
+    abnt.tabela_abnt(doc, "4", "Distribuição de sentimento no corpus completo",
      ["Rótulo", "Notícias", "%"],
      [[r, fmt(dist_label[r]), f"{dist_label[r]/n_amostra*100:.1f}%"] for r in dist_label.index])
-    abnt.figura_abnt(doc, "1", "Distribuição preliminar dos rótulos de sentimento (amostra)", g_dist, largura_cm=11)
+    abnt.figura_abnt(doc, "1", "Distribuição dos rótulos de sentimento no corpus completo", g_dist, largura_cm=11)
 else:
     abnt.paragrafo(doc,
-     "Os resultados quantitativos de sentimento serão inseridos após o processamento completo do "
-     "corpus. O pipeline foi validado funcionalmente (ver Seção 7).")
+     "Os resultados quantitativos de sentimento serão inseridos após o processamento do corpus. "
+     "O pipeline foi validado funcionalmente (ver Seção 7).")
 
 # 10
 abnt.secao(doc, "10", "Limitações da etapa")

@@ -62,6 +62,8 @@ import os
 from pathlib import Path
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use("Agg")   # backend não interativo: evita travar em plt.show() (execução local/background)
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import warnings

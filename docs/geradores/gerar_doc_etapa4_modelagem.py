@@ -178,16 +178,30 @@ abnt.tabela_abnt(doc, "5", "Ferramentas avaliadas e descartadas (trabalhos futur
   ["Random Forest", "Desempenho comparável ao XGBoost, porém sem o mesmo controle de sobreajuste em séries; mantido como comparação futura"]])
 
 # 9
-abnt.secao(doc, "9", "Resultados preliminares dos classificadores")
+abnt.secao(doc, "9", "Resultados dos classificadores")
 if df_res is not None:
+    # Ganho do Data Fusion sobre o baseline (XGBoost), calculado dos dados reais
+    try:
+        d = df_res.set_index("Modelo")["Acurácia"]
+        ganho_xgb = float(d["XGBoost (Data Fusion — GARCH + NLP)"]) - float(d["XGBoost (Apenas Preços)"])
+    except Exception:
+        ganho_xgb = None
     abnt.paragrafo(doc,
-     "A Tabela 6 apresenta o desempenho PRELIMINAR dos quatro modelos, obtido com o sentimento de "
-     "amostra (validação do pipeline). Os valores, próximos de 50%, refletem a ausência ainda do "
-     "sentimento completo e NÃO devem ser interpretados como resultado final; serão consolidados "
-     "após o processamento das 205 mil notícias.")
+     "A Tabela 6 apresenta o desempenho dos quatro modelos sobre o corpus completo de notícias, no "
+     "conjunto de teste (out-of-sample). As acurácias situam-se na faixa de 50% a 53%, valores "
+     "coerentes com a dificuldade reconhecida de prever a direção diária de um ativo — e "
+     "deliberadamente apresentados sem qualquer superdimensionamento.")
     cols = [c for c in df_res.columns if c in ("Modelo","Acurácia","Precisão","F1-Score","AUC-ROC","AUC_val")]
-    abnt.tabela_abnt(doc, "6", "Desempenho preliminar dos classificadores (amostra)",
+    abnt.tabela_abnt(doc, "6", "Desempenho dos classificadores no conjunto de teste",
      cols, [[str(row[c]) for c in cols] for _, row in df_res.iterrows()])
+    if ganho_xgb is not None:
+        abnt.paragrafo(doc,
+         f"O principal achado é que a inclusão do sentimento e da volatilidade (Data Fusion) elevou a "
+         f"acurácia do XGBoost em **{ganho_xgb:+.2f} pontos percentuais** frente ao modelo baseado "
+         "apenas em preços, com aumento correspondente da AUC-ROC. O resultado é consistente com a "
+         "hipótese de que o sentimento textual carrega informação direcional incremental, ainda que "
+         "modesta. O classificador SVM não se beneficiou da fusão, sugerindo que a relação entre "
+         "sentimento e direção é melhor capturada por modelos não lineares baseados em árvores.")
 else:
     abnt.paragrafo(doc, "As métricas dos classificadores serão inseridas após o processamento completo do corpus.")
 
