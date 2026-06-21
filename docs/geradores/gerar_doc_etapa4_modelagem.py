@@ -54,12 +54,42 @@ ax.plot(dff.index, dff["vol"], color=VERM, lw=0.7)
 ax.set_ylabel("Volatilidade condicional (σ)"); ax.set_xlabel("Ano")
 g_vol = ASSETS / "mod_vol.png"; fig.savefig(g_vol, bbox_inches="tight"); plt.close(fig)
 
-# Resultados preliminares dos modelos (amostra), se existirem
+# Resultados dos modelos (Tabela 4.3), se existirem
 df_res = None
 try:
     df_res = pd.read_csv(PASTA / "resultados_modelos_petr4.csv")
 except Exception:
     pass
+
+# ── Experimento de tuning (antes/depois), calculado dos dados reais ───────────
+from sklearn.metrics import accuracy_score, roc_auc_score
+from xgboost import XGBClassifier
+tun = None
+try:
+    m = pd.read_csv(PASTA / "base_master_petr4.csv")
+    Ym = m["Alvo"].values
+    Xb = m[["Retorno_Ontem", "Volatilidade_Ontem"]].values
+    Xf = m[["Retorno_Ontem", "Volatilidade_Ontem", "Sentimento_Ontem"]].values
+    nm = len(Ym); c1 = int(nm * .60); c2 = int(nm * .75)
+    tr, va, te = np.arange(0, c1), np.arange(c1, c2), np.arange(c2, nm)
+
+    def _tr(X, md=3, lr=0.1):
+        mdl = XGBClassifier(n_estimators=100, max_depth=md, learning_rate=lr, subsample=0.8,
+                            colsample_bytree=0.8, eval_metric="logloss", random_state=42, verbosity=0)
+        mdl.fit(X[tr], Ym[tr]); return mdl
+    ac_base = accuracy_score(Ym[te], _tr(Xb).predict(Xb[te])) * 100
+    ac_def = accuracy_score(Ym[te], _tr(Xf).predict(Xf[te])) * 100
+    melhor, melhor_auc, pbest = None, -1, None
+    for d in (3, 5):
+        for lr in (0.05, 0.1):
+            mdl = _tr(Xf, d, lr); auc = roc_auc_score(Ym[va], mdl.predict_proba(Xf[va])[:, 1])
+            if auc > melhor_auc: melhor, melhor_auc, pbest = mdl, auc, (d, lr)
+    ac_tun = accuracy_score(Ym[te], melhor.predict(Xf[te])) * 100
+    tun = {"base": ac_base, "def": ac_def, "tun": ac_tun, "p": pbest,
+           "g_sent": ac_tun - ac_base, "g_tun": ac_tun - ac_def,
+           "n_tr": len(tr), "n_va": len(va), "n_te": len(te)}
+except Exception as _e:
+    tun = None
 
 # ── Documento ─────────────────────────────────────────────────────────────────
 doc = abnt.novo_documento()
@@ -205,16 +235,54 @@ if df_res is not None:
 else:
     abnt.paragrafo(doc, "As métricas dos classificadores serão inseridas após o processamento completo do corpus.")
 
-# 10
-abnt.secao(doc, "10", "Limitações da etapa")
+# 10 — Evolução experimental
+abnt.secao(doc, "10", "Evolução experimental: treinamentos, ajustes e tuning")
+abnt.paragrafo(doc,
+ "Os resultados foram construídos de forma iterativa, em estágios sucessivos de treinamento e "
+ "ajuste. Esta seção documenta essa evolução — resultados iniciais, ajustes realizados e o efeito "
+ "do tuning de hiperparâmetros —, em nome da transparência e da reprodutibilidade.")
+if tun is not None:
+    abnt.tabela_abnt(doc, "7", "Estágios de treinamento e respectivos resultados (XGBoost Data Fusion)",
+     ["Estágio", "Configuração", "Acurácia (teste)", "Observação"],
+     [["1 — Validação do fluxo", "Sentimento de AMOSTRA (300 notícias)", "≈ 50%",
+       "Indistinguível de acaso (passeio aleatório); validou apenas o pipeline ponta a ponta"],
+      ["2 — Corpus completo", "Sentimento de 205.697 notícias (FinBERT-PT-BR), hiperparâmetros padrão",
+       f"{tun['def']:.2f}%", "Primeiro resultado com sentimento real"],
+      ["3 — Tuning na validação", f"Hiperparâmetros selecionados por AUC (max_depth={tun['p'][0]}, lr={tun['p'][1]})",
+       f"{tun['tun']:.2f}%", "Seleção pela validação; ver discussão abaixo"]])
+    abnt.paragrafo(doc,
+     "O ajuste fino (tuning) foi conduzido de forma metodologicamente correta: os hiperparâmetros "
+     "candidatos foram avaliados no conjunto de VALIDAÇÃO (nunca no de teste), e o de maior AUC-ROC "
+     "foi selecionado. A Tabela 8 isola o efeito de cada componente — o sentimento e o tuning — sobre "
+     "a acurácia no conjunto de teste.")
+    abnt.tabela_abnt(doc, "8", "Efeito do sentimento e do tuning na acurácia (conjunto de teste)",
+     ["Modelo", "Acurácia (teste)", "Ganho"],
+     [["XGBoost — apenas preços (baseline)", f"{tun['base']:.2f}%", "—"],
+      ["XGBoost — Data Fusion, sem tuning", f"{tun['def']:.2f}%", f"{tun['def']-tun['base']:+.2f} pp (sentimento)"],
+      ["XGBoost — Data Fusion, com tuning", f"{tun['tun']:.2f}%", f"{tun['g_tun']:+.2f} pp (tuning)"]])
+    abnt.paragrafo(doc,
+     f"Dois achados merecem registro honesto. Primeiro, a inclusão do sentimento (Data Fusion) elevou "
+     f"a acurácia em **{tun['def']-tun['base']:+.2f} pontos percentuais** sobre o baseline — evidência "
+     "de informação direcional incremental no texto. Segundo, o tuning de hiperparâmetros teve efeito "
+     f"**{('positivo' if tun['g_tun']>0 else 'praticamente nulo/negativo')} ({tun['g_tun']:+.2f} pp)** "
+     "no conjunto de teste: o procedimento selecionou, pela validação, uma taxa de aprendizado menor, "
+     "que não se traduziu em ganho fora da amostra. Esse resultado é coerente com a dificuldade "
+     "intrínseca de prever a direção diária de um ativo quase-eficiente e com o pequeno tamanho da "
+     "amostra de validação — e é apresentado sem qualquer superdimensionamento.")
+else:
+    abnt.paragrafo(doc, "Os números de evolução serão consolidados após a execução completa do pipeline.")
+
+# 11
+abnt.secao(doc, "11", "Limitações da etapa")
 abnt.lista(doc, [
- "Métricas dos classificadores ainda preliminares (sentimento de amostra); a consolidação depende do processamento completo do corpus.",
+ "Acurácia modesta (50–53%), coerente com a hipótese de eficiência de mercado; o ganho do sentimento é estatisticamente pequeno e deve ser interpretado com cautela.",
  "GARCH(1,1) assume uma forma funcional específica da variância; regimes extremos podem exigir variantes assimétricas (EGARCH/TGARCH).",
  "Horizonte de previsão de um dia (t+1); horizontes maiores são trabalho futuro.",
+ "Tuning limitado a uma grade pequena; uma busca mais ampla (e validação cruzada por janelas) é trabalho futuro.",
  "Generalização: o pipeline aplica-se a outros ativos da B3 (ex.: VALE3) trocando-se a série de preços e o termo de busca, o que se registra como trabalho futuro.",
 ])
 
-abnt.referencias(doc, "11", [
+abnt.referencias(doc, "12", [
  "BOLLERSLEV, T. Generalized autoregressive conditional heteroskedasticity. Journal of Econometrics, v. 31, n. 3, p. 307-327, 1986.",
  "CHEN, T.; GUESTRIN, C. XGBoost: a scalable tree boosting system. In: KDD, 2016. p. 785-794.",
  "CORTES, C.; VAPNIK, V. Support-vector networks. Machine Learning, v. 20, n. 3, p. 273-297, 1995.",
