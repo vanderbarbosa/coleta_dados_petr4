@@ -21,6 +21,7 @@ from functools import lru_cache
 import pandas as pd
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 RAIZ = Path(__file__).resolve().parents[2]
 DADOS = RAIZ / "Mestrado_PETR4"
@@ -156,6 +157,97 @@ def estatisticas():
         "por_ano": {str(k): int(v) for k, v in por_ano.items()},
         "por_categoria": [{"id": c, "rotulo": ROTULOS.get(c, c), "total": int(v)} for c, v in por_cat.items()],
         "por_portal": {str(k): int(v) for k, v in por_portal.items()},
+    }
+
+
+# ── Previsão de direção a partir de uma notícia ───────────────────────────────
+# Requer o ambiente 'petr4' (torch + transformers + xgboost). Os imports são
+# preguiçosos (lazy) para que os endpoints de dados funcionem mesmo no 'base'.
+
+TERMOS_RELEVANCIA = getattr(tx, "TERMOS_RELEVANCIA_ESTRITA", ["petrobras", "petr4", "petróleo"])
+_modelo_cache = {}
+
+
+def _carregar_preditor():
+    """Carrega (uma vez) o modelo XGBoost, os metadados e o pipeline FinBERT-PT-BR."""
+    if _modelo_cache:
+        return _modelo_cache
+    import json
+    # SSL relaxado para o Hugging Face (proxy); o modelo já está em cache local.
+    try:
+        import huggingface_hub, requests, urllib3
+        urllib3.disable_warnings()
+        huggingface_hub.configure_http_backend(
+            backend_factory=lambda: (lambda s: (s.__setattr__("verify", False) or s))(requests.Session()))
+    except Exception:
+        pass
+    from transformers import pipeline
+    from xgboost import XGBClassifier
+
+    with open(DADOS / "modelo_meta.json", encoding="utf-8") as f:
+        meta = json.load(f)
+    modelo = XGBClassifier()
+    modelo.load_model(str(DADOS / "modelo_xgb_fusion.json"))
+    nlp = pipeline("sentiment-analysis", model="lucas-leme/FinBERT-PT-BR",
+                   truncation=True, max_length=512, device=-1)
+    _modelo_cache.update(meta=meta, modelo=modelo, nlp=nlp)
+    return _modelo_cache
+
+
+class EntradaPrevisao(BaseModel):
+    texto: str
+
+
+@app.post("/api/prever")
+def prever(entrada: EntradaPrevisao):
+    texto = (entrada.texto or "").strip()
+    if len(texto) < 10:
+        return {"erro": "Informe um texto de notícia com pelo menos 10 caracteres."}
+
+    p = _carregar_preditor()
+    meta, modelo, nlp = p["meta"], p["modelo"], p["nlp"]
+
+    # 1) Sentimento (FinBERT-PT-BR) → índice em [-1, +1]
+    r = nlp(texto)[0]
+    L = str(r["label"]).upper()
+    polaridade = 1 if "POS" in L else (-1 if "NEG" in L else 0)
+    indice = polaridade * float(r["score"])
+    rotulo_sent = "Positivo" if polaridade > 0 else ("Negativo" if polaridade < 0 else "Neutro")
+
+    # 2) Relevância temática (relacionada ao ativo/commodity)
+    alvo = texto.lower()
+    relevante = any(t in alvo for t in TERMOS_RELEVANCIA)
+
+    # 3) Previsão de direção do próximo pregão (XGBoost Data Fusion)
+    import numpy as np
+    X = np.array([[meta["retorno_recente"], meta["volatilidade_recente"], indice]])
+    prob_alta = float(modelo.predict_proba(X)[0, 1])
+
+    # 4) Veredito (honesto: só afirma direção com confiança mínima)
+    if not relevante:
+        direcao, explica = "sem_influencia", "A notícia não aparenta relação direta com a Petrobras/PETR4 ou com o mercado de petróleo."
+    elif prob_alta >= 0.55:
+        direcao, explica = "alta", "O modelo indica tendência de ALTA no próximo pregão."
+    elif prob_alta <= 0.45:
+        direcao, explica = "baixa", "O modelo indica tendência de BAIXA no próximo pregão."
+    else:
+        direcao, explica = "indefinida", "O modelo não identifica direção clara (provável baixa influência)."
+
+    return {
+        "sentimento": {"rotulo": rotulo_sent, "indice": round(indice, 4), "confianca": round(float(r["score"]), 4)},
+        "relevante": relevante,
+        "prob_alta": round(prob_alta, 4),
+        "direcao": direcao,
+        "explicacao": explica,
+        "contexto": {
+            "data_referencia": meta["data_referencia"],
+            "retorno_recente_pct": round(meta["retorno_recente"], 3),
+            "volatilidade_recente": round(meta["volatilidade_recente"], 3),
+            "modelo": "XGBoost Data Fusion (preços + GARCH + sentimento)",
+            "acuracia_teste": meta["acuracia_teste_fusion"],
+            "auc_teste": meta["auc_teste_fusion"],
+        },
+        "aviso": "Previsão de natureza acadêmica/experimental — não é recomendação de investimento.",
     }
 
 

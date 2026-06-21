@@ -11,10 +11,21 @@ async function get(caminho, params = {}) {
   return resp.json();
 }
 
+async function post(caminho, corpo) {
+  const resp = await fetch(caminho, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(corpo),
+  });
+  if (!resp.ok) throw new Error(`Falha na API (${resp.status})`);
+  return resp.json();
+}
+
 export const api = {
   saude: () => get("/api/saude"),
   categorias: () => get("/api/categorias"),
   noticias: (params) => get("/api/noticias", params),
   precos: (params) => get("/api/precos", params),
   estatisticas: () => get("/api/estatisticas"),
+  prever: (texto) => post("/api/prever", { texto }),
 };

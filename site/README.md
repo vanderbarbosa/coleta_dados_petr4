@@ -10,12 +10,16 @@ futuramente, a previsão de direção a partir de uma notícia e a demonstraçã
 
 ## Como executar (local)
 
-### 1. Backend (ambiente `base`, que tem pandas + fastapi)
+### 1. Backend (ambiente conda `petr4` — tem pandas, torch/FinBERT e xgboost)
 ```bash
 cd site/backend
-uvicorn app:app --reload --port 8000
+conda run -n petr4 uvicorn app:app --reload --port 8000
+# ou: C:/Users/Vanderlei/anaconda3.12/envs/petr4/Scripts/uvicorn.exe app:app --port 8000
 # Documentação interativa da API: http://localhost:8000/docs
 ```
+> Os endpoints de **dados** funcionam em qualquer ambiente com pandas; o endpoint de
+> **previsão** (`POST /api/prever`) exige o `petr4` (carrega o FinBERT-PT-BR e o modelo XGBoost).
+> Os imports de torch/transformers são *lazy* — só carregam na primeira previsão.
 
 ### 2. Frontend (ambiente conda `web`, que tem Node)
 ```bash

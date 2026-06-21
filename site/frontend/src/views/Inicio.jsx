@@ -45,11 +45,18 @@ export default function Inicio() {
         <li><strong>Estatísticas</strong> — gráficos e tabelas descritivas do corpus e da série financeira.</li>
       </ul>
 
+      <h2>Avaliar uma notícia (modelo treinado)</h2>
+      <p>
+        Na aba <strong>Avaliar notícia</strong> é possível inserir o texto de uma manchete e obter:
+        o sentimento (FinBERT-PT-BR), se a notícia é relevante para a PETR4 e a direção prevista do
+        próximo pregão pelo modelo XGBoost de <em>Data Fusion</em> (preços + GARCH + sentimento),
+        treinado sobre o corpus completo de {fmt(est?.noticias_total)} notícias.
+      </p>
+
       <div className="aviso">
-        <strong>Transparência.</strong> Todos os números exibidos provêm dos dados reais da pesquisa,
-        sem qualquer valor inventado. As funcionalidades de <em>previsão de direção a partir de uma
-        notícia</em> e a <em>demonstração prática</em> serão habilitadas após a conclusão do
-        processamento completo do sentimento e do treinamento dos modelos.
+        <strong>Transparência.</strong> Todos os números e previsões provêm dos dados e modelos reais
+        da pesquisa, sem qualquer valor inventado. As previsões têm caráter acadêmico/experimental
+        (acurácia da ordem de 53% no conjunto de teste) e não constituem recomendação de investimento.
       </div>
     </div>
   );

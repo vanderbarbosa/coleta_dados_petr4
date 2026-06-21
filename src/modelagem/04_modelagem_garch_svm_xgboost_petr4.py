@@ -772,6 +772,25 @@ if df_ablacao is not None:
     df_ablacao.to_csv(caminho_ablacao, index=False, encoding='utf-8')
     print(f"\n   💾 Tabela de ablação por categoria: {caminho_ablacao}")
 
+# ── Persiste o MODELO XGBoost Data Fusion + contexto recente (para o site) ────
+# Permite, na aplicação, prever a direção do PRÓXIMO pregão a partir do
+# sentimento de uma nova notícia, usando o retorno e a volatilidade mais recentes.
+import json
+xgb_fusion.save_model(caminho_base + "modelo_xgb_fusion.json")
+_meta = {
+    "features": features_data_fusion,                       # ordem dos atributos
+    "retorno_recente": float(df_master["Log_Retorno_Pct"].iloc[-1]),
+    "volatilidade_recente": float(df_master["Volatilidade_GARCH"].iloc[-1]),
+    "data_referencia": str(df_master.index[-1].date()),
+    "acuracia_teste_fusion": float(metricas_xgb_df["Acurácia"]),
+    "auc_teste_fusion": float(metricas_xgb_df["AUC-ROC"]),
+    "periodo_treino": [str(data_inicio_treino), str(data_fim_treino)],
+    "periodo_teste": [str(data_inicio_teste), str(data_fim_teste)],
+}
+with open(caminho_base + "modelo_meta.json", "w", encoding="utf-8") as _f:
+    json.dump(_meta, _f, ensure_ascii=False, indent=2)
+print(f"   💾 Modelo XGBoost Data Fusion + metadados salvos (para o site).")
+
 print("\n" + "="*60)
 print("✅ MODELAGEM CONCLUÍDA COM SUCESSO!")
 print("="*60)

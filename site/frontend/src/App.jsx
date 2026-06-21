@@ -3,12 +3,14 @@ import Inicio from "./views/Inicio.jsx";
 import Noticias from "./views/Noticias.jsx";
 import Precos from "./views/Precos.jsx";
 import Estatisticas from "./views/Estatisticas.jsx";
+import Previsao from "./views/Previsao.jsx";
 
 const PAGINAS = [
   { id: "inicio", rotulo: "Início", comp: Inicio },
   { id: "noticias", rotulo: "Notícias", comp: Noticias },
   { id: "precos", rotulo: "Preços (PETR4)", comp: Precos },
   { id: "estatisticas", rotulo: "Estatísticas", comp: Estatisticas },
+  { id: "previsao", rotulo: "Avaliar notícia", comp: Previsao },
 ];
 
 export default function App() {
