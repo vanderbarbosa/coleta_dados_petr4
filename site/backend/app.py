@@ -451,6 +451,28 @@ def demonstracao(data: str, janela: int = 20):
     }
 
 
+@app.get("/api/resultados")
+def resultados():
+    import json
+    out = {"modelos": [], "ablacao": [], "meta": None}
+    try:
+        dfm = pd.read_csv(DADOS / "resultados_modelos_petr4.csv")
+        out["modelos"] = dfm.to_dict(orient="records")
+    except Exception:
+        pass
+    try:
+        dfa = pd.read_csv(DADOS / "resultados_ablacao_categorias_petr4.csv")
+        out["ablacao"] = dfa.to_dict(orient="records")
+    except Exception:
+        pass
+    try:
+        with open(DADOS / "modelo_meta.json", encoding="utf-8") as f:
+            out["meta"] = json.load(f)
+    except Exception:
+        pass
+    return out
+
+
 @app.get("/")
 def raiz():
     return {"api": "PETR4 — Pesquisa", "docs": "/docs",

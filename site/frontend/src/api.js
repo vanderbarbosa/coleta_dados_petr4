@@ -30,4 +30,5 @@ export const api = {
   prever: (texto) => post("/api/prever", { texto }),
   eventos: () => get("/api/eventos"),
   demonstracao: (params) => get("/api/demonstracao", params),
+  resultados: () => get("/api/resultados"),
 };

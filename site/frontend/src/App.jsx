@@ -5,6 +5,7 @@ import Precos from "./views/Precos.jsx";
 import Estatisticas from "./views/Estatisticas.jsx";
 import Previsao from "./views/Previsao.jsx";
 import Demonstracao from "./views/Demonstracao.jsx";
+import Sobre from "./views/Sobre.jsx";
 
 const PAGINAS = [
   { id: "inicio", rotulo: "Início", comp: Inicio },
@@ -13,6 +14,7 @@ const PAGINAS = [
   { id: "estatisticas", rotulo: "Estatísticas", comp: Estatisticas },
   { id: "previsao", rotulo: "Avaliar notícia", comp: Previsao },
   { id: "demonstracao", rotulo: "Demonstração", comp: Demonstracao },
+  { id: "sobre", rotulo: "Sobre a Pesquisa", comp: Sobre },
 ];
 
 export default function App() {
