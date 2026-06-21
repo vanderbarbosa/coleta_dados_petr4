@@ -1,0 +1,28 @@
+# Dependências do projeto PETR4 (execução LOCAL)
+# Instale com:  pip install -r requirements.txt
+# (em rede com proxy/SSL: adicione --trusted-host pypi.org --trusted-host files.pythonhosted.org)
+
+# --- Núcleo (todos os scripts) ---
+pandas
+numpy
+python-dateutil
+requests
+matplotlib
+
+# --- Script 01 (coleta financeira) ---
+yfinance
+
+# --- Script 03 (análise de sentimento) ---
+transformers
+torch
+sentencepiece
+
+# --- Script 04 (modelagem) ---
+scikit-learn
+xgboost
+arch
+statsmodels
+scipy
+
+# --- Geração da documentação (docs/geradores) ---
+python-docx

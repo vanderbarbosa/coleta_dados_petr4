@@ -37,12 +37,10 @@
 
 
 # ==============================================================================
-# BLOCO 1 — INSTALAÇÃO DAS BIBLIOTECAS NECESSÁRIAS
+# BLOCO 1 — DEPENDÊNCIAS
 # ==============================================================================
-# Instalamos apenas o que o Colab não tem por padrão.
-# O "--quiet" evita que o terminal fique poluído com mensagens de instalação.
-
-!pip install yfinance --quiet
+# Execução LOCAL (não-Colab). Instale as dependências uma única vez no ambiente:
+#   pip install -r requirements.txt     (ou: pip install yfinance pandas numpy)
 
 print("✅ Bibliotecas verificadas e prontas.")
 
@@ -51,8 +49,8 @@ print("✅ Bibliotecas verificadas e prontas.")
 # BLOCO 2 — IMPORTAÇÃO DAS FERRAMENTAS
 # ==============================================================================
 
-from google.colab import drive   # Para conectar ao seu Google Drive
 import os                        # Para criar pastas
+from pathlib import Path         # Caminhos robustos (local)
 import pandas as pd              # Para manipular tabelas de dados
 import numpy as np               # Para cálculos matemáticos (logaritmo)
 import yfinance as yf            # Para baixar dados da bolsa (B3/NYSE)
@@ -61,19 +59,19 @@ print("✅ Todas as ferramentas importadas com sucesso.")
 
 
 # ==============================================================================
-# BLOCO 3 — CONEXÃO COM O GOOGLE DRIVE
+# BLOCO 3 — PASTA DE DADOS (LOCAL)
 # ==============================================================================
-# Ao rodar esta célula, o Colab vai pedir autorização para acessar seu Drive.
-# Clique no link que aparecer, escolha sua conta Google e cole o código.
+# A pasta de dados fica na raiz do projeto (Mestrado_PETR4/). Este script vive
+# em src/coleta/, então a raiz está 2 níveis acima.
 
-drive.mount('/content/drive')
-
-# Definimos a pasta onde TODOS os arquivos da dissertação serão salvos.
-# Se a pasta não existir, o script a cria automaticamente.
-caminho_base = '/content/drive/MyDrive/Mestrado_PETR4/'
+try:
+    _RAIZ = Path(__file__).resolve().parents[2]
+except NameError:                # execução interativa
+    _RAIZ = Path.cwd()
+caminho_base = str(_RAIZ / "Mestrado_PETR4") + os.sep
 os.makedirs(caminho_base, exist_ok=True)
 
-print(f"✅ Google Drive conectado. Pasta da pesquisa: {caminho_base}")
+print(f"✅ Pasta da pesquisa: {caminho_base}")
 
 
 # ==============================================================================
@@ -85,6 +83,11 @@ TICKER      = "PETR4.SA"    # Código da ação na B3 (sufixo .SA = São Paulo)
 DATA_INICIO = "2018-01-01"  # Início do período de análise
 DATA_FIM    = "2025-12-31"  # Fim do período de análise
 
+# Em redes com proxy que intercepta SSL, defina VERIFY_SSL = False para o
+# yfinance conseguir alcançar a API do Yahoo. Em rede normal, mantenha True.
+VERIFY_SSL = False
+MAX_TENTATIVAS = 5          # Yahoo aplica rate limit; tentamos novamente com espera
+
 print(f"\n📊 Iniciando coleta para: {TICKER}")
 print(f"   Período: {DATA_INICIO} até {DATA_FIM}")
 
@@ -92,21 +95,38 @@ print(f"   Período: {DATA_INICIO} até {DATA_FIM}")
 # ==============================================================================
 # BLOCO 5 — DOWNLOAD DOS DADOS HISTÓRICOS
 # ==============================================================================
+import time
+import requests
+import urllib3
+if not VERIFY_SSL:
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-try:
-    ativo = yf.Ticker(TICKER)
-    df_petr4 = ativo.history(start=DATA_INICIO, end=DATA_FIM)
+# Sessão HTTP própria (permite contornar interceptação SSL do proxy)
+_sessao = requests.Session()
+_sessao.verify = VERIFY_SSL
+_sessao.headers.update({"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
 
-    # Verificamos se os dados foram retornados corretamente
-    if df_petr4.empty:
-        raise ValueError("Nenhum dado foi retornado. Verifique o ticker e as datas.")
+df_petr4 = None
+for tentativa in range(1, MAX_TENTATIVAS + 1):
+    try:
+        ativo = yf.Ticker(TICKER, session=_sessao)
+        df_petr4 = ativo.history(start=DATA_INICIO, end=DATA_FIM)
+        if df_petr4 is not None and not df_petr4.empty:
+            print(f"✅ Dados baixados! Total de pregões coletados: {len(df_petr4)} dias")
+            break
+        raise ValueError("Nenhum dado retornado (possível rate limit do Yahoo).")
+    except Exception as e:
+        espera = min(15 * tentativa, 60)
+        print(f"   ⚠️  Tentativa {tentativa}/{MAX_TENTATIVAS} falhou: {str(e)[:80]}")
+        if tentativa < MAX_TENTATIVAS:
+            print(f"      Aguardando {espera}s (rate limit do Yahoo)...")
+            time.sleep(espera)
 
-    print(f"✅ Dados baixados! Total de pregões coletados: {len(df_petr4)} dias")
-
-except Exception as e:
-    print(f"❌ Erro na coleta: {e}")
-    print("   Dica: verifique sua conexão com a internet e tente novamente.")
-    raise
+if df_petr4 is None or df_petr4.empty:
+    print("❌ Não foi possível baixar os dados (Yahoo indisponível ou rate limit).")
+    print("   Tente novamente em alguns minutos. Dados B3 também podem ser obtidos")
+    print("   manualmente (ex.: investing.com / B3) e salvos como base_financeira_petr4.csv.")
+    raise SystemExit(1)
 
 
 # ==============================================================================

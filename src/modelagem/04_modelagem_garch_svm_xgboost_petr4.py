@@ -46,20 +46,20 @@
 
 
 # ==============================================================================
-# BLOCO 1 — INSTALAÇÃO DAS BIBLIOTECAS
+# BLOCO 1 — DEPENDÊNCIAS
 # ==============================================================================
+# Execução LOCAL. Instale uma vez:  pip install -r requirements.txt
+#   (arch, xgboost, scikit-learn, pandas, numpy, matplotlib, scipy, statsmodels)
 
-!pip install arch xgboost scikit-learn pandas numpy matplotlib scipy statsmodels --quiet
-
-print("✅ Bibliotecas instaladas.")
+print("✅ Bibliotecas verificadas.")
 
 
 # ==============================================================================
 # BLOCO 2 — IMPORTAÇÕES
 # ==============================================================================
 
-from google.colab import drive
 import os
+from pathlib import Path
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -94,12 +94,16 @@ print("✅ Ferramentas importadas.")
 
 
 # ==============================================================================
-# BLOCO 3 — CONEXÃO COM O GOOGLE DRIVE
+# BLOCO 3 — PASTA DE DADOS (LOCAL)
 # ==============================================================================
+# Este script vive em src/modelagem/, então a raiz do projeto está 2 níveis acima.
 
-drive.mount('/content/drive')
-
-caminho_base = '/content/drive/MyDrive/Mestrado_PETR4/'
+try:
+    _RAIZ = Path(__file__).resolve().parents[2]
+except NameError:
+    _RAIZ = Path.cwd()
+caminho_base = str(_RAIZ / "Mestrado_PETR4") + os.sep
+os.makedirs(caminho_base, exist_ok=True)
 
 print(f"✅ Drive conectado.")
 

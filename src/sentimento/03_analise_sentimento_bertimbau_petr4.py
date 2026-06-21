@@ -59,27 +59,25 @@
 
 
 # ==============================================================================
-# BLOCO 1 — INSTALAÇÃO DAS BIBLIOTECAS DE DEEP LEARNING
+# BLOCO 1 — DEPENDÊNCIAS
 # ==============================================================================
-# "transformers" = biblioteca da HuggingFace que carrega o BERTimbau
-# "torch"        = motor de deep learning (PyTorch) — necessário para o BERT
-# "sentencepiece" = tokenizador usado pelo BERTimbau
+# Execução LOCAL. Instale uma vez (pode ser pesado — torch é grande):
+#   pip install transformers torch sentencepiece
+# (ou: pip install -r requirements.txt)
 
-!pip install transformers torch sentencepiece --quiet
-
-print("✅ Bibliotecas de Deep Learning instaladas.")
+print("✅ Bibliotecas de Deep Learning verificadas.")
 
 
 # ==============================================================================
 # BLOCO 2 — IMPORTAÇÕES
 # ==============================================================================
 
-from google.colab import drive
 import os
+from pathlib import Path
 import pandas as pd
 import numpy as np
 import torch
-from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification
+from transformers import pipeline
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -87,14 +85,18 @@ print("✅ Ferramentas importadas.")
 
 
 # ==============================================================================
-# BLOCO 3 — CONEXÃO COM O GOOGLE DRIVE
+# BLOCO 3 — PASTA DE DADOS (LOCAL)
 # ==============================================================================
+# Este script vive em src/sentimento/, então a raiz do projeto está 2 níveis acima.
 
-drive.mount('/content/drive')
+try:
+    _RAIZ = Path(__file__).resolve().parents[2]
+except NameError:
+    _RAIZ = Path.cwd()
+caminho_base = str(_RAIZ / "Mestrado_PETR4") + os.sep
+os.makedirs(caminho_base, exist_ok=True)
 
-caminho_base = '/content/drive/MyDrive/Mestrado_PETR4/'
-
-print(f"✅ Drive conectado.")
+print(f"✅ Pasta da pesquisa: {caminho_base}")
 
 
 # ==============================================================================
@@ -106,45 +108,55 @@ print(f"✅ Drive conectado.")
 if torch.cuda.is_available():
     device_id = 0  # 0 = primeira GPU disponível
     nome_device = torch.cuda.get_device_name(0)
-    print(f"✅ GPU detectada: {nome_device}")
-    print(f"   O processamento será rápido (~15-30 min para o corpus completo).")
+    print(f"✅ GPU detectada: {nome_device} — processamento acelerado.")
 else:
     device_id = -1  # -1 = CPU
-    print("⚠️  GPU não detectada. Usando CPU.")
-    print("   Para ativar a GPU: Menu → Ambiente de execução → Alterar tipo de ambiente")
-    print("   → Acelerador de hardware → GPU (T4)")
-    print("   O processamento na CPU pode levar 2-4 horas para o corpus completo.")
+    print("⚠️  Sem GPU — usando CPU. Em CPU, o corpus completo (205k notícias)")
+    print("    pode levar algumas horas. Para testes, reduza com LIMITE_NOTICIAS abaixo.")
+
+# Limite opcional de notícias (para testes rápidos em CPU). None = processa tudo.
+LIMITE_NOTICIAS = None
 
 
 # ==============================================================================
-# BLOCO 5 — CARREGAMENTO DO MODELO BERTimbau
+# BLOCO 5 — CARREGAMENTO DO MODELO DE SENTIMENTO (FinBERT-PT-BR)
 # ==============================================================================
-# Usamos o modelo "lxyuan/distilbert-base-multilingual-cased-sentiments-student"
-# que é fine-tuned especificamente para análise de sentimento financeiro
-# e funciona muito bem em português.
+# MODELO ESCOLHIDO: lucas-leme/FinBERT-PT-BR
+# ─────────────────────────────────────────────────────────────────────────────
+# Justificativa (responde diretamente à arguição do Prof. Emerson na
+# qualificação): o BERTimbau/“xlm-roberta” genérico foi pré-treinado em texto
+# comum do português, NÃO em texto financeiro — não conhece jargões nem ironias
+# do mercado. O FinBERT-PT-BR é um BERT em português brasileiro com fine-tuning
+# em CORPUS FINANCEIRO (notícias e relatórios do mercado de capitais), sendo a
+# escolha mais adequada para o domínio desta pesquisa.
 #
-# ALTERNATIVA (mais pesado, mas mais preciso — recomendado se tiver GPU T4):
-# "nlptown/bert-base-multilingual-uncased-sentiment"
+# COMO O SCORE DE SENTIMENTO É EXTRAÍDO (esclarece a dúvida da banca:
+# "o BERT é um encoder, como se obtém o score de −1 a +1?"):
+#   1. O modelo possui um HEAD de classificação de 3 classes
+#      (POSITIVE / NEGATIVE / NEUTRAL) acoplado ao encoder BERT.
+#   2. O pipeline "sentiment-analysis" da biblioteca Transformers (Hugging Face)
+#      aplica softmax aos logits desse head, retornando (label, score), onde
+#      score = probabilidade da classe vencedora (0 a 1).
+#   3. O Índice de Sentimento contínuo é então: polaridade × score, com
+#      polaridade ∈ {+1 positivo, 0 neutro, −1 negativo} (ver Bloco 7).
+# Assim, o intervalo final fica em [−1, +1]. Uso ZERO-SHOT (sem novo treino):
+# aplica-se o modelo já fine-tunado em finanças diretamente às manchetes.
 #
-# Para usar o BERTimbau puro (base) com fine-tuning em sentimento PT-BR:
-# "uer/roberta-base-finetuned-jd-binary-chinese" (não; use o abaixo)
-# "cardiffnlp/twitter-xlm-roberta-base-sentiment" — multilíngue incluindo PT-BR
-#
-# MODELO ESCOLHIDO: cardiffnlp/twitter-xlm-roberta-base-sentiment
-# Justificativa: É o modelo mais citado na literatura para análise de
-# sentimento multilíngue (incluindo PT-BR) aplicado a textos financeiros.
-# Compatível com a descrição metodológica da dissertação (Seção 3.2.1).
+# ALTERNATIVAS consideradas e por que NÃO foram adotadas como principal:
+#   • cardiffnlp/twitter-xlm-roberta (genérico, não-financeiro) — crítica da banca;
+#   • léxicos estáticos (OpLexicon/LIWC) — regrediria ao paradigma TF-IDF que a
+#     banca apontou como superado pelos Transformers.
 
-NOME_MODELO = "cardiffnlp/twitter-xlm-roberta-base-sentiment"
+NOME_MODELO = "lucas-leme/FinBERT-PT-BR"
 
-print(f"\n🧠 Carregando o modelo: {NOME_MODELO}")
-print("   (O download pode demorar alguns minutos na primeira execução — ~1 GB)")
+print(f"\n🧠 Carregando o modelo de sentimento financeiro: {NOME_MODELO}")
+print("   (O download ocorre só na primeira execução — alguns minutos / ~400 MB)")
 
 modelo_nlp = pipeline(
     task       = "sentiment-analysis",
     model      = NOME_MODELO,
     tokenizer  = NOME_MODELO,
-    max_length = 512,       # Limite de tokens do modelo BERT
+    max_length = 512,       # Limite de tokens do BERT
     truncation = True,      # Textos maiores que 512 tokens são cortados
     device     = device_id, # GPU (0) ou CPU (-1)
 )
@@ -275,23 +287,20 @@ def extrair_sentimento(texto):
 
         # Aplica o modelo
         resultado = modelo_nlp(texto)[0]
-        label = resultado['label']   # Ex: "LABEL_0", "LABEL_1", "LABEL_2" ou "Negative", "Neutral", "Positive"
-        score = resultado['score']   # Confiança de 0 a 1
+        label_raw = resultado['label']   # FinBERT-PT-BR: POSITIVE/NEGATIVE/NEUTRAL
+        score     = resultado['score']   # Confiança de 0 a 1 (probabilidade da classe)
 
-        # Mapeamento de labels para polaridade
-        # O modelo cardiffnlp usa "Negative", "Neutral", "Positive"
-        mapa_labels = {
-            'Negative' : -1,
-            'LABEL_0'  : -1,  # Fallback caso o modelo retorne LABEL_X
-            'Neutral'  :  0,
-            'LABEL_1'  :  0,
-            'Positive' : +1,
-            'LABEL_2'  : +1,
-        }
+        # Normaliza o rótulo para o padrão canônico (case-insensitive), cobrindo
+        # FinBERT-PT-BR (MAIÚSCULAS), cardiffnlp (Capitalizado) e LABEL_0/1/2.
+        L = str(label_raw).strip().upper()
+        if L in ('POSITIVE', 'POSITIVO', 'POS', 'LABEL_2'):
+            polaridade, label = +1, 'Positive'
+        elif L in ('NEGATIVE', 'NEGATIVO', 'NEG', 'LABEL_0'):
+            polaridade, label = -1, 'Negative'
+        else:  # NEUTRAL / NEUTRO / LABEL_1
+            polaridade, label = 0, 'Neutral'
 
-        polaridade = mapa_labels.get(label, 0)
-
-        # Índice de Sentimento = polaridade × confiança
+        # Índice de Sentimento contínuo = polaridade × confiança ∈ [−1, +1]
         indice = polaridade * score
 
         return indice, label, score
@@ -310,6 +319,11 @@ def extrair_sentimento(texto):
 print("\n" + "="*60)
 print("INICIANDO EXTRAÇÃO DE SENTIMENTO")
 print("="*60)
+
+# Limite opcional para testes rápidos em CPU (definido no Bloco 4).
+if LIMITE_NOTICIAS is not None:
+    df_noticias = df_noticias.head(int(LIMITE_NOTICIAS)).copy()
+    print(f"⚙️  LIMITE_NOTICIAS ativo: processando apenas {len(df_noticias)} notícias (teste).")
 
 TAMANHO_LOTE = 32  # Ajuste para 16 se houver erro de memória (Out of Memory)
 
