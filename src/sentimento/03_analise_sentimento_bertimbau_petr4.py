@@ -81,6 +81,21 @@ from transformers import pipeline
 import warnings
 warnings.filterwarnings('ignore')
 
+# Em redes com proxy que intercepta SSL, o download do modelo no Hugging Face Hub
+# falha na verificação de certificado. Configuramos uma sessão sem verificação
+# para contornar. Em rede normal/sem proxy, defina VERIFY_SSL_HF = True.
+VERIFY_SSL_HF = False
+if not VERIFY_SSL_HF:
+    try:
+        import huggingface_hub, requests, urllib3
+        urllib3.disable_warnings()
+        def _hf_backend():
+            s = requests.Session(); s.verify = False; return s
+        huggingface_hub.configure_http_backend(backend_factory=_hf_backend)
+        print("⚠️  Verificação SSL do Hugging Face desabilitada (rede com proxy).")
+    except Exception as _e:
+        print(f"   (Aviso: não foi possível ajustar o backend HTTP do HF: {_e})")
+
 print("✅ Ferramentas importadas.")
 
 
@@ -115,7 +130,8 @@ else:
     print("    pode levar algumas horas. Para testes, reduza com LIMITE_NOTICIAS abaixo.")
 
 # Limite opcional de notícias (para testes rápidos em CPU). None = processa tudo.
-LIMITE_NOTICIAS = None
+# Pode ser definido pela variável de ambiente LIMITE_NOTICIAS (ex.: 300).
+LIMITE_NOTICIAS = int(os.environ["LIMITE_NOTICIAS"]) if os.environ.get("LIMITE_NOTICIAS") else None
 
 
 # ==============================================================================

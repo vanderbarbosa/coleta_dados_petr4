@@ -58,21 +58,29 @@ A maioria dos scripts foi escrita para rodar no **Google Colab** (montam o Googl
 
 ---
 
-## 🔧 Pré-requisitos
+## 🔧 Pré-requisitos (execução LOCAL)
 
-### No Google Colab (recomendado)
-- Conta Google com acesso ao Drive; crie a pasta `Mestrado_PETR4` na raiz do *My Drive*.
-- **GPU ativada** para o Script 03: *Ambiente de execução → Alterar tipo de ambiente → GPU (T4)*.
-- As dependências são instaladas pelo próprio script (`!pip install ...`).
+Todo o pipeline roda **localmente** (sem Colab). Recomenda-se um **ambiente conda dedicado** — o PyTorch (Script 03) instala de forma confiável via conda, evitando o erro `WinError 1114` do build do PyPI no Windows/Anaconda.
 
-### Em ambiente local (VS Code / terminal) — usado pelo Script 02 multi-fonte
 ```bash
-python -m venv .venv
-.venv\Scripts\activate          # Windows
-# source .venv/bin/activate     # Mac/Linux
-pip install feedparser newsapi-python tenacity tqdm python-dateutil pandas requests
+# 1) Criar o ambiente com Python + PyTorch (CPU) via conda
+conda create -n petr4 -y -c pytorch -c conda-forge python=3.11 pytorch cpuonly
+
+# 2) Instalar as demais dependências no ambiente
+conda run -n petr4 pip install -r requirements.txt
+#   (transformers fica em 4.x para carregar pesos .bin com torch CPU 2.5)
+
+# 3) Rodar qualquer script com o Python do ambiente
+conda run -n petr4 python src/coleta/01_coleta_dados_financeiros_petr4.py
 ```
-Para os demais scripts, as bibliotecas principais são: `yfinance`, `transformers`, `torch`, `sentencepiece`, `arch`, `xgboost`, `scikit-learn`, `statsmodels`, `scipy`, `matplotlib`.
+
+**Redes com proxy/SSL (corporativo):** a interceptação de SSL exige ajustes já embutidos:
+- `pip` → adicionar `--trusted-host pypi.org --trusted-host files.pythonhosted.org`;
+- `conda` → `conda config --set ssl_verify false`;
+- **Script 01** (Yahoo) → flag `VERIFY_SSL = False` (sessão própria + retry de rate limit);
+- **Script 03** (Hugging Face) → flag `VERIFY_SSL_HF = False` (desabilita verificação no download do modelo).
+
+> 💡 Em CPU, o Script 03 sobre as 205 mil notícias leva **horas**. Use a variável de ambiente `LIMITE_NOTICIAS=300` para um teste rápido (valida o pipeline ponta a ponta).
 
 ---
 

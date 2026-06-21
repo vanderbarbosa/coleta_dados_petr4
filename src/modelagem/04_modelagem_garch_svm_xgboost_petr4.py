@@ -380,9 +380,10 @@ df_master['Alvo'] = np.where(df_master['Log_Retorno_Pct'] > 0, 1, 0)
 df_master.dropna(subset=['Retorno_Ontem', 'Volatilidade_Ontem', 'Alvo'], inplace=True)
 
 # Para os dias sem ISM (sem notícias coletadas), preenchemos com zero (sentimento neutro)
-df_master['Sentimento_Ontem'].fillna(0, inplace=True)
+# Atribuição explícita (compatível com Copy-on-Write do pandas >= 3.0).
+df_master['Sentimento_Ontem'] = df_master['Sentimento_Ontem'].fillna(0)
 for col_lag in COLUNAS_CATEGORIA_LAG:
-    df_master[col_lag].fillna(0, inplace=True)
+    df_master[col_lag] = df_master[col_lag].fillna(0)
 
 print(f"✅ Matriz de atributos construída:")
 print(f"   Total de pregões no modelo : {len(df_master)}")
