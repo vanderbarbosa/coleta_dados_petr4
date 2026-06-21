@@ -52,7 +52,8 @@ A maioria dos scripts foi escrita para rodar no **Google Colab** (montam o Googl
 | [src/sentimento/03_analise_sentimento_bertimbau_petr4.py](src/sentimento/03_analise_sentimento_bertimbau_petr4.py) | **Script 03** — análise de sentimento (NLP) e Índice de Sentimento da Mídia (ISM) |
 | [src/modelagem/04_modelagem_garch_svm_xgboost_petr4.py](src/modelagem/04_modelagem_garch_svm_xgboost_petr4.py) | **Script 04** — testes estatísticos, GARCH(1,1), Data Fusion, modelos e ablação |
 | [src/comum/abnt_docx.py](src/comum/abnt_docx.py) | Módulo reutilizável de formatação **ABNT** (NBR 14724/6023/6024/10520) |
-| [docs/geradores/gerar_documentacao_dissertacao.py](docs/geradores/gerar_documentacao_dissertacao.py) | Gera o documento Word **ABNT** da Etapa 1 |
+| [src/comum/taxonomia.py](src/comum/taxonomia.py) | Fonte **única** dos 152 termos (7 categorias) e dos critérios de filtragem — garante completude nas tabelas dos documentos |
+| [docs/geradores/](docs/geradores/) | Geradores dos documentos Word **ABNT**, um por etapa: Etapa 1 (engenharia de dados), Etapa 2 (financeira), Etapa 3 (sentimento), Etapa 4 (modelagem). Saída em `docs/saida/` |
 | [docs/DOCUMENTACAO_BASES.md](docs/DOCUMENTACAO_BASES.md) · [docs/GUIA_DE_EXECUCAO.md](docs/GUIA_DE_EXECUCAO.md) | Documentação das bases e guia de execução (Colab) |
 | [obsoleto/](obsoleto/) | Coletores antigos **desativados** (GDELT, multi-fonte, RSS) — ver [obsoleto/LEIA-ME.md](obsoleto/LEIA-ME.md) |
 

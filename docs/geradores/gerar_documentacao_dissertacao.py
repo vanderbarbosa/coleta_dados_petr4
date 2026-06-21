@@ -24,6 +24,7 @@ RAIZ = Path(__file__).resolve().parents[2]
 # O módulo ABNT reutilizável fica em src/comum/
 sys.path.insert(0, str(RAIZ / "src" / "comum"))
 import abnt_docx as abnt
+import taxonomia as tx   # fonte única dos termos (garante completude — todos os 152)
 
 PASTA = RAIZ / "Mestrado_PETR4"
 ARQ_ORIGINAL = PASTA / "base_textual_petr4_wordpress_2018_2025.csv"
@@ -57,8 +58,7 @@ hora        = df["dt"].dt.hour
 lead_lag_pct = (hora >= 17).mean() * 100
 tem_hora_pct = ((hora != 0) | (df["dt"].dt.minute != 0)).mean() * 100
 
-TERMOS_ESTRITO = ["petrobras","petr4","petr3","petroleira","petróleo","petroleo",
-                  "brent","wti","opep","barril","combustível","combustivel","refinaria"]
+TERMOS_ESTRITO = tx.TERMOS_RELEVANCIA_ESTRITA   # lista canônica (fonte única)
 alvo = (df["titulo"].fillna("") + " " + df["resumo"].fillna("")).str.lower()
 mask_estrito = alvo.apply(lambda t: any(x in t for x in TERMOS_ESTRITO))
 dist_cat_estrito = df[mask_estrito]["categoria"].value_counts()
@@ -328,29 +328,25 @@ abnt.paragrafo(doc,
  "norte-americanas do pós-guerra foram precedidas por choques no preço do petróleo, ao passo que "
  "Kilian (2009) decompôs tais choques em componentes de oferta, de demanda agregada e de demanda "
  "específica. Ignorar essas categorias tornaria o corpus estruturalmente incompleto para a "
- "previsão de volatilidade. A Tabela 6 descreve a taxonomia.")
-abnt.tabela_abnt(doc, "6", "Taxonomia de categorias temáticas dos termos de busca",
- ["Categoria","Termos","Foco temático","Âncora teórica"],
- [["CAT1 — Empresa","21","Petrobras, PETR4, resultados, governança","Tetlock et al. (2008)"],
-  ["CAT2 — Mercado de Petróleo","20","Brent/WTI, OPEP, oferta e demanda","Kilian (2009)"],
-  ["CAT3 — Geopolítica","27","Guerras e tensões em países produtores","Hamilton (1983); Caldara e Iacoviello (2022)"],
-  ["CAT4 — Infraestrutura","20","Refinarias, oleodutos, plataformas","Choque da Aramco (2019)"],
-  ["CAT5 — Sanções e Navegação","20","Embargos, Ormuz, Mar Vermelho","Prêmio de risco de rotas"],
-  ["CAT6 — Governança","24","Direção, intervenção, política energética","Estudos de evento"],
-  ["CAT7 — Macroeconomia/Energia","20","Câmbio, juros, China, transição energética","Zhang et al. (2008); Kilian e Murphy (2014)"]])
+ "previsão de volatilidade. A Tabela 6 sintetiza a taxonomia (foco e âncora teórica) e a Tabela 7 "
+ "lista, na íntegra, TODOS os termos de cada categoria.")
+abnt.tabela_abnt(doc, "6", "Categorias temáticas: foco e fundamentação teórica",
+ ["Categoria", "Nº de termos", "Foco temático", "Âncora teórica"],
+ [["CAT1 — Empresa", "21", "Petrobras, PETR4, resultados, governança", "Tetlock et al. (2008)"],
+  ["CAT2 — Mercado de Petróleo", "20", "Brent/WTI, OPEP, oferta e demanda", "Kilian (2009)"],
+  ["CAT3 — Geopolítica", "27", "Guerras e tensões em países produtores", "Hamilton (1983); Caldara e Iacoviello (2022)"],
+  ["CAT4 — Infraestrutura", "20", "Refinarias, oleodutos, plataformas", "Hamilton (1983)"],
+  ["CAT5 — Sanções e Navegação", "20", "Embargos, Ormuz, Mar Vermelho", "Kilian (2009)"],
+  ["CAT6 — Governança", "24", "Direção, intervenção, política energética", "Estudos de evento"],
+  ["CAT7 — Macroeconomia/Energia", "20", "Câmbio, juros, China, transição energética", "Zhang et al. (2008); Kilian e Murphy (2014)"]])
 abnt.paragrafo(doc,
- "Ao todo são 152 termos. A categoria associada a cada termo é gravada em cada notícia, "
- "viabilizando a posterior análise de ablação. O Quadro 3 ilustra a estrutura da taxonomia.")
-abnt.quadro_codigo(doc, "3", "Estrutura da taxonomia de termos (Python)",
-'''TERMOS_POR_CATEGORIA = {
-    "CAT1_Empresa":          ["Petrobras", "PETR4", "pre-sal", "Petrobras dividendos", ...],
-    "CAT2_Mercado_Petroleo": ["petroleo Brent", "OPEP", "preco do petroleo", ...],
-    "CAT3_Geopolitica":      ["guerra Russia Ucrania", "Estreito de Ormuz", ...],
-    "CAT4_Infraestrutura":   ["refinaria petroleo", "plataforma offshore", ...],
-    "CAT5_Sancoes_Navegacao":["embargo petroleo", "Mar Vermelho petroleo", ...],
-    "CAT6_Governanca":       ["CEO Petrobras", "ministro de minas e energia", ...],
-    "CAT7_Macro_Energia":    ["dolar petroleo", "demanda China petroleo", ...],
-}''')
+ f"Ao todo são {tx.total_termos()} termos. A categoria associada a cada termo é gravada em cada "
+ "notícia, viabilizando a posterior análise de ablação. A Tabela 7 apresenta a lista completa, "
+ "sem omissões, garantindo a rastreabilidade e a reprodutibilidade exigidas.")
+abnt.tabela_abnt(doc, "7", "Lista completa dos termos de busca por categoria",
+ ["Categoria", "Termos (lista completa, sem omissões)"],
+ [[tx.ROTULOS_CATEGORIA[c], "; ".join(termos)]
+  for c, termos in tx.TERMOS_POR_CATEGORIA.items()])
 
 # 9 AGRUPAMENTO
 abnt.secao(doc, "9", "Agrupamento (categorização) das notícias")
@@ -370,14 +366,14 @@ abnt.quadro_codigo(doc, "4", "Laço de coleta com categorização e deduplicaç�
                     hashes.add(artigo["hash_titulo"])
                     writer.writerow(artigo)                   # grava com 'categoria' ''')
 abnt.figura_abnt(doc, "3", "Distribuição das notícias por categoria temática", g_categorias)
-abnt.tabela_abnt(doc, "7", "Notícias por categoria temática",
+abnt.tabela_abnt(doc, "8", "Notícias por categoria temática",
  [["Categoria","Notícias","% do corpus"]][0],
  [[c, fmt(dist_cat[c]), f"{dist_cat[c]/N_ORIG*100:.1f}%"] for c in dist_cat.index])
 
 # 10 ESTATÍSTICAS
 abnt.secao(doc, "10", "Estatísticas da coleta: sucessos e limitações")
-abnt.paragrafo(doc, "A Tabela 8 sintetiza os principais indicadores quantitativos da coleta final.")
-abnt.tabela_abnt(doc, "8", "Indicadores quantitativos da coleta final",
+abnt.paragrafo(doc, "A Tabela 9 sintetiza os principais indicadores quantitativos da coleta final.")
+abnt.tabela_abnt(doc, "9", "Indicadores quantitativos da coleta final",
  ["Métrica","Valor"],
  [["Período coberto","01/01/2018 a 31/12/2025"],
   ["Artigos brutos requisitados", fmt(COLETA["brutos"])],
@@ -391,7 +387,7 @@ abnt.paragrafo(doc,
  "comando da Petrobras, pela guerra entre Rússia e Ucrânia e pela elevação do preço do petróleo —, "
  "o que reforça a validade do corpus.")
 abnt.figura_abnt(doc, "4", "Notícias coletadas por ano (2018–2025)", g_anual)
-abnt.tabela_abnt(doc, "9", "Distribuição anual das notícias",
+abnt.tabela_abnt(doc, "10", "Distribuição anual das notícias",
  ["Ano","Notícias"], [[str(a), fmt(dist_ano[a])] for a in dist_ano.index])
 abnt.paragrafo(doc,
  f"As Figuras 5 e 6 comprovam a disponibilidade do timestamp: **{lead_lag_pct:.1f}%** das "
@@ -415,11 +411,16 @@ abnt.secao(doc, "11.1", "Filtragem forte (estrita): testada e descartada", nivel
 abnt.paragrafo(doc,
  "A filtragem forte exigia que o título ou o resumo contivesse explicitamente um termo do ativo "
  "ou da commodity (petrobras, petr4, petróleo, brent, opep, entre outros), conforme o Quadro 5.")
-abnt.quadro_codigo(doc, "5", "Filtragem forte (estrita)",
-'''TERMOS_RELEVANCIA = ["petrobras","petr4","petroleo","brent","opep","barril", ...]
-alvo = (df["titulo"].fillna("") + " " + df["resumo"].fillna("")).str.lower()
+abnt.quadro_codigo(doc, "5", "Filtragem forte (estrita) — lógica",
+'''alvo = (df["titulo"].fillna("") + " " + df["resumo"].fillna("")).str.lower()
 mask = alvo.apply(lambda t: any(termo in t for termo in TERMOS_RELEVANCIA))
 df_filtrada = df[mask]   # mantem aproximadamente 20% do corpus''')
+abnt.paragrafo(doc,
+ f"A Tabela 11 apresenta a lista COMPLETA dos {len(tx.TERMOS_RELEVANCIA_ESTRITA)} termos de "
+ "relevância da filtragem estrita (sem omissões).")
+abnt.tabela_abnt(doc, "11", "Lista completa dos termos da filtragem estrita",
+ ["Termos de relevância (filtragem estrita)"],
+ [["; ".join(tx.TERMOS_RELEVANCIA_ESTRITA)]])
 abnt.paragrafo(doc,
  f"O resultado foi a retenção de apenas **{fmt(N_ESTRITO)} notícias** "
  f"({N_ESTRITO/N_ORIG*100:.1f}% do corpus) e, sobretudo, o esvaziamento das categorias exógenas — "
@@ -427,13 +428,16 @@ abnt.paragrafo(doc,
  "Geopolítica caiu para cerca de 1% e a categoria Macroeconomia/Energia para cerca de 3%.")
 abnt.secao(doc, "11.2", "Filtragem leve: estratégia adotada", nivel=2)
 abnt.paragrafo(doc,
- "A filtragem leve aplica apenas uma limpeza de qualidade, removendo notícias degeneradas — "
- "título vazio, com menos de quinze caracteres, ou marcadores de remoção. Não há filtro temático, "
- "pois o sinal de relevância já provém do termo da taxonomia utilizado na captura. O Quadro 6 "
- "apresenta a implementação.")
+ "A filtragem leve aplica apenas uma limpeza de qualidade, removendo notícias degeneradas. Não há "
+ "filtro temático, pois o sinal de relevância já provém do termo da taxonomia utilizado na captura. "
+ "Os critérios de remoção, na íntegra, são: (i) título vazio; (ii) título com menos de "
+ f"{tx.LIMPEZA_LEVE['min_titulo_chars']} caracteres; e (iii) título igual a um dos marcadores de "
+ f"remoção [{', '.join(tx.LIMPEZA_LEVE['marcadores_invalidos'])}]. O Quadro 6 apresenta a implementação.")
 abnt.quadro_codigo(doc, "6", "Filtragem leve (limpeza de qualidade)",
-'''titulo = df["titulo"].fillna("").astype(str).str.strip()
-remover = (titulo == "") | (titulo.str.len() < 15) | titulo.str.lower().isin(MARCADORES)
+f'''MIN_TITULO_CHARS = {tx.LIMPEZA_LEVE['min_titulo_chars']}
+MARCADORES = {tx.LIMPEZA_LEVE['marcadores_invalidos']}
+titulo = df["titulo"].fillna("").astype(str).str.strip()
+remover = (titulo == "") | (titulo.str.len() < MIN_TITULO_CHARS) | titulo.str.lower().isin(MARCADORES)
 df_tratada = df[~remover]   # mantem ~100% do corpus, preserva as 7 categorias''')
 abnt.secao(doc, "11.3", "Justificativa da filtragem leve", nivel=2)
 abnt.paragrafo(doc,
@@ -444,7 +448,7 @@ abnt.paragrafo(doc,
  "eliminaria justamente o diferencial do estudo. A filtragem leve preserva a amplitude temática e "
  "remove apenas ruído degenerado.")
 abnt.secao(doc, "11.4", "Resultado da filtragem", nivel=2)
-abnt.tabela_abnt(doc, "10", "Comparação entre as estratégias de filtragem",
+abnt.tabela_abnt(doc, "12", "Comparação entre as estratégias de filtragem",
  ["Estratégia","Notícias mantidas","% do corpus","Efeito nas categorias exógenas"],
  [["Original (sem filtro)", fmt(N_ORIG), "100,0%","—"],
   ["Filtragem forte (estrita)", fmt(N_ESTRITO), f"{N_ESTRITO/N_ORIG*100:.1f}%","Esvaziadas (Geopol. ~1%; Macro ~3%)"],
@@ -477,13 +481,13 @@ abnt.quadro_codigo(doc, "7", "Particionamento temporal estratificado por ano",
 
 df["conjunto"] = df.groupby("ano", group_keys=False).apply(classificar_ano)''')
 if not tab_split.empty:
-    abnt.tabela_abnt(doc, "11", "Distribuição global do particionamento",
+    abnt.tabela_abnt(doc, "13", "Distribuição global do particionamento",
      ["Conjunto","Notícias","%"],
      [["Treino", fmt(dist_split.get("treino",0)), f"{dist_split.get('treino',0)/len(dft)*100:.1f}%"],
       ["Validação", fmt(dist_split.get("validacao",0)), f"{dist_split.get('validacao',0)/len(dft)*100:.1f}%"],
       ["Teste", fmt(dist_split.get("teste",0)), f"{dist_split.get('teste',0)/len(dft)*100:.1f}%"]])
     abnt.figura_abnt(doc, "8", "Particionamento temporal por ano (estratificado)", g_split)
-    abnt.tabela_abnt(doc, "12", "Notícias por ano e conjunto",
+    abnt.tabela_abnt(doc, "14", "Notícias por ano e conjunto",
      ["Ano","Treino","Validação","Teste"],
      [[str(a), fmt(tab_split.loc[a,"treino"]), fmt(tab_split.loc[a,"validacao"]), fmt(tab_split.loc[a,"teste"])]
       for a in tab_split.index])
