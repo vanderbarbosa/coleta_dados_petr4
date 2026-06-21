@@ -128,9 +128,14 @@ TERMOS_RELEVANCIA = ["petrobras", "petr4", "petr3", "petroleira", "petróleo",
                      "petroleo", "brent", "opep", "barril", "combustível"]
 
 # ── Caminhos ──────────────────────────────────────────────────────────────────
+# Raiz do projeto: este script vive em src/coleta/, então sobe 2 níveis.
+try:
+    _RAIZ = Path(__file__).resolve().parents[2]
+except NameError:           # execução interativa (ex.: %run no Colab)
+    _RAIZ = Path.cwd()
 _NO_COLAB   = Path("/content/drive/MyDrive").exists()
 PASTA_BASE  = Path("/content/drive/MyDrive/Mestrado_PETR4") if _NO_COLAB \
-              else Path("./Mestrado_PETR4")
+              else _RAIZ / "Mestrado_PETR4"
 PASTA_BASE.mkdir(parents=True, exist_ok=True)
 
 ARQUIVO_CSV = PASTA_BASE / ("base_textual_wordpress_TESTE.csv" if MODO_TESTE

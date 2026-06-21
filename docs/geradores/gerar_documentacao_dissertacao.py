@@ -11,6 +11,7 @@
 #   Saída: Documentacao_Etapa1_Engenharia_de_Dados_PETR4.docx
 # ==============================================================================
 
+import sys
 from pathlib import Path
 import pandas as pd
 import numpy as np
@@ -18,13 +19,17 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
+# Raiz do projeto: este gerador vive em docs/geradores/, então sobe 2 níveis.
+RAIZ = Path(__file__).resolve().parents[2]
+# O módulo ABNT reutilizável fica em src/comum/
+sys.path.insert(0, str(RAIZ / "src" / "comum"))
 import abnt_docx as abnt
 
-PASTA = Path("./Mestrado_PETR4")
+PASTA = RAIZ / "Mestrado_PETR4"
 ARQ_ORIGINAL = PASTA / "base_textual_petr4_wordpress_2018_2025.csv"
 ARQ_TRATADA  = PASTA / "base_textual_petr4_tratada.csv"
-ASSETS = Path("./_doc_assets"); ASSETS.mkdir(exist_ok=True)
-SAIDA = Path("Documentacao_Etapa1_Engenharia_de_Dados_PETR4.docx")
+ASSETS = RAIZ / "_doc_assets"; ASSETS.mkdir(exist_ok=True)
+SAIDA = RAIZ / "docs" / "saida" / "Documentacao_Etapa1_Engenharia_de_Dados_PETR4.docx"
 
 plt.rcParams.update({"figure.dpi": 150, "font.size": 11,
                      "axes.spines.top": False, "axes.spines.right": False})

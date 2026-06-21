@@ -53,14 +53,21 @@ from pathlib import Path
 # BLOCO 1 — CONFIGURAÇÕES
 # ==============================================================================
 
+# Raiz do projeto: este script vive em src/coleta/, então sobe 2 níveis.
+try:
+    _RAIZ = Path(__file__).resolve().parents[2]
+except NameError:           # execução interativa (ex.: %run no Colab)
+    _RAIZ = Path.cwd()
 _NO_COLAB  = Path("/content/drive/MyDrive").exists()
 PASTA_BASE = Path("/content/drive/MyDrive/Mestrado_PETR4") if _NO_COLAB \
-             else Path("./Mestrado_PETR4")
+             else _RAIZ / "Mestrado_PETR4"
 
 ARQ_ORIGINAL = PASTA_BASE / "base_textual_petr4_wordpress_2018_2025.csv"   # INTACTA
 ARQ_TRATADA  = PASTA_BASE / "base_textual_petr4_tratada.csv"
 ARQ_SPLITDEF = PASTA_BASE / "definicao_split_temporal.csv"
-ARQ_DOC      = Path("DOCUMENTACAO_BASES.md")   # na raiz do projeto (versionável)
+# Documentação versionável vai para docs/ (em ambiente local). No Colab, ao lado da base.
+ARQ_DOC      = (_RAIZ / "docs" / "DOCUMENTACAO_BASES.md") if not _NO_COLAB \
+               else PASTA_BASE / "DOCUMENTACAO_BASES.md"
 
 # ── Filtragem LEVE (limpeza de qualidade — NÃO é filtro temático) ─────────────
 # Remove apenas notícias degeneradas, preservando toda a amplitude temática

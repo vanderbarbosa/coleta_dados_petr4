@@ -20,27 +20,41 @@ O fluxo é organizado em **4 scripts sequenciais**. Cada script consome a saída
 └──────────┘   └──────────┘   └──────────┘   └──────────┘
 ```
 
-A maioria dos scripts foi escrita para rodar no **Google Colab** (montam o Google Drive em `/content/drive/MyDrive/Mestrado_PETR4/`). O script de coleta multi-fonte ([02_coleta_noticias_petr4.py](02_coleta_noticias_petr4.py)) detecta automaticamente se está no Colab ou em ambiente local.
+A maioria dos scripts foi escrita para rodar no **Google Colab** (montam o Google Drive em `/content/drive/MyDrive/Mestrado_PETR4/`). O script de coleta multi-fonte ([02_coleta_noticias_petr4.py](obsoleto/02_coleta_noticias_petr4.py)) detecta automaticamente se está no Colab ou em ambiente local.
 
 ---
 
 ## 🗂️ Estrutura do Repositório
 
-| Arquivo | Papel |
-|---------|-------|
-| [01_coleta_dados_financeiros_petr4.py](01_coleta_dados_financeiros_petr4.py) | **Script 01** — coleta preços da PETR4 e calcula o Log-Retorno |
-| [02_coleta_noticias_gdelt_petr4.py](02_coleta_noticias_gdelt_petr4.py) | **Script 02 (versão simples)** — coleta de notícias apenas via GDELT |
-| [02_coleta_noticias_petr4.py](02_coleta_noticias_petr4.py) | **Script 02 (versão multi-fonte, v3.1)** — GDELT + NewsAPI + 25 RSS feeds, com dedup, logging e retomada |
-| [02b_coleta_noticias_wordpress_petr4.py](02b_coleta_noticias_wordpress_petr4.py) | ⭐ **Script 02b (recomendado)** — coleta via WordPress REST API de 5 portais, com **hora exata de publicação** e a **taxonomia de 7 categorias** |
-| [02c_preparar_base_treino_teste_validacao.py](02c_preparar_base_treino_teste_validacao.py) | **Script 02c** — gera a base **tratada** (filtragem leve) e o **split treino/validação/teste (60/15/25)** a partir da base bruta (que permanece intacta) |
-| [02_coleta_noticias_petr4_OLD.py](02_coleta_noticias_petr4_OLD.py) | Versão 3.0 do script acima, preservada para histórico |
-| [teste_rss_feeds.py](teste_rss_feeds.py) | **Script 02a** — diagnóstico que valida quais RSS feeds estão ativos |
-| [03_analise_sentimento_bertimbau_petr4.py](03_analise_sentimento_bertimbau_petr4.py) | **Script 03** — análise de sentimento (NLP) e construção do Índice de Sentimento da Mídia (ISM) |
-| [04_modelagem_garch_svm_xgboost_petr4.py](04_modelagem_garch_svm_xgboost_petr4.py) | **Script 04** — testes estatísticos, GARCH(1,1), Data Fusion e modelos preditivos |
-| [abnt_docx.py](abnt_docx.py) | Módulo reutilizável de formatação **ABNT** (NBR 14724/6023/6024/10520) para os documentos Word de cada etapa |
-| [gerar_documentacao_dissertacao.py](gerar_documentacao_dissertacao.py) | Gera o documento Word **em ABNT** da Etapa 1 (`Documentacao_Etapa1_Engenharia_de_Dados_PETR4.docx`) — texto corrido, código, tabelas e gráficos reais |
-| [GUIA_DE_EXECUCAO.md](GUIA_DE_EXECUCAO.md) | Guia passo a passo de execução (foco em Colab) |
-| `Mestrado_PETR4/` | Pasta de dados — saídas de cada script (CSV, gráficos, logs, relatórios) |
+```
+.
+├── src/
+│   ├── coleta/        01 (financeiro), 02b (WordPress), 02c (base + split)
+│   ├── sentimento/    03 (BERTimbau/XLM-R + ISM)
+│   ├── modelagem/     04 (GARCH + SVM/XGBoost + ablação)
+│   └── comum/         abnt_docx.py (formatação ABNT reutilizável)
+├── docs/
+│   ├── geradores/     gerar_documentacao_dissertacao.py
+│   ├── saida/         *.docx gerados (gitignored)
+│   ├── DOCUMENTACAO_BASES.md, GUIA_DE_EXECUCAO.md
+├── obsoleto/          versões antigas desativadas (GDELT, NewsAPI, RSS)
+├── Mestrado_PETR4/    dados — saídas de cada script (gitignored)
+├── Referencial_Teorico/   29 PDFs do referencial (gitignored)
+├── Exame_qualificacao/    materiais da banca (gitignored)
+└── README.md
+```
+
+| Script | Papel |
+|--------|-------|
+| [src/coleta/01_coleta_dados_financeiros_petr4.py](src/coleta/01_coleta_dados_financeiros_petr4.py) | **Script 01** — preços da PETR4 (yfinance) e Log-Retorno |
+| [src/coleta/02b_coleta_noticias_wordpress_petr4.py](src/coleta/02b_coleta_noticias_wordpress_petr4.py) | ⭐ **Script 02b** — coleta via WordPress REST API (5 portais), com **hora exata** e **taxonomia de 7 categorias** |
+| [src/coleta/02c_preparar_base_treino_teste_validacao.py](src/coleta/02c_preparar_base_treino_teste_validacao.py) | **Script 02c** — base **tratada** (filtragem leve) + **split treino/validação/teste (60/15/25)**; base bruta intacta |
+| [src/sentimento/03_analise_sentimento_bertimbau_petr4.py](src/sentimento/03_analise_sentimento_bertimbau_petr4.py) | **Script 03** — análise de sentimento (NLP) e Índice de Sentimento da Mídia (ISM) |
+| [src/modelagem/04_modelagem_garch_svm_xgboost_petr4.py](src/modelagem/04_modelagem_garch_svm_xgboost_petr4.py) | **Script 04** — testes estatísticos, GARCH(1,1), Data Fusion, modelos e ablação |
+| [src/comum/abnt_docx.py](src/comum/abnt_docx.py) | Módulo reutilizável de formatação **ABNT** (NBR 14724/6023/6024/10520) |
+| [docs/geradores/gerar_documentacao_dissertacao.py](docs/geradores/gerar_documentacao_dissertacao.py) | Gera o documento Word **ABNT** da Etapa 1 |
+| [docs/DOCUMENTACAO_BASES.md](docs/DOCUMENTACAO_BASES.md) · [docs/GUIA_DE_EXECUCAO.md](docs/GUIA_DE_EXECUCAO.md) | Documentação das bases e guia de execução (Colab) |
+| [obsoleto/](obsoleto/) | Coletores antigos **desativados** (GDELT, multi-fonte, RSS) — ver [obsoleto/LEIA-ME.md](obsoleto/LEIA-ME.md) |
 
 ---
 
@@ -64,7 +78,7 @@ Para os demais scripts, as bibliotecas principais são: `yfinance`, `transformer
 
 ## ▶️ Como Executar (resumo)
 
-> Detalhes completos, prints esperados e tabela de erros comuns estão em **[GUIA_DE_EXECUCAO.md](GUIA_DE_EXECUCAO.md)**.
+> Detalhes completos, prints esperados e tabela de erros comuns estão em **[GUIA_DE_EXECUCAO.md](docs/GUIA_DE_EXECUCAO.md)**.
 
 ### Script 01 — Coleta Financeira `(~3 min)`
 Baixa a série diária da PETR4 (B3) via **yfinance** e calcula o Log-Retorno `Rt = ln(Pt / Pt-1)`.
@@ -72,14 +86,14 @@ Baixa a série diária da PETR4 (B3) via **yfinance** e calcula o Log-Retorno `R
 
 ### Script 02 — Coleta de Notícias `(simples: ~25–45 min · multi-fonte: 10–12 h)`
 Coleta notícias sobre Petrobras/PETR4 (2018–2025). Duas opções:
-- **Simples** ([02_coleta_noticias_gdelt_petr4.py](02_coleta_noticias_gdelt_petr4.py)): apenas GDELT, janelas mensais, ideal para Colab.
-- **Multi-fonte v3.1** ([02_coleta_noticias_petr4.py](02_coleta_noticias_petr4.py)): GDELT + NewsAPI + 25 RSS feeds, com taxonomia de 7 categorias temáticas, deduplicação por hash SHA-256, gravação linha a linha, logging auditável (`coleta_noticias.log`) e **retomada automática** (basta rodar de novo).
+- **Simples** ([02_coleta_noticias_gdelt_petr4.py](obsoleto/02_coleta_noticias_gdelt_petr4.py)): apenas GDELT, janelas mensais, ideal para Colab.
+- **Multi-fonte v3.1** ([02_coleta_noticias_petr4.py](obsoleto/02_coleta_noticias_petr4.py)): GDELT + NewsAPI + 25 RSS feeds, com taxonomia de 7 categorias temáticas, deduplicação por hash SHA-256, gravação linha a linha, logging auditável (`coleta_noticias.log`) e **retomada automática** (basta rodar de novo).
 
 > ℹ️ **NewsAPI desativada por padrão** (`USAR_NEWSAPI = False`). O plano gratuito só cobre os **últimos ~30 dias** (confirmado em teste: requisições a datas de 2018 retornam HTTP 426). Como todo o recorte da pesquisa (2018–2025) é mais antigo que isso, a NewsAPI gratuita não acrescenta notícias ao corpus — a cobertura histórica vem do GDELT e dos RSS. Para reativar com um plano que tenha histórico estendido, troque a flag para `True` (instruções no Bloco 3 do script).
 
 > ⚠️ **Atenção ao GDELT:** a API pública bloqueia o IP por volume de requisições (HTTP 429 persistente). Antes de coletas longas, valide o IP abrindo no navegador:
 > `https://api.gdeltproject.org/api/v2/doc/doc?query=%22Petrobras%22&mode=artlist&format=json`
-> Se retornar 429, aguarde 2–4 h. Rode antes [teste_rss_feeds.py](teste_rss_feeds.py) para conferir os feeds.
+> Se retornar 429, aguarde 2–4 h. Rode antes [teste_rss_feeds.py](obsoleto/teste_rss_feeds.py) para conferir os feeds.
 
 **Gera:** `base_textual_petr4_2018_2025.csv`
 
@@ -97,7 +111,7 @@ Fonte **recomendada** desde jun/2026, após a banca (Prof. Emerson) exigir **hor
 A partir da base bruta (que **permanece intacta**, jamais recoletada), gera as bases derivadas para a modelagem:
 - **Base tratada** (`base_textual_petr4_tratada.csv`): **filtragem leve** (limpeza de qualidade) — remove apenas notícias degeneradas (título vazio, com menos de 15 caracteres ou marcadores de remoção). **Não** há filtro temático, então **todas as 7 categorias são preservadas** (mantém a base adequada para a ablação). Na prática, retém ~100% do corpus (só ~19 linhas removidas).
 - **Split temporal 60/15/25** treino/validação/teste, **estratificado por ano** (todos os anos nos três conjuntos) e **cronológico dentro do ano** (sem embaralhar → sem *data leakage*), por **dias inteiros** (um dia nunca é dividido). Grava a coluna `conjunto` e o mapa `definicao_split_temporal.csv` (Data → conjunto) para uso consistente no Script 04.
-- **Documentação** completa das bases (original + tratada + split) em **[DOCUMENTACAO_BASES.md](DOCUMENTACAO_BASES.md)**, gerada automaticamente com os números reais.
+- **Documentação** completa das bases (original + tratada + split) em **[DOCUMENTACAO_BASES.md](docs/DOCUMENTACAO_BASES.md)**, gerada automaticamente com os números reais.
 
 ### Script 03 — Análise de Sentimento `(GPU: ~15–30 min · CPU: 2–4 h)`
 Classifica cada notícia em Positivo/Neutro/Negativo usando o modelo multilíngue `cardiffnlp/twitter-xlm-roberta-base-sentiment` (referido como "BERTimbau" na dissertação). Calcula o **Índice de Sentimento da Mídia (ISM)** — média diária de `polaridade × confiança` — com **alinhamento temporal**: notícias publicadas após o fechamento da B3 (17h) são atribuídas ao próximo pregão, evitando *data leakage*. Detecta o schema do corpus automaticamente (02b ou GDELT) e, quando há coluna `categoria`, gera também um **ISM por categoria** para a análise de ablação.
@@ -140,7 +154,7 @@ Núcleo da dissertação:
 
 - **Por que Log-Retorno?** Garante aditividade temporal e aproxima a série da estacionariedade (requisito do GARCH e dos modelos de ML).
 - **Por que GARCH(1,1)?** Justificado pelo teste ARCH-LM, que confirma heterocedasticidade condicional (volatilidade não constante / *volatility clusters*).
-- **Por que abordagem multi-fonte de notícias?** Evitar o *viés de cobertura* de uma única fonte (Heston & Sinha, 2017). A taxonomia de 7 categorias (empresa, mercado de petróleo, geopolítica, infraestrutura, sanções/navegação, liderança/política, macroeconomia) ancora-se em Hamilton (1983), Kilian (2009), Caldara & Iacoviello (2022), entre outros — ver o cabeçalho de [02_coleta_noticias_petr4.py](02_coleta_noticias_petr4.py) para a documentação completa e as referências.
+- **Por que abordagem multi-fonte de notícias?** Evitar o *viés de cobertura* de uma única fonte (Heston & Sinha, 2017). A taxonomia de 7 categorias (empresa, mercado de petróleo, geopolítica, infraestrutura, sanções/navegação, liderança/política, macroeconomia) ancora-se em Hamilton (1983), Kilian (2009), Caldara & Iacoviello (2022), entre outros — ver o cabeçalho de [02_coleta_noticias_petr4.py](obsoleto/02_coleta_noticias_petr4.py) para a documentação completa e as referências.
 - **Por que a hora exata importa (timestamp)?** Sem o horário de publicação não é possível garantir o alinhamento Lead-Lag — uma notícia das 20h (mercado fechado) só pode impactar o pregão seguinte. Capturar o timestamp real (Script 02b) é o que torna válida a prova de causalidade com o GARCH(1,1). Rota metodológica análoga a Cardoso & Nakane (2024).
 - **O que é a análise de ablação?** Remover uma categoria de notícia por vez e medir a queda de desempenho do modelo. A maior queda revela a categoria mais informativa para prever o PETR4 — uma contribuição científica adicional possibilitada pela taxonomia.
 - **Como citar o GDELT:** Leetaru, K.; Schrodt, P. A. *GDELT: Global data on events, location, and tone, 1979–2012.* ISA Annual Convention, 2013.
