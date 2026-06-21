@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { api } from "../api.js";
+import Jornada from "./Jornada.jsx";
 
 const EXEMPLOS = [
   "Guerra leva ao fechamento do Estreito de Ormuz, impossibilitando a navegação dos navios petroleiros.",
@@ -26,7 +27,7 @@ export default function Previsao() {
     if (t) setTexto(t);
     setErro(null); setCarregando(true); setRes(null);
     api.prever(txt)
-      .then((r) => (r.erro ? setErro(r.erro) : setRes(r)))
+      .then((r) => (r.erro ? setErro(r.erro) : setRes({ ...r, frase: txt })))
       .catch((e) => setErro("Não foi possível avaliar. A API de previsão está no ar? " + e.message))
       .finally(() => setCarregando(false));
   }
@@ -64,14 +65,9 @@ export default function Previsao() {
 
       {res && (
         <>
-          <div className={`veredito ${classe(res.direcao)}`} style={{ marginBottom: 18 }}>
-            <span className="seta">{SETA[res.direcao] || "●"}</span>
-            <div>
-              <div className="txt">{TXT[res.direcao] || "—"}</div>
-              <div style={{ fontWeight: 500, fontSize: ".92rem", marginTop: 2, opacity: .9 }}>{res.explicacao}</div>
-            </div>
-          </div>
+          <Jornada res={res} />
 
+          <h2>Detalhes da análise</h2>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 18 }}>
             <span className={`tag ${res.sentimento.rotulo === "Positivo" ? "verde" : res.sentimento.rotulo === "Negativo" ? "verm" : "cinza"}`}>
               Sentimento: {res.sentimento.rotulo} ({res.sentimento.indice})
