@@ -2,18 +2,17 @@ import React, { useState } from "react";
 import { api } from "../api.js";
 
 const EXEMPLOS = [
-  "Petrobras anuncia dividendos recordes e lucro acima do esperado no trimestre",
-  "Governo anuncia intervenção e troca o comando da Petrobras; ação despenca",
-  "Guerra no Oriente Médio eleva o preço do petróleo Brent acima de US$ 90",
+  "Guerra leva ao fechamento do Estreito de Ormuz, impossibilitando a navegação dos navios petroleiros.",
+  "Petrobras anuncia dividendos recordes e lucro acima do esperado no trimestre.",
+  "Governo anuncia intervenção e demite o presidente da Petrobras.",
 ];
 
-const COR = { alta: "#1a9641", baixa: "#d7191c", indefinida: "#6b7884", sem_influencia: "#6b7884" };
-const ROTULO = {
-  alta: "▲ Tende à ALTA",
-  baixa: "▼ Tende à BAIXA",
-  indefinida: "● Direção indefinida",
-  sem_influencia: "○ Sem influência relevante",
+const SETA = { alta: "▲", baixa: "▼", indefinida: "●", sem_influencia: "○", neutra: "●", contextual: "◆" };
+const TXT = {
+  alta: "Tende à ALTA", baixa: "Tende à BAIXA", indefinida: "Direção indefinida",
+  sem_influencia: "Sem influência relevante", neutra: "Sem direção clara", contextual: "Efeito contextual",
 };
+const classe = (d) => (d === "alta" || d === "baixa") ? d : (d === "sem_influencia" ? "sem_influencia" : "indefinida");
 
 export default function Previsao() {
   const [texto, setTexto] = useState("");
@@ -28,7 +27,7 @@ export default function Previsao() {
     setErro(null); setCarregando(true); setRes(null);
     api.prever(txt)
       .then((r) => (r.erro ? setErro(r.erro) : setRes(r)))
-      .catch((e) => setErro("Não foi possível avaliar. A API de previsão está no ar (ambiente petr4)? " + e.message))
+      .catch((e) => setErro("Não foi possível avaliar. A API de previsão está no ar? " + e.message))
       .finally(() => setCarregando(false));
   }
 
@@ -36,17 +35,17 @@ export default function Previsao() {
     <div>
       <h1>Avaliar uma notícia</h1>
       <p className="sub">
-        Informe o texto de uma notícia. O sistema avalia o <strong>sentimento</strong> (FinBERT-PT-BR),
-        se a notícia é <strong>relevante</strong> para a PETR4 e a <strong>direção prevista</strong> do
-        próximo pregão pelo modelo XGBoost (preços + GARCH + sentimento).
+        Informe o texto de uma manchete. O sistema identifica o <strong>sentimento</strong> (FinBERT-PT-BR),
+        a <strong>categoria temática</strong> e a <strong>direção provável</strong> da PETR4, combinando uma
+        leitura econômica setorial (fundamentada na literatura) com o modelo estatístico treinado.
       </p>
 
       <div className="painel">
         <div className="campo" style={{ width: "100%" }}>
           <label htmlFor="texto">Texto da notícia</label>
           <textarea id="texto" rows={4} value={texto} onChange={(e) => setTexto(e.target.value)}
-            placeholder="Ex.: Petrobras aprova novo plano de investimentos e eleva projeção de produção…"
-            style={{ padding: "10px 12px", border: "1px solid var(--cinza-200)", borderRadius: 8, fontSize: ".95rem", fontFamily: "inherit", resize: "vertical" }} />
+            placeholder="Ex.: Ataque a refinaria reduz a oferta global e eleva o preço do barril de petróleo…"
+            style={{ resize: "vertical" }} />
         </div>
         <div style={{ display: "flex", gap: 10, marginTop: 12, flexWrap: "wrap" }}>
           <button className="btn" onClick={() => avaliar()} disabled={carregando}>
@@ -57,34 +56,59 @@ export default function Previsao() {
           ))}
         </div>
         {erro && <div className="aviso" style={{ marginTop: 14 }}>{erro}</div>}
-        <p className="sub" style={{ margin: "12px 0 0", fontSize: ".8rem" }}>
-          A primeira avaliação pode levar alguns segundos (carregamento do modelo de linguagem).
+        {carregando && <div className="carregando"><span className="spinner" /> Processando o modelo de linguagem… (a 1ª vez pode levar alguns segundos)</div>}
+        <p className="sub" style={{ margin: "10px 0 0", fontSize: ".8rem" }}>
+          Dica: experimente os exemplos. A primeira avaliação carrega o modelo na memória.
         </p>
       </div>
 
       {res && (
-        <div className="painel">
-          <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
-            <span style={{ fontSize: "1.3rem", fontWeight: 700, color: COR[res.direcao] }}>
-              {ROTULO[res.direcao]}
-            </span>
-            <span className="tag">Sentimento: {res.sentimento.rotulo} ({res.sentimento.indice})</span>
-            <span className="tag">Relevante: {res.relevante ? "sim" : "não"}</span>
-            <span className="tag">P(alta) = {(res.prob_alta * 100).toFixed(1)}%</span>
+        <>
+          <div className={`veredito ${classe(res.direcao)}`} style={{ marginBottom: 18 }}>
+            <span className="seta">{SETA[res.direcao] || "●"}</span>
+            <div>
+              <div className="txt">{TXT[res.direcao] || "—"}</div>
+              <div style={{ fontWeight: 500, fontSize: ".92rem", marginTop: 2, opacity: .9 }}>{res.explicacao}</div>
+            </div>
           </div>
-          <p style={{ marginTop: 12 }}>{res.explicacao}</p>
 
-          <table style={{ marginTop: 8 }}>
-            <tbody>
-              <tr><th>Modelo</th><td>{res.contexto.modelo}</td></tr>
-              <tr><th>Acurácia / AUC (teste)</th><td>{res.contexto.acuracia_teste}% / {res.contexto.auc_teste}</td></tr>
-              <tr><th>Contexto (referência {res.contexto.data_referencia})</th>
-                <td>retorno recente {res.contexto.retorno_recente_pct}% · volatilidade {res.contexto.volatilidade_recente}</td></tr>
-            </tbody>
-          </table>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 18 }}>
+            <span className={`tag ${res.sentimento.rotulo === "Positivo" ? "verde" : res.sentimento.rotulo === "Negativo" ? "verm" : "cinza"}`}>
+              Sentimento: {res.sentimento.rotulo} ({res.sentimento.indice})
+            </span>
+            <span className="tag">{res.categoria.id ? res.categoria.rotulo : "Sem categoria"}</span>
+            <span className={`tag ${res.relevante ? "verde" : "cinza"}`}>
+              Relevância: {res.nivel_relevancia}
+            </span>
+          </div>
 
-          <div className="aviso" style={{ marginTop: 14 }}>{res.aviso}</div>
-        </div>
+          <div className="grade-2">
+            <div className="painel" style={{ margin: 0 }}>
+              <h2 style={{ marginTop: 0 }}>📚 Leitura econômica setorial</h2>
+              <p style={{ marginTop: 0 }}><strong>{TXT[res.leitura_setorial.direcao] || "—"}</strong></p>
+              <p style={{ color: "var(--tinta-2)", fontSize: ".92rem" }}>{res.leitura_setorial.justificativa}</p>
+            </div>
+            <div className="painel" style={{ margin: 0 }}>
+              <h2 style={{ marginTop: 0 }}>📈 Modelo estatístico (dados)</h2>
+              <p style={{ marginTop: 0 }}>
+                <strong>{TXT[res.leitura_modelo.direcao] || "—"}</strong> · P(alta) = {(res.leitura_modelo.prob_alta * 100).toFixed(1)}%
+              </p>
+              <p style={{ color: "var(--tinta-2)", fontSize: ".92rem" }}>{res.leitura_modelo.nota}</p>
+            </div>
+          </div>
+
+          <div className="painel">
+            <table>
+              <tbody>
+                <tr><th>Modelo</th><td>{res.contexto.modelo}</td></tr>
+                <tr><th>Acurácia / AUC (teste)</th><td>{res.contexto.acuracia_teste}% · {res.contexto.auc_teste}</td></tr>
+                <tr><th>Contexto (ref. {res.contexto.data_referencia})</th>
+                  <td>retorno recente {res.contexto.retorno_recente_pct}% · volatilidade {res.contexto.volatilidade_recente}</td></tr>
+              </tbody>
+            </table>
+            <div className="aviso" style={{ marginTop: 14 }}>{res.aviso}</div>
+          </div>
+        </>
       )}
     </div>
   );

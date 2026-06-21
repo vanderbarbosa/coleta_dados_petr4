@@ -22,8 +22,11 @@ export default function App() {
       <header className="topo">
         <div className="container">
           <div className="marca">
-            PETR4 · Sentimento &amp; Previsão
-            <small>Dissertação de Mestrado — PUCPR/PPGIa</small>
+            <span className="dot" aria-hidden="true" />
+            <span>
+              PETR4 · Sentimento &amp; Previsão
+              <small>Dissertação de Mestrado — PUCPR/PPGIa</small>
+            </span>
           </div>
           <nav className="nav" aria-label="Navegação principal">
             {PAGINAS.map((p) => (

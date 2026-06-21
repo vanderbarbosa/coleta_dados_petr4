@@ -46,7 +46,7 @@ export default function Precos() {
       </div>
 
       <div className="painel">
-        {carregando ? <div className="carregando">Carregando…</div> : (
+        {carregando ? <div className="carregando"><span className="spinner" /> Carregando…</div> : (
           <>
             <p className="sub" style={{ margin: "0 0 8px" }}>
               <strong>{dados.length.toLocaleString("pt-BR")}</strong> pregões

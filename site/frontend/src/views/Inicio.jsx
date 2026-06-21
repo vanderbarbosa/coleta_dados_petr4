@@ -13,13 +13,15 @@ export default function Inicio() {
 
   return (
     <div className="prosa">
-      <h1>Sentimento de Notícias e a Previsão da PETR4</h1>
-      <p className="sub">
-        Plataforma interativa da pesquisa de mestrado que investiga se o sentimento extraído de
-        notícias financeiras melhora a previsão da direção e da volatilidade do ativo PETR4.
-      </p>
+      <div className="hero">
+        <h1>Sentimento de Notícias e a Previsão da PETR4</h1>
+        <p className="sub">
+          Plataforma interativa da pesquisa de mestrado que investiga se o sentimento extraído de
+          notícias financeiras melhora a previsão da direção e da volatilidade do ativo PETR4.
+        </p>
+      </div>
 
-      {erro && <div className="aviso">Não foi possível carregar os números (a API está no ar?). Detalhe: {erro}</div>}
+      {erro && <div className="aviso" style={{ marginBottom: 18 }}>Não foi possível carregar os números (a API está no ar?). Detalhe: {erro}</div>}
 
       <div className="cartoes">
         <div className="cartao"><div className="num">{fmt(est?.noticias_total)}</div><div className="rot">Notícias coletadas (com data e hora)</div></div>

@@ -164,8 +164,60 @@ def estatisticas():
 # Requer o ambiente 'petr4' (torch + transformers + xgboost). Os imports são
 # preguiçosos (lazy) para que os endpoints de dados funcionem mesmo no 'base'.
 
-TERMOS_RELEVANCIA = getattr(tx, "TERMOS_RELEVANCIA_ESTRITA", ["petrobras", "petr4", "petróleo"])
 _modelo_cache = {}
+
+# Categorias de OFERTA (choques que tendem a mover o preço do petróleo).
+_CATS_OFERTA = {"CAT2_Mercado_Petroleo", "CAT3_Geopolitica",
+                "CAT4_Infraestrutura", "CAT5_Sancoes_Navegacao"}
+
+
+def _detectar_categoria(texto_low: str):
+    """Detecta a categoria temática pela taxonomia completa (152 termos).
+    Retorna (categoria_id, rotulo, qtd_termos_casados) ou (None, None, 0)."""
+    melhor, melhor_qtd = None, 0
+    try:
+        for cat, termos in tx.TERMOS_POR_CATEGORIA.items():
+            qtd = sum(1 for t in termos if t.lower() in texto_low)
+            if qtd > melhor_qtd:
+                melhor, melhor_qtd = cat, qtd
+    except Exception:
+        pass
+    if melhor is None:
+        return None, None, 0
+    return melhor, ROTULOS.get(melhor, melhor), melhor_qtd
+
+
+def _leitura_setorial(cat, polaridade):
+    """Interpretação econômica QUALITATIVA por categoria, fundamentada na
+    literatura (Kilian, 2009; Hamilton, 1983). Distingue o efeito sobre o
+    MERCADO do efeito sobre a PETR4 (produtora de petróleo) — exatamente a
+    distinção apontada pela banca."""
+    if cat == "CAT1_Empresa":
+        if polaridade > 0:
+            return "alta", "Notícia corporativa de tom positivo tende a favorecer a PETR4."
+        if polaridade < 0:
+            return "baixa", "Notícia corporativa de tom negativo tende a pressionar a PETR4."
+        return "neutra", "Notícia corporativa de tom neutro, sem direção clara."
+    if cat in _CATS_OFERTA:
+        if polaridade < 0:
+            return "alta", ("Choque de OFERTA com teor de disrupção (conflito, bloqueio, sanção, "
+                            "interrupção) tende a ELEVAR o preço do petróleo; como a Petrobras é "
+                            "produtora da commodity, o efeito sobre a PETR4 costuma ser FAVORÁVEL — "
+                            "ainda que o tom da notícia seja negativo para o mercado em geral "
+                            "(Kilian, 2009; Hamilton, 1983).")
+        if polaridade > 0:
+            return "baixa", ("Distensão ou aumento de oferta tende a REDUZIR o preço do petróleo, "
+                             "o que costuma ser DESFAVORÁVEL para a Petrobras.")
+        return "neutra", "Evento de oferta de tom neutro, sem direção clara."
+    if cat == "CAT6_Governanca":
+        if polaridade < 0:
+            return "baixa", "Risco de governança/intervenção estatal tende a pressionar a PETR4."
+        if polaridade > 0:
+            return "alta", "Sinal de governança favorável tende a beneficiar a PETR4."
+        return "neutra", "Notícia de governança de tom neutro."
+    # CAT7 — Macro/Energia: efeito ambíguo
+    return "contextual", ("Fator macroeconômico (câmbio, juros, demanda, transição energética) de "
+                          "efeito ambíguo, dependente do contexto.")
 
 
 def _carregar_preditor():
@@ -214,31 +266,55 @@ def prever(entrada: EntradaPrevisao):
     indice = polaridade * float(r["score"])
     rotulo_sent = "Positivo" if polaridade > 0 else ("Negativo" if polaridade < 0 else "Neutro")
 
-    # 2) Relevância temática (relacionada ao ativo/commodity)
+    # 2) Relevância + categoria (taxonomia COMPLETA — 152 termos)
     alvo = texto.lower()
-    relevante = any(t in alvo for t in TERMOS_RELEVANCIA)
+    cat_id, cat_rotulo, qtd_termos = _detectar_categoria(alvo)
+    relevante = cat_id is not None
+    nivel_relevancia = ("alta" if qtd_termos >= 2 else "media") if relevante else "baixa"
 
-    # 3) Previsão de direção do próximo pregão (XGBoost Data Fusion)
+    # 3) Leitura ESTATÍSTICA: direção do próximo pregão (XGBoost Data Fusion)
     import numpy as np
     X = np.array([[meta["retorno_recente"], meta["volatilidade_recente"], indice]])
     prob_alta = float(modelo.predict_proba(X)[0, 1])
-
-    # 4) Veredito (honesto: só afirma direção com confiança mínima)
-    if not relevante:
-        direcao, explica = "sem_influencia", "A notícia não aparenta relação direta com a Petrobras/PETR4 ou com o mercado de petróleo."
-    elif prob_alta >= 0.55:
-        direcao, explica = "alta", "O modelo indica tendência de ALTA no próximo pregão."
+    if prob_alta >= 0.55:
+        dir_modelo = "alta"
     elif prob_alta <= 0.45:
-        direcao, explica = "baixa", "O modelo indica tendência de BAIXA no próximo pregão."
+        dir_modelo = "baixa"
     else:
-        direcao, explica = "indefinida", "O modelo não identifica direção clara (provável baixa influência)."
+        dir_modelo = "indefinida"
+
+    # 4) Leitura ECONÔMICA SETORIAL (qualitativa, fundamentada na literatura)
+    if relevante:
+        dir_setorial, just_setorial = _leitura_setorial(cat_id, polaridade)
+    else:
+        dir_setorial, just_setorial = "sem_influencia", \
+            "A notícia não casa com nenhum termo da taxonomia (Petrobras, mercado de petróleo, " \
+            "geopolítica, infraestrutura, sanções, governança ou macroeconomia)."
+
+    # 5) Veredito-síntese: prioriza a leitura econômica quando relevante (mais
+    #    interpretável); o número estatístico do modelo é exibido em paralelo.
+    if not relevante:
+        direcao, explica = "sem_influencia", "Notícia sem relevância aparente para a PETR4."
+    elif dir_setorial in ("alta", "baixa"):
+        seta = "ALTA" if dir_setorial == "alta" else "BAIXA"
+        direcao, explica = dir_setorial, f"Tendência de {seta}. {just_setorial}"
+    else:
+        direcao, explica = "indefinida", just_setorial
 
     return {
-        "sentimento": {"rotulo": rotulo_sent, "indice": round(indice, 4), "confianca": round(float(r["score"]), 4)},
+        "sentimento": {"rotulo": rotulo_sent, "indice": round(indice, 4),
+                       "confianca": round(float(r["score"]), 4)},
         "relevante": relevante,
-        "prob_alta": round(prob_alta, 4),
+        "nivel_relevancia": nivel_relevancia,
+        "categoria": {"id": cat_id, "rotulo": cat_rotulo, "termos_casados": qtd_termos},
         "direcao": direcao,
         "explicacao": explica,
+        "leitura_setorial": {"direcao": dir_setorial, "justificativa": just_setorial},
+        "leitura_modelo": {
+            "direcao": dir_modelo, "prob_alta": round(prob_alta, 4),
+            "nota": "Modelo estatístico baseado em sentimento agregado; sua acurácia (~53%) e o uso "
+                    "de polaridade genérica limitam a captura da distinção mercado × ativo.",
+        },
         "contexto": {
             "data_referencia": meta["data_referencia"],
             "retorno_recente_pct": round(meta["retorno_recente"], 3),
@@ -247,7 +323,7 @@ def prever(entrada: EntradaPrevisao):
             "acuracia_teste": meta["acuracia_teste_fusion"],
             "auc_teste": meta["auc_teste_fusion"],
         },
-        "aviso": "Previsão de natureza acadêmica/experimental — não é recomendação de investimento.",
+        "aviso": "Análise acadêmica/experimental — não é recomendação de investimento.",
     }
 
 

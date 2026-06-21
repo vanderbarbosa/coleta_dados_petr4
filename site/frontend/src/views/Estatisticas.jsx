@@ -8,7 +8,7 @@ export default function Estatisticas() {
   useEffect(() => { api.estatisticas().then(setEst).catch((e) => setErro(e.message)); }, []);
 
   if (erro) return <div className="aviso">Falha ao carregar estatísticas: {erro}</div>;
-  if (!est) return <div className="carregando">Carregando estatísticas…</div>;
+  if (!est) return <div className="carregando"><span className="spinner" /> Carregando estatísticas…</div>;
 
   const porAno = Object.entries(est.por_ano).map(([ano, n]) => ({ ano, n }));
   const porCat = est.por_categoria.map((c) => ({ nome: c.rotulo.replace(/^CAT\d+\s*[—-]\s*/, ""), n: c.total }));
