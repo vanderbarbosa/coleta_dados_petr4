@@ -28,4 +28,6 @@ export const api = {
   precos: (params) => get("/api/precos", params),
   estatisticas: () => get("/api/estatisticas"),
   prever: (texto) => post("/api/prever", { texto }),
+  eventos: () => get("/api/eventos"),
+  demonstracao: (params) => get("/api/demonstracao", params),
 };

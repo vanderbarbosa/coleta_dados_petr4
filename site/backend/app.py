@@ -327,6 +327,81 @@ def prever(entrada: EntradaPrevisao):
     }
 
 
+# ── Demonstração prática: estudo de evento (notícia real × preço real) ────────
+@lru_cache(maxsize=1)
+def carregar_ism():
+    try:
+        df = pd.read_csv(DADOS / "indice_sentimento_petr4.csv", parse_dates=["Data"])
+        return {d.date(): float(v) for d, v in zip(df["Data"], df["Indice_Sentimento_Transformer"])}
+    except Exception:
+        return {}
+
+
+# Eventos reais e notórios para a PETR4 (datas de referência).
+EVENTOS = [
+    {"id": "ceo2021", "data": "2021-02-22", "titulo": "Troca do comando da Petrobras (fev/2021)",
+     "contexto": "O anúncio da substituição do presidente da Petrobras pelo governo provocou forte queda da ação."},
+    {"id": "covid2020", "data": "2020-03-18", "titulo": "COVID-19 e guerra de preços do petróleo (mar/2020)",
+     "contexto": "A pandemia somada ao colapso do preço do petróleo levou a PETR4 a mínimas históricas."},
+    {"id": "ceo2022", "data": "2022-06-20", "titulo": "Demissão do CEO e pressão do governo (jun/2022)",
+     "contexto": "Troca de comando em meio ao conflito sobre a política de preços de combustíveis."},
+    {"id": "ucrania2022", "data": "2022-02-24", "titulo": "Rússia invade a Ucrânia (fev/2022)",
+     "contexto": "O conflito elevou o preço do petróleo no mundo, com efeito sobre as produtoras."},
+]
+
+
+@app.get("/api/eventos")
+def eventos():
+    return EVENTOS
+
+
+@app.get("/api/demonstracao")
+def demonstracao(data: str, janela: int = 20):
+    p = carregar_precos().sort_values("Date").reset_index(drop=True)
+    d0 = pd.to_datetime(data)
+    pos = int(p["Date"].searchsorted(d0))
+    pos = min(max(pos, 0), len(p) - 1)
+    ini, fim = max(0, pos - janela), min(len(p), pos + janela + 1)
+    jan = p.iloc[ini:fim]
+
+    data_evento = p.iloc[pos]["Date"]
+    preco_evento = float(p.iloc[pos]["Close"])
+
+    def varN(n):
+        j = pos + n
+        if 0 <= j < len(p):
+            return round((float(p.iloc[j]["Close"]) / preco_evento - 1) * 100, 2)
+        return None
+
+    # Variação do PRÓPRIO dia do evento (fechamento vs. pregão anterior)
+    var_dia = None
+    if pos - 1 >= 0:
+        var_dia = round((preco_evento / float(p.iloc[pos - 1]["Close"]) - 1) * 100, 2)
+
+    serie = [{"data": dt.strftime("%Y-%m-%d"), "fechamento": round(float(c), 2),
+              "evento": dt.date() == data_evento.date()}
+             for dt, c in zip(jan["Date"], jan["Close"])]
+
+    # Notícias reais daquele dia (e do dia anterior, se houver poucas)
+    n = carregar_noticias()
+    dia = n[n["dt"].dt.date == data_evento.date()]
+    if len(dia) < 3:
+        dia = n[(n["dt"].dt.date >= (data_evento - pd.Timedelta(days=1)).date()) &
+                (n["dt"].dt.date <= data_evento.date())]
+    noticias = [{"titulo": r["titulo"], "categoria": ROTULOS.get(r["categoria"], r["categoria"]),
+                 "fonte": r.get("dominio", "")} for _, r in dia.head(6).iterrows()]
+
+    ism = carregar_ism().get(data_evento.date())
+    return {
+        "data_evento": data_evento.strftime("%Y-%m-%d"),
+        "preco_evento": round(preco_evento, 2),
+        "serie": serie,
+        "variacoes": {"dia": var_dia, "d1": varN(1), "d5": varN(5), "d10": varN(10)},
+        "ism_dia": round(ism, 3) if ism is not None else None,
+        "noticias": noticias,
+    }
+
+
 @app.get("/")
 def raiz():
     return {"api": "PETR4 — Pesquisa", "docs": "/docs",
