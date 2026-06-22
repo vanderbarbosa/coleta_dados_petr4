@@ -82,6 +82,56 @@ abnt.paragrafo(doc,
  "domínio FINANCEIRO. Essa escolha responde diretamente à ponderação do Prof. Emerson de que um "
  "modelo pré-treinado em texto genérico do português pode não reconhecer jargões e ironias do "
  "mercado: ao ser especializado em textos financeiros, o FinBERT-PT-BR reduz esse risco.")
+abnt.paragrafo(doc,
+ "Um esclarecimento é central para dirimir a dúvida da banca quanto à preferência por este modelo em "
+ "relação ao BERTimbau: o FinBERT-PT-BR NÃO é um modelo de família distinta, mas o PRÓPRIO BERTimbau "
+ "especializado. Conforme Santos, Bianchi e Costa (2023), o FinBERT-PT-BR foi obtido a partir do "
+ "BERTimbau (Souza, Nogueira e Lotufo, 2020) por meio de dois estágios: (i) um pré-treinamento "
+ "adicional de modelo de linguagem sobre mais de 1,4 milhão de textos de notícias financeiras em "
+ "português; e (ii) o ajuste de um classificador de sentimento de três classes a partir de "
+ "aproximadamente 500 textos rotulados. Portanto, optar pelo FinBERT-PT-BR em vez do BERTimbau "
+ "genérico não significa abandonar o BERTimbau — significa empregá-lo já adaptado à tarefa e ao "
+ "domínio exatos desta pesquisa, sem que fosse necessário construir e rotular, do zero, um corpus "
+ "financeiro para o ajuste fino.")
+
+abnt.secao(doc, "2.1", "Critérios de seleção do modelo", nivel=2)
+abnt.paragrafo(doc,
+ "A escolha não foi arbitrária nem motivada apenas por disponibilidade. Definiram-se, a priori, seis "
+ "critérios de seleção, derivados das exigências da pesquisa e das ponderações da banca, contra os "
+ "quais os modelos candidatos foram avaliados (Tabela 1).")
+abnt.tabela_abnt(doc, "1", "Critérios de seleção do modelo de sentimento",
+ ["Critério", "Descrição", "Por que importa"],
+ [["C1 — Tarefa", "O modelo deve produzir, de fábrica, uma CLASSIFICAÇÃO de sentimento (não apenas embeddings)", "Evita ter de rotular um corpus próprio e treinar um cabeçalho do zero"],
+  ["C2 — Domínio", "Especialização em texto FINANCEIRO em português", "Reconhecer jargões, ironia e o sentido econômico (ponderação do Prof. Emerson)"],
+  ["C3 — Idioma", "Português brasileiro nativo", "Notícias do corpus são em PT-BR; evita perdas de tradução"],
+  ["C4 — Evidência", "Avaliação publicada e revisada, com comparação a linhas de base", "Sustentação acadêmica da escolha, não mera conveniência"],
+  ["C5 — Reprodutibilidade", "Pesos abertos, licença permissiva e versionamento estável", "Permite execução local e auditoria por terceiros"],
+  ["C6 — Custo", "Inferência viável em CPU para o corpus completo", "Restrição de infraestrutura da pesquisa"]])
+
+abnt.secao(doc, "2.2", "Comparação entre os candidatos", nivel=2)
+abnt.paragrafo(doc,
+ "A Tabela 2 confronta os principais candidatos com os critérios. O BERTimbau genérico atende ao "
+ "idioma, mas falha em C1 (é um codificador de linguagem, não um classificador de sentimento pronto) "
+ "e em C2 (não é especializado em finanças): usá-lo exigiria construir e rotular um corpus financeiro "
+ "para o ajuste fino — exatamente o trabalho que Santos, Bianchi e Costa (2023) já realizaram ao gerar "
+ "o FinBERT-PT-BR. O modelo multilíngue (xlm-roberta) classifica sentimento, mas é genérico (falha em "
+ "C2). Léxicos e LDA representam retrocesso frente ao estado da arte. O FinBERT-PT-BR é o único que "
+ "satisfaz todos os seis critérios simultaneamente.")
+abnt.tabela_abnt(doc, "2", "Modelos candidatos × critérios de seleção",
+ ["Candidato", "C1 Tarefa", "C2 Domínio", "C3 PT-BR", "C4 Evidência", "C5 Reprod.", "C6 Custo"],
+ [["FinBERT-PT-BR (adotado)", "Sim", "Sim (finanças)", "Sim", "Sim (BWAIF 2023)", "Sim", "Sim (CPU)"],
+  ["BERTimbau genérico", "Não (só encoder)", "Não", "Sim", "Sim (BRACIS 2020)", "Sim", "Sim"],
+  ["xlm-roberta (multilíngue)", "Sim", "Não", "Parcial", "Sim", "Sim", "Sim"],
+  ["Léxicos (OpLexicon/LIWC)", "Sim", "Parcial", "Sim", "Limitada", "Sim", "Sim"],
+  ["LDA (tópicos)", "Não", "Não", "Sim", "—", "Sim", "Sim"]])
+abnt.paragrafo(doc,
+ "Quanto à EVIDÊNCIA de superioridade (critério C4 e pergunta direta da banca: “onde consta que o "
+ "FinBERT-PT-BR é melhor?”), os próprios autores reportam, na publicação de referência, que o modelo "
+ "supera as linhas de base do estado da arte em português na tarefa de sentimento financeiro (Santos; "
+ "Bianchi; Costa, 2023). Como o FinBERT-PT-BR é o BERTimbau acrescido de especialização de domínio, a "
+ "comparação “FinBERT-PT-BR vs. BERTimbau” equivale a medir o ganho do ajuste fino financeiro — "
+ "positivo por construção e confirmado empiricamente pelos autores. Para conferir a esse argumento "
+ "validade também NESTE corpus, a Seção 8 especifica um conjunto-ouro de validação humana.")
 
 # 3
 abnt.secao(doc, "3", "Como o escore de sentimento é extraído")
@@ -101,7 +151,7 @@ indice = polaridade_do_rotulo * resultado['score']           # ∈ [-1, +1]''')
 
 # 4
 abnt.secao(doc, "4", "Bibliotecas utilizadas e justificativa")
-abnt.tabela_abnt(doc, "1", "Bibliotecas da Etapa 3 e justificativa da escolha",
+abnt.tabela_abnt(doc, "3", "Bibliotecas da Etapa 3 e justificativa da escolha",
  ["Biblioteca", "Função", "Justificativa da escolha"],
  [["transformers (Hugging Face)", "Carregamento do modelo e pipeline de classificação", "Padrão de fato para modelos Transformer; abstrai tokenização, inferência e softmax"],
   ["PyTorch (torch)", "Motor de execução das redes neurais", "Backend nativo do FinBERT-PT-BR; estável em CPU via instalação conda"],
@@ -111,9 +161,10 @@ abnt.tabela_abnt(doc, "1", "Bibliotecas da Etapa 3 e justificativa da escolha",
 # 5
 abnt.secao(doc, "5", "Ferramentas avaliadas e descartadas")
 abnt.paragrafo(doc,
- "A Tabela 2 registra as alternativas avaliadas e o motivo do descarte. Destaca-se a remoção do "
- "LDA, explicitamente questionado pela banca como um contrassenso em relação ao BERT.")
-abnt.tabela_abnt(doc, "2", "Ferramentas de PLN avaliadas e descartadas",
+ "A Tabela 4 detalha o motivo do descarte de cada alternativa, complementando a comparação por "
+ "critérios da Seção 2.2. Destaca-se a remoção do LDA, explicitamente questionado pela banca como um "
+ "contrassenso em relação ao BERT.")
+abnt.tabela_abnt(doc, "4", "Ferramentas de PLN avaliadas e descartadas",
  ["Ferramenta", "Motivo do descarte"],
  [["cardiffnlp/twitter-xlm-roberta (sentimento multilíngue genérico)", "Não especializado em finanças; sujeito à crítica de não reconhecer jargões do mercado"],
   ["LDA (Alocação Latente de Dirichlet)", "Modelagem de tópicos baseada em contagem de palavras (TF-IDF); contrassenso em relação ao BERT, conforme apontado pela banca. Substituído pela taxonomia supervisionada de 7 categorias (Etapa 1)"],
@@ -138,7 +189,7 @@ abnt.paragrafo(doc,
  "A execução local da análise de sentimento exigiu a superação de uma sequência de obstáculos de "
  "infraestrutura, documentados a seguir em nome da reprodutibilidade. Nenhum deles afeta a validade "
  "do método; todos foram resolvidos.")
-abnt.tabela_abnt(doc, "3", "Dificuldades técnicas e soluções adotadas",
+abnt.tabela_abnt(doc, "5", "Dificuldades técnicas e soluções adotadas",
  ["Problema", "Causa", "Solução adotada"],
  [["PyTorch não carregava (WinError 1114)", "Conflito de DLL/MKL do pacote PyPI no ambiente Anaconda (mesmo com CPU compatível, AVX2)", "Criação de ambiente conda dedicado (petr4) com PyTorch via canal oficial — carrega corretamente"],
   ["Erro ao carregar pesos do modelo", "transformers 5.x exige torch ≥ 2.6 para pesos .bin (vulnerabilidade CVE-2025-32434); FinBERT-PT-BR usa .bin", "Fixação do transformers na versão 4.46.3, compatível com torch 2.5 (CPU)"],
@@ -169,11 +220,11 @@ abnt.secao(doc, "9", "Resultados: distribuição de sentimento do corpus")
 if dist_label is not None:
     abnt.paragrafo(doc,
      f"O modelo FinBERT-PT-BR foi aplicado ao corpus completo, classificando **{fmt(n_amostra)} "
-     "notícias**. A Tabela 4 e a Figura 1 apresentam a distribuição dos rótulos. Observa-se "
+     "notícias**. A Tabela 6 e a Figura 1 apresentam a distribuição dos rótulos. Observa-se "
      "predominância de notícias negativas, em consonância com o viés de negatividade descrito na "
      "literatura sobre o noticiário financeiro, o que oferece suporte preliminar à hipótese de "
      "assimetria comportamental (viés de negatividade) investigada na pesquisa.")
-    abnt.tabela_abnt(doc, "4", "Distribuição de sentimento no corpus completo",
+    abnt.tabela_abnt(doc, "6", "Distribuição de sentimento no corpus completo",
      ["Rótulo", "Notícias", "%"],
      [[r, fmt(dist_label[r]), f"{dist_label[r]/n_amostra*100:.1f}%"] for r in dist_label.index])
     abnt.figura_abnt(doc, "1", "Distribuição dos rótulos de sentimento no corpus completo", g_dist, largura_cm=11)
@@ -194,7 +245,7 @@ abnt.lista(doc, [
 abnt.referencias(doc, "11", [
  "DEVLIN, J. et al. BERT: pre-training of deep bidirectional transformers for language understanding. In: NAACL-HLT, 2019.",
  "SOUZA, F.; NOGUEIRA, R.; LOTUFO, R. BERTimbau: pretrained BERT models for Brazilian Portuguese. In: BRACIS, 2020.",
- "ARAUJO, M. et al. (FinBERT-PT-BR) Modelos de linguagem para o domínio financeiro em português. [completar dados da publicação].",
+ "SANTOS, L. L.; BIANCHI, R. A. C.; COSTA, A. H. R. FinBERT-PT-BR: Análise de Sentimentos de Textos em Português do Mercado Financeiro. In: Anais do II Brazilian Workshop on Artificial Intelligence in Finance (BWAIF). Porto Alegre: SBC, 2023. p. 144-155.",
  "TETLOCK, P. C. Giving content to investor sentiment: the role of media in the stock market. The Journal of Finance, v. 62, n. 3, p. 1139-1168, 2007.",
 ])
 

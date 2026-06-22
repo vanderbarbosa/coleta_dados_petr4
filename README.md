@@ -51,9 +51,10 @@ A maioria dos scripts foi escrita para rodar no **Google Colab** (montam o Googl
 | [src/coleta/02c_preparar_base_treino_teste_validacao.py](src/coleta/02c_preparar_base_treino_teste_validacao.py) | **Script 02c** — base **tratada** (filtragem leve) + **split treino/validação/teste (60/15/25)**; base bruta intacta |
 | [src/sentimento/03_analise_sentimento_bertimbau_petr4.py](src/sentimento/03_analise_sentimento_bertimbau_petr4.py) | **Script 03** — análise de sentimento (NLP) e Índice de Sentimento da Mídia (ISM) |
 | [src/modelagem/04_modelagem_garch_svm_xgboost_petr4.py](src/modelagem/04_modelagem_garch_svm_xgboost_petr4.py) | **Script 04** — testes estatísticos, GARCH(1,1), Data Fusion, modelos e ablação |
+| [src/modelagem/05_refinamento_modelos_petr4.py](src/modelagem/05_refinamento_modelos_petr4.py) | **Script 05** — refinamento controlado (E0–E8): engenharia de atributos, seleção, modelos alternativos, tuning e walk-forward; conclui pela parcimônia (baseline mais robusto fora da amostra) |
 | [src/comum/abnt_docx.py](src/comum/abnt_docx.py) | Módulo reutilizável de formatação **ABNT** (NBR 14724/6023/6024/10520) |
 | [src/comum/taxonomia.py](src/comum/taxonomia.py) | Fonte **única** dos 152 termos (7 categorias) e dos critérios de filtragem — garante completude nas tabelas dos documentos |
-| [docs/geradores/](docs/geradores/) | Geradores dos documentos Word **ABNT**, um por etapa: Etapa 1 (engenharia de dados), Etapa 2 (financeira), Etapa 3 (sentimento), Etapa 4 (modelagem, com evolução/tuning), Etapa 5 (inferência e refinamentos). Saída em `docs/saida/` |
+| [docs/geradores/](docs/geradores/) | Geradores dos documentos Word **ABNT**: Etapa 1 (engenharia de dados), Etapa 2 (financeira), Etapa 3 (sentimento, **com justificativa de escolha FinBERT-PT-BR × BERTimbau e critérios**), Etapa 4 (modelagem, com evolução/tuning), **Etapa 4b (refinamento: bases e jornada experimental)**, Etapa 5 (inferência e refinamentos). Saída em `docs/saida/` |
 | [docs/DOCUMENTACAO_BASES.md](docs/DOCUMENTACAO_BASES.md) · [docs/GUIA_DE_EXECUCAO.md](docs/GUIA_DE_EXECUCAO.md) | Documentação das bases e guia de execução (Colab) |
 | [obsoleto/](obsoleto/) | Coletores antigos **desativados** (GDELT, multi-fonte, RSS) — ver [obsoleto/LEIA-ME.md](obsoleto/LEIA-ME.md) |
 
