@@ -182,6 +182,31 @@ abnt.paragrafo(doc,
 abnt.quadro_codigo(doc, "2", "Agregação diária com alinhamento lead-lag (lógica)",
 '''data_ajustada = data + 1 dia  se  hora >= 17  senao  data        # lead-lag
 ISM_dia = media( indice_sentimento  das noticias de cada data_ajustada )''')
+abnt.paragrafo(doc,
+ "Esse procedimento responde a uma pergunta natural: o que ocorre quando, em um mesmo dia, há "
+ "notícias POSITIVAS e NEGATIVAS? A resposta é que elas se COMPENSAM na média. Cada notícia "
+ "contribui com seu índice em [−1, +1] (polaridade × confiança), e o ISM do dia é a média desses "
+ "valores; assim, sinais opostos se anulam parcialmente e o que resta é o SALDO líquido de "
+ "sentimento daquele pregão. O Quadro 3 ilustra um dia hipotético com cinco notícias conflitantes.")
+abnt.quadro_codigo(doc, "3", "Exemplo de agregação em um dia com notícias conflitantes",
+'''Noticias do pregao (indice = polaridade x confianca):
+   +0,90   (positiva, alta confianca)      "Petrobras eleva dividendos"
+   +0,70   (positiva)                       "Producao do pre-sal cresce"
+   -0,80   (negativa)                       "Risco de intervencao politica"
+   -0,60   (negativa)                       "Petroleo cai no exterior"
+   +0,10   (quase neutra)                   "Assembleia ordinaria marcada"
+
+ISM_dia = (0,90 + 0,70 - 0,80 - 0,60 + 0,10) / 5 = +0,30 / 5 = +0,06
+        -> saldo levemente POSITIVO (as positivas superaram as negativas por pouco)''')
+abnt.paragrafo(doc,
+ "Duas observações são importantes. Primeiro, a média intencionalmente preserva a INTENSIDADE: uma "
+ "notícia muito confiante (escore próximo de 1) pesa mais que uma quase neutra. Segundo, a média não "
+ "captura, por si só, o VOLUME nem a DISPERSÃO (um dia com cinco notícias divididas tem o mesmo ISM "
+ "que um dia calmo de saldo equivalente); por isso, registram-se também a contagem diária de "
+ "notícias e os totais por polaridade, atributos explorados no estudo de refinamento (Etapa 4b). "
+ "Cabe sublinhar que o ISM é o INSUMO de sentimento, e não a previsão: a decisão de alta ou baixa é "
+ "tomada pelo classificador da Etapa 4, que aprende a relação entre o sentimento de ontem e o "
+ "movimento de preço de hoje.")
 
 # 7
 abnt.secao(doc, "7", "Dificuldades técnicas enfrentadas e soluções")

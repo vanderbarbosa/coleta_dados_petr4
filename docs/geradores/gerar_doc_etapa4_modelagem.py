@@ -173,6 +173,35 @@ abnt.tabela_abnt(doc, "3", "Escolhas de modelagem e respectiva justificativa",
   ["AUC-ROC", "Métrica adequada à classificação binária com classes potencialmente desbalanceadas; independe do limiar"],
   ["Distribuição t-Student (GARCH)", "Acomoda as caudas pesadas confirmadas pelo teste de Jarque-Bera"]])
 
+abnt.secao(doc, "5.1", "Unidade de análise e regra de decisão (alta ou baixa)", nivel=2)
+abnt.paragrafo(doc,
+ "Um esclarecimento essencial diz respeito à UNIDADE DE ANÁLISE. A previsão é feita por PREGÃO (dia "
+ "de negociação), e não por notícia. As mais de 205 mil notícias do corpus não são, cada uma, uma "
+ "observação do modelo: elas são AGREGADAS à frequência diária por meio do Índice de Sentimento da "
+ "Mídia (Etapa 3), de modo que cada pregão recebe um único valor-resumo de sentimento. Como o "
+ "período 2018–2025 contém cerca de 1.986 pregões, a matriz de modelagem possui aproximadamente "
+ "1.986 linhas. Não há descarte de notícias: a totalidade do corpus está contida nessas linhas, "
+ "comprimida na frequência em que a decisão de investimento efetivamente ocorre — uma direção por "
+ "dia. O número de linhas, portanto, é determinado pela quantidade de pregões, não pela quantidade "
+ "de notícias.")
+abnt.paragrafo(doc,
+ "Quanto à decisão, o modelo de DIREÇÃO é estritamente BINÁRIO: para cada pregão, prevê-se ALTA ou "
+ "BAIXA — não existe uma classe “neutra” na previsão estatística (o caso, raríssimo, de retorno "
+ "exatamente nulo é convencionado como baixa). O rótulo NEUTRO existe apenas no nível do SENTIMENTO "
+ "de cada notícia (Etapa 3), não na saída do classificador de direção. A decisão opera assim: a "
+ "partir dos atributos defasados de t−1 (retorno, volatilidade e ISM), o classificador estima uma "
+ "PROBABILIDADE de alta p ∈ [0, 1]; decide-se ALTA quando p ≥ 0,5 e BAIXA caso contrário. É "
+ "fundamental notar que o modelo NÃO deduz a direção do SINAL do sentimento (não é uma regra do tipo "
+ "“sentimento positivo ⇒ alta”): ele APRENDE, a partir do histórico real de retornos, qual a "
+ "associação entre os atributos de ontem e o movimento de preço de hoje.")
+abnt.quadro_codigo(doc, "2", "Da agregação diária à decisão de direção (lógica)",
+'''# (Etapa 3) muitas noticias do dia  ->  UM valor diario (media dos sentimentos)
+ISM_dia = media( polaridade x confianca  de cada noticia do pregao )
+
+# (Etapa 4) atributos de ONTEM (t-1)  ->  probabilidade de alta HOJE (t)
+p_alta = classificador( Retorno[t-1], Volatilidade[t-1], ISM[t-1] )
+direcao = "ALTA"  se  p_alta >= 0.5   senao   "BAIXA"      # binario, sem neutro''')
+
 # 6
 abnt.secao(doc, "6", "Particionamento treino/validação/teste (sem vazamento)")
 abnt.paragrafo(doc,
