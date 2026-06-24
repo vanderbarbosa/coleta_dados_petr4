@@ -1,0 +1,82 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TEMPLATE DE DISSERTAÇÕES E TESES DO PPGIA/PUCPR
+% CRIADO POR: JEAN PAUL BARDDAL
+% VERSÃO 1 - DEZEMBRO DE 2022
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{ppgia}
+
+% pt-br ou en-us
+\idioma{pt-br}
+
+\title{O Impacto do Sentimento de Notícias Financeiras na Previsão de Direção e Volatilidade do Ativo PETR4: Uma Abordagem via Transformers e Machine Learning}
+
+\author{Vanderlei Barbosa da Silva}
+%\studentId{1518036}
+
+% Orientador
+\orientador{Prof. Dr. Julio Cesar Nievola}
+
+% Co-orientador, caso exista (se não houver, mantenha comentado com %)
+%\coorientador{Nome do(a) Co-orientador(a)}
+%\coorientadorUniversidade{Universidade do(a) co-orientador(a)}
+
+%tipo do documento (pdm, msc, pdd, phd)
+% pdm = qualificacao de mestrado
+% msc = dissertacao completa de mestrado
+% pdd = qualificacao de doutorado
+% phd = tese completa de doutorado
+\tipodocumento{pdm}
+
+% cidade
+\cidade{Curitiba}
+
+% universidade (não alterar)
+\universidade{Pontifícia Universidade Católica do Paraná}
+% programa (não alterar)
+\programa{Programa de Pós-Graduação em Informática}
+\ano{2026}
+
+% arquivo da ficha catalografica (comentar a linha com % se nao houver ainda)
+%\pathfichacatalografica{catalogacao.pdf}
+
+% arquivo da declaracao do programa (comentar a linha com % se não houver ainda)
+%\pathdeclaracaoconclusao{declaracao_defesa.pdf}
+
+\graphicspath{{figuras/}}
+
+\usepackage{longtable}
+\usepackage{booktabs}
+
+% Nomes em português (a classe não carrega babel): corrige "Figure"/"Table"/"Chapter"
+\renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{Tabela}
+\renewcommand{\appendixname}{Apêndice}
+\renewcommand{\chaptername}{Capítulo}
+% \@chapapp é usado pelo cabeçalho de página (\leftmark) e marcadores do PDF
+\makeatletter
+\renewcommand{\@chapapp}{\chaptername}
+\makeatother
+
+\begin{document}
+	% Para capa, contra-capa, dedicatória, resumo, abstract, sumário, listas de figuras, ...
+	\frontmatter
+	
+	% Inicia contadores para paginação adequada do restante do documento
+	\mainmatter
+	
+	% Adicione abaixo os capítulos conforme necessário
+	\include{capitulos/1-introducao}
+	\include{capitulos/2-referencial}
+	\include{capitulos/3-metodologia}
+    \include{capitulos/4-resultados}
+    \include{capitulos/5-conclusao}
+
+	% Bibliography
+	\backmatter
+
+	% Apêndices (após as Referências, conforme a NBR 14724)
+	\appendix
+	\include{apendices/A-taxonomia}
+	\include{apendices/B-reprodutibilidade}
+\end{document}

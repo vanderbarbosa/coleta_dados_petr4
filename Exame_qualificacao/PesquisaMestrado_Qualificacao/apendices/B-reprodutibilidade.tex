@@ -1,0 +1,41 @@
+\chapter{Ambiente Computacional e Reprodutibilidade} \label{ap:reprodutibilidade}
+
+Em consonância com o compromisso de reprodutibilidade assumido nesta dissertação, este apêndice registra o ambiente computacional, as bibliotecas e as decisões de implementação que permitem a outro pesquisador reproduzir os resultados.
+
+\section{Linguagem e ambiente}
+
+Todo o \textit{pipeline} foi implementado na linguagem Python, versão 3.11, executado localmente em um ambiente isolado gerenciado pela ferramenta Conda. A opção pela execução local, e não em nuvem, decorreu da necessidade de controle sobre as versões das bibliotecas e da estabilidade do ambiente de inferência do modelo de linguagem.
+
+\section{Bibliotecas principais}
+
+A Tabela~\ref{tab:bibliotecas} relaciona as bibliotecas centrais empregadas em cada etapa do método, com a sua respectiva função.
+
+\begin{table}[htpb]
+\centering
+\caption{Bibliotecas centrais do \textit{pipeline} e suas funções.}
+\label{tab:bibliotecas}
+\begin{tabular}{lll}
+\hline
+\textbf{Etapa} & \textbf{Biblioteca} & \textbf{Função} \\ \hline
+Dados financeiros & yfinance & Coleta das cotações da PETR4 \\
+Coleta de notícias & requests & Acesso à API REST dos portais \\
+Sentimento & transformers & Inferência do FinBERT-PT-BR \\
+Sentimento & torch (PyTorch) & Motor de execução da rede neural \\
+Risco & arch & Estimação do modelo GARCH \\
+Classificação & scikit-learn & Implementação do SVM e métricas \\
+Classificação & xgboost & Implementação do XGBoost \\
+Manipulação de dados & pandas, numpy & Processamento tabular e numérico \\
+Testes estatísticos & scipy, statsmodels & Binomial, McNemar e Granger \\
+Visualização & matplotlib & Geração das figuras \\ \hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor.}
+\end{table}
+
+\section{Decisões de implementação relevantes}
+
+Algumas decisões técnicas foram necessárias para a estabilidade e a correção do \textit{pipeline}, e ficam aqui registradas. A biblioteca \textit{transformers} foi fixada em uma versão compatível com o formato dos pesos do FinBERT-PT-BR. A semente dos geradores de números aleatórios foi fixada em um valor constante em todas as etapas que envolvem aleatoriedade, o que garante que execuções sucessivas produzam resultados idênticos. A divisão dos dados em treino, validação e teste é determinística, pois segue a ordem cronológica e não depende de sorteio. O alinhamento temporal das notícias utiliza o horário de Brasília como referência para o corte das dezessete horas, em conformidade com o horário de funcionamento da B3.
+
+\section{Disponibilidade}
+
+O código-fonte do \textit{pipeline}, incluindo os roteiros de coleta, de processamento de sentimento, de modelagem e de análise, foi versionado em repositório de controle de versão, o que assegura o registro histórico das alterações e a possibilidade de auditoria. Os dados brutos coletados são preservados em sua forma original, e as bases derivadas são geradas a partir deles por roteiros reproduzíveis, sem edição manual.
