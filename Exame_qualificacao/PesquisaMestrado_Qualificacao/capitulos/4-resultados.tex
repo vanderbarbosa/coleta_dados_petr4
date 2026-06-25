@@ -314,7 +314,43 @@ No plano da previsão fora da amostra, contudo, o quadro é mais sóbrio. Compar
 
 É importante registrar que esse resultado, longe de contradizer a literatura, converge com ela. \citeonline{silva_o_2018}, ao avaliar a previsão de volatilidade do IBOVESPA, constatou que o sentimento textual, isolado como única variável preditora, apresenta um coeficiente de determinação fora da amostra negativo, da ordem de $-0{,}42$, e que a volatilidade passada permanece um preditor difícil de superar. O achado da presente dissertação é, portanto, qualitativamente idêntico: o sentimento, sozinho ou acrescentado de forma simples a um modelo de volatilidade, não melhora a previsão pontual. Duas razões o explicam: a natureza ruidosa da \textit{proxy} de volatilidade realizada, o valor absoluto do retorno diário, e o fato de a volatilidade condicional do GARCH já incorporar grande parte da informação preditível.
 
-O ponto decisivo é que \citeonline{silva_o_2018} só obteve ganho de previsão por meio de um modelo mais sofisticado, a regressão quantílica da volatilidade com pesos variáveis atribuídos aos quantis, e não pela simples adição do sentimento a um modelo linear. Esse é, precisamente, o caminho promissor que a presente dissertação identifica e registra entre os trabalhos futuros. A conclusão honesta desta seção é, assim, dupla: dentro da amostra, o sentimento está inequivocamente associado à volatilidade, confirmando a hipótese H2; fora da amostra, a sua contribuição preditiva só deve emergir sob uma modelagem quantílica ponderada da volatilidade, e não sob a abordagem linear aqui testada.
+O ponto decisivo é que \citeonline{silva_o_2018} só obteve ganho de previsão por meio de um modelo mais sofisticado, a regressão quantílica da volatilidade com pesos variáveis atribuídos aos quantis, e não pela simples adição do sentimento a um modelo linear. Esse é, precisamente, o caminho promissor que a presente dissertação identifica e registra entre os trabalhos futuros. A conclusão desta etapa é, assim, dupla: dentro da amostra, o sentimento está inequivocamente associado à volatilidade, confirmando a hipótese H2; fora da amostra, a sua contribuição preditiva não emerge sob a abordagem linear. Resta verificar se ela emerge sob a modelagem quantílica ponderada que rendeu ganho a \citeonline{silva_o_2018}, hipótese testada diretamente na subseção seguinte.
+
+\subsection{Previsão de volatilidade por regressão quantílica com pesos variáveis}
+
+Para testar de forma rigorosa a hipótese anterior, replicou-se, sobre os dados da PETR4, a estratégia que rendeu ganho a \citeonline{silva_o_2018}: a previsão da volatilidade por uma combinação de regressões quantílicas com pesos variáveis. O modelo de base é o HAR de \citeonline{corsi_simple_2009}, no qual a volatilidade realizada é explicada por suas próprias médias de um, cinco e vinte e dois dias, captando a memória de curto, médio e longo prazo. Estimaram-se regressões em cinco quantis e combinaram-se as suas previsões com pesos inversamente proporcionais ao erro de cada quantil na validação, atribuindo mais peso aos quantis mais precisos. Todos os modelos foram avaliados fora da amostra, sob a mesma divisão cronológica. A Tabela~\ref{tab:vol_quantilica} e a Figura~\ref{fig:vol_quantilica} resumem os resultados.
+
+\begin{table}[htpb]
+\centering
+\caption{Previsão da volatilidade realizada da PETR4 fora da amostra: modelo HAR linear, suas variantes com sentimento e a combinação quantílica com pesos variáveis.}
+\label{tab:vol_quantilica}
+\begin{tabular}{lcc}
+\hline
+\textbf{Modelo} & \textbf{MAE (teste)} & \textbf{$R^2$-OS vs HAR} \\ \hline
+Média histórica & 1,274 & --- \\
+HAR linear (referência) & 0,865 & --- \\
+HAR linear + sentimento & 0,897 & $-4{,}1\%$ \\
+Quantílico, pesos iguais, + sentimento & --- & $+3{,}8\%$ \\
+Quantílico, pesos variáveis, sem sentimento & 0,761 & $+10{,}9\%$ \\
+\textbf{Quantílico, pesos variáveis, + sentimento} & \textbf{0,769} & \textbf{$+10{,}9\%$} \\ \hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor.}
+\end{table}
+
+\begin{figure}[htpb]
+\centering
+\caption{Coeficiente de determinação fora da amostra dos modelos de previsão de volatilidade, em relação ao HAR linear de referência. A combinação quantílica com pesos variáveis supera amplamente o modelo linear, mas o acréscimo do sentimento não altera o resultado.}
+\vspace{0.2cm}
+\includegraphics[width=0.7\textwidth]{figuras/fig_vol_quantilica.png}
+\label{fig:vol_quantilica}
+\vspace{0.2cm}
+{\small Fonte: Elaborado pelo autor.}
+\end{figure}
+
+Três conclusões emergem, e a sua leitura conjunta é instrutiva. A primeira é que a combinação quantílica com pesos variáveis representa um avanço metodológico real: ela reduz o erro de previsão de volatilidade em relação ao HAR linear, com um coeficiente de determinação fora da amostra de aproximadamente $+11\%$ e queda do erro absoluto médio de $0{,}865$ para $0{,}761$. A segunda é que os pesos variáveis são essenciais, pois a combinação com pesos iguais alcança apenas $+3{,}8\%$, contra os $+10{,}9\%$ da ponderação variável, exatamente como destacou \citeonline{silva_o_2018}. A terceira, e mais reveladora, é que o sentimento, mesmo sob esse arcabouço mais sofisticado, praticamente não altera a previsão: os modelos quantílicos com e sem sentimento são indistinguíveis, com diferença de erro inferior a um décimo de ponto percentual.
+
+A interpretação honesta é, portanto, mais conservadora do que a de \citeonline{silva_o_2018}. O ganho de previsão de volatilidade provém da metodologia quantílica ponderada, e não do sentimento. Confirma-se que o sentimento das notícias está associado à volatilidade, como mostraram a causalidade de Granger e a regressão dentro da amostra, mas essa associação não se converte em melhoria de previsão pontual fora da amostra, ainda que se empregue a modelagem que melhor extrai o sinal de volatilidade. Esse resultado, ao mesmo tempo em que entrega uma contribuição metodológica positiva, a superioridade do modelo quantílico ponderado, delimita com precisão o alcance do sentimento como preditor de volatilidade, o que é, em si, um esclarecimento de valor científico.
 
 \subsection{Condicionamento por regime de incerteza}
 
