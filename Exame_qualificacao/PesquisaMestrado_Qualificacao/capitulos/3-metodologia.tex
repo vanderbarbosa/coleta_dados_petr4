@@ -158,3 +158,74 @@ Esse percurso evidencia como o método distingue uma notícia negativa para o me
 \section{Reprodutibilidade}
 
 Todo o \textit{pipeline} foi implementado em linguagem Python e executado localmente. A análise de sentimento utiliza as bibliotecas \textit{Transformers} e PyTorch para a inferência do FinBERT-PT-BR. A modelagem econométrica emprega a biblioteca \textit{arch} para o GARCH. Os classificadores utilizam as bibliotecas \textit{scikit-learn}, para o SVM, e \textit{xgboost}, para o XGBoost. As sementes dos geradores de números aleatórios foram fixadas, e as versões das bibliotecas foram registradas, de modo a permitir a reprodução dos resultados. Os detalhes do ambiente computacional constam no Apêndice.
+
+\section{Implementação Comentada e Diferenciais Metodológicos}
+
+Para tornar o método transparente e verificável, esta seção apresenta trechos comentados do código que materializa as etapas centrais, e sintetiza, ao final, as principais mudanças introduzidas em relação à literatura e à versão de qualificação.
+
+O Código~\ref{lst:finbert} mostra a extração do sentimento de uma notícia. A função recebe o texto, obtém do FinBERT-PT-BR o rótulo e a confiança, converte o rótulo em uma polaridade e devolve o índice contínuo, conforme formalizado anteriormente.
+
+\begin{lstlisting}[language=Python, caption={Extração do índice de sentimento com o FinBERT-PT-BR.}, label=lst:finbert]
+from transformers import pipeline
+nlp = pipeline("sentiment-analysis", model="lucas-leme/FinBERT-PT-BR")
+
+def sentimento(texto):
+    r = nlp(texto)[0]                  # ex.: {'label': 'NEGATIVE', 'score': 0.85}
+    polaridade = {'POSITIVE': 1, 'NEUTRAL': 0, 'NEGATIVE': -1}[r['label']]
+    return polaridade * r['score']     # indice continuo em [-1, +1]
+\end{lstlisting}
+
+O Código~\ref{lst:ism} apresenta a construção do Índice de Sentimento da Mídia. As notícias publicadas após as dezessete horas são realocadas para o pregão seguinte, e o índice diário é a média dos índices de sentimento de cada pregão.
+
+\begin{lstlisting}[language=Python, caption={Alinhamento Lead-Lag e agregação diária do ISM.}, label=lst:ism]
+# noticias apos as 17h sao atribuidas ao pregao do dia util seguinte
+atrasa = (df['hora'] >= 17)
+df['data_ajustada'] = df['data'] + atrasa.map({True: pd.Timedelta(days=1),
+                                               False: pd.Timedelta(0)})
+# ISM diario = media dos indices de sentimento das noticias do pregao
+ism = df.groupby('data_ajustada')['indice_sentimento'].mean()
+\end{lstlisting}
+
+O Código~\ref{lst:fusion} ilustra a construção da matriz de \textit{Data Fusion}, com todos os atributos defasados em um dia, e a definição da variável-alvo binária.
+
+\begin{lstlisting}[language=Python, caption={Matriz de Data Fusion com atributos defasados em t-1.}, label=lst:fusion]
+# so se usa informacao de ontem para prever hoje (evita vazamento)
+m['Retorno_Ontem']      = m['Log_Retorno'].shift(1)
+m['Volatilidade_Ontem'] = m['Volatilidade_GARCH'].shift(1)
+m['Sentimento_Ontem']   = m['ISM'].shift(1)
+m['Alvo'] = (m['Log_Retorno'] > 0).astype(int)   # 1 = alta, 0 = baixa
+\end{lstlisting}
+
+Por fim, o Código~\ref{lst:quantil} mostra a regressão quantílica empregada na análise de assimetria, que estima o efeito do sentimento em diferentes pontos da distribuição do retorno.
+
+\begin{lstlisting}[language=Python, caption={Regressão quantílica do retorno sobre o sentimento defasado.}, label=lst:quantil]
+import statsmodels.api as sm
+from statsmodels.regression.quantile_regression import QuantReg
+
+X = sm.add_constant(df[['Retorno_Ontem', 'Volatilidade_Ontem', 'Sentimento_Ontem']])
+for tau in [0.05, 0.50, 0.95]:
+    res = QuantReg(df['Log_Retorno_Pct'], X).fit(q=tau)
+    print(tau, res.params['Sentimento_Ontem'])   # efeito do sentimento no quantil
+\end{lstlisting}
+
+A Tabela~\ref{tab:diferenciais} sintetiza as principais mudanças implementadas, contrastando a abordagem anterior, seja da literatura, seja da versão de qualificação, com a solução adotada e o ganho correspondente.
+
+\begin{table}[htpb]
+\centering
+\caption{Principais mudanças implementadas em relação à literatura e à versão de qualificação.}
+\label{tab:diferenciais}
+\resizebox{0.98\textwidth}{!}{%
+\begin{tabular}{p{2.6cm} p{4.0cm} p{4.0cm} p{3.4cm}}
+\hline
+\textbf{Aspecto} & \textbf{Abordagem anterior} & \textbf{Mudança implementada} & \textbf{Ganho} \\ \hline
+Marcação temporal & Imputação estocástica de datas (qualificação) & Coleta via API com data e hora reais & Viabiliza a causalidade Lead-Lag \\
+Modelo de sentimento & Contagem léxica ou dicionário (Silva; Nizer); BERTimbau genérico & FinBERT-PT-BR contextual de domínio & Interpreta contexto e jargão \\
+Organização temática & LDA não supervisionado (qualificação) & Taxonomia supervisionada de 7 categorias & Grupos auditáveis, ablação, mercado vs ativo \\
+Objeto de estudo & Índice agregado, IBOVESPA (Silva) & Ativo individual, PETR4 & Recupera o risco idiossincrático \\
+Avaliação & Melhor resultado entre configurações & Teste cronológico único e testes de significância & Resultado honesto e não enviesado \\
+Efeito do sentimento & Efeito médio por regressão linear & Regressão quantílica por quantil & Revela a assimetria nas caudas \\ \hline
+\end{tabular}%
+}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor.}
+\end{table}

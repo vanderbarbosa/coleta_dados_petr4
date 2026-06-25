@@ -132,6 +132,18 @@ A adequação do ajuste é verificada pela análise dos resíduos padronizados. 
 
 \section{Previsão de Direção e Significância Estatística}
 
+Antes de apresentar os modelos, a Figura~\ref{fig:correlacao} mostra a matriz de correlação entre os atributos defasados e o retorno do dia. As correlações são fracas, em especial entre os atributos de ontem e o retorno de hoje, o que é coerente com a quase-eficiência do mercado e antecipa a dificuldade da previsão direcional: não há um preditor linear forte, e o sinal, quando existe, é sutil e provavelmente não linear, o que justifica o uso de classificadores como o XGBoost.
+
+\begin{figure}[htpb]
+\centering
+\caption{Matriz de correlação de Pearson entre os atributos defasados e o retorno do dia. As correlações fracas evidenciam a baixa previsibilidade linear, coerente com a eficiência do mercado.}
+\vspace{0.2cm}
+\includegraphics[width=0.6\textwidth]{figuras/fig_correlacao.png}
+\label{fig:correlacao}
+\vspace{0.2cm}
+{\small Fonte: Elaborado pelo autor.}
+\end{figure}
+
 Com a volatilidade modelada e o sentimento extraído, a matriz de fusão alimentou os classificadores para a previsão da direção da PETR4 no pregão seguinte. A Tabela~\ref{tab:resultados_direcao} compara o desempenho dos modelos no conjunto de teste, formado pelos quatrocentos e noventa e sete pregões mais recentes, contra duas linhas de base.
 
 \begin{table}[htpb]
@@ -340,6 +352,18 @@ Os experimentos E5 a E7 atacam o modelo, e não os atributos. O E5 troca o class
 O quadro que emerge é coerente e tem assinatura inconfundível. Cada estratégia de sofisticação eleva a acurácia de validação, que chega a cinquenta e oito vírgula quatro por cento, mas degrada a de teste, que recua para a faixa de quarenta e sete a cinquenta e dois por cento. Esse é o retrato do sobreajuste. Duas causas se somam. A primeira é estatística: diante de um sinal genuíno mas fraco, coerente com a quase-eficiência do mercado, aumentar a capacidade do modelo serve sobretudo para memorizar ruído, fenômeno que \citeonline{carta_multi-dqn_2021} já associavam à instabilidade dos dados de mercado. A segunda é uma mudança de regime entre os períodos, pois a proporção de pregões de alta difere entre a validação, com cinquenta e seis vírgula quatro por cento, e o teste, com cinquenta vírgula nove por cento, o que orienta o ajuste na direção errada.
 
 A implicação metodológica foi incorporada à postura de todo o capítulo. Avaliar o desempenho apenas na validação teria conduzido à conclusão falsa de um modelo com acurácia próxima de cinquenta e oito por cento, precisamente o tipo de afirmação inflada que a banca de qualificação criticou. A separação estrita de um conjunto de teste, consultado uma única vez, evitou esse erro. Conclui-se que, neste mercado quase-eficiente, a parcimônia generaliza melhor, e que o ganho efetivo deve ser buscado a montante, na qualidade do sinal de sentimento, e não na complexidade do classificador. Esse é um avanço de natureza metodológica, e não de acurácia, mas nem por isso menos valioso.
+
+A Figura~\ref{fig:tuning} ilustra visualmente a sensibilidade do modelo aos hiperparâmetros, apresentando a acurácia de validação para combinações de profundidade das árvores e taxa de aprendizado. A melhor célula, com profundidade dois e taxa de zero vírgula zero dois, atinge cinquenta e oito vírgula quatro por cento na validação. Esse valor deve ser lido com a cautela já discutida, pois reflete o desempenho na validação, superior ao do teste, e ilustra de forma gráfica a tentação de sobreajuste que o estudo de refinamento procurou evitar.
+
+\begin{figure}[htpb]
+\centering
+\caption{Acurácia de validação do modelo Data Fusion para diferentes combinações de profundidade das árvores e taxa de aprendizado do XGBoost. As células mais escuras indicam maior acurácia na validação.}
+\vspace{0.2cm}
+\includegraphics[width=0.6\textwidth]{figuras/fig_tuning.png}
+\label{fig:tuning}
+\vspace{0.2cm}
+{\small Fonte: Elaborado pelo autor.}
+\end{figure}
 
 \section{Robustez por Subperíodo}
 

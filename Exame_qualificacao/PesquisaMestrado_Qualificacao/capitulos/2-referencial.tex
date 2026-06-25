@@ -62,6 +62,18 @@ Antes de representar um texto numericamente, é útil compreender uma regularida
 
 A lei de Zipf tem consequências diretas para a análise de sentimento. De um lado, as palavras mais frequentes tendem a ser conectivos e termos genéricos, de baixo poder discriminante, o que justifica a sua remoção ou o seu rebaixamento por esquemas de ponderação como o TF-IDF. De outro, o conteúdo informativo concentra-se em termos relativamente raros e específicos do domínio, o que explica por que as representações baseadas apenas em contagem enfrentam o problema da esparsidade, e por que modelos contextuais, capazes de inferir o significado de uma palavra a partir de poucas ocorrências e do seu entorno, representam um avanço. Essa compreensão fundamenta tanto a construção da taxonomia de termos adotada no método quanto a opção por um modelo de linguagem contextual.
 
+A Figura~\ref{fig:zipf} confirma a validade da lei de Zipf no corpus desta pesquisa. Ao ordenar as palavras das notícias da PETR4 pela frequência e plotar a frequência contra a posição em escala logarítmica, obtém-se uma reta descendente próxima da curva teórica, o que evidencia que pouquíssimas palavras concentram a maior parte das ocorrências, enquanto a vasta maioria do vocabulário, de mais de quarenta mil palavras distintas, aparece raramente.
+
+\begin{figure}[htpb]
+\centering
+\caption{Distribuição de frequência das palavras no corpus de notícias da PETR4, em escala logarítmica, comparada à curva teórica da lei de Zipf. A aderência confirma a concentração das ocorrências em poucos termos.}
+\vspace{0.2cm}
+\includegraphics[width=0.75\textwidth]{figuras/fig_zipf.png}
+\label{fig:zipf}
+\vspace{0.2cm}
+{\small Fonte: Elaborado pelo autor.}
+\end{figure}
+
 \subsection{Representações léxicas e de contagem}
 
 As primeiras aplicações representavam um documento como um vetor de frequências de palavras, abordagem conhecida como \textit{Bag-of-Words}. A variante mais difundida, o TF-IDF, pondera cada termo pela sua frequência no documento e pela sua raridade no conjunto, de modo a destacar palavras discriminantes. No mercado brasileiro, \citeonline{nizer_metodo_2011} foi precursor ao empregar essa família de técnicas para detectar o efeito de publicações de notícias sobre ações da Bovespa, em um trabalho que abriu caminho para a pesquisa nacional na área.
