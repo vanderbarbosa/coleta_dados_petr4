@@ -22,6 +22,40 @@ A hipótese H3, do viés de negatividade, foi corroborada. Além do forte predom
 
 Convém um registro de método. Em contraste com a versão de qualificação, não se interpreta aqui a acurácia próxima de cinquenta por cento como prova de robustez. Aquela leitura decorria do ruído introduzido pela imputação de datas. Com os dados reais, a referência honesta é o ganho modesto, porém significativo, sobre as linhas de base.
 
+\section{Contribuições da Pesquisa}
+
+À luz dos resultados, é possível enunciar de forma precisa as contribuições deste trabalho, organizadas em quatro planos e sintetizadas na Tabela~\ref{tab:contribuicoes}.
+
+No plano \textbf{teórico}, a principal contribuição é a quantificação da assimetria do efeito do sentimento. Por meio da regressão quantílica, demonstrou-se que o sentimento das notícias não exerce um efeito uniforme sobre o retorno, e sim um efeito concentrado na cauda inferior da distribuição, grande e estatisticamente significativo nos dias de pior desempenho e praticamente nulo nos dias de alta. Esse achado fornece evidência empírica direta do viés de negatividade para um ativo individual da B3, articulando o Teorema da Concordância e as Finanças Comportamentais, e estende ao nível de um ativo específico o que \citeonline{silva_o_2018} havia observado para o índice agregado.
+
+No plano \textbf{metodológico}, a contribuição é dupla. A primeira é a consolidação de uma arquitetura unificada e reprodutível que integra, de forma inédita para a PETR4, um modelo de sentimento contextual de domínio, o FinBERT-PT-BR, o controle econométrico do risco pelo GARCH e a previsão por aprendizado de máquina, tudo sobre um corpus dotado de marcação temporal precisa, requisito que viabiliza a análise de antecedência entre notícia e preço. A segunda é a demonstração de que a combinação de regressões quantílicas com pesos variáveis melhora de forma substancial a previsão de volatilidade em relação ao modelo linear.
+
+No plano \textbf{empírico}, a pesquisa entrega resultados reportados com rigor e transparência: o ganho do sentimento sobre o acaso na previsão de direção, estatisticamente significativo; a forte causalidade preditiva do sentimento sobre a volatilidade; e a delimitação honesta de que esse sinal, embora real, não se converte em melhoria de previsão pontual de volatilidade fora da amostra, conclusão que converge com a literatura e evita a superestimação.
+
+No plano \textbf{prático}, o trabalho disponibiliza um \textit{pipeline} modular e transferível a outros ativos, uma distinção operacional entre eventos de mercado e de empresa por meio da taxonomia temática, e uma avaliação econômica que indica valor da vantagem preditiva no período analisado.
+
+\begin{table}[htpb]
+\centering
+\caption{Síntese das contribuições da pesquisa e respectivas evidências.}
+\label{tab:contribuicoes}
+\resizebox{0.98\textwidth}{!}{%
+\begin{tabular}{p{2.3cm} p{6.3cm} p{5.6cm}}
+\hline
+\textbf{Plano} & \textbf{Contribuição} & \textbf{Evidência} \\ \hline
+Teórico & Quantificação da assimetria do efeito do sentimento (viés de negatividade) em um ativo individual & Efeito de $+542$ bps no quantil $0{,}05$ ($p=0{,}001$), nulo nos quantis altos \\
+Metodológico & Arquitetura unificada com sentimento contextual, GARCH e ML, sob marcação temporal precisa & FinBERT-PT-BR; alinhamento Lead-Lag; divisão cronológica \\
+Metodológico & Modelo quantílico ponderado para a previsão de volatilidade & $R^2$ fora da amostra de $+10{,}9\%$ sobre o HAR linear \\
+Empírico & Ganho significativo do sentimento na previsão de direção & $54{,}5\%$ vs $50{,}1\%$; teste binomial $p=0{,}024$ \\
+Empírico & O sentimento antecede a volatilidade & Causalidade de Granger $p \approx 0{,}000$ em todas as defasagens \\
+Prático & Distinção mercado vs ativo e \textit{pipeline} transferível & Taxonomia de 7 categorias; generalização para a VALE3 \\ \hline
+\end{tabular}%
+}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor.}
+\end{table}
+
+Em síntese, a contribuição central da dissertação pode ser assim enunciada: trata-se de uma arquitetura reprodutível e honesta que, pela primeira vez, aplica um modelo de sentimento contextual de domínio a um ativo individual da B3 com marcação temporal precisa, e cujo achado mais relevante é o de que o efeito do sentimento sobre o retorno não é uniforme, mas concentrado nos momentos de queda, resultado que a análise na média e a previsão de direção, isoladamente, não revelam.
+
 \section{Limitações da Pesquisa}
 
 A credibilidade de um estudo depende do reconhecimento de suas limitações, e esta dissertação assume as seguintes. A magnitude do sinal direcional é modesta, da ordem de cinquenta e quatro por cento, de modo que as previsões têm caráter acadêmico e não constituem recomendação de investimento. O sentimento é extraído do título e do resumo das notícias, e não do texto integral, e a volatilidade realizada é aproximada pelo valor absoluto do retorno, uma medida reconhecidamente ruidosa. O FinBERT-PT-BR foi aplicado sem reajuste ao corpus específico da pesquisa, e a validação humana por coeficiente \textit{kappa}, embora preparada, ainda será consolidada. O estudo de refinamento revelou sensibilidade a mudanças de regime entre períodos, o que limita a generalização temporal dos modelos mais complexos. Por fim, a análise restringe-se a um único ativo e a um único idioma.
