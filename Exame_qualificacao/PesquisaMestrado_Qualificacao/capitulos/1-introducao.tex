@@ -64,6 +64,17 @@ No plano acadêmico, a dissertação contribui para a interseção entre as Fina
 
 No plano prático, o estudo entrega uma arquitetura reprodutível que integra a volatilidade econométrica à semântica contextual de domínio para a análise de risco. Os resultados, reportados com transparência quanto à sua magnitude e à sua significância estatística, oferecem subsídios para o entendimento do papel informacional da mídia na precificação da PETR4, sem que se atribua ao método capacidade preditiva além da que foi efetivamente medida.
 
+\subsection{Contribuições da pesquisa}
+
+De forma sucinta, e antecipando o detalhamento apresentado no Capítulo~\ref{chap:conclusao}, as principais contribuições deste trabalho são as seguintes:
+
+\begin{itemize}
+    \item \textbf{Teórica:} a quantificação da assimetria do efeito do sentimento sobre o retorno de um ativo individual da B3, mostrando, por regressão quantílica, que esse efeito se concentra nos dias de queda, evidência direta do viés de negatividade.
+    \item \textbf{Metodológica:} a consolidação de uma arquitetura unificada e reprodutível que integra um modelo de sentimento contextual de domínio, o FinBERT-PT-BR, a modelagem econométrica do risco e a previsão por aprendizado de máquina, sobre um corpus com marcação temporal precisa; e a demonstração de que a combinação quantílica com pesos variáveis aprimora a previsão de volatilidade.
+    \item \textbf{Empírica:} a evidência, com testes de significância, de que o sentimento agrega poder preditivo à direção e antecede a volatilidade, acompanhada da delimitação honesta do alcance desse sinal.
+    \item \textbf{Prática:} um \textit{pipeline} modular e transferível a outros ativos, com uma distinção operacional entre eventos de mercado e de empresa por meio de uma taxonomia temática.
+\end{itemize}
+
 \section{Organização do Documento}
 
 Os capítulos seguintes estão organizados da forma descrita a seguir. O Capítulo~\ref{chap:referencial_teorico} apresenta o referencial teórico e a Revisão Sistemática da Literatura, com a \textit{string} de busca, a janela temporal, os critérios de seleção e a discussão dos trabalhos correlatos, posicionando a originalidade do estudo. O Capítulo~\ref{chap:metodologia} distingue a metodologia, isto é, a natureza e os pressupostos da pesquisa, do método propriamente dito, descrevendo a coleta de dados com marcação temporal, a taxonomia, a extração de sentimento, a modelagem do risco e a fusão de dados, e ilustra o percurso completo com um exemplo. O Capítulo~\ref{chap:resultados} reporta e discute os resultados obtidos sobre o corpus completo, incluindo os testes de significância, a análise de causalidade e a avaliação da volatilidade. O Capítulo~\ref{chap:conclusao} sintetiza as conclusões, examina as limitações, discute a generalização para outros ativos e aponta os desdobramentos futuros.
