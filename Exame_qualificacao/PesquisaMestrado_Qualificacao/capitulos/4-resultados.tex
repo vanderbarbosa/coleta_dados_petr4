@@ -155,6 +155,18 @@ Três características merecem destaque. Primeiro, o log-retorno apresenta forte
 {\small Fonte: Elaborado pelo autor.}
 \end{figure}
 
+O gráfico quantil-quantil da Figura~\ref{fig:qqplot} confirma o diagnóstico de não normalidade de outra forma. Se os retornos seguissem uma distribuição normal, os pontos se alinhariam sobre a reta de referência; o que se observa, em vez disso, é um desvio acentuado nas extremidades, com os pontos das caudas afastando-se da reta, sinal inequívoco de que os eventos extremos ocorrem com frequência muito maior do que a normal prevê. Esse comportamento reforça a adequação da distribuição \textit{t}-Student adotada no GARCH e da abordagem quantílica empregada na análise do efeito do sentimento.
+
+\begin{figure}[htpb]
+\centering
+\caption{Gráfico quantil-quantil dos log-retornos da PETR4 contra a distribuição normal. O afastamento dos pontos em relação à reta nas extremidades evidencia as caudas pesadas.}
+\vspace{0.2cm}
+\includegraphics[width=0.55\textwidth]{figuras/fig_qqplot.png}
+\label{fig:qqplot}
+\vspace{0.2cm}
+{\small Fonte: Elaborado pelo autor.}
+\end{figure}
+
 \begin{figure}[htpb]
 \centering
 \caption{Evolução do preço de fechamento da PETR4 no período de 2018 a 2025, com destaque para a forte queda associada ao choque da pandemia em 2020.}
