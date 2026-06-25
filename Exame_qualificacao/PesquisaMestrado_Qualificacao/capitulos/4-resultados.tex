@@ -52,6 +52,18 @@ Infraestrutura & 2.346 & 1,1\% \\ \hline
 
 A predominância das categorias diretamente ligadas à empresa e ao mercado de petróleo, que juntas respondem por quase sessenta por cento do corpus, é coerente com a natureza do ativo. As categorias de governança, sanções e infraestrutura, embora menos numerosas, capturam eventos pontuais de alto impacto, como trocas de comando ou interrupções de produção, cuja relevância não se mede pelo volume.
 
+Uma leitura complementar diz respeito ao tom de cada categoria temática. A Figura~\ref{fig:sent_categoria} apresenta o sentimento médio por categoria e revela que todas são, em média, negativas, com destaque para a geopolítica, a mais pessimista, o que reflete o teor de conflitos e tensões que a compõe, ao passo que as notícias de macroeconomia e energia figuram como as menos negativas.
+
+\begin{figure}[htpb]
+\centering
+\caption{Sentimento médio por categoria temática. Todas as categorias apresentam tom médio negativo, com a geopolítica como a mais pessimista.}
+\vspace{0.2cm}
+\includegraphics[width=0.75\textwidth]{figuras/fig_sent_categoria.png}
+\label{fig:sent_categoria}
+\vspace{0.2cm}
+{\small Fonte: Elaborado pelo autor.}
+\end{figure}
+
 \section{Desafios de Engenharia na Coleta e no Processamento}
 
 A obtenção de um corpus com marcação temporal precisa, eixo desta versão, não foi imediata. Esta seção registra os obstáculos enfrentados e as soluções adotadas, tanto pela transparência quanto porque a própria superação desses obstáculos constitui parte da contribuição metodológica do trabalho.
@@ -104,9 +116,123 @@ O dado mais notável é o forte predomínio de notícias negativas, que represen
 {\small Fonte: Elaborado pelo autor.}
 \end{figure}
 
+\section{Estatística Descritiva das Séries}
+
+Antes de modelar, convém caracterizar as séries quantitativas que alimentam o estudo. A Tabela~\ref{tab:descritiva} apresenta a estatística descritiva do log-retorno, da volatilidade condicional estimada pelo GARCH e do índice diário de sentimento, ao longo dos mil novecentos e oitenta e seis pregões.
+
+\begin{table}[htpb]
+\centering
+\caption{Estatística descritiva das séries diárias (2018--2025).}
+\label{tab:descritiva}
+\resizebox{0.95\textwidth}{!}{%
+\begin{tabular}{lccc}
+\hline
+\textbf{Estatística} & \textbf{Log-retorno (\%)} & \textbf{Volatilidade GARCH} & \textbf{Índice de sentimento} \\ \hline
+Observações & 1.986 & 1.986 & 1.986 \\
+Média & 0,098 & 2,423 & $-0{,}261$ \\
+Desvio-padrão & 2,692 & 1,221 & 0,090 \\
+Mínimo & $-35{,}24$ & 1,327 & $-0{,}591$ \\
+Máximo & 20,07 & 13,228 & $-0{,}012$ \\
+Assimetria & $-1{,}94$ & 4,60 & $-0{,}19$ \\
+Curtose & 28,24 & 31,17 & 3,19 \\
+Jarque-Bera ($p$) & 53.965 (0,000) & 72.670 (0,000) & 15,5 (0,000) \\
+ADF ($p$) & $-11{,}63$ (0,000) & $-6{,}22$ (0,000) & $-9{,}29$ (0,000) \\ \hline
+\end{tabular}%
+}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor.}
+\end{table}
+
+Três características merecem destaque. Primeiro, o log-retorno apresenta forte assimetria negativa, de $-1{,}94$, e curtose extrema, de $28{,}24$, muito acima do valor $3$ da distribuição normal, o que indica caudas pesadas e quedas mais frequentes e severas do que altas de igual magnitude. O teste de Jarque-Bera rejeita de forma contundente a normalidade. Esses fatos estilizados justificam tanto a adoção da distribuição \textit{t}-Student no GARCH quanto a opção pela regressão quantílica, que dispensa o pressuposto de normalidade e foca precisamente as caudas. Segundo, o teste de Dickey-Fuller Aumentado confirma a estacionariedade das três séries, requisito para a modelagem econométrica. Terceiro, o índice de sentimento tem média negativa, de $-0{,}261$, o que confirma, no plano agregado e diário, o predomínio de notícias negativas já observado na distribuição de rótulos, em consonância com o viés de negatividade. A Figura~\ref{fig:retorno_dist} ilustra a distribuição dos retornos frente à curva normal, e a Figura~\ref{fig:preco_serie} apresenta a evolução do preço da PETR4 no período.
+
+\begin{figure}[htpb]
+\centering
+\caption{Distribuição dos log-retornos diários da PETR4 comparada à distribuição normal. O excesso de massa nas caudas e o pico central evidenciam a curtose elevada.}
+\vspace{0.2cm}
+\includegraphics[width=0.65\textwidth]{figuras/fig_retorno_dist.png}
+\label{fig:retorno_dist}
+\vspace{0.2cm}
+{\small Fonte: Elaborado pelo autor.}
+\end{figure}
+
+\begin{figure}[htpb]
+\centering
+\caption{Evolução do preço de fechamento da PETR4 no período de 2018 a 2025, com destaque para a forte queda associada ao choque da pandemia em 2020.}
+\vspace{0.2cm}
+\includegraphics[width=0.85\textwidth]{figuras/fig_preco_serie.png}
+\label{fig:preco_serie}
+\vspace{0.2cm}
+{\small Fonte: Elaborado pelo autor.}
+\end{figure}
+
+A Tabela~\ref{tab:por_ano} desagrega as séries por ano e revela a heterogeneidade dos regimes ao longo do período, informação essencial para interpretar as análises de robustez apresentadas adiante.
+
+\begin{table}[htpb]
+\centering
+\caption{Estatística descritiva anual: pregões, retorno médio e seu desvio-padrão, volatilidade média, sentimento médio e proporção de pregões de alta.}
+\label{tab:por_ano}
+\resizebox{0.98\textwidth}{!}{%
+\begin{tabular}{ccccccc}
+\hline
+\textbf{Ano} & \textbf{Pregões} & \textbf{Ret. médio (\%)} & \textbf{DP ret.} & \textbf{Volat. média} & \textbf{Sentim. médio} & \textbf{\% altas} \\ \hline
+2018 & 244 & 0,143 & 3,34 & 3,01 & $-0{,}252$ & 52,9\% \\
+2019 & 248 & 0,128 & 1,83 & 2,03 & $-0{,}246$ & 52,4\% \\
+2020 & 248 & $-0{,}025$ & 4,49 & 3,45 & $-0{,}263$ & 49,2\% \\
+2021 & 247 & 0,085 & 2,83 & 2,63 & $-0{,}228$ & 51,8\% \\
+2022 & 250 & 0,129 & 2,60 & 2,56 & $-0{,}306$ & 53,6\% \\
+2023 & 248 & 0,273 & 2,05 & 2,21 & $-0{,}254$ & 57,3\% \\
+2024 & 251 & 0,070 & 1,58 & 1,80 & $-0{,}261$ & 50,2\% \\
+2025 & 250 & $-0{,}021$ & 1,44 & 1,71 & $-0{,}276$ & 52,0\% \\ \hline
+\end{tabular}%
+}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor.}
+\end{table}
+
+O ano de 2020 destaca-se pela volatilidade média mais alta, de $3{,}45$, e pelo desvio-padrão dos retornos de $4{,}49$, reflexo do choque da pandemia. O ano de 2022, marcado pelo ciclo eleitoral e por forte interferência política sobre a Petrobras, apresenta o sentimento médio mais negativo, de $-0{,}306$. Já 2023 reúne o melhor retorno médio e a maior proporção de pregões de alta, ao passo que 2024 e 2025 exibem volatilidade decrescente. Essa variação de regime entre os anos é precisamente o que torna a previsão direcional sensível ao período, fenômeno analisado em detalhe na seção de robustez por subperíodo.
+
 \section{Modelagem do Risco e Diagnóstico}
 
-A variância condicional da PETR4 foi estimada por um modelo GARCH(1,1) com distribuição \textit{t}-Student. Os parâmetros obtidos foram um coeficiente de choque de aproximadamente zero vírgula zero oito cinco e um coeficiente de inércia de aproximadamente zero vírgula oito nove nove. A soma desses coeficientes, que mede a persistência da volatilidade, atinge zero vírgula nove oito quatro, valor próximo da unidade que indica forte inércia: episódios de alta volatilidade tendem a perdurar por vários pregões antes de se dissiparem. A Figura~\ref{fig:garch_clusters} apresenta a série de volatilidade condicional estimada, na qual os agrupamentos são visíveis.
+A variância condicional da PETR4 foi estimada por um modelo GARCH(1,1) com distribuição \textit{t}-Student, ajustado por máxima verossimilhança. A Tabela~\ref{tab:garch} apresenta os parâmetros estimados, com as respectivas estatísticas $t$, e os critérios de informação.
+
+\begin{table}[htpb]
+\centering
+\caption{Estimativas do modelo GARCH(1,1) com distribuição \textit{t}-Student para a PETR4.}
+\label{tab:garch}
+\begin{tabular}{lcc}
+\hline
+\textbf{Parâmetro} & \textbf{Coeficiente} & \textbf{Estatística $t$} \\ \hline
+$\mu$ (média) & 0,132 & 3,33 \\
+$\omega$ (constante) & 0,128 & 1,94 \\
+$\alpha$ (choque) & 0,085 & 3,52 \\
+$\beta$ (inércia) & 0,899 & 30,86 \\
+$\nu$ (graus de liberdade) & 4,27 & 10,43 \\ \hline
+Persistência ($\alpha + \beta$) & \multicolumn{2}{c}{0,984} \\
+Log-verossimilhança & \multicolumn{2}{c}{$-4.299{,}5$} \\
+AIC / BIC & \multicolumn{2}{c}{8.609 / 8.637} \\ \hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor a partir do pacote \textit{arch} em Python.}
+\end{table}
+
+Todos os parâmetros da equação da variância são positivos e estatisticamente significativos, e a soma $\alpha + \beta = 0{,}984$ confirma a forte persistência da volatilidade, com episódios de alta tensão que tendem a perdurar por vários pregões antes de se dissiparem. O baixo número de graus de liberdade estimado para a distribuição \textit{t}-Student, de $4{,}27$, confirma a presença das caudas pesadas já identificadas na estatística descritiva e valida a escolha dessa distribuição em lugar da normal. A Figura~\ref{fig:garch_clusters} apresenta a série de volatilidade condicional estimada, na qual os agrupamentos são visíveis.
+
+A adequação do ajuste foi avaliada pelos testes sobre os resíduos padronizados, sintetizados na Tabela~\ref{tab:garch_diag}. O teste de Ljung-Box não rejeita a ausência de autocorrelação, o que indica que o modelo capturou bem a dinâmica da série. O teste de Jarque-Bera rejeita a normalidade dos resíduos, resultado esperado e já acomodado pela distribuição \textit{t}-Student. O teste de heterocedasticidade ARCH-LM, por sua vez, ainda detecta um efeito residual em defasagens mais longas, o que sugere que uma especificação mais rica, como o EGARCH ou o GJR-GARCH, poderia aprimorar o ajuste, conforme registrado entre os trabalhos futuros. Ainda assim, para o propósito desta pesquisa, de fornecer uma medida diária de risco como atributo e como objeto de avaliação, o GARCH(1,1) mostra-se adequado.
+
+\begin{table}[htpb]
+\centering
+\caption{Diagnóstico dos resíduos padronizados do modelo GARCH(1,1).}
+\label{tab:garch_diag}
+\begin{tabular}{lcc}
+\hline
+\textbf{Teste} & \textbf{Estatística} & \textbf{Valor-p} \\ \hline
+Jarque-Bera (normalidade) & 2.695,6 & 0,000 \\
+Ljung-Box(10) (autocorrelação) & 12,69 & 0,242 \\
+ARCH-LM(10) (heterocedasticidade) & 27,20 & 0,002 \\ \hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor.}
+\end{table}
 
 \begin{figure}[htpb]
 \centering

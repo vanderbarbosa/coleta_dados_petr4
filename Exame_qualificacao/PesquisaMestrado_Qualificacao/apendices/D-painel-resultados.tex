@@ -1,0 +1,29 @@
+\chapter{Painel Consolidado de Resultados} \label{ap:painel}
+
+Este apêndice reúne, em um único quadro de referência, os principais resultados quantitativos obtidos ao longo da pesquisa, com a respectiva métrica e a hipótese ou seção a que se vinculam. O objetivo é oferecer ao leitor uma visão sintética e comparável do conjunto de análises, cujo detalhamento consta do Capítulo~\ref{chap:resultados}.
+
+\begin{table}[htpb]
+\centering
+\caption{Painel consolidado dos resultados da pesquisa.}
+\label{tab:painel}
+\resizebox{0.99\textwidth}{!}{%
+\begin{tabular}{p{4.4cm} p{4.6cm} p{5.2cm} c}
+\hline
+\textbf{Análise} & \textbf{Métrica principal} & \textbf{Resultado} & \textbf{Vínculo} \\ \hline
+Previsão de direção & Acurácia de teste & 54,5\% (vs 50,1\% apenas-preços; binomial $p=0{,}024$) & H1 \\
+Ponderação do ISM & Acurácia da melhor construção & 54,9\% (ponderação por confiança) & H1 \\
+Causalidade de Granger & Valor-p sentimento $\rightarrow$ volatilidade & $\approx 0{,}000$ em todas as defasagens & H2 \\
+Regressão quantílica & Efeito no quantil 0,05 & $+542$ bps ($p=0{,}001$); nulo nos quantis altos & H3 \\
+Volatilidade (modelo linear) & $R^2$ fora da amostra com sentimento & Negativo (sem ganho) & H2 \\
+Volatilidade (quantílica com pesos) & $R^2$ fora da amostra vs HAR & $+10{,}9\%$ (ganho da metodologia, não do sentimento) & --- \\
+Estudo de refinamento & Melhor acurácia de teste & Baseline parcimonioso (54,5\%) & --- \\
+Robustez por subperíodo & Faixa de acurácia anual & 43\% a 53\% (sensível ao regime) & --- \\
+Avaliação econômica & Retorno vs comprar e manter & $+22{,}1\%$ vs $+2{,}6\%$ no teste & --- \\
+Validação humana do sentimento & Coeficiente \textit{kappa} de Cohen & Rotulagem em curso & --- \\ \hline
+\end{tabular}%
+}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor.}
+\end{table}
+
+A leitura do painel reforça a mensagem central da dissertação. O sentimento das notícias agrega valor preditivo de forma modesta na direção, significativa na sua assimetria e clara na sua relação com a volatilidade, ao mesmo tempo em que o trabalho delimita, com honestidade, as fronteiras desse alcance, em especial a ausência de ganho de previsão pontual de volatilidade fora da amostra. Esse equilíbrio entre a demonstração do que o sentimento contribui e o reconhecimento do que ele não entrega é, em última análise, a marca metodológica desta pesquisa.
