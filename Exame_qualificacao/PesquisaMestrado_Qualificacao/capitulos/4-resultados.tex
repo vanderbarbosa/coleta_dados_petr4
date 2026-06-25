@@ -252,6 +252,60 @@ Coeficiente de determinação & 0,166 & Fração da variação explicada \\ \hli
 
 A previsão de volatilidade apresenta correlação positiva moderada com a volatilidade realizada e um coeficiente de Mincer-Zarnowitz próximo, embora abaixo, do valor ideal de um, o que indica um leve viés sistemático. O coeficiente de determinação modesto é esperado quando se usa o valor absoluto do retorno diário como aproximação da volatilidade latente, pois essa medida é, ela própria, bastante ruidosa. Lido em conjunto com a forte causalidade de Granger do sentimento sobre a volatilidade, esse resultado sugere que o canal de volatilidade é onde o sentimento exerce a influência mais nítida e estável, o que aponta uma direção promissora para o aprofundamento da pesquisa.
 
+\section{Análises Econométricas Complementares}
+
+As seções anteriores avaliaram o sentimento sob a ótica do aprendizado de máquina, que fornece uma medida pontual do seu poder preditivo. Esta seção, fundamentada na Seção~\ref{chap:metodologia} e inspirada em \citeonline{silva_o_2018}, aprofunda a investigação com duas perguntas que a média condicional não responde: o efeito do sentimento é simétrico ao longo da distribuição do retorno, e ele contribui de forma direta para a previsão da volatilidade?
+
+\subsection{Assimetria do efeito do sentimento: regressão quantílica}
+
+Uma primeira dificuldade motivou esta análise. A regressão de mínimos quadrados do retorno sobre o sentimento defasado produz um efeito médio de aproximadamente $+134$ pontos-base por unidade do índice de sentimento, mas com significância apenas marginal (valor de probabilidade de $0{,}055$). Esse resultado, tomado isoladamente, sugeriria um efeito fraco. A suspeita, à luz do viés de negatividade, era de que a média mascarasse um comportamento heterogêneo: o sentimento poderia importar muito nos dias ruins e pouco nos dias bons. Para investigar essa hipótese, substituiu-se a regressão na média pela regressão quantílica de \citeonline{koenker_regression_1978}, que estima o efeito em diferentes pontos da distribuição do retorno. A Tabela~\ref{tab:quantilica} e a Figura~\ref{fig:quantilica} apresentam o resultado.
+
+\begin{table}[htpb]
+\centering
+\caption{Efeito do sentimento defasado sobre o log-retorno da PETR4 por quantil, em pontos-base por unidade do índice de sentimento.}
+\label{tab:quantilica}
+\begin{tabular}{cccc}
+\hline
+\textbf{Quantil} & \textbf{Efeito (bps)} & \textbf{IC 95\% (bps)} & \textbf{Valor-p} \\ \hline
+0,05 & $+541{,}8$ & $[+221{,}7;\ +861{,}9]$ & 0,001 \\
+0,10 & $+156{,}5$ & --- & 0,100 \\
+0,25 & $+96{,}5$ & --- & 0,109 \\
+0,50 & $+117{,}8$ & --- & 0,032 \\
+0,75 & $+19{,}2$ & --- & 0,782 \\
+0,90 & $-67{,}7$ & --- & 0,534 \\
+0,95 & $+16{,}2$ & --- & 0,915 \\ \hline
+\textit{Média (MQO)} & \textit{$+134{,}3$} & --- & \textit{0,055} \\ \hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor.}
+\end{table}
+
+\begin{figure}[htpb]
+\centering
+\caption{Efeito do sentimento defasado sobre o retorno da PETR4 ao longo dos quantis, com intervalo de confiança de 95\% e o efeito médio (MQO) como referência. O efeito concentra-se na cauda inferior, nos dias de pior desempenho.}
+\vspace{0.2cm}
+\includegraphics[width=0.85\textwidth]{figuras/fig_quantilica.png}
+\label{fig:quantilica}
+\vspace{0.2cm}
+{\small Fonte: Elaborado pelo autor.}
+\end{figure}
+
+O resultado é nítido e contrasta fortemente com a leitura da média. No quantil $0{,}05$, que corresponde aos piores dias do mercado, o efeito do sentimento é grande e altamente significativo, de aproximadamente $+542$ pontos-base por unidade do índice, com valor de probabilidade de $0{,}001$. À medida que se sobe na distribuição, o efeito diminui e perde significância, tornando-se indistinguível de zero nos quantis superiores, a partir de $0{,}75$. Em termos de magnitude realista, como o desvio-padrão do índice de sentimento diário é de $0{,}090$, uma variação de um desvio-padrão no sentimento de ontem associa-se a uma diferença de cerca de $+49$ pontos-base no retorno dos piores dias, contra apenas $+11$ pontos-base na mediana.
+
+A interpretação econômica é coerente com a teoria. O sentimento das notícias exerce a sua maior influência justamente nos momentos de queda, quando os investidores, mais avessos à perda, reagem com intensidade ao tom da mídia, comportamento previsto pelo viés de negatividade e pela evidência de \citeonline{garcia_sentiment_2013} de concentração do efeito em períodos adversos. Esse achado representa um avanço claro sobre as análises anteriores. O modelo de direção, com acurácia de $54{,}5\%$, e a regressão na média, com significância marginal, ofereciam um retrato de efeito modesto e quase uniforme. A regressão quantílica revela que esse efeito, longe de uniforme, é estruturalmente assimétrico e estatisticamente robusto na cauda que mais importa para a gestão de risco. Esse resultado alinha-se ao encontrado por \citeonline{silva_o_2018} para o IBOVESPA, e estende-o a um ativo individual, com um índice de sentimento contextual.
+
+\subsection{Contribuição do sentimento à previsão da volatilidade}
+
+A segunda análise testa, de forma direta, se o sentimento ajuda a prever a volatilidade. Aqui é necessário distinguir dois planos, e a sua distinção constitui um resultado honesto e instrutivo. No plano da associação dentro da amostra, a intensidade do sentimento, medida pelo valor absoluto do índice, é um preditor fortemente significativo da volatilidade realizada, mesmo controlando pela volatilidade do dia anterior estimada pelo GARCH, com coeficiente positivo e valor de probabilidade de $0{,}0004$. Esse resultado confirma, por uma via independente, o achado da causalidade de Granger: dias de sentimento mais intenso associam-se a maior volatilidade.
+
+No plano da previsão fora da amostra, contudo, o quadro é mais sóbrio. Comparou-se um modelo de referência, baseado apenas na volatilidade passada, a um modelo aumentado com a intensidade do sentimento, medindo a redução do erro de previsão no conjunto de teste. Tanto contra um modelo autorregressivo simples quanto contra o modelo baseado no GARCH, o acréscimo do sentimento \emph{não} reduziu o erro de previsão; ao contrário, produziu um coeficiente de determinação fora da amostra ligeiramente negativo, da ordem de $-4$ a $-5\%$. Em outras palavras, embora o sentimento esteja inequivocamente associado à volatilidade dentro da amostra, essa associação não se traduz em ganho de previsão fora da amostra sobre um modelo que já utiliza a volatilidade passada.
+
+Esse contraste merece registro transparente, em contraposição ao achado de \citeonline{silva_o_2018}, que reportou redução do erro de previsão de volatilidade ao incorporar o sentimento. Duas explicações são plausíveis. A primeira é a natureza ruidosa da \textit{proxy} de volatilidade realizada empregada, o valor absoluto do retorno diário, que dificulta qualquer ganho marginal de previsão. A segunda é que a volatilidade condicional do GARCH já incorpora grande parte da informação preditível, deixando pouca margem para o sentimento contribuir. Trata-se, portanto, de uma limitação reconhecida: o sentimento informa sobre a volatilidade, mas não a prevê melhor do que a sua própria inércia. O aprofundamento dessa previsão, por exemplo com proxies de volatilidade de alta frequência, é registrado entre os trabalhos futuros.
+
+\subsection{Condicionamento por regime de incerteza}
+
+Por fim, replicou-se, de forma simplificada, a estratégia de \citeonline{silva_o_2018} de condicionar o efeito do sentimento ao regime de incerteza econômica. Classificaram-se como de alta incerteza os pregões pertencentes ao quartil superior da volatilidade, os $25\%$ de maior risco, e estimou-se o efeito médio do sentimento sobre o retorno em cada regime. O efeito é mais do que o dobro no regime de alta incerteza, de aproximadamente $+191$ pontos-base por unidade do índice, contra $+88$ pontos-base no regime de baixa incerteza. A direção do resultado é, portanto, consistente com a hipótese de que o sentimento importa mais em períodos turbulentos, embora a estimativa no regime de alta incerteza não alcance significância estatística, em razão do menor tamanho da subamostra e do fato de a média, como visto, diluir o efeito concentrado nas caudas. A análise por regime e a análise quantílica, lidas em conjunto, reforçam de modo convergente a natureza assimétrica e dependente do estado do mercado do efeito do sentimento.
+
 \section{Estudo de Refinamento: Cada Experimento em Detalhe}
 
 Uma vez estabelecido o desempenho do modelo de fusão, conduziu-se um estudo sistemático de refinamento, com o objetivo de verificar se seria possível elevar a acurácia fora da amostra. O estudo foi organizado como uma sequência de nove experimentos incrementais, identificados de E0 a E8, em que cada um introduz uma modificação sobre o anterior. O critério de êxito foi deliberadamente rigoroso: só se considera melhora um ganho no conjunto de teste, consultado uma única vez, e não na validação, sobre a qual as decisões são tomadas. A Tabela~\ref{tab:refinamento} reúne os resultados.
