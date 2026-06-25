@@ -168,7 +168,7 @@ Para tornar o método concreto, acompanha-se uma notícia hipotética por todo o
     \item \textbf{Fusão e leitura econômica.} O ISM, defasado, compõe o vetor de atributos ao lado do retorno e da volatilidade de ontem. Embora o tom seja negativo, a categoria de mercado sinaliza um choque de oferta, que tende a elevar o preço do petróleo e pode favorecer a produtora. O classificador pondera esse sinal junto aos demais atributos para estimar a probabilidade de alta.
 \end{enumerate}
 
-Esse percurso evidencia como o método distingue uma notícia negativa para o mercado de uma negativa para a empresa, questão que a banca considerou central.
+Esse percurso evidencia como o método distingue uma notícia negativa para o mercado de uma negativa para a empresa, questão que a banca considerou central. Vale ressaltar que, no sistema implementado, a notícia individual não gera diretamente uma previsão de preço; ela contribui, junto com todas as demais do pregão, para o índice diário de sentimento, que então alimenta o modelo. A leitura econômica setorial descrita no exemplo opera, assim, em duas instâncias complementares: na categorização que organiza o corpus para a análise de ablação, e na aplicação interativa que acompanha esta dissertação, na qual o usuário submete uma manchete e recebe, além da previsão estatística, a interpretação econômica de seu provável efeito. Essa dupla operação ilustra a distância entre o modelo estatístico, que prevê uma direção por pregão, e a ferramenta de apoio à decisão, que interpreta uma notícia isolada, ambos derivados da mesma arquitetura.
 
 \section{Reprodutibilidade}
 
