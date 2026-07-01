@@ -1,0 +1,20 @@
+{
+  "features": [
+    "Retorno_Ontem",
+    "Volatilidade_Ontem",
+    "Sentimento_Ontem"
+  ],
+  "retorno_recente": 0.20996862190795998,
+  "volatilidade_recente": 1.869185234308397,
+  "data_referencia": "2026-06-29",
+  "acuracia_teste_fusion": 52.22,
+  "auc_teste_fusion": 0.5139,
+  "periodo_treino": [
+    "2016-01-06",
+    "2022-04-22"
+  ],
+  "periodo_teste": [
+    "2023-11-14",
+    "2026-06-29"
+  ]
+}

@@ -32,6 +32,10 @@ Ou seja: o site **funciona sozinho** no Pages (sem servidor). Um backend de prev
 
 ## Como executar (local, funcionalidade completa)
 
+> 📋 Para rodar em **outra máquina** (ex.: apresentação à banca), com a frase
+> passando por todos os classificadores, siga o guia passo a passo:
+> [**COMO_RODAR_LOCAL.md**](COMO_RODAR_LOCAL.md).
+
 ### 1. Backend (ambiente conda `petr4` — pandas, torch/FinBERT e xgboost)
 ```bash
 cd site/backend

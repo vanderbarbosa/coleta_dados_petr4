@@ -11,7 +11,11 @@ __pycache__/
 # ─── Dados e saídas geradas pelos scripts (grandes / regeneráveis) ───
 # O corpus completo passa de 100 MB — acima do limite do GitHub.
 # Para versionar dados grandes, use Git LFS ou os "Releases" do GitHub.
-Mestrado_PETR4/
+Mestrado_PETR4/*
+# ...EXCETO os arquivos do modelo treinado (pequenos), necessários para rodar a
+# previsão completa (FinBERT + XGBoost) em qualquer máquina após um git clone.
+!Mestrado_PETR4/modelo_xgb_fusion.json
+!Mestrado_PETR4/modelo_meta.json
 *.csv
 *.log
 *.png
