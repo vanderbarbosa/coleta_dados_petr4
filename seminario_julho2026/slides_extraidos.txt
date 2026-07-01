@@ -1,0 +1,486 @@
+
+======================================================================
+SLIDE 1
+[layout: Slide de Título]
+  <IMAGEM nome='Imagem 4'>
+  <PLACEHOLDER (14)> O Impacto do Sentimento de Notícias Financeiras na Previsão de Direção e Volatilidade do Ativo PETR4: Uma Abordagem via Transformers e Machine Learning
+  <PLACEHOLDER (14)> Orientador: Júlio Cesar Nievola
+  <IMAGEM nome='Imagem 7'>
+  <TEXT_BOX (17)> Vanderlei Barbosa da Silva
+  [NOTAS]: Boa tarde aos ilustres membros da banca. É com grande satisfação que apresento o meu projeto de dissertação, focado em decodificar o sentimento da mídia financeira para antecipar a direção e a volatilidade da PETR4.
+
+======================================================================
+SLIDE 2
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Estrutura da Apresentação
+  [NOTAS]: Para otimizar o nosso tempo, estruturei esta apresentação seguindo o rigor do nosso documento escrito. 
+
+Passaremos pela problematização e hipóteses, avançaremos para a revisão da literatura e, na segunda metade, detalharemos a nossa arquitetura de Data Fusion e os resultados preliminares.
+
+======================================================================
+SLIDE 3
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Introdução
+
+======================================================================
+SLIDE 4
+[layout: Conteúdo com Legenda]
+  <PLACEHOLDER (14)> O Cenário da B3 e a Magnitude do Ativo PETR4
+  <TEXT_BOX (17)> Fevereiro/2024: Ápice do Valor de Mercado
+  <TEXT_BOX (17)> Atingiu recordes históricos sucessivos, consolidando a companhia como uma das maiores forças de capitalização da B3.
+  <IMAGEM nome='Imagem 10'>
+  <TEXT_BOX (17)> Setembro/2024: 
+A Democratização da Base de Acionistas
+  <TEXT_BOX (17)> Atingiu recordes históricos sucessivos, consolidando a companhia como uma das maiores forças de capitalização da B3.
+  <IMAGEM nome='Imagem 13'>
+  <TEXT_BOX (17)> Novembro/2024: 
+Magnitude do Volume de negociação Diário
+  <TEXT_BOX (17)> Registrou picos de volume negociado da ordem de R$ 3,6 Bilhões, reafirmando sua posição como ativo com maior liquidez e circulação financeira da bolsa brasileira.
+  <IMAGEM nome='Imagem 16'>
+  [NOTAS]: Para justificar a escolha do nosso objeto de estudo, precisamos olhar para a magnitude da Petrobras. 
+
+A PETR4 não é apenas uma ação; ela é um termômetro da economia brasileira. 
+
+Com um valor de mercado que atingiu picos de R$ 571 bilhões, é um ativo com liquidez colossal, mas extremamente suscetível a fatores exógenos: oscilações do petróleo Brent e, principalmente, o risco político e informacional. 
+
+É exatamente a sensibilidade desta ação ao noticiário que a torna o laboratório perfeito para as Finanças Comportamentais e para a nossa modelagem quantitativa.
+
+======================================================================
+SLIDE 5
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> O Poder da Notícia Financeira
+  <TEXT_BOX (17)> O Choque da Lava Jato e a Volatilidade da PETR4
+  <TEXT_BOX (17)> A pesquisa analisa a sensibilidade da PETR4 a fluxos informacionais, demonstrando como notícias de alto impacto provocam quedas verticais no preço e disparos imediatos na volatilidade(risco).
+  <IMAGEM nome='Imagem 8'>
+  [NOTAS]: Professores, observem a anatomia do choque informacional na PETR4. 
+
+Quando a denúncia da Lava Jato atinge a mídia, o investidor age guiado pelo Viés de Negatividade. 
+
+A razão desaparece, o preço desaba abruptamente e a volatilidade explode. 
+
+Modelos estáticos ficam cegos diante dessa anomalia. 
+
+É exatamente para prever esse ponto de inflexão que a nossa arquitetura de Data Fusion foi construída.
+
+======================================================================
+SLIDE 6
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Perguntas de Pesquisa
+  <PLACEHOLDER (14)> Questão Principal: Como o sentimento extraído de notícias financeiras, processado por modelos avançados de Inteligência Artificial (Transformers), impacta a previsão de direção e volatilidade do ativo PETR4 na B3? Através da fusão dos dados que o sentimento extraído pelo BERTimbau aliados ao risco do GARCH.
+  <TEXT_BOX (17)> Questão Secundária 1: O nível de pessimismo ou otimismo textual consegue prever matematicamente a direção de fechamento do ativo (Alta/Baixa)? Sim, nossos algoritmos (XGBoost/SVM) atestam que o sentimento textual da véspera atua como um previsor direcional. 
+  <TEXT_BOX (17)> Questão Secundária 2: O sentimento das notícias atua como um previsor antecipado da inércia do risco (volatilidade)?  Exatamente, o nosso modelo demonstra que a polaridade das notícias age como um gatilho precoce que antecipa a inércia do risco e da volatilidade.
+  <TEXT_BOX (17)> Questão Secundária 3: O Mercado precifica as notícias de forma assimétrica (Viés de Negatividade)? Sim, comprovamos matematicamente o Viés de Negatividade: notícias pessimistas geram vendas de pânico, quedas abruptas e picos de volatilidade muito mais severos que as otimistas.
+  [NOTAS]: "Professores, a literatura clássica já nos diz que notícias impactam os preços. 
+
+O problema é que a maioria dos sistemas preditivos do passado tentava ler essas notícias contando palavras isoladas, esbarrando na ironia e na complexidade do nosso idioma, além de diluir a análise no IBOVESPA inteiro.
+
+Portanto, a nossa Questão Central não é perguntar SE a notícia move o mercado, mas sim COMO nós podemos prever a direção e a volatilidade da PETR4 utilizando o atual estado da arte da Inteligência Artificial. 
+
+Nós queremos testar se arquiteturas avançadas, como os Transformers e o BERTimbau, conseguem ler o noticiário do Valor Econômico e nos dar uma vantagem preditiva.
+
+
+Para desdobrar essa questão central, investigamos três questões secundárias: primeiro, se a máquina consegue prever a direção de Alta ou Baixa; segundo, se a notícia consegue antecipar o agrupamento de risco e volatilidade antes dele acontecer; e, terceiro, se o mercado penaliza a PETR4 de forma assimétrica quando a notícia é negativa, o que chamamos nas Finanças Comportamentais de Viés de Negatividade."
+
+======================================================================
+SLIDE 7
+[layout: Duas Partes de Conteúdo]
+  <PLACEHOLDER (14)> Objetivos e Hipóteses
+  <TEXT_BOX (17)> Objetivo Geral
+  <TABELA 1x1>
+    | Investigar o impacto do sentimento extraído de notícias financeiras, processado via arquitetura Transformers (BERTimbau), sobre a previsão da direção do preço e da volatilidade do ativo PETR4 no mercado acionário brasileiro, estruturando uma arquitetura de fusão de dados (Data Fusion) com algoritmos de Machine Learning.
+  <TEXT_BOX (17)> Objetivos Específicos
+  <TEXT_BOX (17)> Coletar e higienizar um Big Data textual de notícias do jornal Valor Econômico referentes ao contexto macroeconômico e à Petrobras.
+Aplicar a modelagem não-supervisionada de tópicos Latent Dirichlet Allocation (LDA) para diagnosticar as principais forças temáticas que orbitam o ativo.
+Utilizar o modelo estado da arte em NLP (BERTimbau) para extrair o Índice de Polaridade Semântica (sentimento positivo, negativo ou neutro) das manchetes.
+Modelar a inércia do risco do mercado acionário brasileiro por meio da variância condicional estimada pelo modelo econométrico GARCH(1,1).
+Treinar e avaliar modelos preditivos não-lineares de Machine Learning(como XGBoost e Support Vector Machines), sob o protocolo de validação cruzada cronológica (Walk-Forward Validation), para classificar a direção futura do ativo (alta/baixa).
+  [NOTAS]: Nosso Objetivo Geral é construir uma arquitetura de Data Fusion que una o sentimento extraído de notícias com algoritmos preditivos para antecipar a direção e a volatilidade da PETR4. 
+
+Para que isso seja possível, nossos objetivos específicos englobam: 
+	1. a coleta e higienização de um Big Data do Valor Econômico; 
+	2. a extração do índice de polaridade (otimismo/pessimismo) via modelo BERTimbau; 
+	3. o isolamento da inércia do risco via modelo econométrico GARCH(1,1); 
+	4. e a aplicação de classificadores não-lineares, validados rigorosamente pelo protocolo Walk-Forward para impedir qualquer vazamento de dados do futuro.
+
+======================================================================
+SLIDE 8
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Hipóteses
+  <TEXT_BOX (17)> H1 (Impacto Direcional): O sentimento textual das notícias financeiras(extraído via BERTimbau) exerce influência preditiva sobre os log-retornos das ações da PETR4, capturando a absorção da informação pelos investidores.
+H2 (Antecipação de Risco): O grau de polaridade das notícias atua como um previsor da variação do risco do ativo, possuindo forte correlação coma volatilidade condicional da PETR4 modelada via GARCH(1,1).
+H3 (Viés de Negatividade): Em consonância com a assimetria no processamento cognitivo dos investidores, as manchetes classificadas com viés de pessimismo (notícias negativas) geram os picos mais agudos de turbulência e ineficiência na B3.
+H4 (Robustez e Random Walk): Quando a arquitetura híbrida de Machine Learning (XGBoost e SVM) é submetida a um fluxo temporal com injeção de ruído estocástico (desalinhamento de timestamps), os modelos comportam-se como um passeio aleatório (random walk) com acurácia próxima a 50%, atestando matematicamente a sua robustez contra o sobre ajuste (overfitting) na ausência do evento causal imediato.
+  <TEXT_BOX (17)> Hipótese
+  <TEXT_BOX (17)> Método de teste
+  <TEXT_BOX (17)> Sentimento afeta retorno. 
+Sentimento antecipa risco. 
+Viés de Negatividade. 
+Robustez
+  <TEXT_BOX (17)> Tipo de Hipótese
+  <TEXT_BOX (17)> Validação Direcional no XGBoost.
+Modelagem GARCH(1,1) (Resíduos Quadráticos).
+Dispersão Sentimento vs. Volatilidade.
+Walk-Forward Validation com Imputação Estocástica.
+  [NOTAS]: Nossa pesquisa se ancora em 4 hipóteses. H1: O texto afeta o retorno de forma direcional. 
+H2: O texto atua como previsor antecipado da volatilidade. 
+H3: As notícias pessimistas geram ineficiências mais agudas que as otimistas (Viés de Negatividade). E a nossa hipótese de controle, 
+H4: se desalinharmos as datas das notícias (imputação estocástica), os modelos devem se comportar como um passeio aleatório, cravando 50% de acurácia, provando que não há overfitting.
+
+======================================================================
+SLIDE 9
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Contribuições
+  <TEXT_BOX (17)> CONTRIBUIÇÃO PRINCIPAL
+  <TABELA 1x1>
+    | Framework Preditivo de Data Fusion Híbrido 
+Desenvolvimento de um pipeline computacional diário que funde NLP Transformers com Risco GARCH para predição direcional da PETR4.
+  <TEXT_BOX (17)> CONTRIBUIÇÕES COMPLEMENTARES
+  <TEXT_BOX (17)> Base de dados textualColetar e higienizar um corpus  de notícias do jornal Valor Econômico referentes ao contexto macroeconômico e à Petrobras.
+  <TEXT_BOX (17)> Modelo
+Um modelo que comprova numericamente o 'Viés' na B3, demonstrando como o investidor da PETR4 reage às notícias.
+  [NOTAS]: Professores, a nossa contribuição principal transcende a teoria. 
+
+Nós entregamos à comunidade científica um Framework Preditivo de Data Fusion. O que isso significa na prática? 
+
+Significa que nós construímos e validamos um pipeline computacional capaz de ingerir as notícias do Valor Econômico diariamente, cruzar essa semântica com a volatilidade econométrica do GARCH, e fornecer aos algoritmos de Machine Learning o sinal claro se a PETR4 tem maior probabilidade de alta ou de baixa no pregão seguinte.
+
+ Não é apenas uma análise do passado, é um framework arquitetural validado para uso preditivo diário no mercado brasileiro.
+
+======================================================================
+SLIDE 10
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Contribuições
+  <IMAGEM nome='Imagem 3'>
+  [NOTAS]: Professores, a nossa contribuição principal transcende a teoria. 
+
+Nós entregamos à comunidade científica um Framework Preditivo de Data Fusion. O que isso significa na prática? Significa que nós construímos e validamos um pipeline computacional capaz de ingerir as notícias do Valor Econômico diariamente, cruzar essa semântica com a volatilidade econométrica do GARCH, e fornecer aos algoritmos de Machine Learning o sinal claro se a PETR4 tem maior probabilidade de alta ou de baixa no pregão seguinte. Não é apenas uma análise do passado, é um framework arquitetural validado para uso preditivo diário no mercado brasileiro.
+
+======================================================================
+SLIDE 11
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Contribuições
+  <IMAGEM nome='Imagem 3'>
+  [NOTAS]: Professores, a nossa contribuição principal transcende a teoria. 
+
+Nós entregamos à comunidade científica um Framework Preditivo de Data Fusion. O que isso significa na prática? Significa que nós construímos e validamos um pipeline computacional capaz de ingerir as notícias do Valor Econômico diariamente, cruzar essa semântica com a volatilidade econométrica do GARCH, e fornecer aos algoritmos de Machine Learning o sinal claro se a PETR4 tem maior probabilidade de alta ou de baixa no pregão seguinte. Não é apenas uma análise do passado, é um framework arquitetural validado para uso preditivo diário no mercado brasileiro.
+
+======================================================================
+SLIDE 12
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Contribuições
+  <IMAGEM nome='Imagem 3'>
+  [NOTAS]: Professores, a nossa contribuição principal transcende a teoria. 
+
+Nós entregamos à comunidade científica um Framework Preditivo de Data Fusion. O que isso significa na prática? Significa que nós construímos e validamos um pipeline computacional capaz de ingerir as notícias do Valor Econômico diariamente, cruzar essa semântica com a volatilidade econométrica do GARCH, e fornecer aos algoritmos de Machine Learning o sinal claro se a PETR4 tem maior probabilidade de alta ou de baixa no pregão seguinte. Não é apenas uma análise do passado, é um framework arquitetural validado para uso preditivo diário no mercado brasileiro.
+
+======================================================================
+SLIDE 13
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Contribuições
+  <IMAGEM nome='Imagem 3'>
+  [NOTAS]: Professores, a nossa contribuição principal transcende a teoria. 
+
+Nós entregamos à comunidade científica um Framework Preditivo de Data Fusion. O que isso significa na prática? Significa que nós construímos e validamos um pipeline computacional capaz de ingerir as notícias do Valor Econômico diariamente, cruzar essa semântica com a volatilidade econométrica do GARCH, e fornecer aos algoritmos de Machine Learning o sinal claro se a PETR4 tem maior probabilidade de alta ou de baixa no pregão seguinte. Não é apenas uma análise do passado, é um framework arquitetural validado para uso preditivo diário no mercado brasileiro.
+
+======================================================================
+SLIDE 14
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Contribuições
+  <IMAGEM nome='Imagem 3'>
+  [NOTAS]: Professores, a nossa contribuição principal transcende a teoria. 
+
+Nós entregamos à comunidade científica um Framework Preditivo de Data Fusion. O que isso significa na prática? Significa que nós construímos e validamos um pipeline computacional capaz de ingerir as notícias do Valor Econômico diariamente, cruzar essa semântica com a volatilidade econométrica do GARCH, e fornecer aos algoritmos de Machine Learning o sinal claro se a PETR4 tem maior probabilidade de alta ou de baixa no pregão seguinte. Não é apenas uma análise do passado, é um framework arquitetural validado para uso preditivo diário no mercado brasileiro.
+
+======================================================================
+SLIDE 15
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Contribuições
+  <IMAGEM nome='Imagem 3'>
+  [NOTAS]: Professores, a nossa contribuição principal transcende a teoria. 
+
+Nós entregamos à comunidade científica um Framework Preditivo de Data Fusion. O que isso significa na prática? Significa que nós construímos e validamos um pipeline computacional capaz de ingerir as notícias do Valor Econômico diariamente, cruzar essa semântica com a volatilidade econométrica do GARCH, e fornecer aos algoritmos de Machine Learning o sinal claro se a PETR4 tem maior probabilidade de alta ou de baixa no pregão seguinte. Não é apenas uma análise do passado, é um framework arquitetural validado para uso preditivo diário no mercado brasileiro.
+
+======================================================================
+SLIDE 16
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Referencial Teórico
+
+======================================================================
+SLIDE 17
+[layout: Título e Conteúdo]
+  <TEXT_BOX (17)> Trabalhos Relacionados
+  <IMAGEM nome='Imagem 8'>
+  <IMAGEM nome='Imagem 12'>
+  <TEXT_BOX (17)> Seleção Final: 25 Estudos Seminais(Estado da Arte)
+  [NOTAS]: Conduzimos uma rigorosa Revisão Sistemática da Literatura. 
+
+Partimos de 452 publicações globais na última década. 
+
+Aplicamos filtros, eliminando artigos sem revisão por pares, sem aplicação a mercados de ações reais ou que não utilizassem Processamento de Linguagem Natural. 
+
+Isso expurgou 427 trabalhos, deixando-nos com os 25.
+
+======================================================================
+SLIDE 18
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Trabalhos Relacionados
+  <IMAGEM nome='Imagem 8'>
+  [NOTAS]: Professores, para chegarmos à nossa arquitetura, não fizemos escolhas aleatórias. 
+
+Nós mapeamos as 25 obras mais relevantes do estado da arte global. 
+
+Trouxe aqui para a tela as 12 principais referências que contam a história tecnológica que o nosso laboratório buscou superar.
+
+======================================================================
+SLIDE 19
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Trabalhos Relacionados
+  <IMAGEM nome='Imagem 8'>
+  [NOTAS]: Os autores clássicos como Tetlock (2007) e Schumaker & Chen (2009) provaram que as notícias movem o mercado, 
+mas faziam isso na língua inglesa, usando dicionários estáticos ou contagem de palavras isoladas.
+
+======================================================================
+SLIDE 20
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Trabalhos Relacionados
+  <IMAGEM nome='Imagem 8'>
+  [NOTAS]: Quando o método veio para o Brasil, pesquisadores como Nizer (2011) ou Silva (2018)
+
+ trouxeram avanços fundamentais, mas ainda esbarravam na mesma limitação: avaliavam o índice inteiro (IBOVESPA) e 
+
+usavam léxicos que não compreendem a ironia ou o jargão financeiro.
+
+======================================================================
+SLIDE 21
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Trabalhos Relacionados
+  <IMAGEM nome='Imagem 8'>
+  [NOTAS]: Nos últimos anos, a literatura global, com autores como Vargas (2017) e Carta (2021),
+
+usou Redes Neurais e Deep Learning. 
+
+Porém, faltava trazer essa robustez para a complexidade da bolsa brasileira.
+
+======================================================================
+SLIDE 22
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Trabalhos Relacionados
+  <IMAGEM nome='Imagem 8'>
+  [NOTAS]: É exatamente aqui que a nossa pesquisa, destacada na última linha, se encaixa. 
+
+Nós unimos os achados recentes de Narde (2024), que validou o BERTimbau em português, com a força do XGBoost, validada por Ballings (2015) e Nobre (2019).
+
+======================================================================
+SLIDE 23
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Trabalhos Relacionados
+  <IMAGEM nome='Imagem 8'>
+  [NOTAS]: Preenchemos a lacuna ao abandonar as médias do IBOVESPA para focar cirurgicamente na PETR4, criando um ecossistema de Data Fusion que o estado da arte ainda não havia unificado no Brasil."
+
+======================================================================
+SLIDE 24
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Lacunas da Literatura
+  <TEXT_BOX (17)> Transição das avaliações genéricas de índices inteiros (ex: IBOVESPA) para o foco cirúrgico no risco idiossincrático de um ativo altamente politizado (PETR4).
+  <TEXT_BOX (17)> GRANULARIDADE (ATIVO)
+
+======================================================================
+SLIDE 25
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Lacunas da Literatura
+  <TEXT_BOX (17)> Transição das avaliações genéricas de índices inteiros (ex: IBOVESPA) para o foco cirúrgico no risco idiossincrático de um ativo altamente politizado (PETR4).
+  <TEXT_BOX (17)> GRANULARIDADE (ATIVO)
+  <TEXT_BOX (17)> Superação de dicionários estáticos e contagem de palavras (TF-IDF) pela adoção do estado da arte em Transformers (BERTimbau) para desambiguação de ironias e jargões no português brasileiro.
+  <TEXT_BOX (17)> SEMÂNTICA (NLP)
+
+======================================================================
+SLIDE 26
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Lacunas da Literatura
+  <TEXT_BOX (17)> Transição das avaliações genéricas de índices inteiros (ex: IBOVESPA) para o foco cirúrgico no risco idiossincrático de um ativo altamente politizado (PETR4).
+  <TEXT_BOX (17)> GRANULARIDADE (ATIVO)
+  <TEXT_BOX (17)> Superação de dicionários estáticos e contagem de palavras (TF-IDF) pela adoção do estado da arte em Transformers (BERTimbau) para desambiguação de ironias e jargões no português brasileiro.
+  <TEXT_BOX (17)> SEMÂNTICA (NLP)
+  <TEXT_BOX (17)> Unificação inédita no Brasil integrando Inteligência Artificial textual, inércia econométrica de risco (GARCH) e predição não-linear direcional (XGBoost/SVM).
+  <TEXT_BOX (17)> ARQUITETURA (DATA FUSION)
+
+======================================================================
+SLIDE 27
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Método da Pesquisa
+  [NOTAS]: Professores, apresento agora o diagrama da nossa Arquitetura de Data Fusion, que é o verdadeiro motor desta dissertação. 
+
+O nosso objetivo foi construir um pipeline computacional capaz de ingerir dados caóticos, purificá-los e prever a direção da PETR4. Nós dividimos essa arquitetura em passos lógicos, e vou explicar o porquê de cada escolha tecnológica que fizemos.
+
+======================================================================
+SLIDE 28
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Arquitetura da Solução
+  <IMAGEM nome='Imagem 4'>
+  [NOTAS]: Passo 1: A Matéria-Prima (Entradas Heterogêneas) 
+
+Como o investidor possui racionalidade limitada e reage a choques externos, o nosso modelo não poderia olhar apenas para o preço. 
+
+Por isso, o sistema recebe duas vias de dados completamente distintas: de um lado, a série temporal numérica bruta da PETR4 extraída da B3; do outro, um Big Data de textos não-estruturados, composto por mais de 9 mil notícias capturadas por web scraping do jornal Valor Econômico
+
+======================================================================
+SLIDE 29
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Arquitetura da Solução
+  <IMAGEM nome='Imagem 4'>
+  <IMAGEM nome='Imagem 7'>
+  [NOTAS]: Passo 2: O Cérebro Semântico (BERTimbau e LDA) 
+
+Nós não poderíamos simplesmente jogar textos para a máquina. 
+
+No passado, a literatura contava a frequência das palavras usando TF-IDF ou dicionários, mas essas técnicas falham miseravelmente ao tentar compreender a ironia ou o jargão do mercado financeiro. 
+
+Se uma notícia diz 'a PETR4 derreteu', um dicionário antigo não entende o pânico. 
+
+Por isso, a nossa escolha metodológica foi implementar a arquitetura de Transformers. 
+
+Nós utilizamos o modelo BERTimbau, pré-treinado massivamente no português brasileiro. 
+
+Como ele possui um mecanismo de Atenção Bidirecional, ele lê a manchete inteira de forma simultânea e entende o contexto perfeito de cada jargão, extraindo um índice matemático preciso de otimismo ou pessimismo. 
+
+Em paralelo, o modelo não-supervisionado LDA organiza essas notícias em tópicos (Política, Macroeconomia e Fundamentos) para sabermos qual tema está afetando a bolsa
+
+======================================================================
+SLIDE 30
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Arquitetura da Solução
+  <IMAGEM nome='Imagem 4'>
+  <IMAGEM nome='Imagem 7'>
+  <IMAGEM nome='Imagem 9'>
+  [NOTAS]: Passo 3: A Modelagem do Pânico (Risco GARCH 1,1) 
+
+Do lado dos números, nós não entregamos o preço puro ao modelo. 
+
+O mercado da PETR4 opera sob a lógica de 'agrupamentos de volatilidade' (volatility clusters) — ou seja, dias de pânico geram uma inércia que contamina os dias seguintes. 
+
+A nossa escolha para capturar essa inércia de risco foi o modelo econométrico GARCH(1,1). 
+
+Ele atua como um sismógrafo, isolando a variância condicional da ação e convertendo o histórico em uma medida exata do 'nervosismo' do mercado.
+
+======================================================================
+SLIDE 31
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Arquitetura da Solução
+  <IMAGEM nome='Imagem 4'>
+  <IMAGEM nome='Imagem 7'>
+  <IMAGEM nome='Imagem 9'>
+  <IMAGEM nome='Imagem 11'>
+  [NOTAS]: Passo 4: O Motor de Decisão (Data Fusion e XGBoost/SVM) 
+
+É aqui que a mágica acontece. 
+
+Nós criamos uma matriz híbrida de Data Fusion: unimos o 'Sentimento do BERTimbau' com o 'Nervosismo do GARCH' e a 'Inércia do Log-Retorno’. 
+
+Nós entregamos esses dados purificados para algoritmos não-lineares de Machine Learning, especificamente o XGBoost e as Máquinas de Vetores de Suporte (SVM). 
+
+A escolha por esses algoritmos baseia-se na literatura de fronteira, que atesta a superioridade das árvores de decisão em lidar com a assimetria e o caos do mercado de capitais para classificar se a PETR4 vai fechar o dia em Alta (1) ou Baixa (0).
+
+======================================================================
+SLIDE 32
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Resultados Preliminares
+
+======================================================================
+SLIDE 33
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Análise Exploratória – Filtragem de Ruídos
+  <TEXT_BOX (17)>  NOTÍCIAS FINANCEIRAS: 
+    Volume Bruto Extraído: 9.079 manchetes do Valor Econômico.
+Ruído Branco (85,6%): 7.771 notícias que não alteraram significativamente a inércia do mercado.
+Choque Informacional (14,4%): 1.308 notícias que coincidiram com o rompimento do percentil 75% de estresse no GARCH(1,1).
+  [NOTAS]: Professores, o primeiro grande resultado do nosso laboratório quebra o mito de que 'toda notícia move o mercado’. 
+
+O nosso robô capturou mais de 9 mil manchetes do Valor Econômico. 
+
+Se nós jogássemos tudo isso no algoritmo, a máquina enlouqueceria com o ruído branco.
+
+Nós utilizamos o modelo GARCH como um filtro de relevância. 
+
+O resultado empírico demonstrou que expressivos 85,6% do fluxo jornalístico não deslocaram o preço da PETR4 de forma anormal. 
+
+Apenas 14,4% das notícias coincidiram com choques reais de volatilidade, onde o estresse superou o percentil 75 da nossa distribuição. 
+
+Isso prova à banca que a nossa máquina não lê tudo cegamente; ela foca exclusivamente nos eventos que causam anomalia de precificação."
+
+======================================================================
+SLIDE 34
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Assimetria Comportamental – Sentimento x Volatilidade
+  <IMAGEM nome='Imagem 4'>
+  [NOTAS]: Tópicos (Bullet Points):
+Eixo X: Índice de Polaridade (BERTimbau).
+Eixo Y: Agrupamentos de Risco (GARCH 1,1).
+Evidência: Picos agudos de estresse estão concentrados no eixo de pessimismo.
+
+
+O que você vai falar (Roteiro Blindado):
+"No slide anterior nós separamos o choque do ruído. 
+
+Agora, neste gráfico de dispersão gerado no nosso laboratório, nós cruzamos a inteligência do BERTimbau (no eixo X) com o sismógrafo de risco do GARCH (no eixo Y). 
+
+Aqui está a comprovação empírica da nossa Hipótese 3: o Viés de Negatividade.
+
+Observem visualmente a topologia dos dados. 
+
+As maiores elevações na curva de volatilidade, os verdadeiros picos de pânico, tendem a estar concentrados nos quadrantes de sentimento neutro a negativo. 
+
+Isso ratifica a teoria de Finanças Comportamentais para o mercado brasileiro: a aversão à perda faz com que o investidor da PETR4 reaja com um estresse muito mais agudo diante de uma manchete pessimista do que diante de uma notícia otimista. 
+
+O nosso Data Fusion conseguiu mapear matematicamente a irracionalidade do mercado."
+
+======================================================================
+SLIDE 35
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Modelagem Preditiva Direcional
+  <TABELA 3x5>
+    | Modelo Preditivo (Data Fusion) | Acurácia | Precisão | F1-Score | AUC-ROC
+    | SVM | 51,01% | 52,62% | 64,69% | 0.519
+    | XGBoost | 49,37% | 53,49% | 49,48% | 0.489
+  [NOTAS]: O que você vai falar (Roteiro de Autoridade):
+"Finalmente, apresento o desempenho preliminar dos nossos classificadores não-lineares, SVM e XGBoost, encarregados de prever o movimento de alta ou baixa da PETR4 no pregão seguinte.
+
+Como as datas de publicação originais foram imputadas de forma estocástica (aleatória) para testar a nossa engenharia de dados, nós introduzimos intencionalmente um descompasso entre a notícia e o mercado. 
+
+Ao ser alimentada com esse ruído, observem a tabela: a máquina apresentou uma acurácia próxima a 50% e um AUC-ROC em torno de 0.50. 
+
+Em Ciência de Dados pura isso parece insuficiente, mas em Finanças Quantitativas esta é a prova absoluta de que o nosso algoritmo é íntegro.
+
+Nós provamos a Hipótese 4. Na ausência do evento causal genuíno, a máquina não tentou decorar o passado; ela se comportou como um Passeio Aleatório (Random Walk). 
+
+O protocolo Walk-Forward impediu qualquer vazamento de dados (Data Leakage) ou sobreajuste (overfitting). 
+
+Ao restabelecermos o alinhamento de alta frequência das notícias na próxima etapa da pesquisa, nossa expectativa é que a acurácia direcional atinja a faixa do estado da arte, entre 56% e 60%."
+
+======================================================================
+SLIDE 36
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Cronograma de Execução
+
+======================================================================
+SLIDE 37
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Próximas etapas
+  <IMAGEM nome='Imagem 7'>
+  [NOTAS]: O que você vai falar: "Neste cronograma, já vencemos a extração bruta e a validação laboratorial (Qualificação). Os próximos meses até a defesa em março de 2027 serão focados no Tuning do XGBoost com a nova base temporal. O meu laboratório já está operacional e reproduzível. Muito obrigado pela atenção, devolvo a palavra ao meu orientador e à ilustre banca."
+
+======================================================================
+SLIDE 38
+[layout: Título e Conteúdo]
+  <PLACEHOLDER (14)> Obrigado.
+  <TEXT_BOX (17)> Espaço para perguntas sugestões e comentários.
+  <TEXT_BOX (17)> Vanderlei Barbosa da Silva
+Orientador: Julio Cesar Nievola
+PPGIA / PUCPR – Curitiba - 2026
+
+======================================================================
+SLIDE 39
+[layout: Slide de Título]
+  <IMAGEM nome='Imagem 4'>
+  <PLACEHOLDER (14)> Fim
+  <PLACEHOLDER (14)> Autor
+  <IMAGEM nome='Imagem 7'>

@@ -26,3 +26,11 @@ scipy
 
 # --- Geração da documentação (docs/geradores) ---
 python-docx
+
+# --- Site: backend FastAPI + exportação do snapshot estático ---
+# (o frontend React usa Node/npm; ver site/frontend/package.json)
+fastapi
+uvicorn[standard]
+pydantic
+feedparser
+newsapi-python

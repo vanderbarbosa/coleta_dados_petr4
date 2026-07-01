@@ -1,0 +1,644 @@
+[00:00] Levanta considerar essas objevações que foram feitas agora nesse período da defesa
+[00:03] E aí vão ajustar a apresentação que eles fizeram, no caso da defesa
+[00:08] Corrigindo esses gaps e enxugando mais ela porque teremos menos tempo
+[00:12] Foi isso, e aí o que eu tava fazendo?
+[00:15] Dia seguinte, dois dias seguintes após a defesa
+[00:18] Eu listei tudo que foi passado pelo senhor e pelo professor Reis
+[00:23] E falei, vou tapar todos esses buracos aqui, essas falhas
+[00:27] E eu comecei com isso, e de ontem pra hoje eu vou mexer na apresentação
+[00:33] Porque eu já perdi parte dos buracos, lógico, não todos
+[00:35] Vamos fazer o seguinte então, enquanto você fala, eu costumo tomar nota das coisas que senão eu esqueço
+[00:42] Depois, na semana seguinte, quando eu for conversar com você eu não leio mais nada
+[00:45] Então assim, hoje é dia 26, 06
+[00:50] Eu acho assim, eu não sei se você se reuniu com o professor Júlio, mas eu acho que é importante
+[00:54] A gente já definiu o que você vai apresentar na próxima sexta, porque daí você já faz uma apresentação
+[00:58] Com alguns gaps preenchidos
+[01:00] Então você tem aí os slides da tua defesa?
+[01:03] Tem, tenho sim
+[01:04] Vai ser a base do que a gente vai precisar
+[01:06] Deixa eu ver se eu tenho nesse computador, normalmente eu trabalho em outra máquina
+[01:10] Só que lá não tem câmera, essa daqui tem câmera
+[01:14] Deixa eu ver se eu acho ela aqui
+[01:21] Se eu me dar só um minutinho?
+[01:23] Sim, vai lá
+[01:24] Ou se eu quer que a gente encaminhe ela por email agora?
+[01:27] Você vai compartilhar a tela aí?
+[01:29] Tá, perfeito, então eu vou pegar aqui
+[02:12] Então segura
+[02:14] Vou compartilhar a tela aqui, tá, professor?
+[03:06] Beleza
+[03:14] Aí, solta ela
+[03:16] Vamos lá, pega essa apresentação, já salva ela com outro nome
+[03:21] Porque daí a gente vai começar a modificá-la
+[03:23] Não é poder modificar, eu tenho que salvar ela
+[03:25] Beleza
+[03:27] Então vamos pensar, é uma apresentação de 20 minutos, certo?
+[03:29] Você vai ter 20 minutos só e 25 minutos para você responder perguntas
+[03:34] Então a gente tem que tirar desse conjunto de slides aquilo que é menos importante
+[03:39] Tudo é importante, mas a gente vai ter que tirar aquilo que é menos importante
+[03:41] Então vamos passar um por um
+[03:43] O próximo slide é o quê?
+[03:45] É a estrutura
+[03:47] Então a estrutura depois você atualiza
+[03:49] Podemos passar para o próximo
+[03:51] Isso, aí você motiva a plateia no seu trabalho
+[03:55] Aqui eu me lembro bem
+[03:57] Você ultrapassou o limite de tempo, não foi isso?
+[04:01] Não, acho que fiquei faltando uns 5 minutos ainda
+[04:04] Essa parte aqui de motivação você pode ser bem sucinto
+[04:06] Porque o que interessa no seminário é a parte científica
+[04:10] As pessoas precisam conhecer bem o que é o teu problema do ponto de vista da computação
+[04:14] E quais as perguntas de pesquisa que você quer responder
+[04:18] Qual é o teu método, quais são os experimentos que você já tem
+[04:21] Essa é a parte mais importante
+[04:23] Então, eu vi que tem mais slides
+[04:25] Vamos ver quantos slides tem de motivação ali
+[04:27] Tá, vou passando e a gente volta
+[04:29] Esse aqui é o poder da notícia
+[04:31] Esse aqui já cai na pergunta
+[04:34] Então assim, talvez você possa condensar
+[04:38] A pergunta de pesquisa eu entendo que é muito bom ter
+[04:40] Se você não colocar ela vai pegar no teu pé violentamente
+[04:42] Então tenta juntar depois o slide 4 no 5
+[04:45] Ou deixa o 4 ou deixa o 5
+[04:47] Porque se você reduz os slides
+[04:49] Você vai precisar de menos tempo para fazer a apresentação
+[04:51] Então nessa motivação, talvez você possa usar o 5
+[04:53] Me parece que é o que tá mais esse
+[04:57] Esse aqui
+[04:59] Acho que esse é o que mais resume
+[05:01] Agora sim
+[05:04] No momento, Vanderlei, não vai dar para a gente mexer nisso
+[05:07] Mas eu creio que após essa apresentação
+[05:09] A gente vai ter que mexer aqui
+[05:11] Porque o que eu percebi na apresentação
+[05:13] Eu fiquei com a impressão que tudo já tava meio pronto
+[05:15] E na verdade não
+[05:17] Foi a forma como você escreveu ali
+[05:19] Você foi colocando assim, através
+[05:21] Eu acho que aqui no momento
+[05:23] Você tem que deixar só as perguntas
+[05:25] Não tem resposta ainda
+[05:27] Perfeito, perfeito
+[05:29] Então no slide está no 6
+[05:31] Só perguntas
+[05:33] Beleza, no slide 7
+[05:36] Você tem que deixar como está
+[05:38] Mesmo que depois a gente dê uma repensada neles
+[05:40] Hipótese
+[05:42] Também deixa como está
+[05:45] Há hipóteses aqui, deixa eu ver
+[05:50] Acho que já modei alguma coisa aqui
+[05:52] Beleza, mas enfim, eu ajudo
+[05:54] Você atualizou, não tem problema
+[05:57] Aí vem para contribuições, tem que ficar, né
+[05:59] Isso, deixa eu só ver uma coisa aqui, porque aqui é algo importante
+[06:01] Da contribuição principal, framework, preditivo, data fusion
+[06:03] Quando você coloca assim, desenvolvimento
+[06:05] NLP transformers com risco GART
+[06:07] Para predição
+[06:09] As pessoas não sabem o que é o risco GART
+[06:11] Você tem um slide lá que vai explicar isso, né
+[06:13] Sim, mais lá na frente
+[06:15] Tá bom
+[06:17] E daí, contribuições complementares
+[06:19] Base de dados textual
+[06:21] Coletar e higienizar um big data
+[06:23] Então, vamos tirar o big data
+[06:25] Porque pra mim não ficou caracterizado como big data
+[06:27] Hoje eu consegui, depois daquela pesquisa
+[06:29] Estava com 9 mil
+[06:31] Eu consegui, foi 205 mil
+[06:33] 205 mil
+[06:35] Notícias
+[06:37] Mas vamos deixar assim, coletar e higienizar um
+[06:39] A gente chama de corpos
+[06:41] Um corpos textual, de notícias
+[06:43] Então tira isso, um corpos de notícias
+[06:45] Textual de notícias
+[06:47] O textual não precisa, que o corpos já conecta
+[06:49] ao textual
+[06:51] Então ficaria assim, coletar e higienizar um corpos
+[06:53] De notícias do jornal
+[06:55] Eu vou atualizar esse aqui porque eu já tô pegando também de outros lugares
+[06:57] Tem um valor econômico e tem de outro local
+[06:59] Mas eu vou atualizar esse aqui
+[07:01] um modelo que comprove numericamente o viés na B3, demonstrando como o investidor reage
+[07:05] a notícias.
+[07:06] Tá.
+[07:07] Bom, ok.
+[07:08] Aí o slide 10.
+[07:09] O que seria?
+[07:10] Aqui 10 é só uma ilustração, que ele vai montando aqui como ele processa, como ele
+[07:15] processa, né?
+[07:16] Recebe a notícia, uma apresentação do processamento, desde quando ele coleta a
+[07:20] notícia, por onde ele passa, e o final que é a projeção de alto ou de baixo.
+[07:24] Tá.
+[07:25] Me diz uma coisa, essas figuras você fez usando o chat EPT?
+[07:27] Foi.
+[07:28] Foi bem pequenininho ali embaixo, feito com o apoio do chat EPT, porque daí você
+[07:32] já resolve um problema de autoria de imagens.
+[07:36] Consegue colocar bem pequenininho ali?
+[07:38] Eu vou colocar aqui?
+[07:41] Isso.
+[07:42] Eu vou escrever aqui para a gente não perder tempo, slide 15, colocar autoria, chat
+[07:46] EPT.
+[07:47] Feito com ajuda.
+[07:48] Não foi ele o responsável.
+[07:49] Você é o responsável.
+[07:50] Ele só gerou a imagem para você, né?
+[07:51] É.
+[07:52] Eu usei, na verdade, foi o notebook LM.
+[07:53] Mas enfim, vou colocar.
+[07:54] Isso.
+[07:55] Aqui, imagens geradas com apoio do notebook.
+[07:59] Perfeito, perfeito.
+[08:00] Tá.
+[08:01] Aí aqui vem a referencial teórica.
+[08:02] Aqui, essas imagens aqui eu deixo elas assim ou já ponho de uma vez ela inteira?
+[08:05] Olha, eu acho assim, eu gosto dessa lógica de você ir agregando, tá?
+[08:12] Você só tem que fazer uma prévia para ver o tempo que vai levar.
+[08:15] Perfeito, perfeito.
+[08:16] Aí aqui a gente já vai partir por referencial teórico, tá aqui.
+[08:20] Aqui assim, agora assim, isso a gente vai separar já.
+[08:23] Uma coisa é o referencial teórico.
+[08:25] Outra coisa é esse trabalho relacionado.
+[08:27] Um trabalho relacionado não é referencial teórico.
+[08:29] Referencial teórico é quando você define conceitos que serão necessários na tua pesquisa.
+[08:35] Então nós vamos dividir essa parte em duas.
+[08:38] Um slide, um ou dois, será a fundamentação teórica.
+[08:41] Onde você vai explicar, por exemplo, a arte, aquela coisa que você tem.
+[08:45] E os outros dois, três slides são trabalhos relacionados, que é o que a gente chama de estado da arte.
+[08:49] Eu deixo esse título aqui então ou não, referencial teórico?
+[08:52] Não.
+[08:53] Você vai mudar.
+[08:54] Fundamentação teórica ou vai ser trabalhos relacionados?
+[08:58] Você vai ter duas.
+[08:59] Então vai ser fundamentação teórica.
+[09:05] E vou ter um outro slide que será uns trabalhos relacionados.
+[09:07] Trabalhos relacionados, exatamente.
+[09:13] O senhor pode falar novamente a diferença de um para o outro?
+[09:15] Posso, posso falar.
+[09:16] Fundamentação teórica é a sessão onde você vai definir os conceitos necessários
+[09:22] para que as pessoas conheçam para entender o seu método.
+[09:26] Então quais são os conceitos teóricos que as pessoas têm que conhecer para entender o seu método?
+[09:30] Os principais.
+[09:31] Porque a gente parte do princípio que as pessoas sabem o que é IA,
+[09:34] sabem o que é aprendizagem de máquina,
+[09:36] sabem o que é corpos,
+[09:37] sabem o que é profissão na linguagem natural.
+[09:38] Tudo isso você não vai precisar definir.
+[09:40] O que você tem que definir aqui?
+[09:41] Você tem que definir aqueles conceitos que são particulares,
+[09:44] que são decisivos na tua pesquisa.
+[09:46] Me vem à cabeça logo de cara esse modelo GART que você cita ali.
+[09:50] Entendi.
+[09:51] GART, Bettenbauer, XGBuster.
+[09:55] Isso, já está bom.
+[09:56] Não é mais do que isso.
+[09:58] Aí você já começa a não ter mais tempo.
+[10:00] Eu tenho que colocar e aí eu explico?
+[10:03] Só explico?
+[10:04] Só explica.
+[10:05] O XGBuster eu não explicaria.
+[10:07] Que é um classificador.
+[10:09] Pessoal, precisamos de um classificador.
+[10:10] O classificador que nós escolhemos é esse.
+[10:11] Não dá tempo de você explicar como é que isso funciona.
+[10:13] Entendi.
+[10:14] Então é uma explicação bem sucinta.
+[10:16] Eu cito eles e explico sucintamente onde eu vou utilizar dentro da minha...
+[10:20] Não.
+[10:21] Não é onde você vai utilizar.
+[10:22] Você pode até dizer onde que você vai utilizar na tua pesquisa.
+[10:25] Mas o principal é você explicar o que é.
+[10:27] Então o que é o Bettenbauer?
+[10:30] É um modelo de linguagem, um encoder que recebe textos e gera uma representação.
+[10:36] Perfeito.
+[10:37] É um embedding.
+[10:38] E aí esse outro GART confesso para você que eu desconheço.
+[10:40] Você tem que explicar direitinho lá.
+[10:42] E aí depois tem os trabalhos relacionados.
+[10:44] Daí aqueles slides que você estava mostrando lá.
+[10:46] Então o 16 vai ser a fundamentação teórica que eu vou explicar isso aqui.
+[10:50] E depois os trabalhos relacionados que serão esses aqui.
+[10:53] Só que daí, calma lá.
+[10:55] Não se esqueça, a professora Sheila vai estar presente.
+[10:57] Ela vai tomar nota de tudo que estiver faltando para depois...
+[11:00] Sim, eu sei como é que ela é.
+[11:02] Então assim, neste ponto ela vai querer saber aqueles elementos que você utilizou
+[11:10] para separar essas publicações.
+[11:12] Então, por exemplo, quais foram as queries, as perguntas de pesquisa que você utilizou
+[11:17] lá nas bases de artigos, sabe?
+[11:20] Outra, quais são as bases de artigos que você consultou?
+[11:24] As queries que eu colosei.
+[11:26] As queries, as bases de artigos.
+[11:28] Então, ACM, 3E, fui lá no Periódicos da Caps, onde é que você foi?
+[11:33] Eu, Cv e... não sei.
+[11:35] E as queries e os sites, né?
+[11:38] Isso, os repositórios de artigos que você consultou.
+[11:43] Listo todos?
+[11:44] Lista todos. Não deve ser muitos, quatro ou cinco só.
+[11:48] E não se esqueça de colocar a janela de tempo.
+[11:52] Porque você colocou ali, de 2009 a 2024.
+[11:56] Aí assim, ela vai te perguntar, mas nós estamos em 2026,
+[11:59] por que você não se interessou por artigos de 2026?
+[12:02] Então, já corrige isso, Vanderlei.
+[12:04] É de 2009 a 2026.
+[12:06] Agora, por que 2009, não 2010, não 2008?
+[12:08] Você tem uma explicação para isso?
+[12:10] Não, eu só peguei porque eu acho que...
+[12:13] Não foi muito machismo. Eu falei, eu vou pegar coisas mais recentes.
+[12:16] A partir de 2020, eu acho que a tecnologia é mais recente,
+[12:20] mas não tem nenhum estudo, nada científico a falar, olha, a partir de não, não tem.
+[12:26] Eu voltaria no tempo uns dez anos só.
+[12:29] Então seria de 2017 a 2026.
+[12:32] 2017 a 2026?
+[12:35] Assumindo que nós já estamos no meio de 2026, então seria isso.
+[12:38] Se você quiser fazer de 2016 a 2026, também dá.
+[12:41] 2025 não, porque eu pegava o ano fechado.
+[12:43] Não, tem que ser até a data de hoje.
+[12:45] Porque se você for fazer a query, você tem que pegar tudo que entrou.
+[12:49] Tudo que já tem disponível.
+[12:51] Então aí você tem que fazer essa query e provavelmente esses números vão mudar.
+[12:54] Sim, certamente.
+[12:55] É porque eu escolhi essa janela de tempo.
+[12:58] Por enquanto, vão sobrar esses 25 estudos seminais que você escolheu ali.
+[13:02] Mas aí você só tem que atualizar os números ali
+[13:06] depois que você fizer a busca de novo com essa nova janela.
+[13:09] Beleza.
+[13:11] Isso, você vai ter que passar bem batido.
+[13:14] Você diz, olha, eu fiz um estudo aprofundado, sobraram 25 artigos,
+[13:19] nós não temos tempo de discutir, mas na dissertação que eu defendia três semanas atrás,
+[13:24] na qualificação que eu defendia duas, três semanas atrás,
+[13:29] eu descrevo detalhadamente cada um deles.
+[13:31] Eu posso só fazer uma tabela, por exemplo, de ano, tantas e tantos anos,
+[13:36] sem descrever esses detalhes aqui.
+[13:38] Isso, eu acho, porque não tem como passar por todos esses slides não.
+[13:41] Aí aqui as lacunas que eu encontrei.
+[13:43] Isso, lacunas é muito importante.
+[13:45] Aí, beleza.
+[13:48] Aí agora a gente vai para o método.
+[13:50] Isso, quando chega no método, a professora Sheila tem uma pergunta fatal.
+[13:53] Fatal.
+[13:54] Ela vai perguntar assim para você, olha, qual é o método de pesquisa que você escolheu
+[13:57] para a tua pesquisa?
+[13:58] Aquele negócio de pesquisa experimental, pesquisa isso, pesquisa aquilo,
+[14:01] você tem um definido?
+[14:02] Então, você precisaria conversar com o professor Júlio.
+[14:04] Essa é uma parte que você tem que ver com ele.
+[14:06] Você tem que marcar um horário com o professor Júlio.
+[14:08] Depois que você tiver fechado esses slides,
+[14:11] você agenda um horário com o professor Júlio.
+[14:13] Você vai apresentar na quinta ou na sexta?
+[14:15] Deixe-me tomar nota aqui.
+[14:16] Eu vou tentar ver todos, mas eu não garanto que eu vou ver todos, não.
+[14:19] Dia dois.
+[14:20] Mas qual é o horário da sua?
+[14:21] Duas horas.
+[14:22] Duas horas.
+[14:23] Eu estou numa reunião das duas às quatro, cara.
+[14:25] Vou tomar nota aqui, espera aí.
+[14:26] Apresentação.
+[14:29] Seminário.
+[14:30] É, Vanderlei.
+[14:34] Eu tenho que assistir três.
+[14:35] A da Luciane, que é a minha orientanda.
+[14:39] A do Luiz Anísio, que eu estou coorientando junto com o professor Jean.
+[14:42] E a sua agora, que eu vou coorientar junto com o Júlio.
+[14:45] Porém, lógico, eu vou tentar assistir as demais também, né?
+[14:48] Na sexta-feira, para mim, está bem tranquilo.
+[14:49] O problema é a quinta-feira.
+[14:50] A tarde.
+[14:51] Mas beleza, isso aí é outro problema.
+[14:53] Então, assim, até dia dois, se você quiser, terminando a reunião aqui, manda uma mensagem
+[14:57] pro professor Júlio dizendo, pro professor Júlio, eu gostaria de agendar um horário
+[14:59] pra eu mostrar a apresentação que eu farei no seminário.
+[15:04] Aí você mostra, e aí você já tira essa dúvida com ele, olha, eu estou com
+[15:08] dificuldade em identificar qual é o método de pesquisa que a gente está usando.
+[15:11] Ele vai falar, ah, mas são um daqueles métodos que vocês estudaram com a
+[15:14] professora Cheira, com a professora Andréia.
+[15:15] Mas enfim, eu prefiro que você consulte ele sobre essa questão.
+[15:18] Tá?
+[15:19] Beleza.
+[15:20] Aí você vai começar a apresentar teu método.
+[15:24] Isso.
+[15:25] Então aí, Vanderlei, esse teu método, ele vai passar por algumas transformações aí,
+[15:29] né?
+[15:30] Depois que a gente começar a trabalhar mais efetivamente.
+[15:32] E aí, o que que eu faço com isso?
+[15:33] Porque eu vou tirar, acho que na LP eu já tirei.
+[15:35] Exatamente.
+[15:36] Já tirei na LP.
+[15:37] Tanto da dissertação como...
+[15:39] Não, calma.
+[15:40] O Bertin Bal você vai tirar?
+[15:41] Não vai mais usar?
+[15:42] Eu vou usar, mas tem um outro que eu encontrei.
+[15:44] O senhor falou que tinha um outro, e eu ia pesquisando, encontrei o outro.
+[15:47] Eu tenho até que falar com o senhor depois, mas isso vai ser depois.
+[15:49] Vai dar tempo agora.
+[15:50] É, então tenta talvez, Vanderlei, atualizar essas imagens para esse novo cenário.
+[15:55] Dá uma simplificada, mas algo que você consiga explicar e algo que depois não se esqueça.
+[15:59] Os demais professores vão explorar perguntas, né?
+[16:02] Os colegas.
+[16:03] Então você tem que mostrar o que você tem de melhor aí.
+[16:05] As pessoas têm que entender.
+[16:06] Porque a essa altura elas já sabem o que que é o GART.
+[16:08] Elas já sabem o que que é o modelo de linguagem que você vai usar.
+[16:12] Enfim, já conhece um pouco da lógica do seu trabalho.
+[16:15] Mas aí você tem que explicar.
+[16:17] Dos 20 minutos, a maior parte do tempo é aqui.
+[16:19] Então é aqui que você não pode podar muito.
+[16:21] O resto é tudo meio rapidão.
+[16:23] Mas o método é a parte mais importante.
+[16:25] É o que eu vou gastar mais tempo, né?
+[16:26] Você vai gastar mais tempo.
+[16:27] Exatamente.
+[16:28] Tá.
+[16:29] É a parte mais importante.
+[16:30] Vou até botar uma cabelinha aqui porque...
+[16:33] Vamos lá.
+[16:34] Aí aqui é os resultados preliminares que entram.
+[16:36] Isso.
+[16:37] Aí a gente vai ter que dar uma resumida.
+[16:38] Eu acho que não sei se vai ter tempo de você apresentar.
+[16:40] Então assim, antes de apresentar os resultados preliminares, tem uma coisa que não apareceu até agora que é...
+[16:49] Como que você pretende...
+[16:50] Quais são as métricas que você vai utilizar para avaliar o seu trabalho?
+[16:54] Que tipo de métrica você vai...
+[16:56] Como é que você vai descobrir se houve um impacto realmente lá na...
+[16:59] Saiu uma notícia, como é que você prova que houve um impacto na nação da Petrobras.
+[17:05] Então, aí eu não sei que métrica.
+[17:07] Quando a gente fala métrica, é algo assim, tipo acurácia, cobertura, precisão.
+[17:10] Tem alguma métrica que você já tenha escolhido que a gente precisa avaliar?
+[17:15] Mesmo que preliminar, né?
+[17:16] Preliminar.
+[17:17] Acha acurácia, mesmo assim, né?
+[17:19] Na verdade é assim.
+[17:20] As pessoas querem saber as métricas que você pretende usar.
+[17:22] Os resultados que você obteve até agora não influenciam muito,
+[17:26] porque todo mundo sabe que você está no meio da pesquisa ainda.
+[17:28] Então, não é para você ter bons resultados.
+[17:30] O que as pessoas querem é que você tenha uma boa previsão do que vai ser feito.
+[17:34] Um bom método e uma boa previsão.
+[17:36] Aí assim, vamos lá.
+[17:38] Antes de continuar, vamos pensar em termos de mineração de dados, aprendizagem de máquina.
+[17:42] O que eu preciso primeiro? Dado.
+[17:44] Que dado que você tem na sua pesquisa?
+[17:45] Você tem as notícias, então isso precisa ser apresentado em algum lugar.
+[17:49] Tem mais dado aí.
+[17:52] Você não precisa também, para fazer experimentos, conhecer a série.
+[17:58] Data, preço de abertura, preço de fechamento, máxima, mínima.
+[18:03] Isso. Onde que aparece na sua apresentação essa parte?
+[18:06] Eu acho que eu não coloquei isso aqui não.
+[18:08] Eu acho que você tinha que colocar isso aí.
+[18:10] Aí, terceiro.
+[18:13] Beleza, os dados são esses.
+[18:15] O método você vai apresentar.
+[18:17] Aí faltam as métricas.
+[18:19] Como é que nós vamos avaliar?
+[18:21] Aí você precisaria descrever que tipo de métrica o modelo vai te entregar um resultado.
+[18:28] O que é o resultado final, Wanderlei?
+[18:30] É uma classificação?
+[18:32] É uma previsão de alta ou de baixa ou de nada.
+[18:38] Essa notícia não vai influenciar nem positiva nem negativamente.
+[18:42] Não vai ter influência.
+[18:44] É uma previsão que a notícia vai causar um efeito positivo.
+[18:48] A ação vai subir e o negativo vai cair.
+[18:50] Então é como se fosse uma classificação mesmo.
+[18:52] Você tem três possibilidades.
+[18:54] Subir, permanecer ou descer.
+[18:56] E aí você vai ter que fazer experimentos para mostrar se isso ocorreu ou não.
+[19:00] Por exemplo, olha.
+[19:02] Eu criei já uma pequena aplicação.
+[19:06] Que ele já faz isso.
+[19:08] Eu posso perguntar na hora. Diga uma frase.
+[19:10] Aí eu vou colocar e ele vai me dizer.
+[19:12] Essa notícia tem um viés positivo.
+[19:14] Então a tendência é subir.
+[19:16] Já tenho isso.
+[19:18] Já tenho isso pronto.
+[19:20] Lógico que não está com uma porácia alta.
+[19:22] Mas eu já tenho isso.
+[19:24] O que eu ia te falar?
+[19:26] Como você pretende validar isso?
+[19:28] Porque você tem uma base de dados anotada?
+[19:30] Por exemplo, vamos voltar em 2023.
+[19:32] Tem um dia onde a ação subiu.
+[19:34] E saiu uma notícia.
+[19:36] Você tem uma base que permita a gente vincular uma coisa com a outra ou não?
+[19:38] Eu não fiz esse cruzamento.
+[19:40] Mas a minha base me permite isso.
+[19:42] Porque tivemos vários eventos
+[19:44] ao longo desses anos que tiveram grande influência.
+[19:46] Ainda mais recente agora, por exemplo, da guerra.
+[19:48] Que é inclusive o que eu sinto aqui.
+[19:50] Eu sinto isso aqui atrás.
+[19:52] Foi o da guerra.
+[19:55] Aqui é justamente isso.
+[19:57] Esse tempo aqui é justamente na guerra.
+[19:59] A ação tem uma mudança de rota gigantesca a partir de uma notícia que é publicada.
+[20:07] O que nós vamos fazer na próxima reunião que a gente fizer?
+[20:09] A gente vai começar por aqui.
+[20:11] A gente precisa ter certeza que a gente tem tudo na mão
+[20:13] para fazer a pesquisa.
+[20:15] Porque no momento eu estou em dúvida.
+[20:17] Para ser sincero com você, se a gente tem tudo na mão
+[20:19] que permite a gente...
+[20:21] As notícias eu tenho.
+[20:23] O preço das ações eu tenho.
+[20:25] Eu posso buscar ao longo desses anos
+[20:29] notícias pontuais que eu sei que influenciaram
+[20:31] e a gente buscar.
+[20:33] Mas eu não sei como é que a gente vai fazer isso.
+[20:35] De fato, isso eu não sei como fazer.
+[20:37] Para mim, o Júlio que é especialista nessa parte.
+[20:41] Porque alguém pode... Vamos pegar um cara que
+[20:43] quer te pressionar.
+[20:45] Ele vai dizer assim
+[20:47] Como é que você garante...
+[20:49] Por exemplo, teve um terremoto lá na Venezuela
+[20:51] antes de ontem.
+[20:53] E o que aconteceu com as ações da Petrobras local?
+[20:55] Ou subiu ou desceu ou permaneceu igual?
+[20:57] Digamos que ela tenha caído.
+[20:59] Porque afinal de contas o terremoto é uma notícia ruim.
+[21:01] Alguém pode dizer
+[21:03] O que me garante que a ação caiu
+[21:05] Ação caiu por causa do terremoto.
+[21:07] E que não caiu por causa de um comentário que o Trump fez lá não sei aonde.
+[21:09] Então sempre vai ter alguém que possa te questionar
+[21:11] esse respeito.
+[21:13] Mas talvez o que a gente possa tentar lá no final
+[21:15] e aí é que entra.
+[21:17] Eu estava na minha pesquisa essa semana.
+[21:19] Eu acho que foi ontem. Eu estava justamente com essa dúvida
+[21:21] e tentando responder. Mas espera aí.
+[21:23] Eu tenho cinco notícias.
+[21:25] Três positivas e duas negativas.
+[21:27] Mas há uma ponderação a ser feita.
+[21:29] E isso não é simplesmente a notícia.
+[21:31] Há uma ponderação. Só que eu vou precisar entender mais disso.
+[21:33] Eu vi que tem como ponderar.
+[21:35] E dar pesos.
+[21:37] Pode ter só uma positiva. Mas essa positiva em relação aos negativos
+[21:39] ele se sobrepõe a notícia mesmo assim
+[21:41] ela tem um viés positivo.
+[21:43] Eu pensei nisso ontem e já comecei a pesquisar.
+[21:45] Só que eu não tenho a resposta ainda.
+[21:47] Eu acho que esse tipo de resposta você vai encontrar naqueles artigos que você
+[21:49] buscou lá.
+[21:51] Provavelmente lá você vai encontrar isso daí.
+[21:53] Então assim
+[21:55] pode ser que algum professor te pressione nesse sentido.
+[21:57] O que você sabe você responde.
+[21:59] O que você não sabe diz.
+[22:01] Então o que eu vou te pedir
+[22:03] não inventa uma resposta lá na hora.
+[22:05] Ou você diz que você sabe.
+[22:07] Ou que você não sabe.
+[22:09] No momento eu estou estudando esse ponto.
+[22:11] Vou tomar nota aqui para poder te responder
+[22:13] na sequência.
+[22:15] E acaba o assunto ali.
+[22:18] Acho que a gente não precisa.
+[22:20] Esse slide de 1834 morre.
+[22:22] Essa aqui é a modelagem preditiva.
+[22:24] Aqui já é com o resultado
+[22:26] para eliminar.
+[22:28] Só que eu não coloquei as métricas.
+[22:30] Já das métricas.
+[22:32] E aí o cronograma.
+[22:34] E acabou.
+[22:36] Deixa só ver o cronograma ali que tem uma coisa importante.
+[22:38] No outro cronograma
+[22:40] precisa ter uma linha ali
+[22:42] que vai estar entre a linha 7 e a linha 8.
+[22:44] Você vai criar uma linha que é o quê?
+[22:46] É a previsão de escrita e
+[22:48] submissão de um artigo para uma conferência.
+[22:50] Entre a 7 e a 8.
+[22:52] Veja bem.
+[22:54] Se você pensa em defender
+[22:56] em março de 27
+[22:58] o que você teria?
+[23:00] Teria que ter um artigo aceito até março de 27.
+[23:02] Então o ideal é que por ali
+[23:04] por novembro você já tenha um artigo
+[23:06] pronto para ser submetido
+[23:08] para uma conferência.
+[23:11] Novembro, dezembro. Então você vai criar uma barra ali
+[23:13] que vai começar em setembro
+[23:16] e vai até março.
+[23:18] Setembro a março.
+[23:21] Que é o período onde você vai escrever, vai mandar
+[23:23] vai esperar que seja aceito. Se for aceito vai fazer
+[23:25] as correções para versão final.
+[23:27] Mas isso do artigo? Do artigo.
+[23:29] Você tem que submeter, mas para submeter
+[23:31] você tem que escrever.
+[23:33] Então eu não tenho que estar com ele pronto em novembro?
+[23:35] É, mas aí que tá.
+[23:37] Para escrever um artigo você demora várias semanas.
+[23:39] Então você vai começar a escrever em setembro
+[23:41] e em paralelo você vai fazendo as experimentações.
+[23:43] Lá em novembro, quando você tiver os resultados
+[23:45] que você já consiga publicar. Porque assim
+[23:47] quando a gente escreve o artigo não necessariamente a gente já tem tudo pronto.
+[23:49] A gente pode ter uma parte pronta.
+[23:51] Escrevemos o artigo, mandamos.
+[23:53] Você continua a pesquisa eventualmente para um segundo artigo.
+[23:55] E aí por que a gente mantém a barrinha?
+[23:57] Porque o artigo foi enviado. Se ele foi aceito
+[23:59] você vai ter que continuar mexendo nesse artigo
+[24:01] para a versão final. Porque a conferência
+[24:03] diz assim, olha, o teu artigo foi aceito.
+[24:05] Você tem até o dia 30 para fazer
+[24:07] as modificações que os revisores sugeriram.
+[24:09] E você continua fazendo. Se o artigo não foi
+[24:11] aceito você vai ter que trabalhar mais ainda no artigo
+[24:13] ver o que deu de problema para submeter
+[24:15] para uma outra conferência. Por isso que a gente deixa
+[24:17] a barra toda preenchida porque
+[24:19] não que você vai trabalhar todo o tempo naquilo
+[24:21] mas é passível de ser trabalhado
+[24:23] naquele período.
+[24:25] Então a fechada vai começar de setembro e vai até março?
+[24:27] Vai de setembro até março, exatamente.
+[24:29] Que nem você colocou ali a redação do documento final
+[24:31] você tem coisas em paralelo, tá vendo? Tem análise dos resultados
+[24:33] e é isso.
+[24:39] Novembro para dezembro.
+[24:41] E aí para onde vai ser mandado? O professor Júlio vai poder te ajudar.
+[24:43] Vocês vão escolher alguma
+[24:45] conferência, tal, né?
+[24:49] Eu vou precisar mais da ajuda do senhor.
+[24:51] O senhor é muito pontual. Gostei bastante
+[24:53] da forma que o senhor
+[24:55] está orientando aí.
+[24:57] E é uma certeza que vai agregar bastante.
+[24:59] Para corrigir o slide, quando eu terminar
+[25:01] eu posso mandar uma revisão.
+[25:03] Você pode me mandar uma
+[25:05] cópia, né? Mas a palavra
+[25:07] final é do professor Júlio porque ele é o seu
+[25:09] orientador, né? Então terminando aqui
+[25:11] manda uma mensagem para ele tentando agendar
+[25:13] um horário, daí você faz uma prévia
+[25:15] dos 20 minutos para ele e tira essas dúvidas
+[25:17] que eventualmente aparecerem.
+[25:20] Perfeito então, professor. É isso, acho que foi.
+[25:22] E eu vou continuar
+[25:24] trabalhando aqui e aí o senhor pode anotar aí
+[25:26] qualquer coisa, o senhor pode me mandar e-mail, o senhor
+[25:28] pode ficar à vontade de mandar WhatsApp também.
+[25:30] Isso, vou fazer o seguinte agora. Nós vamos
+[25:32] agendar uma outra reunião agora para a gente
+[25:34] poder tratar do que...
+[25:36] do resto, né? Tratar do resto. Continuidade, né?
+[25:38] Veja bem, de 8 a 22
+[25:40] a gente está em recesso aqui na PUC.
+[25:42] Então a gente tem que fazer uma reunião antes do dia 8.
+[25:44] De agosto?
+[25:46] De julho.
+[25:48] Então tem que ser dia 6 ou dia 7.
+[25:50] Ou seja, na semana que vem você vai ter que trabalhar
+[25:52] bastante na pesquisa. Você vai trabalhar nessa apresentação
+[25:54] e também vai continuar
+[25:56] trabalhando na pesquisa, dando uma reestruturada
+[25:58] listando tudo que você tem
+[26:00] dificuldades, que você ainda não tem resposta.
+[26:02] E aí na próxima reunião
+[26:04] a gente vai começar
+[26:06] tentando entender o problema. Como é que
+[26:08] a gente vai fazer para
+[26:10] associar as
+[26:12] notícias com o que
+[26:14] acontece com a ação.
+[26:16] Tá ótimo então. O senhor pode
+[26:18] escolher o dia e aí pode só
+[26:20] me mandar o convite. Tá, mas vamos decidir juntos agora.
+[26:22] Então beleza, perfeito.
+[26:24] Dia 6 ou dia 7? Dia 6 segunda-feira
+[26:26] poderia ser ou não? Pode.
+[26:28] Para você é melhor de manhã ou à tarde?
+[26:30] Pela manhã, deixa eu ver aqui. Depende do horário
+[26:32] pela manhã. Se for bem cedinho,
+[26:34] de oito, meia. É melhor.
+[26:36] Das oito às nove eu não consigo mais.
+[26:38] E a tarde como que é?
+[26:40] A tarde é mais tranquilo. Então eu vou colocar aqui
+[26:42] 14 horas, pode ser? Pode ser, 14 horas.
+[26:44] Então eu vou fazer o seguinte aqui.
+[26:48] Qual que é o teu email mesmo?
+[26:52] Silva
+[26:54] Silva VBS
+[26:56] Eu vou colocar das 14 às 15.
+[26:58] Já estou te mandando aqui um invite.
+[27:00] Já fui, já.
+[27:02] Tá ótimo, professor. Muito obrigado mais uma vez.
+[27:04] Vou começar a trabalhar nesse agora aqui
+[27:06] nessas slides. Beleza.
+[27:08] Obrigado. Bom fim de semana.
+[27:10] Igualmente. Tchau, tchau.

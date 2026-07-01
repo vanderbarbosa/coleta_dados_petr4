@@ -62,6 +62,10 @@ export default function Noticias() {
           <>
             <p className="sub" style={{ margin: "0 0 8px" }}>
               <strong>{dados.total.toLocaleString("pt-BR")}</strong> notícias encontradas.
+              {dados.amostragem && (
+                <> {" "}· amostra de {dados.amostragem.amostra.toLocaleString("pt-BR")} de{" "}
+                  {dados.amostragem.corpus.toLocaleString("pt-BR")} do corpus (site publicado).</>
+              )}
             </p>
             {dados.itens.map((n, i) => (
               <article className="noticia" key={i}>

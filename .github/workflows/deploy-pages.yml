@@ -1,0 +1,72 @@
+# ==============================================================================
+#  Deploy do site (frontend React/Vite) no GitHub Pages.
+#  Dissertação PETR4 | Vanderlei Barbosa da Silva
+#
+#  A cada push na branch `main` que altere `site/frontend/**`, este workflow
+#  compila o frontend e publica no GitHub Pages. Ative uma vez em:
+#    Settings → Pages → Build and deployment → Source: "GitHub Actions".
+#
+#  Backend de previsão ao vivo (opcional): defina o segredo/variável de
+#  repositório `VITE_API_URL` (ex.: https://<seu-space>.hf.space) em
+#    Settings → Secrets and variables → Actions → Variables.
+#  Sem ele, o site funciona com o snapshot estático + previsão no navegador.
+# ==============================================================================
+name: Deploy site (GitHub Pages)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/frontend/**"
+      - ".github/workflows/deploy-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: site/frontend/package-lock.json
+
+      - name: Instalar dependências
+        working-directory: site/frontend
+        run: npm ci
+
+      - name: Build (Vite)
+        working-directory: site/frontend
+        env:
+          # base = /<nome-do-repositorio>/ (project pages)
+          VITE_BASE: /${{ github.event.repository.name }}/
+          # URL do backend externo (opcional). Vazio => snapshot estático + previsão no navegador.
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
+        run: npm run build
+
+      - name: Upload do artefato do Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/frontend/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -10,6 +10,11 @@
 
 Este repositório contém o pipeline computacional completo da dissertação. O objetivo é testar se o **sentimento extraído de notícias financeiras** (via NLP) melhora a previsão da **direção** (alta/baixa) e da **volatilidade** do ativo **PETR4**, quando combinado (*Data Fusion*) com modelos econométricos (GARCH) e de *machine learning* (SVM e XGBoost).
 
+> 🌐 **Site interativo da pesquisa (acesse de qualquer lugar):**
+> **https://vanderbarbosa.github.io/coleta_dados_petr4/**
+> Notícias, preços, estatísticas, demonstração de eventos e avaliação de direção a partir de
+> uma notícia. Código e instruções de execução/publicação em [`site/`](site/README.md).
+
 O fluxo é organizado em **4 scripts sequenciais**. Cada script consome a saída do anterior — **execute sempre na ordem**:
 
 ```

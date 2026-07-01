@@ -1,0 +1,14 @@
+# Backend de PREVISÃO (FastAPI) — dissertação PETR4
+# Enxuto para deploy externo (ex.: Hugging Face Space). O endpoint /api/prever
+# carrega FinBERT-PT-BR (transformers/torch) + o modelo XGBoost treinado.
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
+pandas>=2.1
+numpy>=1.26
+xgboost>=2.0
+transformers>=4.40
+torch>=2.2
+huggingface_hub>=0.23
+requests>=2.31
+urllib3>=2.0

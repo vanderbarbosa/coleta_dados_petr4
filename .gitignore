@@ -21,6 +21,14 @@ Mestrado_PETR4/
 *.pdf
 _doc_assets/
 
+# ─── Vídeos (arquivos grandes — não versionar; acima do limite do GitHub) ───
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.m4v
+
 # ─── Material de pesquisa (artigos, PDFs, exame) — não versionar ───
 Referencial_Teorico/
 Exame_qualificacao/
@@ -33,6 +41,8 @@ site/frontend/dist/
 # ─── Sistema operacional / editores ───
 .DS_Store
 Thumbs.db
+# Arquivos de bloqueio temporários do MS Office (Word/PowerPoint)
+~$*
 .vscode/
 .idea/
 .claude/

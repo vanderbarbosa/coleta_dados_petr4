@@ -14,6 +14,7 @@
 #     uvicorn app:app --reload --port 8000     (a partir de site/backend/)
 # ==============================================================================
 
+import os
 import sys
 from pathlib import Path
 from functools import lru_cache
@@ -24,7 +25,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 RAIZ = Path(__file__).resolve().parents[2]
-DADOS = RAIZ / "Mestrado_PETR4"
+# Diretório dos dados/modelos. Localmente aponta para Mestrado_PETR4; num deploy
+# externo (ex.: Hugging Face Space), defina DADOS_DIR para a pasta com os
+# arquivos do modelo (modelo_xgb_fusion.json, modelo_meta.json) e CSVs.
+DADOS = Path(os.environ["DADOS_DIR"]) if os.environ.get("DADOS_DIR") else RAIZ / "Mestrado_PETR4"
+# A taxonomia é buscada em src/comum (repositório) ou ao lado do app.py (deploy
+# autocontido, onde uma cópia de taxonomia.py acompanha o backend).
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(RAIZ / "src" / "comum"))
 try:
     import taxonomia as tx

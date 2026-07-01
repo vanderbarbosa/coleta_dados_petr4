@@ -65,6 +65,14 @@ export default function Previsao() {
 
       {res && (
         <>
+          {res.origem === "navegador" && (
+            <div className="aviso" style={{ marginTop: 14 }}>
+              ℹ️ Previsão calculada <strong>no seu navegador</strong> (regras da taxonomia + léxico).
+              O índice FinBERT-PT-BR e a probabilidade do XGBoost só aparecem quando o backend de
+              previsão está no ar. {res.motor}
+            </div>
+          )}
+
           <Jornada res={res} />
 
           <h2>Detalhes da análise</h2>
@@ -91,22 +99,28 @@ export default function Previsao() {
             </div>
             <div className="painel" style={{ margin: 0 }}>
               <h2 style={{ marginTop: 0 }}>📈 Modelo estatístico (dados)</h2>
-              <p style={{ marginTop: 0 }}>
-                <strong>{TXT[res.leitura_modelo.direcao] || "—"}</strong> · P(alta) = {(res.leitura_modelo.prob_alta * 100).toFixed(1)}%
-              </p>
+              {res.leitura_modelo.prob_alta != null ? (
+                <p style={{ marginTop: 0 }}>
+                  <strong>{TXT[res.leitura_modelo.direcao] || "—"}</strong> · P(alta) = {(res.leitura_modelo.prob_alta * 100).toFixed(1)}%
+                </p>
+              ) : (
+                <p style={{ marginTop: 0 }}><strong>Indisponível offline</strong></p>
+              )}
               <p style={{ color: "var(--tinta-2)", fontSize: ".92rem" }}>{res.leitura_modelo.nota}</p>
             </div>
           </div>
 
           <div className="painel">
-            <table>
-              <tbody>
-                <tr><th>Modelo</th><td>{res.contexto.modelo}</td></tr>
-                <tr><th>Acurácia / AUC (teste)</th><td>{res.contexto.acuracia_teste}% · {res.contexto.auc_teste}</td></tr>
-                <tr><th>Contexto (ref. {res.contexto.data_referencia})</th>
-                  <td>retorno recente {res.contexto.retorno_recente_pct}% · volatilidade {res.contexto.volatilidade_recente}</td></tr>
-              </tbody>
-            </table>
+            {res.contexto && (
+              <table>
+                <tbody>
+                  <tr><th>Modelo</th><td>{res.contexto.modelo}</td></tr>
+                  <tr><th>Acurácia / AUC (teste)</th><td>{res.contexto.acuracia_teste}% · {res.contexto.auc_teste}</td></tr>
+                  <tr><th>Contexto (ref. {res.contexto.data_referencia})</th>
+                    <td>retorno recente {res.contexto.retorno_recente_pct}% · volatilidade {res.contexto.volatilidade_recente}</td></tr>
+                </tbody>
+              </table>
+            )}
             <div className="aviso" style={{ marginTop: 14 }}>{res.aviso}</div>
           </div>
         </>
