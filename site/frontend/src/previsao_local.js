@@ -94,31 +94,44 @@ const NEG = ["queda", "cai", "caiu", "prejuízo", "perda", "greve", "crise", "de
 const RESOLUCAO = ["acordo", "fim da greve", "greve termina", "termina a greve", "fim da paralis",
   "retomada", "retoma", "normaliz", "volta ao normal", "cessar-fogo", "cessar fogo", "acordo de paz",
   "trégua", "tregua", "reabertura", "reabre", "fim do bloqueio", "fim do embargo", "fim das sanç",
-  "alívio", "alivio", "encerr", "resolv", "supera", "aprova", "conclui", "avanç"];
+  "alívio", "alivio", "encerr", "resolv", "supera", "aprova", "conclui", "avanç",
+  "absolv", "arquiva", "arquivamento", "inocent", "sem irregularidad"];
 const DISRUPCAO = ["greve", "paralis", "bloqueio", "ataque", "guerra", "sanç", "embargo", "interrup",
   "acidente", "fechamento", "fecha", "invasão", "invasao", "conflito", "explos", "sabotagem",
   "apreens", "demiss", "demite", "intervenç", "intervenc", "rompe", "crise", "tensão", "tensao",
-  "ameaç", "queda", "prejuízo", "prejuizo", "rombo"];
+  "ameaç", "queda", "prejuízo", "prejuizo", "rombo", "vazamento de oleo", "derramamento",
+  "lucro menor", "lucro abaixo", "queda do lucro", "queda no lucro", "lucro cai", "lucro caiu",
+  "lucro despenca", "lucro frustra"];
+// Governança/jurídico negativo (nível empresa → pressiona a ação).
+const GOVERNANCA_NEG = ["corrupc", "fraude", "investigac", "investiga", "delacao", "cpi",
+  "operacao policial", "policia federal", "escandalo", "propina", "lavagem de dinheiro",
+  "denuncia", "indiciad", "indiciamento", " reu ", "condenac", "condenad", "busca e apreensao",
+  "irregularidad", "desvio de", "superfaturamento", "cartel", "improbidade", "quebra de sigilo"];
 
 const CATS_EMPRESA = new Set(["CAT1_Empresa", "CAT6_Governanca"]);
 const CATS_OFERTA_MERC = new Set(["CAT2_Mercado_Petroleo", "CAT3_Geopolitica", "CAT5_Sancoes_Navegacao"]);
 
 // Cessação de valor ao acionista (corte/suspensão de proventos, ou prejuízo) —
 // o "fim de uma coisa boa", que pressiona a ação mesmo com tom textual positivo.
-const CESSA_MARCADORES = ["deixar de", "deixara de", "deixou de", "deixa de",
-  "suspend", "corte de", "corta ", "cortar", "reduz", "reducao", "cancela",
-  "cancelamento", "fim do", "fim dos", "nao pag"];
+const CESSA_MARCADORES = ["deixar de", "deixara de", "deixou de", "deixa de", "suspend",
+  "corte de", "corta ", "cortar", "reduz", "reduc", "cancela", "cancelamento", "fim do",
+  "fim dos", "fim da", "nao pag", "nao rece", "nao have", "nao distribu", "sem distribu",
+  "abaixo do esperado", "revisa para baixo", "revisao para baixo", "menor que o esperado", "frustr"];
 const VALOR_ACIONISTA = ["dividendo", "provento", "jcp", "juros sobre capital",
-  "recompra", "distribuicao de resultado", "distribuir resultado"];
+  "recompra", "distribuicao de resultado", "distribuir resultado", "payout"];
 
 // Remove acentos para casar termos de forma robusta ('petrobrás' → 'petrobras').
 function sa(s) { return s.normalize("NFD").replace(/\p{Diacritic}/gu, ""); }
 
 function cessacaoValor(lowN) {
-  if (lowN.includes("prejuizo")) return true;
+  if (lowN.includes("prejuizo") || lowN.includes("rombo")) return true;
   const temValor = VALOR_ACIONISTA.some((v) => lowN.includes(v));
   const temMarcador = CESSA_MARCADORES.some((m) => lowN.includes(m));
   return temValor && temMarcador;
+}
+
+function governancaNegativa(lowN) {
+  return GOVERNANCA_NEG.some((k) => lowN.includes(k));
 }
 
 function detectarCategoria(low) {
@@ -166,15 +179,18 @@ function analisarDirecao(low, pol, catId) {
   const mec = mecanismo(catId, low);
   if (mec === "empresa") {
     if (cessacaoValor(lowN)) return ["baixa", "Cessação ou redução de proventos ao acionista (corte, suspensão ou fim de dividendos/JCP/recompra) — ou prejuízo — reduz o retorno esperado e tende a PRESSIONAR a PETR4, ainda que o texto mencione termos usualmente positivos como 'dividendos' ou 'lucro'.", "disrupcao"];
-    if (ev === "resolucao") return ["alta", "Resolução de evento operacional ou corporativo (acordo, fim de paralisação, normalização) tende a FAVORECER a PETR4, ainda que o tom textual contenha termos negativos.", ev];
+    if (governancaNegativa(lowN) && ev !== "resolucao") return ["baixa", "Evento negativo de governança ou jurídico (corrupção, fraude, investigação, operação policial, denúncia) eleva o risco percebido e o prêmio de risco da estatal, tendendo a PRESSIONAR a PETR4.", "disrupcao"];
+    if (ev === "resolucao") return ["alta", "Resolução de evento operacional, corporativo ou jurídico (acordo, fim de paralisação, normalização, arquivamento/absolvição) tende a FAVORECER a PETR4, ainda que o tom textual contenha termos negativos.", ev];
     if (ev === "disrupcao") return ["baixa", "Disrupção operacional, de governança ou corporativa (greve, intervenção, acidente, demissão) tende a PRESSIONAR a PETR4.", ev];
     if (pol > 0) return ["alta", "Notícia corporativa de tom positivo tende a favorecer a PETR4.", ev];
     if (pol < 0) return ["baixa", "Notícia corporativa de tom negativo tende a pressionar a PETR4.", ev];
     return ["neutra", "Notícia corporativa de tom neutro, sem direção clara.", ev];
   }
   if (mec === "oferta") {
-    if (ev === "disrupcao") return ["alta", "Choque de OFERTA (conflito, bloqueio, sanção, ataque, interrupção) tende a ELEVAR o preço do petróleo; como a Petrobras é produtora da commodity, o efeito sobre a PETR4 costuma ser FAVORÁVEL — ainda que o tom seja negativo para o mercado em geral (Kilian, 2009; Hamilton, 1983).", ev];
-    if (ev === "resolucao") return ["baixa", "Distensão ou normalização da oferta (cessar-fogo, acordo, aumento de produção) tende a REDUZIR o preço do petróleo, DESFAVORÁVEL à Petrobras.", ev];
+    const corteOferta = ["corte de produc", "corte na produc", "corta a produc", "reduz a produc", "reducao da produc", "reduz a oferta", "reducao da oferta", "corta a oferta"].some((k) => lowN.includes(k));
+    const aumentoOferta = ["aumento da produc", "aumenta a produc", "aumentar a produc", "eleva a produc", "aumento de produc", "eleva a oferta", "aumento da oferta", "aumenta a oferta"].some((k) => lowN.includes(k));
+    if (ev === "disrupcao" || corteOferta) return ["alta", "Choque de OFERTA (conflito, bloqueio, sanção, ataque, interrupção ou corte de produção) tende a ELEVAR o preço do petróleo; como a Petrobras é produtora da commodity, o efeito sobre a PETR4 costuma ser FAVORÁVEL — ainda que o tom seja negativo para o mercado (Kilian, 2009; Hamilton, 1983).", "disrupcao"];
+    if (ev === "resolucao" || aumentoOferta) return ["baixa", "Distensão ou aumento da oferta (cessar-fogo, acordo, elevação da produção) tende a REDUZIR o preço do petróleo, DESFAVORÁVEL à Petrobras.", "resolucao"];
     return ["neutra", "Evento de mercado de petróleo de tom neutro, sem direção clara.", ev];
   }
   return ["contextual", "Fator macroeconômico (câmbio, juros, demanda, transição energética) de efeito ambíguo, dependente do contexto.", ev];

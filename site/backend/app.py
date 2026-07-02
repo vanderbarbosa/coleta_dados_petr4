@@ -16,7 +16,6 @@
 
 import os
 import sys
-import unicodedata
 from pathlib import Path
 from functools import lru_cache
 
@@ -174,144 +173,13 @@ def estatisticas():
 
 _modelo_cache = {}
 
-# Categorias de OFERTA (choques que tendem a mover o preço do petróleo).
-_CATS_OFERTA = {"CAT2_Mercado_Petroleo", "CAT3_Geopolitica",
-                "CAT4_Infraestrutura", "CAT5_Sancoes_Navegacao"}
+# ── Leitura econômica setorial (regras) — FONTE ÚNICA em regras_setoriais.py,
+#    também usada pelo script de avaliação (avaliar_regras.py) e espelhada no
+#    motor do navegador (frontend/src/previsao_local.js). ──────────────────────
+import regras_setoriais as rs
 
-
-def _sem_acento(s: str) -> str:
-    """Remove acentos (NFKD) para casar termos de forma robusta — ex.: 'petrobrás'
-    passa a casar com 'Petrobras'."""
-    return "".join(c for c in unicodedata.normalize("NFKD", s) if not unicodedata.combining(c))
-
-
-def _detectar_categoria(texto_low: str):
-    """Detecta a categoria temática pela taxonomia completa (152 termos).
-    Retorna (categoria_id, rotulo, qtd_termos_casados) ou (None, None, 0)."""
-    alvo = _sem_acento(texto_low)
-    melhor, melhor_qtd = None, 0
-    try:
-        for cat, termos in tx.TERMOS_POR_CATEGORIA.items():
-            qtd = sum(1 for t in termos if _sem_acento(t.lower()) in alvo)
-            if qtd > melhor_qtd:
-                melhor, melhor_qtd = cat, qtd
-    except Exception:
-        pass
-    if melhor is None:
-        return None, None, 0
-    return melhor, ROTULOS.get(melhor, melhor), melhor_qtd
-
-
-# Palavras que indicam RESOLUÇÃO (um evento ruim TERMINANDO/melhorando) e
-# DISRUPÇÃO (um evento ruim ACONTECENDO). Resolver a ambiguidade de polaridade
-# do FinBERT (ex.: "greve termina" tem a palavra "greve", mas é positivo).
-_RESOLUCAO = [
-    "acordo", "fim da greve", "greve termina", "termina a greve", "fim da paralis",
-    "retomada", "retoma", "normaliz", "volta ao normal", "cessar-fogo", "cessar fogo",
-    "acordo de paz", "trégua", "tregua", "reabertura", "reabre", "fim do bloqueio",
-    "fim do embargo", "fim das sanç", "alívio", "alivio", "encerr", "resolv", "supera",
-    "aprova", "conclui", "avanç",
-]
-_DISRUPCAO = [
-    "greve", "paralis", "bloqueio", "ataque", "guerra", "sanç", "embargo", "interrup",
-    "acidente", "fechamento", "fecha", "invasão", "invasao", "conflito", "explos",
-    "sabotagem", "apreens", "demiss", "demite", "intervenç", "intervenc", "rompe",
-    "crise", "tensão", "tensao", "ameaç", "queda", "prejuízo", "prejuizo", "rombo",
-]
-
-_CATS_EMPRESA = {"CAT1_Empresa", "CAT6_Governanca"}
-_CATS_OFERTA_MERC = {"CAT2_Mercado_Petroleo", "CAT3_Geopolitica", "CAT5_Sancoes_Navegacao"}
-
-# CESSAÇÃO DE VALOR AO ACIONISTA — o "fim de uma coisa boa" (simétrico à resolução,
-# que é o fim de uma coisa ruim). Corte/suspensão/redução de proventos, ou prejuízo,
-# reduzem o retorno esperado e PRESSIONAM a ação — ainda que o texto contenha palavras
-# usualmente positivas ("dividendos", "lucro") que enganam o sentimento do FinBERT.
-_CESSA_MARCADORES = ["deixar de", "deixara de", "deixou de", "deixa de",
-                     "suspend", "corte de", "corta ", "cortar", "reduz", "reducao",
-                     "cancela", "cancelamento", "fim do", "fim dos", "nao pag"]
-_VALOR_ACIONISTA = ["dividendo", "provento", "jcp", "juros sobre capital",
-                    "recompra", "distribuicao de resultado", "distribuir resultado"]
-
-
-def _cessacao_valor(low_n):
-    """Detecta corte/suspensão/redução de proventos ao acionista, ou prejuízo,
-    a partir do texto SEM acento (low_n)."""
-    if "prejuizo" in low_n:
-        return True
-    tem_valor = any(v in low_n for v in _VALOR_ACIONISTA)
-    tem_marcador = any(m in low_n for m in _CESSA_MARCADORES)
-    return tem_valor and tem_marcador
-
-
-def _tipo_evento(texto_low):
-    """Classifica o evento como resolução (melhora), disrupção (piora) ou neutro."""
-    t = _sem_acento(texto_low)
-    if any(_sem_acento(k) in t for k in _RESOLUCAO):
-        return "resolucao"
-    if any(_sem_acento(k) in t for k in _DISRUPCAO):
-        return "disrupcao"
-    return "neutro"
-
-
-def _mecanismo(cat_id, texto_low):
-    """Como a notícia transmite-se à PETR4: nível da EMPRESA (operação/valor) ou
-    do MERCADO de petróleo (preço da commodity)."""
-    if cat_id in _CATS_EMPRESA:
-        return "empresa"
-    if cat_id in _CATS_OFERTA_MERC:
-        return "oferta"
-    if cat_id == "CAT4_Infraestrutura":
-        # Infraestrutura da própria Petrobras (empresa) vs. oferta global.
-        t = _sem_acento(texto_low)
-        return "empresa" if ("petrobras" in t or "brasil" in t) else "oferta"
-    return "macro"  # CAT7
-
-
-def _analisar_direcao(texto_low, polaridade, cat_id):
-    """Direção provável da PETR4, combinando o TIPO de evento (resolução/disrupção)
-    com o MECANISMO de transmissão (empresa/oferta), fundamentado em Kilian (2009)
-    e Hamilton (1983). Distingue o efeito sobre o mercado do efeito sobre o ativo —
-    e corrige a leitura quando o tom textual não reflete o sentido do evento.
-    Retorna (direcao, justificativa, tipo_evento)."""
-    low_n = _sem_acento(texto_low)
-    ev = _tipo_evento(texto_low)
-    mec = _mecanismo(cat_id, texto_low)
-
-    if mec == "empresa":
-        # Cessação de valor ao acionista tem prioridade: corte/suspensão de
-        # proventos ou prejuízo pressionam a ação, mesmo com tom textual "positivo".
-        if _cessacao_valor(low_n):
-            return "baixa", ("Cessação ou redução de proventos ao acionista (corte, suspensão ou "
-                             "fim de dividendos/JCP/recompra) — ou prejuízo — reduz o retorno "
-                             "esperado e tende a PRESSIONAR a PETR4, ainda que o texto mencione "
-                             "termos usualmente positivos como 'dividendos' ou 'lucro'."), "disrupcao"
-        if ev == "resolucao":
-            return "alta", ("Resolução de evento operacional ou corporativo (acordo, fim de "
-                            "paralisação, normalização) tende a FAVORECER a PETR4, ainda que o tom "
-                            "textual contenha termos negativos."), ev
-        if ev == "disrupcao":
-            return "baixa", ("Disrupção operacional, de governança ou corporativa (greve, "
-                             "intervenção, acidente, demissão) tende a PRESSIONAR a PETR4."), ev
-        if polaridade > 0:
-            return "alta", "Notícia corporativa de tom positivo tende a favorecer a PETR4.", ev
-        if polaridade < 0:
-            return "baixa", "Notícia corporativa de tom negativo tende a pressionar a PETR4.", ev
-        return "neutra", "Notícia corporativa de tom neutro, sem direção clara.", ev
-
-    if mec == "oferta":
-        if ev == "disrupcao":
-            return "alta", ("Choque de OFERTA (conflito, bloqueio, sanção, ataque, interrupção) tende "
-                            "a ELEVAR o preço do petróleo; como a Petrobras é produtora da commodity, "
-                            "o efeito sobre a PETR4 costuma ser FAVORÁVEL — ainda que o tom seja "
-                            "negativo para o mercado em geral (Kilian, 2009; Hamilton, 1983)."), ev
-        if ev == "resolucao":
-            return "baixa", ("Distensão ou normalização da oferta (cessar-fogo, acordo, aumento de "
-                             "produção) tende a REDUZIR o preço do petróleo, DESFAVORÁVEL à "
-                             "Petrobras."), ev
-        return "neutra", "Evento de mercado de petróleo de tom neutro, sem direção clara.", ev
-
-    return "contextual", ("Fator macroeconômico (câmbio, juros, demanda, transição energética) de "
-                          "efeito ambíguo, dependente do contexto."), ev
+_detectar_categoria = rs.detectar_categoria      # (texto_low) -> (id, rotulo, qtd)
+_analisar_direcao = rs.analisar_direcao          # (texto_low, polaridade, cat_id) -> (dir, just, evento)
 
 
 def _carregar_preditor():
