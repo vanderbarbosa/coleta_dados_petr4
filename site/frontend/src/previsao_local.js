@@ -103,11 +103,30 @@ const DISRUPCAO = ["greve", "paralis", "bloqueio", "ataque", "guerra", "sanç", 
 const CATS_EMPRESA = new Set(["CAT1_Empresa", "CAT6_Governanca"]);
 const CATS_OFERTA_MERC = new Set(["CAT2_Mercado_Petroleo", "CAT3_Geopolitica", "CAT5_Sancoes_Navegacao"]);
 
+// Cessação de valor ao acionista (corte/suspensão de proventos, ou prejuízo) —
+// o "fim de uma coisa boa", que pressiona a ação mesmo com tom textual positivo.
+const CESSA_MARCADORES = ["deixar de", "deixara de", "deixou de", "deixa de",
+  "suspend", "corte de", "corta ", "cortar", "reduz", "reducao", "cancela",
+  "cancelamento", "fim do", "fim dos", "nao pag"];
+const VALOR_ACIONISTA = ["dividendo", "provento", "jcp", "juros sobre capital",
+  "recompra", "distribuicao de resultado", "distribuir resultado"];
+
+// Remove acentos para casar termos de forma robusta ('petrobrás' → 'petrobras').
+function sa(s) { return s.normalize("NFD").replace(/\p{Diacritic}/gu, ""); }
+
+function cessacaoValor(lowN) {
+  if (lowN.includes("prejuizo")) return true;
+  const temValor = VALOR_ACIONISTA.some((v) => lowN.includes(v));
+  const temMarcador = CESSA_MARCADORES.some((m) => lowN.includes(m));
+  return temValor && temMarcador;
+}
+
 function detectarCategoria(low) {
+  const alvo = sa(low);
   let melhor = null, melhorQtd = 0;
   for (const [cat, termos] of Object.entries(TERMOS_POR_CATEGORIA)) {
     let qtd = 0;
-    for (const t of termos) if (low.includes(t.toLowerCase())) qtd++;
+    for (const t of termos) if (alvo.includes(sa(t.toLowerCase()))) qtd++;
     if (qtd > melhorQtd) { melhor = cat; melhorQtd = qtd; }
   }
   if (melhor === null) return [null, null, 0];
@@ -115,32 +134,38 @@ function detectarCategoria(low) {
 }
 
 function polaridade(low) {
+  const t = sa(low);
   let p = 0, n = 0;
-  for (const w of POS) if (low.includes(w)) p++;
-  for (const w of NEG) if (low.includes(w)) n++;
+  for (const w of POS) if (t.includes(sa(w))) p++;
+  for (const w of NEG) if (t.includes(sa(w))) n++;
   if (p > n) return 1;
   if (n > p) return -1;
   return 0;
 }
 
 function tipoEvento(low) {
-  if (RESOLUCAO.some((k) => low.includes(k))) return "resolucao";
-  if (DISRUPCAO.some((k) => low.includes(k))) return "disrupcao";
+  const t = sa(low);
+  if (RESOLUCAO.some((k) => t.includes(sa(k)))) return "resolucao";
+  if (DISRUPCAO.some((k) => t.includes(sa(k)))) return "disrupcao";
   return "neutro";
 }
 
 function mecanismo(catId, low) {
   if (CATS_EMPRESA.has(catId)) return "empresa";
   if (CATS_OFERTA_MERC.has(catId)) return "oferta";
-  if (catId === "CAT4_Infraestrutura")
-    return (low.includes("petrobras") || low.includes("brasil")) ? "empresa" : "oferta";
+  if (catId === "CAT4_Infraestrutura") {
+    const t = sa(low);
+    return (t.includes("petrobras") || t.includes("brasil")) ? "empresa" : "oferta";
+  }
   return "macro";
 }
 
 function analisarDirecao(low, pol, catId) {
+  const lowN = sa(low);
   const ev = tipoEvento(low);
   const mec = mecanismo(catId, low);
   if (mec === "empresa") {
+    if (cessacaoValor(lowN)) return ["baixa", "Cessação ou redução de proventos ao acionista (corte, suspensão ou fim de dividendos/JCP/recompra) — ou prejuízo — reduz o retorno esperado e tende a PRESSIONAR a PETR4, ainda que o texto mencione termos usualmente positivos como 'dividendos' ou 'lucro'.", "disrupcao"];
     if (ev === "resolucao") return ["alta", "Resolução de evento operacional ou corporativo (acordo, fim de paralisação, normalização) tende a FAVORECER a PETR4, ainda que o tom textual contenha termos negativos.", ev];
     if (ev === "disrupcao") return ["baixa", "Disrupção operacional, de governança ou corporativa (greve, intervenção, acidente, demissão) tende a PRESSIONAR a PETR4.", ev];
     if (pol > 0) return ["alta", "Notícia corporativa de tom positivo tende a favorecer a PETR4.", ev];

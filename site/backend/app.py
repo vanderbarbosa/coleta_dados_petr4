@@ -16,6 +16,7 @@
 
 import os
 import sys
+import unicodedata
 from pathlib import Path
 from functools import lru_cache
 
@@ -178,13 +179,20 @@ _CATS_OFERTA = {"CAT2_Mercado_Petroleo", "CAT3_Geopolitica",
                 "CAT4_Infraestrutura", "CAT5_Sancoes_Navegacao"}
 
 
+def _sem_acento(s: str) -> str:
+    """Remove acentos (NFKD) para casar termos de forma robusta — ex.: 'petrobrás'
+    passa a casar com 'Petrobras'."""
+    return "".join(c for c in unicodedata.normalize("NFKD", s) if not unicodedata.combining(c))
+
+
 def _detectar_categoria(texto_low: str):
     """Detecta a categoria temática pela taxonomia completa (152 termos).
     Retorna (categoria_id, rotulo, qtd_termos_casados) ou (None, None, 0)."""
+    alvo = _sem_acento(texto_low)
     melhor, melhor_qtd = None, 0
     try:
         for cat, termos in tx.TERMOS_POR_CATEGORIA.items():
-            qtd = sum(1 for t in termos if t.lower() in texto_low)
+            qtd = sum(1 for t in termos if _sem_acento(t.lower()) in alvo)
             if qtd > melhor_qtd:
                 melhor, melhor_qtd = cat, qtd
     except Exception:
@@ -214,12 +222,33 @@ _DISRUPCAO = [
 _CATS_EMPRESA = {"CAT1_Empresa", "CAT6_Governanca"}
 _CATS_OFERTA_MERC = {"CAT2_Mercado_Petroleo", "CAT3_Geopolitica", "CAT5_Sancoes_Navegacao"}
 
+# CESSAÇÃO DE VALOR AO ACIONISTA — o "fim de uma coisa boa" (simétrico à resolução,
+# que é o fim de uma coisa ruim). Corte/suspensão/redução de proventos, ou prejuízo,
+# reduzem o retorno esperado e PRESSIONAM a ação — ainda que o texto contenha palavras
+# usualmente positivas ("dividendos", "lucro") que enganam o sentimento do FinBERT.
+_CESSA_MARCADORES = ["deixar de", "deixara de", "deixou de", "deixa de",
+                     "suspend", "corte de", "corta ", "cortar", "reduz", "reducao",
+                     "cancela", "cancelamento", "fim do", "fim dos", "nao pag"]
+_VALOR_ACIONISTA = ["dividendo", "provento", "jcp", "juros sobre capital",
+                    "recompra", "distribuicao de resultado", "distribuir resultado"]
+
+
+def _cessacao_valor(low_n):
+    """Detecta corte/suspensão/redução de proventos ao acionista, ou prejuízo,
+    a partir do texto SEM acento (low_n)."""
+    if "prejuizo" in low_n:
+        return True
+    tem_valor = any(v in low_n for v in _VALOR_ACIONISTA)
+    tem_marcador = any(m in low_n for m in _CESSA_MARCADORES)
+    return tem_valor and tem_marcador
+
 
 def _tipo_evento(texto_low):
     """Classifica o evento como resolução (melhora), disrupção (piora) ou neutro."""
-    if any(k in texto_low for k in _RESOLUCAO):
+    t = _sem_acento(texto_low)
+    if any(_sem_acento(k) in t for k in _RESOLUCAO):
         return "resolucao"
-    if any(k in texto_low for k in _DISRUPCAO):
+    if any(_sem_acento(k) in t for k in _DISRUPCAO):
         return "disrupcao"
     return "neutro"
 
@@ -233,7 +262,8 @@ def _mecanismo(cat_id, texto_low):
         return "oferta"
     if cat_id == "CAT4_Infraestrutura":
         # Infraestrutura da própria Petrobras (empresa) vs. oferta global.
-        return "empresa" if ("petrobras" in texto_low or "brasil" in texto_low) else "oferta"
+        t = _sem_acento(texto_low)
+        return "empresa" if ("petrobras" in t or "brasil" in t) else "oferta"
     return "macro"  # CAT7
 
 
@@ -243,10 +273,18 @@ def _analisar_direcao(texto_low, polaridade, cat_id):
     e Hamilton (1983). Distingue o efeito sobre o mercado do efeito sobre o ativo —
     e corrige a leitura quando o tom textual não reflete o sentido do evento.
     Retorna (direcao, justificativa, tipo_evento)."""
+    low_n = _sem_acento(texto_low)
     ev = _tipo_evento(texto_low)
     mec = _mecanismo(cat_id, texto_low)
 
     if mec == "empresa":
+        # Cessação de valor ao acionista tem prioridade: corte/suspensão de
+        # proventos ou prejuízo pressionam a ação, mesmo com tom textual "positivo".
+        if _cessacao_valor(low_n):
+            return "baixa", ("Cessação ou redução de proventos ao acionista (corte, suspensão ou "
+                             "fim de dividendos/JCP/recompra) — ou prejuízo — reduz o retorno "
+                             "esperado e tende a PRESSIONAR a PETR4, ainda que o texto mencione "
+                             "termos usualmente positivos como 'dividendos' ou 'lucro'."), "disrupcao"
         if ev == "resolucao":
             return "alta", ("Resolução de evento operacional ou corporativo (acordo, fim de "
                             "paralisação, normalização) tende a FAVORECER a PETR4, ainda que o tom "
