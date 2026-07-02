@@ -9,6 +9,27 @@ taxonomia (categoria) + XGBoost (direção) + leitura econômica setorial.
 
 ---
 
+## ⚡ Modo rápido (UM comando) — recomendado
+
+Depois de instalar os pré-requisitos (seção 0) e clonar o projeto (seção 1), rode:
+
+- **Windows:** duplo-clique em **`run_app.bat`** (ou, no terminal, `run_app.bat`)
+- **macOS / Linux:** `bash run_app.sh`
+
+O script faz **tudo sozinho**: cria o ambiente Python, instala as dependências do
+backend (`pip`) **e** do frontend (`npm`), sobe o backend (porta 8000) e o frontend
+(porta 5173) e abre o navegador. Na 1ª vez demora (baixa `torch`/`transformers`);
+depois é rápido. Para encerrar, feche as janelas dos servidores.
+
+> Por que não "tudo no requirements.txt"? O `requirements.txt` é só do Python (`pip`).
+> O frontend usa Node/`npm` (`package.json`), outro ecossistema — não cabe no mesmo
+> arquivo. O `run_app` é justamente a "cola" que instala os dois e sobe a aplicação.
+
+As seções abaixo são o passo a passo **manual** (equivalente ao que o script faz),
+caso você prefira controlar cada etapa.
+
+---
+
 ## 0. Pré-requisitos (instalar uma vez na máquina nova)
 
 - **Git** — https://git-scm.com/download/win
