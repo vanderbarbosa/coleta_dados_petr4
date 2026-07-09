@@ -1,43 +1,48 @@
-% Experimento-piloto de fine-tuning de encoder — dados reais (2026-07-08).
-\subsection{Experimento-piloto: um encoder mais forte melhora o sentimento?}
+% Experimento de fine-tuning de encoders — dados reais (Colab GPU, 5-fold, 2026-07-09).
+\subsection{Experimento: um encoder mais forte melhora o sentimento?}
 \label{sec:experimento_encoder}
 
 A validação da Seção~\ref{sec:validacao_sentimento} mostrou que a concordância do \mbox{FinBERT-PT-BR}
 com o rótulo humano é apenas razoável. A pergunta natural, e frequentemente sugerida, é se a adoção de
-um codificador mais forte --- como o Albertina \mbox{PT-BR}, de arquitetura DeBERTa --- ajustado ao
-conjunto-ouro, elevaria essa concordância. Para responder de forma empírica, conduziu-se um experimento
-de \textit{fine-tuning} do Albertina-100M sobre as trezentas manchetes rotuladas, sob validação cruzada
-estratificada de cinco dobras, comparando-o ao \mbox{FinBERT-PT-BR} \emph{nas mesmas dobras}. A
-Tabela~\ref{tab:experimento_encoder} resume o resultado.
+um codificador mais forte, ajustado ao conjunto-ouro, elevaria essa concordância. Para responder de
+forma empírica, realizou-se o \textit{fine-tuning} de três codificadores em português --- o
+Albertina-100M (arquitetura DeBERTa), o BERTimbau-base e o BERTimbau-large --- sobre as trezentas
+manchetes rotuladas, sob validação cruzada estratificada de cinco dobras, comparando-os ao
+\mbox{FinBERT-PT-BR} \emph{nas mesmas dobras}. A Tabela~\ref{tab:experimento_encoder} reúne os resultados.
 
 \begin{table}[htpb]
 \centering
-\caption{Fine-tuning de encoder no conjunto-ouro (validação cruzada 5-dobras, média $\pm$ desvio).}
+\caption{Fine-tuning de codificadores no conjunto-ouro (validação cruzada 5-dobras; acurácia em média $\pm$ desvio).}
 \label{tab:experimento_encoder}
 \begin{tabular}{l c c c}
 \hline
 \textbf{Codificador} & \textbf{Acurácia (\%)} & \textbf{F1-macro (\%)} & \textbf{Kappa} \\ \hline
-\textbf{FinBERT-PT-BR (atual, sem re-treino)} & \textbf{58,00 $\pm$ 4,88} & \textbf{57,63} & \textbf{0,370} \\
-Albertina-100M (\textit{fine-tuning}) & 45,67 $\pm$ 6,20 & 29,17 & 0,095 \\ \hline
+\textbf{FinBERT-PT-BR (atual, sem re-treino)} & \textbf{58,00} & \textbf{57,6} & \textbf{0,370} \\
+BERTimbau-large (\textit{fine-tuning}) & 56,33 $\pm$ 5,52 & 54,3 & 0,330 \\
+BERTimbau-base (\textit{fine-tuning})  & 52,67 $\pm$ 8,41 & 48,1 & 0,261 \\
+Albertina-100M (\textit{fine-tuning})  & 42,00 $\pm$ 2,67 & 25,2 & 0,033 \\ \hline
 \end{tabular}
 \vspace{0.2cm}
-{\small \\ Fonte: Elaborado pelo autor (\texttt{src/sentimento/12\_finetune\_albertina\_ptbr.py}, 2026).}
+{\small \\ Fonte: Elaborado pelo autor (\texttt{notebooks/finetune\_encoder\_colab.ipynb}, GPU, 2026).}
 \end{table}
 
-O resultado é claro e, mais uma vez, contraintuitivo apenas na aparência: o Albertina ajustado ficou
-\textbf{doze pontos percentuais abaixo} do \mbox{FinBERT-PT-BR}, com Kappa próximo de zero --- em várias
-dobras, o modelo sequer aprendeu a distinguir as classes, colapsando na categoria majoritária. A
-explicação é metodológica e importante. Com apenas trezentos exemplos, dos quais cerca de duzentos e
-quarenta em cada dobra de treino, não há dados suficientes para ajustar do zero a cabeça de
-classificação de um codificador \emph{genérico}; já o \mbox{FinBERT-PT-BR}, por vir \emph{pré-ajustado}
-para o sentimento financeiro, é aplicado diretamente e leva vantagem decisiva em regime de dados
-escassos. Em outras palavras, um encoder maior não melhora automaticamente o resultado; o que falta,
-antes, são \textbf{rótulos}.
+O resultado é claro e, mais uma vez, contraintuitivo apenas na aparência: \textbf{nenhum} codificador
+ajustado superou o \mbox{FinBERT-PT-BR} no regime de trezentos rótulos. A explicação é metodológica.
+Com apenas cerca de duzentos e quarenta exemplos de treino por dobra, não há dados suficientes para
+ajustar do zero a cabeça de classificação de um codificador que não foi pré-treinado para a tarefa; já
+o \mbox{FinBERT-PT-BR}, por vir \emph{pré-ajustado} para o sentimento financeiro, leva vantagem
+decisiva em dados escassos. O caso extremo é o Albertina, de arquitetura DeBERTa: apesar de ser um
+codificador de propósito geral muito competente, sem rótulos suficientes ele colapsa (Kappa próximo de
+zero). Em suma, um encoder maior não melhora automaticamente o resultado; o que falta, antes, são
+\textbf{rótulos}.
 
-A conclusão prática orienta o refinamento: no estágio atual, o \mbox{FinBERT-PT-BR} permanece a melhor
-escolha para o sinal de sentimento, e a via para superá-lo passa, primeiro, pela \textbf{ampliação da
-base rotulada} (estima-se algo entre quinhentos e mil exemplos), e só então pelo \textit{fine-tuning}
-de um codificador mais forte, idealmente com pré-treino de domínio sobre o próprio corpus. Registra-se
-que o experimento é reprodutível também em GPU gratuita (um \textit{notebook} para o Google Colab
-acompanha o projeto, comparando adicionalmente o BERTimbau, base e \textit{large}, e o Albertina-900M),
-o que evita conclusões precipitadas a partir de uma única configuração.
+Há, porém, um indício promissor. O \textbf{BERTimbau-large} ficou a apenas um vírgula sete ponto
+percentual do \mbox{FinBERT-PT-BR} --- e não por acaso, pois é da \emph{mesma família} que serve de
+base ao próprio FinBERT, apenas em versão maior. Essa proximidade, alcançada com uma base rotulada
+mínima, sugere que a ampliação do conjunto-ouro (estima-se entre quinhentos e mil exemplos) tende a
+permitir que um BERTimbau-large ajustado \emph{iguale ou supere} o modelo atual, ao passo que um salto
+de arquitetura, como o Albertina, exigiria um volume de rótulos consideravelmente maior, ou um
+pré-treino de domínio sobre o próprio corpus. A conclusão prática, portanto, é dupla: no estágio atual,
+o \mbox{FinBERT-PT-BR} permanece a melhor escolha; e a via mais eficiente para superá-lo é, primeiro,
+\textbf{rotular mais}, e depois ajustar um codificador da mesma família, porém maior. O experimento é
+integralmente reprodutível em GPU gratuita, por meio do \textit{notebook} que acompanha o projeto.

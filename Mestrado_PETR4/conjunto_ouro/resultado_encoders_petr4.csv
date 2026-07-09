@@ -1,0 +1,4 @@
+﻿Encoder,Acurácia (%),±dp,F1-macro (%),Kappa,FinBERT acc (%),FinBERT Kappa,Δacc (pp)
+bert-large-portuguese-cased,56.33,5.52,54.26,0.33,58.0,0.37,-1.67
+bert-base-portuguese-cased,52.67,8.41,48.14,0.261,58.0,0.37,-5.33
+albertina-100m-portuguese-ptbr-encoder,42.0,2.67,25.2,0.033,58.0,0.37,-16.0
