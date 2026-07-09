@@ -91,7 +91,7 @@ def avaliar_encoder(modelo, cv=5, epocas=3, maxlen=128, seed=42):
     novo, base = [], []; t0=time.time()
     for k,(tr,te) in enumerate(skf.split(np.zeros(len(y)), y),1):
         torch.manual_seed(seed)
-        m = AutoModelForSequenceClassification.from_pretrained(modelo, num_labels=3).to(dev)
+        m = AutoModelForSequenceClassification.from_pretrained(modelo, num_labels=3, torch_dtype=torch.float32).float().to(dev)
         if grande:
             m.config.use_cache = False; m.gradient_checkpointing_enable()
         dl = DataLoader(TensorDataset(ids[tr],mask[tr],torch.tensor(y[tr])), batch_size=batch, shuffle=True)
