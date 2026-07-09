@@ -1,0 +1,89 @@
+% Gerado por docs/_gerar_secao_experimentos_tex.py — dados reais (rodada 2026-07-04).
+\subsection{Rodada de refinamento: suíte de experimentos de fusão de dados}
+\label{sec:suite_experimentos}
+
+Em atenção às ponderações da banca no seminário, conduziu-se uma rodada sistemática de
+experimentos de fusão de dados, com o objetivo de verificar se a replicação das técnicas de
+maior desempenho identificadas na revisão sistemática elevaria a acurácia direcional. As
+técnicas transpostas para o presente modelo, e a forma de sua adoção, são sintetizadas na
+Tabela~\ref{tab:tecnicas_replicadas}.
+
+\begin{table}[htpb]
+\centering
+\caption{Técnicas de alto desempenho da literatura e sua replicação no modelo de fusão de dados desta pesquisa.}
+\label{tab:tecnicas_replicadas}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{p{3.0cm} p{6.5cm} p{6.0cm}}
+\hline
+\textbf{Estudo} & \textbf{Técnica de alto desempenho} & \textbf{Replicação nesta pesquisa} \\ \hline
+Barak et al. (2017) & FUSÃO/ENSEMBLE de classificadores diversos (Bagging/Boosting/AdaBoost) + meta-classificado & Stacking de RF+XGBoost+SVM com meta-classificador (LogisticRegression) \\
+Nobre e Neves (2019) & XGBoost + redução de dimensão (PCA) + denoise (Wavelet) + OTIMIZAÇÃO de hiperparâmetros (a & Tuning de hiperparâmetros do XGBoost/RF por busca em grade na validação; seleção \\
+Ballings et al. (2015) & ENSEMBLES (Random Forest/AdaBoost/Kernel Factory) superam classificadores únicos; métrica  & Incluir RF e reportar AUC além da acurácia \\
+Nguyen et al. (2015) & Sentimento por TÓPICO (TSLDA) em vez de sentimento único & Feature set com os 7 ISM por categoria (ISM\_CATx\_L1) \\
+Oliveira et al. (2017) & Validação rigorosa com JANELAS DESLIZANTES + testes formais de comparação de previsão & Walk-forward + teste binomial e comparação com baseline \\
+Hagenau et al. (2013) & SELEÇÃO robusta de atributos + feedback de mercado; features sensíveis a contexto & Seleção de atributos por importância (top-k) \\
+Li et al. (2020) & FUSÃO sequencial de preços (indicadores técnicos) + sentimento de notícias em deep learnin & Nosso data fusion já concatena preço+risco+sentimento; deep sequencial fica como \\
+Silva (2018) & Regressão QUANTÍLICA + GARCH para o efeito assimétrico e a VOLATILIDADE & Já replicado (quantílica τ=0,05 +261bps; Granger sent→vol p<0,001) \\
+\hline
+\end{tabular}%
+}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor a partir da revisão sistemática (Cap.~\ref{chap:referencial_teorico}).}
+\end{table}
+
+Os experimentos combinaram cinco algoritmos --- regressão logística, máquina de vetores de
+suporte com núcleo radial, floresta aleatória \cite{ballings_evaluating_2015}, \textit{XGBoost}
+e um \textit{ensemble} por empilhamento (\textit{stacking}) na linha de \citeonline{barak_fusion_2017}
+--- com três conjuntos de atributos: apenas os três atributos-base (retorno, volatilidade e
+sentimento defasados), o acréscimo do sentimento por categoria temática \cite{nguyen_sentiment_2015}
+e o conjunto completo de atributos defasados. Todos os modelos foram avaliados sob a mesma divisão
+cronológica (60/15/25), com até 17 atributos e limiar de
+decisão calibrado na validação \cite{nobre_combining_2019}, totalizando 15
+configurações submetidas a teste de significância binomial \cite{oliveira_impact_2017}. A
+Tabela~\ref{tab:suite_experimentos} reúne todos os resultados.
+
+\begin{table}[htpb]
+\centering
+\caption{Suíte de experimentos de fusão de dados para a previsão da direção da PETR4 (conjunto de teste, 653 pregões). Baseline de classe majoritária: 53.14\%. Em negrito, a melhor configuração.}
+\label{tab:suite_experimentos}
+\begin{tabular}{l l c c c c c}
+\hline
+\textbf{Modelo} & \textbf{Atributos} & \textbf{\#} & \textbf{Acur.\ (\%)} & \textbf{AUC} & \textbf{MCC} & \textbf{$>$ base} \\ \hline
+\textbf{XGBoost } & \textbf{ base3 } & \textbf{ 3 } & \textbf{ 54.52 } & \textbf{ 0.514 } & \textbf{ 0.068 } & \textbf{ sim} \\
+SVM\_RBF & categoria & 10 & 54.06 & 0.503 & 0.052 & sim \\
+LogReg & base3 & 3 & 53.45 & 0.507 & 0.044 & sim \\
+RandomForest & base3 & 3 & 53.45 & 0.527 & 0.034 & sim \\
+Stacking & base3 & 3 & 53.14 & 0.526 & 0.000 & não \\
+SVM\_RBF & full & 17 & 53.14 & 0.504 & 0.017 & não \\
+RandomForest & categoria & 10 & 53.14 & 0.515 & 0.005 & não \\
+Stacking & full & 17 & 53.14 & 0.494 & 0.000 & não \\
+Stacking & categoria & 10 & 52.99 & 0.512 & -0.018 & não \\
+SVM\_RBF & base3 & 3 & 52.83 & 0.502 & -0.052 & não \\
+LogReg & categoria & 10 & 52.37 & 0.522 & -0.058 & não \\
+XGBoost & full & 17 & 52.37 & 0.505 & 0.024 & não \\
+XGBoost & categoria & 10 & 52.37 & 0.522 & 0.020 & não \\
+LogReg & full & 17 & 51.00 & 0.515 & -0.051 & não \\
+RandomForest & full & 17 & 49.00 & 0.489 & -0.035 & não \\
+\hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor (rodada de refinamento 2026-07-04; \texttt{src/modelagem/13\_experimentos\_datafusion.py}).}
+\end{table}
+
+A melhor configuração foi o \textit{XGBoost} sobre os três atributos-base, com acurácia de
+54,52\% no conjunto de teste, superando o
+\textit{baseline} de classe majoritária (53,14\%) e sendo
+estatisticamente superior ao acaso (teste binomial, $p = 0,012$).
+Três leituras honestas emergem do quadro completo. Primeiro, o ganho é \textbf{modesto}: a acurácia
+oscila em torno de cinquenta e três a cinquenta e quatro por cento, e a AUC permanece próxima de
+0,51, o que é coerente com a Hipótese de Mercados Eficientes para a direção diária de um ativo
+líquido. Segundo, o \textit{stacking} e o conjunto completo de atributos \textbf{não} superaram as
+configurações mais simples --- o desempenho superior de oitenta por cento reportado por
+\citeonline{barak_fusion_2017} refere-se a outro mercado (Teerã) e a outra tarefa (retorno/risco),
+não sendo transponível para a direção diária da PETR4; e o conjunto completo de atributos incorreu
+em sobreajuste, com queda de desempenho fora da amostra. Terceiro, e mais relevante, a rodada
+\textbf{confirma} o resultado central da dissertação: a fusão do sentimento eleva a acurácia frente
+ao modelo de apenas preços, porém o ganho direcional é marginal, ao passo que a contribuição do
+sentimento à \textbf{volatilidade} permanece o achado forte e estatisticamente robusto (Seção
+sobre a causalidade de Granger). Cada configuração testada foi persistida como um conjunto de dados
+independente (nomeado por data, modelo e atributos), permitindo auditoria e comparação integral.

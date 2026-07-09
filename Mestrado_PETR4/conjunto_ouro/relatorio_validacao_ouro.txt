@@ -1,0 +1,33 @@
+======================================================================
+VALIDAÇÃO DO FinBERT-PT-BR CONTRA O CONJUNTO-OURO (rótulo humano)
+======================================================================
+Notícias rotuladas avaliadas: 300 de 300
+
+Acurácia (bruta, na amostra) .......  58.00%
+Acurácia (reponderada à população) .  57.65%
+Kappa de Cohen .....................  0.371  -> concordância razoável (fair)
+
+Relevância humana: 111/300 notícias marcadas como relevantes à PETR4 (37.0%).
+
+Matriz de confusão (linhas = humano, colunas = modelo):
+             Negative    Neutral   Positive
+  Negative         60         11          9
+   Neutral         32         66         26
+  Positive         21         27         48
+
+Relatório por classe (modelo vs. humano):
+              precision    recall  f1-score   support
+
+    Negative      0.531     0.750     0.622        80
+     Neutral      0.635     0.532     0.579       124
+    Positive      0.578     0.500     0.536        96
+
+    accuracy                          0.580       300
+   macro avg      0.581     0.594     0.579       300
+weighted avg      0.589     0.580     0.577       300
+
+
+Nota metodológica: a amostra é estratificada com piso para a classe
+minoritária (Positivo); por isso a acurácia BRUTA difere da REPONDERADA
+à população. Reporte ambas, destacando a reponderada como estimativa
+não enviesada do desempenho no corpus completo.

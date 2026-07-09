@@ -1,0 +1,69 @@
+% Gerado por docs/_gerar_secao_validacao_tex.py — dados reais (2026-07-08).
+\subsection{Validação do modelo de sentimento contra um conjunto-ouro humano}
+\label{sec:validacao_sentimento}
+
+Coerente com a estratégia de refinar o primeiro elo antes dos demais, e atendendo à exigência
+da banca por uma medida de concordância que desconte o acaso, construiu-se um \textbf{conjunto-ouro}
+de 300 manchetes, estratificado por categoria temática e rotulado manualmente, de forma
+cega ao modelo, segundo uma rubrica explícita de sentimento financeiro. Comparou-se, então, o rótulo
+do \mbox{FinBERT-PT-BR} ao rótulo humano. A Tabela~\ref{tab:validacao_sentimento} resume o desempenho.
+
+\begin{table}[htpb]
+\centering
+\caption{Concordância entre o FinBERT-PT-BR e o rótulo humano no conjunto-ouro (300 manchetes).}
+\label{tab:validacao_sentimento}
+\begin{tabular}{l r}
+\hline
+\textbf{Métrica} & \textbf{Valor} \\ \hline
+Acurácia (concordância com o humano) & 58,00\% \\
+Kappa de Cohen & 0,371 \\
+F1 macro & 57,9\% \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htpb]
+\centering
+\caption{Desempenho por classe e matriz de confusão (linhas = rótulo humano; colunas = modelo).}
+\label{tab:validacao_sentimento_classe}
+\begin{minipage}{0.52\textwidth}\centering
+\begin{tabular}{l c c c c}
+\hline
+\textbf{Classe} & \textbf{Prec.} & \textbf{Rev.} & \textbf{F1} & \textbf{N} \\ \hline
+Negativo & 0.531 & 0.750 & 0.622 & 80 \\
+Neutro & 0.635 & 0.532 & 0.579 & 124 \\
+Positivo & 0.578 & 0.500 & 0.536 & 96 \\
+\hline
+\end{tabular}
+\end{minipage}\hfill
+\begin{minipage}{0.44\textwidth}\centering
+\begin{tabular}{l c c c}
+\hline
+ & \textbf{Neg.} & \textbf{Neu.} & \textbf{Pos.} \\ \hline
+Negativo & 60 & 11 & 9 \\
+Neutro & 32 & 66 & 26 \\
+Positivo & 21 & 27 & 48 \\
+\hline
+\end{tabular}
+\end{minipage}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor (\texttt{src/sentimento/avaliar\_conjunto\_ouro\_petr4.py}, 2026-07-08).}
+\end{table}
+
+A concordância é de 58\%, com Kappa de Cohen de
+0,371, nível classificado como razoável (\textit{fair}) na escala de
+Landis e Koch. O resultado é, ao mesmo tempo, honesto e instrutivo. Por um lado, o modelo supera com
+folga a concordância ao acaso e a classe majoritária, confirmando que ele captura sinal real de
+sentimento em português financeiro. Por outro, a matriz de confusão revela uma tendência do
+\mbox{FinBERT-PT-BR} a \textbf{superestimar a classe Negativa} (alta revocação, porém precisão modesta),
+o que dilui a distinção entre neutro e negativo --- justamente as categorias mais frequentes no corpus.
+
+Essa medição sustenta a decisão de refinar o sentimento como \emph{primeira} etapa: a qualidade do
+sinal de entrada é apenas razoável, e há margem concreta de melhora, seja pela adoção de um codificador
+mais forte (Albertina \mbox{PT-BR}, arquitetura DeBERTa) com \textit{fine-tuning} sobre este mesmo
+conjunto-ouro, seja pela ampliação da base rotulada. Vale distinguir, contudo, dois limites de natureza
+diferente: enquanto a acurácia do \emph{sentimento} é genuinamente aprimorável, o teto da acurácia da
+\emph{direção} decorre da eficiência do mercado e não se dissolve com um sentimento melhor. Registra-se,
+por fim, um achado descritivo relevante: dos 300 itens, apenas
+37\% foram julgados pelo rotulador como efetivamente
+relevantes à PETR4, o que quantifica o grau de ruído temático do corpus e motiva, como trabalho futuro,
+um classificador de relevância aprendido a partir desses rótulos humanos.

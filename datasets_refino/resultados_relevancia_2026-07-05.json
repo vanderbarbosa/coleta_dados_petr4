@@ -1,0 +1,47 @@
+[
+  {
+    "data": "2026-07-05",
+    "variante": "todas_apos17h",
+    "cobertura_dias_com_noticia": 1.0,
+    "n_teste": 497,
+    "acuracia_teste": 52.11,
+    "auc": 0.5214,
+    "f1_macro": 51.43,
+    "mcc": 0.0392,
+    "limiar": 0.43,
+    "baseline_maj": 50.91,
+    "supera_baseline": true,
+    "p_binomial_vs_50": 0.1848,
+    "p_granger_sent_para_vol_min": 0.0005
+  },
+  {
+    "data": "2026-07-05",
+    "variante": "relevante_direta",
+    "cobertura_dias_com_noticia": 0.989,
+    "n_teste": 497,
+    "acuracia_teste": 52.11,
+    "auc": 0.5245,
+    "f1_macro": 51.87,
+    "mcc": 0.0403,
+    "limiar": 0.47,
+    "baseline_maj": 50.91,
+    "supera_baseline": true,
+    "p_binomial_vs_50": 0.1848,
+    "p_granger_sent_para_vol_min": 0.0128
+  },
+  {
+    "data": "2026-07-05",
+    "variante": "categoria_CAT1_CAT2",
+    "cobertura_dias_com_noticia": 0.999,
+    "n_teste": 497,
+    "acuracia_teste": 50.91,
+    "auc": 0.5225,
+    "f1_macro": 48.61,
+    "mcc": 0.0118,
+    "limiar": 0.4,
+    "baseline_maj": 50.91,
+    "supera_baseline": false,
+    "p_binomial_vs_50": 0.3599,
+    "p_granger_sent_para_vol_min": 0.0001
+  }
+]

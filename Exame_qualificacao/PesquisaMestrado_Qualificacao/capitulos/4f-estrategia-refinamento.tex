@@ -1,0 +1,50 @@
+% Estratégia de refinamento em etapas — redação humanizada (jul/2026).
+\subsection{Estratégia de refinamento em etapas}
+\label{sec:estrategia_refinamento}
+
+O conjunto de experimentos apresentado até aqui não é fruto de tentativas isoladas, mas de uma
+estratégia deliberada, adotada após o seminário de qualificação e em resposta direta às ponderações
+da banca. A ideia central é simples e, ao mesmo tempo, metodologicamente rigorosa: em vez de tentar
+melhorar o sistema como um todo de uma só vez, \textbf{aprimora-se cada componente do \textit{pipeline}
+de forma isolada, validando-o antes de integrá-lo aos demais}. A justificativa é que o \textit{pipeline}
+é uma cadeia --- o texto vira sentimento, o sentimento se funde ao risco e aos preços, e dessa fusão
+sai a previsão --- de modo que um elo fraco, ou de qualidade desconhecida, contamina tudo o que vem
+depois. Otimizar o preditor sobre um sinal de sentimento cuja acurácia sequer foi medida seria, na
+melhor das hipóteses, construir sobre terreno incerto.
+
+A ordem escolhida decorre dessa lógica de dependência. O \textbf{primeiro elo é o sentimento}, por ser
+a entrada de todo o restante. Antes de perguntar se o sentimento prevê o preço, é preciso saber
+\emph{quão bem o sentimento é medido}. Por isso, a primeira etapa do refinamento é a construção de um
+\textbf{conjunto-ouro} de trezentas manchetes, estratificado por categoria temática, rotulado
+manualmente por um avaliador humano de forma cega ao modelo, segundo uma rubrica explícita de
+sentimento financeiro (tom que tende a agradar ou desagradar o mercado), de relevância para a PETR4 e
+de direção econômica esperada. Esse gabarito permite, pela primeira vez, quantificar a concordância
+entre o \mbox{FinBERT-PT-BR} e o julgamento humano por meio da acurácia, do F1 por classe e,
+sobretudo, do \textbf{coeficiente Kappa de Cohen}, que desconta a concordância ao acaso e foi
+explicitamente cobrado pela banca. Só a partir dessa medição faz sentido cogitar a substituição do
+codificador por um modelo mais forte, como o Albertina \mbox{PT-BR} (arquitetura DeBERTa), com o
+devido \textit{fine-tuning} sobre o mesmo conjunto rotulado. Em termos práticos, valida-se e melhora-se
+o sentimento antes de qualquer outra coisa.
+
+O \textbf{segundo elo é a direção}. Com o sinal de sentimento validado, os experimentos de fusão de
+dados (Seções~\ref{sec:suite_experimentos} e~\ref{sec:filtro_relevancia}) buscaram elevar a acurácia
+direcional pela replicação das técnicas de maior desempenho da literatura --- \textit{ensembles} e
+empilhamento, otimização de hiperparâmetros, sentimento por categoria e validação cronológica. Uma
+hipótese específica, levantada durante a análise, merecia teste: a de que a baixa acurácia decorreria
+da ausência de um passo de \textbf{filtragem de relevância}, já que o índice diário mistura o
+sentimento de todas as notícias. O experimento correspondente foi conduzido com honestidade e revelou
+que a filtragem, embora intuitiva, não eleva a acurácia direcional --- resultado que, longe de ser um
+fracasso, é informativo: ele indica que o limite da previsão de direção não está no ruído do texto, e
+sim na própria eficiência do mercado. Registrar esse achado, e o raciocínio que o motivou, é parte da
+contribuição, pois evita que trabalhos futuros repitam o mesmo caminho esperando ganhos que a teoria
+não sustenta.
+
+O \textbf{terceiro elo é a volatilidade}, e é nele que reside a via mais promissora. Como o sentimento
+Granger-causa a volatilidade de forma robusta e persistente, a etapa seguinte do refinamento desloca o
+alvo da direção para a \emph{magnitude} do risco, terreno em que o sinal textual comprovadamente
+informa. Só após o aprimoramento individual de cada elo --- sentimento validado, direção no seu teto
+realista e volatilidade explorada em profundidade --- é que os componentes voltam a ser
+\textbf{integrados}, agora com a segurança de que cada parte foi medida e compreendida. Essa disciplina
+de refinar por partes, medir antes de integrar e reportar tanto os avanços quanto os limites é,
+também ela, uma contribuição metodológica desta dissertação, coerente com o compromisso de rigor e
+transparência que orienta todo o trabalho.
