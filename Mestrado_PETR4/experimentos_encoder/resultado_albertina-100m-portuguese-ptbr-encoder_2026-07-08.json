@@ -1,0 +1,24 @@
+{
+  "data": "2026-07-08",
+  "modelo_novo": "PORTULAN/albertina-100m-portuguese-ptbr-encoder",
+  "cv": 5,
+  "epocas": 3,
+  "n": 300,
+  "device": "cpu",
+  "modelo_novo_metricas": {
+    "acuracia_media": 45.67,
+    "acuracia_dp": 6.2,
+    "f1_macro_media": 29.17,
+    "kappa_media": 0.095,
+    "kappa_dp": 0.126
+  },
+  "finbert_baseline_metricas": {
+    "acuracia_media": 58.0,
+    "acuracia_dp": 4.88,
+    "f1_macro_media": 57.63,
+    "kappa_media": 0.37,
+    "kappa_dp": 0.08
+  },
+  "delta_acuracia_pp": -12.33,
+  "delta_kappa": -0.275
+}
