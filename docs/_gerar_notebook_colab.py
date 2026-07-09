@@ -81,6 +81,7 @@ def met(yt, yp):
             cohen_kappa_score(yt,yp,labels=CLASSES))
 
 def avaliar_encoder(modelo, cv=5, epocas=3, maxlen=128, seed=42):
+    # fp32 sempre: o DeBERTa (Albertina) NAO funciona com fp16 (overflow no masked_fill).
     grande = ("900m" in modelo) or ("large" in modelo)
     batch = 8 if grande else 16
     tok = AutoTokenizer.from_pretrained(modelo)
@@ -91,16 +92,16 @@ def avaliar_encoder(modelo, cv=5, epocas=3, maxlen=128, seed=42):
     for k,(tr,te) in enumerate(skf.split(np.zeros(len(y)), y),1):
         torch.manual_seed(seed)
         m = AutoModelForSequenceClassification.from_pretrained(modelo, num_labels=3).to(dev)
-        if grande: m.gradient_checkpointing_enable()
+        if grande:
+            m.config.use_cache = False; m.gradient_checkpointing_enable()
         dl = DataLoader(TensorDataset(ids[tr],mask[tr],torch.tensor(y[tr])), batch_size=batch, shuffle=True)
-        opt = AdamW(m.parameters(), lr=2e-5); scaler = torch.cuda.amp.GradScaler(enabled=(dev=="cuda"))
+        opt = AdamW(m.parameters(), lr=2e-5)
         m.train()
         for _ in range(epocas):
             for bi,bm,by in dl:
                 opt.zero_grad()
-                with torch.autocast(device_type=dev, dtype=torch.float16, enabled=(dev=="cuda")):
-                    out = m(input_ids=bi.to(dev), attention_mask=bm.to(dev), labels=by.to(dev))
-                scaler.scale(out.loss).backward(); scaler.step(opt); scaler.update()
+                out = m(input_ids=bi.to(dev), attention_mask=bm.to(dev), labels=by.to(dev))
+                out.loss.backward(); opt.step()
         m.eval(); preds=[]
         with torch.no_grad():
             for i in range(0,len(te),64):
@@ -122,7 +123,7 @@ c_run = code(
     "PORTULAN/albertina-100m-portuguese-ptbr-encoder",
     "neuralmind/bert-base-portuguese-cased",       # BERTimbau-base
     "neuralmind/bert-large-portuguese-cased",      # BERTimbau-large
-    # "PORTULAN/albertina-900m-portuguese-ptbr-encoder",  # descomente (usa fp16+checkpointing; cabe na T4)
+    # "PORTULAN/albertina-900m-portuguese-ptbr-encoder",  # so em GPU grande (A100). Em fp32 pode estourar a T4; DeBERTa nao aceita fp16.
 ]
 linhas = []
 for mdl in MODELOS:
