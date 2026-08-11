@@ -1,0 +1,168 @@
+% Filtro de relevância no eixo da volatilidade — dados reais (2026-08-10).
+% Fontes: Mestrado_PETR4/filtro_relevancia_ism.json,
+%         Mestrado_PETR4/modelagem_ism_filtrado.json,
+%         Mestrado_PETR4/previsao_volatilidade_ism.json
+\subsection{Filtro de relevância revisitado: da direção para a volatilidade}
+\label{sec:relevancia_volatilidade}
+
+A Seção~\ref{sec:filtro_relevancia} examinou o filtro de relevância pelo prisma da acurácia
+direcional e concluiu que ele nada acrescentava. À luz do teste de teto reportado na
+Seção~\ref{sec:validacao_sentimento} --- que mostrou que nem um classificador perfeito elevaria a
+previsão de direção ---, aquele desenho experimental revela-se, em retrospecto, mal dirigido: ele
+avaliou o filtro justamente no eixo em que nenhuma melhoria do componente textual poderia
+manifestar-se. Esta seção retoma a questão no eixo pertinente, o da volatilidade, e o faz sobre o
+corpus integral, e não apenas sobre o recorte das notícias publicadas após o fechamento.
+
+\subsubsection{A pergunta e sua origem}
+
+O ponto de partida foi uma observação sobre o procedimento de \citeonline{santos_finbert_2023}: ao
+construir sua base de treinamento, o autor descartou as notícias sem relação com o mercado
+financeiro --- 158 de 661 textos, ou 23,9\% da amostra --- e só então aplicou o codificador. O
+índice de sentimento desta pesquisa, por contraste, agrega \emph{todas} as notícias coletadas no
+dia. Cabia, portanto, verificar se a ausência dessa depuração diluía o sinal.
+
+Convém, antes, registrar que os dois filtros não medem a mesma coisa. O de
+\citeonline{santos_finbert_2023} descarta o que \textbf{não é financeiro}; o desta pesquisa
+distingue o que \textbf{não afeta a Petrobras}, sem deixar de ser notícia financeira. Uma manchete
+como \emph{``Estados Unidos e União Europeia excluem a Rússia do sistema Swift''} seria mantida
+pelo primeiro critério e descartada pelo segundo. Some-se a isso que o corpus desta pesquisa já
+passa, na coleta, por um filtro funcionalmente equivalente ao dele, operado pela taxonomia de 152
+termos descrita na Seção~\ref{sec:metodologia_ism}. A comparação entre os dois procedimentos não é,
+pois, direta, e a expectativa de ganho deve ser calibrada por essa diferença.
+
+\subsubsection{Três recortes do índice}
+
+Construíram-se três versões do índice de sentimento da mídia, da mais ampla à mais restrita, e
+mediu-se a associação de cada uma com a volatilidade realizada do pregão seguinte, tomada como
+o valor absoluto do retorno logarítmico. A significância da diferença entre correlações foi
+estabelecida por \textit{bootstrap} pareado com dez mil reamostras \cite{efron_bootstrap_1992}, em
+que os mesmos pregões são reamostrados para as duas séries simultaneamente --- procedimento
+necessário porque reamostrá-las de forma independente ignoraria a dependência entre elas e
+subestimaria a incerteza da diferença. A Tabela~\ref{tab:recortes_ism} resume os resultados.
+
+\begin{table}[htpb]
+\centering
+\caption{Associação entre o índice de sentimento e a volatilidade do pregão seguinte, por recorte do corpus ($n = 1.988$ pregões).}
+\label{tab:recortes_ism}
+\begin{tabular}{l r r c}
+\hline
+\textbf{Recorte do corpus} & \textbf{Notícias} & \textbf{\% do corpus} & \textbf{$|r|$ com volatilidade} \\ \hline
+A --- todas as notícias & 205.697 & 100\% & 0,1385 \\
+B --- empresa + mercado de petróleo & 120.792 & 59\% & \textbf{0,1704} \\
+C --- apenas empresa & 64.882 & 32\% & 0,1495 \\
+\hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor (\texttt{src/sentimento/filtrar\_ism\_por\_relevancia.py}, 2026-08-10).}
+\end{table}
+
+O recorte B supera o A em $+0{,}0319$, com intervalo de confiança de 95\% igual a
+$[+0{,}0135;\ +0{,}0504]$ e $p = 0{,}0010$ --- diferença estatisticamente significativa que
+representa um acréscimo de aproximadamente 23\% na intensidade da associação. O recorte C, embora
+também superior ao A, não alcança significância ($p = 0{,}475$), e tampouco a diferença entre B e C
+é significativa ($p = 0{,}098$).
+
+A leitura conjunta desses três contrastes é mais informativa do que qualquer um deles isoladamente:
+filtrar melhora, mas filtrar em excesso desperdiça sinal. O ponto de ótimo não está em reter apenas
+as notícias que mencionam a Petrobras. A explicação econômica é direta --- a Petrobras é uma
+produtora de petróleo, de modo que uma notícia sobre o mercado da \textit{commodity} a afeta ainda
+que não a cite. Descartá-la é abrir mão de informação, e o dado corrobora a leitura setorial de
+\citeonline{kilian_not_2009} sobre a transmissão de choques do petróleo.
+
+Registre-se aqui uma tensão que o experimento revelou e que merece nota. No conjunto-ouro, o
+anotador humano classificou 54 notícias da categoria Mercado de Petróleo como não relevantes para a
+PETR4. A evidência estatística contradiz esse julgamento: essas notícias carregam sinal. O critério
+humano de relevância e o critério estatístico não coincidem, o que constitui um argumento adicional
+--- e de natureza distinta da discutida na Seção~\ref{sec:validacao_sentimento} --- sobre os limites
+da anotação manual como padrão de referência.
+
+\subsubsection{O ganho se propaga até a previsão?}
+
+Associação não é previsão. Um índice mais correlacionado com a volatilidade pode, ainda assim, nada
+acrescentar a um modelo que já a preveja bem. Submeteu-se, por isso, o recorte B a duas provas fora
+da amostra.
+
+A primeira replicou integralmente o \textit{pipeline} de previsão de direção descrito na
+Seção~\ref{sec:metodologia_modelagem}, alterando exclusivamente o índice de sentimento e mantendo
+constantes o modelo de volatilidade, os atributos, a divisão cronológica em 60/15/25, a grade de
+hiperparâmetros e a semente aleatória. O resultado foi de indiferença completa: a acurácia de teste
+do \textit{XGBoost} de fusão permaneceu em 52,31\% sob os dois índices, e o teste de McNemar não
+detectou diferença entre os padrões de acerto ($p = 1{,}0000$; 52 acertos exclusivos de cada lado).
+O achado não surpreende --- confirma, por uma via independente, o que o teste de teto já indicara ---
+mas encerra a questão: o filtro de relevância não é caminho para a previsão de direção.
+
+A segunda prova dirigiu-se à volatilidade. Como referência adotou-se o modelo heterogêneo
+autorregressivo de \citeonline{corsi_simple_2009}, que projeta a volatilidade de amanhã a partir de
+suas médias de ontem, da última semana e do último mês. Trata-se de um adversário deliberadamente
+severo: o HAR é simples, notoriamente difícil de superar e não utiliza informação textual alguma, de
+modo que qualquer contribuição do sentimento precisa manifestar-se \emph{sobre} o que ele já captura.
+A volatilidade foi estimada pelo método de \citeonline{parkinson_extreme_1980}, que emprega a máxima
+e a mínima do pregão em vez do fechamento isolado e é cerca de cinco vezes mais eficiente que o
+retorno ao quadrado. Os coeficientes foram reestimados a cada pregão sobre janela expansiva, de sorte
+que nenhuma previsão utiliza informação posterior à data prevista, e as 795 previsões resultantes
+foram comparadas pelo erro quadrático médio e pela função de perda \textit{QLIKE}, esta última
+preferida na literatura de volatilidade por ser robusta ao ruído do estimador da variável latente
+\cite{patton_volatility_2011}. A significância das diferenças foi apurada pelo teste de
+\citeonline{diebold_comparing_1995}, com erro-padrão robusto a autocorrelação. A
+Tabela~\ref{tab:previsao_vol_ism} apresenta os resultados.
+
+\begin{table}[htpb]
+\centering
+\caption{Previsão da volatilidade da PETR4 fora da amostra (795 pregões, janela expansiva, horizonte de um dia).}
+\label{tab:previsao_vol_ism}
+\begin{tabular}{l c c c}
+\hline
+\textbf{Especificação} & \textbf{EQM} & \textbf{\textit{QLIKE}} & \textbf{$R^2$ fora da amostra} \\ \hline
+HAR (sem sentimento) & 0,16451 & $-7{,}3852$ & 0,3060 \\
+HAR + índice completo & 0,16546 & $-7{,}3897$ & 0,3020 \\
+HAR + índice filtrado (B) & \textbf{0,16406} & $-7{,}3891$ & \textbf{0,3079} \\
+\hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor (\texttt{src/modelagem/08\_previsao\_volatilidade\_ism\_filtrado.py}, 2026-08-10). Valores menores indicam melhor desempenho em ambas as funções de perda.}
+\end{table}
+
+Os resultados exigem leitura cuidadosa, pois apontam em duas direções. De um lado, o coeficiente do
+sentimento é estatisticamente significativo e traz o sinal previsto pela teoria: no ajuste sobre a
+série integral, o índice filtrado apresenta coeficiente de $-0{,}2924$ ($t = -3{,}71$;
+$p = 0{,}0002$), contra $-0{,}3110$ ($t = -3{,}10$; $p = 0{,}0020$) do índice completo. O sinal
+negativo significa que dias de sentimento mais pessimista antecedem dias de volatilidade mais alta ---
+exatamente a assimetria documentada por \citeonline{glosten_relation_1993}. E, quando os dois índices
+são confrontados entre si, o filtrado reduz o erro quadrático de forma significativa
+($DM = -2{,}869$; $p = 0{,}0041$), o que confirma fora da amostra o ganho medido pela correlação.
+
+De outro lado, e este é o ponto que a honestidade metodológica obriga a destacar, \textbf{nenhum dos
+dois índices supera o HAR isolado de maneira estatisticamente significativa}. O índice filtrado
+reduz o erro, mas a redução cabe dentro do acaso amostral ($p = 0{,}6405$ pelo EQM;
+$p = 0{,}2170$ pela \textit{QLIKE}), e o índice completo chega a piorar o erro quadrático. A
+estratificação do período de teste em quartis da volatilidade observada não altera o quadro: o
+ganho do índice filtrado sobre o HAR concentra-se, é verdade, no quartil mais turbulento
+($+0{,}00292$ de redução no erro, contra $-0{,}00079$ no quartil mais calmo), mas tampouco ali
+alcança significância ($p = 0{,}1803$).
+
+\subsubsection{Interpretação}
+
+A conclusão que se impõe é de alcance delimitado, e é preferível enunciá-la sem ornamento. O filtro
+de relevância produz um índice de sentimento mensuravelmente melhor: mais associado à volatilidade,
+com coeficiente mais fortemente significativo e com erro de previsão menor que o do índice sem
+filtro. Esse é o primeiro ganho positivo obtido após uma sequência de oito intervenções que não
+produziram melhoria, e ele tem valor metodológico próprio, pois indica que o caminho promissor não
+está em aperfeiçoar a leitura que o modelo faz de cada notícia, mas em decidir \emph{quais} notícias
+devem entrar no índice.
+
+O ganho, contudo, não basta para que o sentimento acrescente poder preditivo a um modelo
+estatístico de volatilidade já bem especificado. A discrepância entre a significância dentro da
+amostra e a ausência de ganho fora dela é fenômeno conhecido em finanças empíricas
+\cite{hansen_forecast_2005} e admite explicação econômica plausível: a persistência da volatilidade,
+que o HAR captura por construção, já incorpora indiretamente boa parte da informação que o fluxo de
+notícias transporta, uma vez que dias turbulentos tendem a ser também dias de noticiário intenso. O
+sentimento textual e o histórico de volatilidade são, nessa leitura, fontes redundantes, e a
+redundância limita o acréscimo marginal do primeiro.
+
+Esse resultado qualifica --- sem contradizer --- a tese central da pesquisa. O sentimento informa o
+risco, e não a direção: isso permanece verdadeiro, sustentado pela significância do coeficiente e
+pelos testes de causalidade de Granger reportados na Seção~\ref{sec:filtro_relevancia}. O que os
+dados agora acrescentam é uma delimitação necessária: informar não é o mesmo que melhorar a
+previsão quando o adversário é um modelo econométrico maduro. Reconhecer essa distinção parece mais
+proveitoso, para o avanço do tema, do que relatar como ganho preditivo aquilo que a evidência fora
+da amostra não sustenta.
