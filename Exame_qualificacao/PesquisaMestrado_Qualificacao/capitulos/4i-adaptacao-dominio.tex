@@ -1,0 +1,162 @@
+% Adaptação de domínio por MLM — dados reais (Colab GPU, 2026-08-10).
+% Fontes: Mestrado_PETR4/comparacao_adaptacao_dominio.json,
+%         Mestrado_PETR4/g3_controle_resultados.csv
+\subsection{Experimento: a adaptação ao domínio melhora o classificador?}
+\label{sec:adaptacao_dominio}
+
+O experimento da Seção~\ref{sec:experimento_encoder} concluiu que nenhum codificador ajustado
+superou o \mbox{FinBERT-PT-BR} no regime de trezentos rótulos, e apontou como via mais promissora
+não a troca de arquitetura, mas a adaptação do modelo de linguagem ao corpus da pesquisa. Essa via
+é a recomendação corrente da literatura de aprendizado por transferência
+\cite{gururangan_dont_2020} e foi a própria estratégia adotada por \citeonline{santos_finbert_2023},
+cujo pré-treinamento continuado sobre 1,4 milhão de textos financeiros reduziu a perplexidade de
+1,51 para 1,24. Ela figura, ademais, entre as direções de pesquisa futura ali declaradas, que
+incluem explicitamente a aplicação da metodologia a setores específicos da bolsa de valores. Esta
+seção reporta o teste dessa hipótese.
+
+\subsubsection{Corpus e procedimento}
+
+O corpus de adaptação foi constituído pelas 205.697 notícias coletadas para esta pesquisa. Cada
+registro resultou da concatenação de título e resumo, produzindo textos com mediana de 39 palavras
+--- extensão equivalente à dos exemplos empregados no treinamento original, cuja mediana é
+igualmente de 39 palavras. Reservaram-se dez mil textos para avaliação, não utilizados no ajuste.
+
+O procedimento replicou os hiperparâmetros de \citeonline{santos_finbert_2023}: modelagem de
+linguagem mascarada com probabilidade de ocultação de 15\%, conforme
+\citeonline{devlin_bert_2019}; taxa de aprendizado de $2 \times 10^{-5}$, segundo a recomendação
+de \citeonline{sun_how_2019}; e duas épocas de treinamento. A avaliação empregou a perplexidade
+\cite{chen_evaluation_1998}, métrica intrínseca cuja principal vantagem, no contexto desta
+pesquisa, é dispensar anotação humana --- o que a torna compatível com a suspensão da rotulagem
+manual descrita na Seção~\ref{sec:validacao_sentimento}.
+
+Registre-se uma limitação do ponto de partida. O repositório público disponibiliza apenas o
+classificador de sentimento, cuja arquitetura declarada é \texttt{BertForSequenceClassification};
+o modelo de linguagem que o antecede não foi publicado. A adaptação partiu, portanto, do
+classificador, com reinicialização da camada de predição de tokens.
+
+\subsubsection{Desenho experimental e a necessidade de um controle}
+
+A comparação direta entre o modelo publicado e o modelo adaptado é confundida por uma diferença no
+volume de supervisão: o primeiro foi ajustado sobre os 503 textos anotados por
+\citeonline{santos_finbert_2023} com validação cruzada, ao passo que o segundo utilizou 352 desses
+textos, reservando os demais para validação. Eventual queda de desempenho poderia, assim, ser
+atribuída indistintamente à adaptação ou à redução do conjunto de treinamento.
+
+Para dissociar os dois efeitos, introduziu-se uma terceira condição experimental, idêntica à
+segunda em tudo exceto na adaptação, conforme a Tabela~\ref{tab:condicoes_adaptacao}. As condições
+B e C compartilham a mesma partição dos dados, obtida com semente fixa, o mesmo protocolo de ajuste
+fino --- descongelamento gradual das camadas de codificação, taxa de aprendizado de
+$5 \times 10^{-6}$ e onze épocas --- e a mesma avaliação. O contraste entre B e C isola, portanto,
+o efeito da adaptação de domínio.
+
+\begin{table}[htpb]
+\centering
+\caption{Condições experimentais da adaptação de domínio.}
+\label{tab:condicoes_adaptacao}
+\begin{tabular}{l c c}
+\hline
+\textbf{Condição} & \textbf{Adaptação de domínio} & \textbf{Exemplos de ajuste fino} \\ \hline
+A --- modelo publicado & Não & 503, com validação cruzada \\
+B --- modelo adaptado  & \textbf{Sim} & 352 \\
+C --- controle         & Não & 352, mesmo protocolo de B \\ \hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor (2026).}
+\end{table}
+
+A significância das diferenças foi estimada por reamostragem \textit{bootstrap}
+\cite{efron_bootstrap_1992} com dez mil repetições, calculando-se a diferença entre condições na
+mesma reamostra --- procedimento adequado à comparação de modelos avaliados sobre os mesmos itens,
+e que replica o protocolo de validação estatística adotado por \citeonline{santos_finbert_2023}.
+
+\subsubsection{Resultados}
+
+A adaptação reduziu substancialmente a perplexidade sobre o subconjunto reservado. Como referência
+válida adotou-se o BERTimbau \cite{souza_bertimbau_2020}, que dispõe de camada de predição de
+tokens treinada, avaliado sobre o mesmo subconjunto: a perplexidade passou de 7,195 para 3,669, uma
+redução de 49,0\%. O procedimento cumpriu, portanto, o objetivo declarado --- o modelo passou a
+representar melhor a distribuição lexical do subdomínio. Ressalve-se que os valores absolutos não
+são comparáveis aos de \citeonline{santos_finbert_2023}, obtidos sobre corpus distinto.
+
+O ganho na modelagem de linguagem, contudo, não se converteu em ganho na tarefa a jusante. A
+Tabela~\ref{tab:resultado_adaptacao} reúne o desempenho das três condições no conjunto-ouro.
+
+\begin{table}[htpb]
+\centering
+\caption{Desempenho no conjunto-ouro ($n = 300$) e contrastes pareados por \textit{bootstrap}.}
+\label{tab:resultado_adaptacao}
+\begin{tabular}{l c c c c}
+\hline
+\textbf{Condição} & \textbf{Acurácia} & \textbf{F1-macro} & \textbf{IC 95\% do F1} & \textbf{Kappa} \\ \hline
+A --- modelo publicado & 0,580 & 0,579 & [0,521; 0,634] & 0,371 \\
+B --- modelo adaptado  & 0,547 & 0,528 & [0,470; 0,584] & 0,309 \\
+C --- controle         & \textbf{0,590} & \textbf{0,584} & [0,527; 0,638] & \textbf{0,378} \\ \hline
+\multicolumn{5}{l}{\textit{Contrastes pareados (10.000 reamostras):}} \\
+\multicolumn{5}{l}{C $-$ B (efeito da adaptação): $+0{,}056$; IC 95\% [$+0{,}008$; $+0{,}106$]; $p = 0{,}022$} \\
+\multicolumn{5}{l}{C $-$ A (protocolo próprio $\times$ publicado): $+0{,}005$; IC 95\% [$-0{,}023$; $+0{,}032$]; $p = 0{,}692$} \\ \hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor (\texttt{notebooks/g3\_controle\_colab.ipynb}, GPU, 2026).}
+\end{table}
+
+O contraste entre as condições C e B é estatisticamente significativo ao nível de 5\%: a adaptação
+de domínio \textbf{degradou} o desempenho de classificação em 0,056 de F1-macro. O contraste entre
+C e A, por sua vez, não é significativo, o que indica que o protocolo de ajuste fino aqui
+implementado reproduz o desempenho do modelo publicado utilizando menor volume de supervisão ---
+resultado que valida a implementação e confere confiabilidade ao contraste principal.
+
+A degradação não se distribui uniformemente entre as classes. A revocação da classe positiva
+reduz-se de 0,448 na condição de controle para 0,281 na condição adaptada, ao passo que a classe
+negativa (0,713 contra 0,750) e a classe neutra (0,621 em ambas) permanecem essencialmente
+inalteradas. O efeito é, portanto, específico à classe positiva --- que já constituía a categoria
+de pior desempenho antes da intervenção.
+
+\subsubsection{Discussão}
+
+Os resultados configuram um caso de \textbf{esquecimento catastrófico} \cite{french_catastrophic_1999}.
+O pré-treinamento continuado sobre o corpus do subdomínio sobrescreveu parte da representação
+específica da tarefa de classificação de sentimento, instalada no corpo do modelo durante o ajuste
+fino original, e os 352 exemplos supervisionados empregados na reconstituição não foram suficientes
+para recuperá-la. Cumpre observar que o descongelamento gradual das camadas de codificação
+\cite{howard_universal_2018} --- técnica adotada precisamente para mitigar esse fenômeno --- foi
+aqui empregado e ainda assim não o preveniu, o que sugere que o esquecimento ocorreu durante a
+etapa de modelagem de linguagem, e não durante o ajuste supervisionado subsequente.
+
+A concentração do efeito na classe positiva admite interpretação coerente com o domínio. O corpus
+de adaptação é composto majoritariamente por notícias de tom informativo ou negativo, refletindo o
+perfil editorial da cobertura do setor no período; o pré-treinamento continuado sobre essa
+distribuição tende a reforçar regularidades lexicais associadas a esses registros, em detrimento da
+sensibilidade aos marcadores de valência positiva, já escassos no material de treinamento original.
+
+A leitura conjunta dos dois resultados constitui a principal contribuição deste experimento:
+\textbf{a melhoria da modelagem de linguagem, medida por redução de 49,0\% na perplexidade, foi
+acompanhada de degradação estatisticamente significativa da tarefa a jusante}. O achado qualifica a
+recomendação, corrente na literatura \cite{gururangan_dont_2020}, de que a adaptação de domínio
+constitua etapa padrão em aplicações especializadas --- ao menos quando o ponto de partida já é um
+modelo ajustado à tarefa e o volume de supervisão disponível para reconstituição é reduzido. Nessas
+condições, o pré-treinamento continuado pode custar mais em representação da tarefa do que agrega
+em representação do domínio.
+
+Do ponto de vista prático, o experimento encerra a linha de investigação iniciada na
+Seção~\ref{sec:experimento_encoder}. Considerados em conjunto, os testes conduzidos --- atribuição
+da classe neutra por limiar de confiança, reponderação pelas probabilidades a priori, normalização
+de caixa, alteração da granularidade textual, composição de comitê com modelo contextual,
+substituição por modelo de linguagem generativo, ajuste fino de codificadores alternativos e
+adaptação de domínio --- somam oito intervenções, nenhuma das quais produziu ganho estatisticamente
+detectável. O conjunto de evidências indica que o classificador se encontra próximo de seu limite
+prático nesta tarefa e neste regime de supervisão, e que o esforço marginal rende mais na
+modelagem econométrica da volatilidade, objeto das seções anteriores.
+
+\subsubsection{Limitações}
+
+Quatro limitações delimitam o alcance destas conclusões. Primeiro, a adaptação partiu do
+classificador publicado, e não do modelo de linguagem que o antecede, indisponível publicamente; a
+camada de predição de tokens foi reinicializada, o que introduz uma etapa de reaprendizagem não
+presente no procedimento original. Segundo, as condições B e C dispuseram de 352 exemplos anotados,
+contra os 503 empregados na condição A --- e, embora o contraste entre C e A não seja
+significativo, não se pode excluir que volume superior de supervisão permitisse recuperar a
+representação perdida. Terceiro, com trezentos itens o intervalo de confiança do F1-macro tem
+amplitude aproximada de 0,11, o que limita a detecção de diferenças inferiores a cinco pontos
+percentuais. Quarto, testou-se uma única combinação de hiperparâmetros, replicada do trabalho de
+referência; configurações mais conservadoras de taxa de aprendizado ou de número de épocas
+poderiam mitigar o esquecimento observado.

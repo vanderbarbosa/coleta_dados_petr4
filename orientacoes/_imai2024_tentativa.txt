@@ -1,0 +1,1776 @@
+Why Not Together? A Multiple-Round Recommender System
+for Queries and Items
+Jiarui Jin1,∗, Xianyu Chen1, Weinan Zhang1, Yong Yu1, Jun Wang2
+1Shanghai Jiao Tong University, 2University College London
+{jinjiarui97,xianyujun,wnzhang,yyu}@sjtu.edu.cn,jun.wang@cs.ucl.ac.uk
+ABSTRACT
+A fundamental technique of recommender systems involves mod-
+eling user preferences, where queries and items are widely used
+as symbolic representations of user interests. Queries delineate
+user needs at an abstract level, providing a high-level description,
+whereas items operate on a more specific and concrete level, rep-
+resenting the granular facets of user preference. While practical,
+both query and item recommendations encounter the challenge of
+sparse user feedback. To this end, we propose a novel approach
+named Multiple-round Auto Guess-and-Update System (MAGUS)
+that capitalizes on the synergies between both types, allowing us
+to leverage both query and item information to form user interests.
+This integrated system introduces a recursive framework that could
+be applied to any recommendation method to exploit queries and
+items in historical interactions and to provide recommendations
+for both queries and items in each interaction round. Concretely,
+MAGUS first represents queries and items through combinations
+of categorical words, and then constructs a relational graph to cap-
+ture the interconnections and dependencies among these individual
+words and word combinations. In response to each user request,
+MAGUS employs an offline tuned recommendation model to assign
+estimated scores to words representing items; and these scores are
+subsequently disseminated throughout the graph, impacting each
+individual word or combination of words. Through multiple-round
+interactions, MAGUS initially guesses user interests by formulating
+meaningful word combinations and presenting them as potential
+queries or items. Subsequently, MAGUS is updated based on user
+feedback, enhancing its recommendations iteratively. Empirical
+results from testing 12 different recommendation methods demon-
+strate that integrating queries into item recommendations via MA-
+GUS significantly enhances the efficiency, with which users can
+identify their preferred items during multiple-round interactions.
+1 INTRODUCTION
+Information retrieval with applications in search engines [18] and
+recommender systems [24] aims to offer preferred or favored items
+to users. A fundamental technique is the capture of user interest
+and demands, predominantly characterized by queries and items.
+∗Work done during Jiarui Jin’s visit at University College London.
+Permission to make digital or hard copies of all or part of this work for personal or
+classroom use is granted without fee provided that copies are not made or distributed
+for profit or commercial advantage and that copies bear this notice and the full citation
+on the first page. Copyrights for components of this work owned by others than ACM
+must be honored. Abstracting with credit is permitted. To copy otherwise, or republish,
+to post on servers or to redistribute to lists, requires prior specific permission and/or a
+fee. Request permissions from permissions@acm.org.
+KDD’25, August X - Y, 2025, Toronto, Canada
+© 2024 Association for Computing Machinery.
+ACM ISBN 978-x-xxxx-xxxx-x/YY/MM. . . $15.00
+https://doi.org/10.1145/nnnnnnn.nnnnnnn
+Queries concentrate on the prediction of user-search queries at
+an abstract level, whereas items operate on individual items at a
+more specific level. Existing search engine algorithms (commonly
+known as learning-to-rank algorithms) and recommendation meth-
+ods always utilize query information and user profiles as inputs and
+employ user-browsed items as supervision signals. However, we
+argue that queries, being capable of describing user needs, should
+also be employed as a form of supervision. Namely, relying exclu-
+sively on items as the sole basis for supervision could result in
+suboptimal solutions. Taking Figure 1(a) as an example, a user uses
+query A Milk, prompting the recommender system to return items
+A, B, and C; and all these items receive negative feedback. Previous
+recommendation methods, centered solely on items, would refrain
+from suggesting additional milk items to the user. However, these
+approaches overlook the explicit indication of the user’s interest
+in milk through query A. This particular case motivates us to in-
+corporate query information within item recommendations, given
+that both elements fundamentally aim to describe user interests.
+In this paper, we propose a novel Multiple-round Auto Guess-
+and-Update System (MAGUS), a multiple-round recommendation
+framework applicable to any recommendation method. MAGUS
+allows a recommender system to leverage both queries and items
+in historical interactions to offer recommendations for queries and
+items at each round, thus addressing the data sparsity issue inherent
+in user feedback. In the design of MAGUS, we are, at least, required
+to handle the following challenges.
+• [C1] How to draw connections between queries and items? Taking
+Figure 1 as an example, a core challenge of jointly considering
+queries and items lies in creating a unified metric for evaluating
+queries and items (e.g., query B and items D, E, and F).
+• [C2] How to model interdependence among queries? Unlike items,
+queries exhibit a significant degree of dependence. Here are three
+possible scenarios for each query-query pair: (i) Mutual improve-
+ment: selecting one query increases the likelihood of selecting
+the other query in the following round (e.g., selecting Milk would
+raise the probability of selectingWhole Milk in the next round). (ii)
+Mutual inhibition: selecting one query decreases the probability
+of selecting the other query in the following round (e.g., if a user
+selects Milk, it is unlikely that she would selectBeef because milk
+and beef belong to distinct categories. (iii) Mutual Independence:
+the selection of one query has minimal or negligible effects on
+the user’s decision regarding the other query (e.g., selecting Milk
+does not significantly influence the user’s preference for On Sale).
+• [C3] How to efficiently make use of user feedback at each round
+within strict online latency requirements? One of the primary
+advantages of multiple-round recommendations lies in its ability
+to progressively approach user interests through iterative guesses
+arXiv:2412.10787v1  [cs.IR]  14 Dec 2024
+KDD’25, August X - Y, 2025, Toronto, Canada Jiarui Jin et al.
+(a) User Browsing Logs
+Milk
+Query 
+A
+Brand 
+A, 
+Semi 
+Skimmed 
+Milk, 
+2L
+Item 
+A
+$
+3
+Brand 
+C
+Item 
+D
+Semi 
+Skimmed
+2L
+$
+3
+Brand 
+C
+Whole
+2L
+$
+2
+Whole
+Milk
+Query 
+B
+Milk
+Milk
+ (b) MAGUS (Ours)
+Brand 
+A, 
+Soya 
+Milk, 
+2L
+$
+4
+Brand 
+B, 
+Semi 
+Skimmed 
+Milk, 
+2L
+$
+3.5
+Brand 
+A
+Whole
+3L
+$
+4
+Item 
+F
+Milk
+Item 
+B
+Item 
+C
+Item 
+E
+Figure 1: An illustrated example of MAGUS recommending
+both queries (e.g., query B) and items (e.g., items D, E, and
+F), as shown in (b). This framework effectively leverages
+both queries (e.g., query A) and items (e.g., items A, B, and
+C) present in the browsing logs, serving to alleviate the data
+sparsity issue of user feedback, as shown in (a).
+and updates. However, this recursive framework presents a chal-
+lenge in terms of effectively leveraging user feedback while main-
+taining strict online latency requirements.
+We recognize that both queries and items act as representations
+of user interests, albeit at different levels of granularity. In this
+context, both queries and items can be regarded as combinations of
+specific categorical words describing user interests. As exemplified
+in Figure 1(b), item A could be expressed as the combination of
+words Brand A, Milk, Semi Skimmed, 2L, and $3; and query B can be
+organized as the combination of words Whole and Milk. Therefore,
+queries and items could be connected through the shared use of
+words, thereby addressing [C1]. To capture the dependence among
+these words, we construct a relational graph, where the nodes
+correspond to individual words or combinations of words, and the
+edges represent three types of dependence introduced in [C2]. We
+illustrate the graph in Figure 2(a).
+In each user session, MAGUS starts with an arbitrary offline
+tuned recommendation model to assign an initial prediction score
+to every node representing an item in the graph, e.g., items A,
+B, and C in Figure 2(a). Subsequently, MAGUS propagates these
+scores to associated words throughout the graph, as demonstrated
+in Figure 2(b). During each interaction round,MAGUS selects those
+nodes with the highest scores. These nodes would either comprise
+artificial queries or specific items.
+In the above multiple-round setting, MAGUS is designed to re-
+ceive user feedback during each interaction round. To effectively
+harness this feedback while adhering to stringent online latency
+requirements (i.e., [C3]), MAGUS employs a label propagation al-
+gorithm to simulate the influence of user feedback on the relevant
+words, as depicted in Figure 2(c). In our approach, we also introduce
+a feature propagation method to determine edge weights within the
+graph. These weights enable us to perform weighted propagation
+as illustrated in Figure 2(b) and (c).
+Given that our principal aim is to identify an item aligned with
+user preferences, we have formulated an innovative multiple-round
+recommendation simulator for evaluation purposes. Within this
+simulation environment, the MAGUS agent operates iteratively,
+providing suggestions for both queries and items in each round,
+while the user agent responds accordingly. This iterative cycle con-
+tinues until an item that sufficiently aligns with user requirements is
+discovered. Furthermore, we demonstrate that incorporating large
+language models into the simulator can enhance its capabilities,
+transforming it into a conversational recommender system.
+Our extensive experiments, conducted on 3 real-world datasets
+and incorporating 12 diverse recommendation methods, consis-
+tently validate that MAGUS significantly enhances recommenda-
+tion performance by effectively identifying items that align with
+user preferences. Additionally, our results also demonstrate that
+MAGUS can effectively handle cases where users do not have a
+clear picture of what they like.
+2 PRELIMINARIES
+2.1 Problem Formulation
+We begin by introducing the notations used in this paper.U denotes
+the set of users,V denotes the set of items, andQ denotes the set of
+queries. For convenience, we use𝜓RE(·), a mapping function𝜓RE :
+U×V→ R, to denote any given offline tuned recommendation
+method that assigns a predicted relevance score to each item. We
+denote the score of each item𝑣∈V as𝜓RE(𝑣)∗. Our goal is to build
+a joint mapping function𝜓MAGUS :U×A→ R, whereA =V∪Q
+is the action space. In other words, our MAGUS, i.e.,𝜓MAGUS(·), is
+capable of exploiting both query information and item information
+to learn to assign scores to both queries and items.
+We highlight that the primary objective of MAGUS is to identify
+an item that meets the user’s requirement within a session, where
+MAGUS is allowed to do multiple-round recommendations of either
+queries or items within each user session. For clarity, we present
+the description in the context of the top-1 recommendation and
+discuss its extension to the top-N recommendation in Appendix ??.
+Definition 2.1 ( Multiple-round Recommender Systems Sup-
+porting both Queries and Items). Given a tuple(U,V,Q,𝐾MAX),
+in each user session (with user𝑢∈U ), the objective of𝜓MAGUS(·)
+is to recommend an item satisfying𝑢’s needs within𝐾MAX rounds.
+The action space of𝜓MAGUS(·) covers both the item space and the
+query space, namely,A =V∪Q . For each 𝑘-th round (where
+𝑘 = 1,...,𝐾 MAX),𝜓MAGUS(·) recommends either an item or a query,
+and the user should provide either positive or negative feedback.
+Formally, letVTARGET denote the set of items that can fulfill the
+user’s requirements, and 𝑎𝑘 ∈A signifies the recommendation
+made by𝜓MAGUS(·) at the𝑘-th round. Our objective is:
+min𝐾, s.t.,𝑎𝐾∈V TARGET, (1)
+where𝐾 = 1,...,𝐾 MAX. In other words, an oracle𝜓MAGUS(·) is sup-
+posed to find an item inVTARGET with a minimal number of rounds.
+∗We use omit𝑢 in notations (i.e., using𝜓·(𝑣) instead of𝜓·(𝑢,𝑣)) for simplicity.
+MAGUS KDD’25, August X - Y, 2025, Toronto, Canada
+For this purpose, MAGUS is supplied with the historical interac-
+tions of users, includingH𝑞
+𝑢 representing the set of searched queries
+associated with each user𝑢,H+𝑢 representing the set of items with
+positive feedback (e.g., observed and clicked) of each user𝑢, andH−𝑢
+representing the set of items with negative feedback (e.g., observed
+and not clicked) of each user𝑢. We also note thatMAGUS can make
+use ofH𝑞
+𝑢 , butH𝑞
+𝑢 is not compulsory for applying MAGUS.
+2.2 Comparisons to Previous Work
+Designing multiple-round recommender systems to identify an
+item meeting user requirements has been explored in the domain of
+conversational recommendations [7, 13]. One popular direction is to
+combine the recommender module and the conversational module
+from a systematic perspective [15, 16, 27, 31]. For example, recent
+papers [15, 17] introduces a reinforcement learning framework
+that enables the optimizations over multiple-round interactions.
+However, reinforcement learning-based approaches inherently face
+challenges related to the insufficient usage of labeled data and high
+complexity costs of deployment. On the contrary, MAGUS could be
+seamlessly integrated with any recommendation method to enable
+it to effectively exploit queries and items in historical interactions
+and recommend both queries and items. Furthermore, it is essential
+to highlight that our recommending queries differ significantly
+from recommending attributes in conversational recommender
+systems like [2, 15, 27, 31]. The key distinction lies in the substantial
+dependence among queries such as apple and macbook, macbook
+and macbook pro , which is not as prominent among attributes
+such as brand and color. In addition, in contrast to our MAGUS
+system, most conversational recommendation methods [15, 27] use
+reinforcement learning techniques, whereas reinforcement learning
+based methods heavily rely on meticulous reward function design.
+In comparison, the MAGUS system can be easily deployed into an
+arbitrary recommendation method, as our framework applies an
+offline-tuned recommendation model in a plug-and-play manner.
+Our MAGUS is also connected to query recommendations (com-
+monly referred to as query suggestions) [21], aiming at improving
+user search experience by providing suggestions that attempt to
+guess user intentions based on their past behaviors. However, our
+ultimate objective differs, as we aim to identify an item rather than
+generate a query.
+3 THE MAGUS SYSTEM
+Our main idea is to recognize that queries and items both represent
+user interests, but they do so at varying levels of granularity. For this
+purpose, we initially construct a relational graph offline to bridge
+queries and items (Section 3.1). In each user session, we employ
+an offline-tuned recommendation model as an initializer to assign
+an initial score to each node (Section 3.2). Subsequently, we design
+a label propagation algorithm to iteratively update these scores
+throughout the session (Section 3.3). Additionally, we propose a
+feature propagation algorithm to learn the edge weights of the
+graph (Section 3.4), although its use is not mandatory in practice.
+3.1 Bridging Queries and Items via Graph
+To establish a connection between queries and items, we use “words”
+as the bridge to build a relational graph as follows.
+Definition 3.1 ( Words and Relational Graph). Given a tuple
+(V,Q) † whereV is the set of items andQ is the set of queries,
+MAGUS establishes a set denoted as W, comprised of categori-
+cal words, to serve as a connecting bridge betweenV andQ. To
+elucidate this process, MAGUS commerces by extracting lexical
+elements from the categorical attributes (a.k.a., features) of items
+inV, e.g., this entails the extraction of terms Brand A, Milk, Semi
+Skimmed, 2L, and $3 from item A in Figure 1(b). This collection
+of extracted terms constitutes the setW. Subsequently, MAGUS
+proceeds to decompose the queries within Q by matching them
+with the words present inW; e.g., query B in Figure 1(b) can be
+deconstructed into a combination of the terms Whole and Milk
+based on this matching process.
+As a result, MAGUS can construct a relational graph denoted as
+G =(E,R), whereE signifies the set of nodes andR denotes the
+set of edges.E encompasses not only individual words from the
+vocabularyW but also the combinations of words that either form
+queries inQ or items inV. For example, as illustrated in Figure 2(a),
+node (macbook pro 13 grey) represents item A, and node (macbook
+pro 13) and node (macbook pro) are the combinations of words used
+to organize item A, and node ( grey) and node ( macbook, apple)
+are individual nodes.R contains three categories of relationships
+between nodes, i.e., mutual improvement (denoted asR+), mutual
+inhibition (denoted asR−), and mutual independence (denoted as
+R⊥). In other words,R =R+∪R−∪R⊥.R+ delineates connections
+between pairs of nodes in situations where one node is subsumed
+within or constitutes a component of the other node. For instance,
+node (macbook) is a part of node ( macbook pro). In contrast,R−
+defines relationships between pairs of nodes that pertain to distinct
+items, exemplified by node (macbook pro) and node (iphone pro)
+associated with item A and item C respectively. Lastly,R⊥ connects
+all the other pairs of nodes, namely, it establishes connections
+between pairs of nodes that can be employed to represent the same
+item but are characterized by a lack of shared elements. For example,
+node (macbook pro) and node (gray) together form item A but do
+not exhibit any overlapping components.
+Based on Definition 3.1, all queries and items can be successfully
+mapped to their respective nodes within the graph, confirming that
+Q⊆E andV⊆E . Then, for each pair of nodes, there are three
+possible scenarios: (i)R+ for those where one node is a part of the
+other, (ii)R− for those where one node is not a part of the other,
+but these nodes are compatible within a single item, and (iii)R⊥
+for those where one node is not a part of the other node and these
+nodes are not compatible.
+We note that the procedure for constructing this relational graph,
+as detailed earlier, does not consider all item features as “words”;
+instead, we focus on utilizing key features that indicate the cate-
+gory of items (e.g., cat_id, seller_id, and brand_id in Tmall dataset),
+similar to the approach in [6]. Moreover, the extraction of key item
+features, such as keywords, from item descriptions aligns with es-
+tablished tokenization practices in the field [20], which falls outside
+the scope of this paper. Our graphs, derived from user interaction
+data and item features, diverge from traditional knowledge graphs
+[10, 28, 30] typically sourced from external databases, since our
+graphs are consistently accessible.
+†A summary table of key notations is provided in the supplementary material.
+KDD’25, August X - Y, 2025, Toronto, Canada Jiarui Jin et al.
+Item 
+A
+Item 
+B
+Item 
+C
+ (a) Relational Graph Legend
+user 
+or 
+item
+word
+Node
+Edge
+mutual 
+improvement
+mutual 
+inhibition
+mutual 
+independence
+(c) 
+Online 
+Label 
+Propagation 
+as 
+Updater
+ (b) Offline Recommender System as Initializer
+mutual 
+inhibition
+Initialization 
+Direction
+Update 
+Direction
+Figure 2: An illustrated example of our relational graph organizing individual words and certain combinations of words (as
+shown in (a)). To maintain clarity, we have opted not to explicitly illustrate the edges representing mutual inhibition and
+mutual independence. In each user session, MAGUS collaborates with an offline-tuned recommendation method to initialize
+the node scores, where the propagation direction is from the nodes representing the items towards the other nodes (as shown
+in (b)). Subsequently, when a user provides her preference on a recommendation, MAGUS updates the relevant nodes by a label
+propagation algorithm whose propagation direction now operates from the recommended node towards the nodes representing
+items (as shown in (c)).
+3.2 Recommender System as Initializer
+As described in Definition 2.1, for each user𝑢∈U , we have access
+to her browsed items, i.e.,H+𝑢 for those with positive feedback and
+H−𝑢 for those with negative feedback. Then, we can establish an
+offline tuned recommendation method, denoted as𝜓RE(·), trained
+uponH+𝑢∪H−𝑢 .𝜓RE(·) can be any recommendation method, and
+we evaluate the impact of employing different𝜓RE(·)s in the exper-
+iment. In every session with user𝑢, with an offline tuned𝜓RE(·),
+we can assign an estimated relevance score to each item 𝑣∈V ,
+denoted as𝜓RE(𝑣). As outlined in Definition 3.1, each item inV
+can correspond to a specific node inE. For convenience, letEITEM
+denote the set of nodes representing items. Here, we use b𝑦𝑣 to
+represent the estimated relevance score for each node𝑣∈E .
+Our initial step is to assign the estimated scores to the nodes
+withinEITEM. Formally, for each node𝑣∈E , this process can be
+expressed as follows.
+b𝑦𝑣 =
+ 𝜓RE(𝑣), 𝑣 ∈E ITEM,
+0, 𝑣 ∈E/E ITEM. (2)
+For convenience, we normalize all scores to fall within the range of
+0 to 1, namely b𝑦𝑣∈[ 0, 1] holds for all𝑣∈E ITEM.
+Next, we propagate these scores to all the other nodes inE. For
+this purpose, we assign a learnable weight to each edge inR. For
+clarity, let𝑤𝑣′𝑣′′ denote the weight of the edge connecting node𝑣′
+and node𝑣′′. With a particular recommendation method𝜓RE(·), a
+simple definition of weights for the edges inR is:
+𝑤𝑣𝑣′ = 1 if⟨𝑣,𝑣′⟩∈R +∪R−, and𝑤𝑣𝑣′ = 0 otherwise. (3)
+If we have access to the offline tuned representation vectors for
+all the items and users provided by the recommendation method,
+we can allocate and tune learnable weights for the edges (as later
+introduced in Section 3.4).
+We then initialize the remaining nodes by propagation on the
+graph. As illustrated in Figure 2(b), the propagation process initiates
+from the nodes inEITEM and extends to the remaining ones. During
+the propagation, the update function of nodes inE/E ITEM can be
+expressed as follows.
+b𝑦𝑣′←
+ 
+
+b𝑦𝑣′+𝑤𝑣′𝑣′′· b𝑦𝑣′′, ⟨𝑣′,𝑣′′⟩∈ − →R+,
+b𝑦𝑣′−𝑤𝑣′𝑣′′· b𝑦𝑣′′, ⟨𝑣′,𝑣′′⟩∈ − →R−,
+b𝑦𝑣′, ⟨𝑣′,𝑣′′⟩∈R ⊥∪← −R+∪← −R−,
+(4)
+where𝑣′∈E/E ITEM and𝑣′′∈E , and− →R+ and− →R− are introduced
+to denote the update directions on the edges inR+ andR− respec-
+tively. Here,R+ =− →R+∪← −R+ andR− =− →R−∪← −R−.
+If we have access to the set of user-searched queries H𝑞
+𝑢 , the
+set of the searched queries for user 𝑢, as stated in Definition 3.1,
+each query inH𝑞
+𝑢 can correspond to a specific node inE. Then, let
+EQUERY denote the set of nodes representing the searched queries.
+We update the estimated scores of those nodes by:
+b𝑦𝑣← max(min({b𝑦𝑣′|𝑣′∈E/(E QUERY∪E ITEM)}, 1),b𝑦𝑣),𝑣 ∈E QUERY,
+(5)
+because those queries can largely represent user interests.
+3.3 Label Propagation as Updater
+For each round in the session, we normalize all estimated relevance
+scores to fall within the range of 0 to 1, namely b𝑦𝑣∈[ 0, 1] holds
+for all𝑣∈E , through applying:
+b𝑦𝑣← b𝑦𝑣− min({b𝑦𝑣′|𝑣′∈E})
+max({b𝑦𝑣′|𝑣′∈E})− min({b𝑦𝑣′|𝑣′∈E}) ,𝑣 ∈E . (6)
+We then generate the recommendation by sorting all the nodes
+and selecting the one, representing either a query or an item, with
+the highest predicted score. Formally, we have:
+𝑎MAGUS = arg max
+𝑎∈A
+𝜓MAGUS = arg max
+𝑣∈A
+b𝑦𝑣, (7)
+where𝑎MAGUS denotes the query or item to recommend by MAGUS.
+For each recommendation𝑎MAGUS, users are expected to provide
+real-time feedback. To efficiently exploit this feedback, we intro-
+duce a label propagation-based algorithm to simulate the influence
+MAGUS KDD’25, August X - Y, 2025, Toronto, Canada
+of user feedback on other nodes. Specially, we update the corre-
+sponding node, denoted as𝑣, based on the received feedback. The
+update function can be written as:
+b𝑦𝑣←
+ 1, 𝑣 ∈E+,
+0, 𝑣 ∈E−, (8)
+where𝑣∈E+ denotes the event where𝑢 provides positive feedback
+(e.g., clicks) to𝑣, and𝑣∈E − denotes the event where𝑢 provides
+negative feedback (e.g., observations without clicks) to𝑣.
+We then propagate the updated score of𝑣 to the remaining nodes,
+i.e.,𝑣′∈E\{ 𝑣}. In this case, our update function can be written as:
+b𝑦𝑣′←
+ 
+
+min(1,b𝑦𝑣′+𝑤𝑣′𝑣′′· b𝑦𝑣′′), ⟨𝑣′,𝑣′′⟩∈ ← −R+,
+max(0,b𝑦𝑣′−𝑤𝑣′𝑣′′· b𝑦𝑣′′), ⟨𝑣′,𝑣′′⟩∈ ← −R−,
+b𝑦𝑣′, ⟨𝑣′,𝑣′′⟩∈R⊥∪ − →R+∪− →R−.
+(9)
+We note that, in contrast to Eq. (4), which propagates information
+in the direction of− →R+∪− →R−, the propagation direction in Eq. (9) is
+reversed, i.e.,← −R+∪← −R−.
+After all nodes inE are updated in each round, we start the next
+round by successively applying Eqs. (6) and (7) to generate a new
+𝑎MAGUS.
+3.4 Feature Propagation as Weight Trainer
+As mentioned in Section 3.2, for each edge inR, we can allocate a
+learnable weight, when we have access to the offline tuned repre-
+sentation vectors for all the items and users. Concretely, we denote
+the representation vector of each item𝑣∈E ITEM as 𝒆𝜓RE
+𝑣 , and the
+representation vector of each user𝑢∈U as 𝒆𝜓RE
+𝑢 . Since we have
+access to all the 𝒆𝜓RE
+𝑣 vectors and the sets of browsed itemsH+𝑢 s
+andH−𝑢 s for all user𝑢s, we can proceed with designing a feature
+propagation algorithm to learn the weights.
+Formally, we start by initializing the representation vector of
+each node𝑣∈E as follows:
+𝒆𝑣 = 𝒆𝜓RE
+𝑣 if𝑣∈E ITEM, and 𝒆𝑣 = 𝒆INIT
+𝑣 otherwise. (10)
+where 𝒆INIT𝑣 represents the initialized embedding vector for node𝑣,
+following a given initializer such as [8].
+We then propagate the feature on the graph. The update function
+for each node𝑣∈E can be formulated as follows:‡
+𝒆𝑣← ReLU
+
+𝒎𝑣←𝑣+
+∑︁
+𝑣′∈N+(𝑣)
+𝒎𝑣←𝑣′
+|N+(𝑣)|−
+∑︁
+𝑣′′∈N−(𝑣)
+𝒎𝑣←𝑣′′
+|N−(𝑣)|
+
+, (11)
+where ReLU(·) is an activation function,N+(𝑣) denotes the set of
+neighbor nodes connected to𝑣 throughR+, andN−(𝑣) denotes the
+set of neighbor nodes connected to𝑣 throughR−. 𝒎𝑣′←𝑣 denotes
+the messages being propagated from node𝑣 to node𝑣′. We compute
+the messages as follows.
+𝒎𝑣←𝑣′ =
+ 𝑾1· 𝒆𝑣, 𝑣 =𝑣′,
+𝑾1· 𝒆𝑣′+ 𝑾2·( 𝒆⊤𝑣 · 𝒆𝑣′)· 𝒆𝑣, 𝑣 ≠𝑣′, (12)
+where 𝑾·∈ R𝑑×𝑑,𝑑 is the dimension of the embedding vector of
+nodes (i.e., 𝒆𝑣,𝑣∈E ).
+‡We do not explicitly write the propagation layers in Eqs. (11) and (12) to make it
+simple and easy to read. In our experiment, to save the computation cost, we set the
+number of propagation layers as 1.
+To supervise the feature propagation, we use H+𝑢 andH−𝑢 of
+each user𝑢 to establish a log-loss function as follows:
+L =−
+∑︁
+𝑢∈U
+∑︁
+𝑣∈H+𝑢∪H−𝑢
+
+𝑦𝑣 logb𝑦𝑣+( 1−𝑦𝑣) log(1− b𝑦𝑣)
+
+, (13)
+where b𝑦𝑣 is our predicted score relevance for node𝑣 regarding user
+𝑢, calculated by b𝑦𝑣 =(𝒆𝜓RE
+𝑢 )⊤· 𝒆𝑣, and𝑦𝑣 is the ground-truth label
+of node𝑣.𝑦𝑣 = 1 if𝑣∈H+𝑢 , and𝑦𝑣 = 0 if𝑣∈H −𝑢 .
+After completing the feature propagation process as described
+above, we obtain an updated representation vector for each node.
+We then define the weight of each edge inR based on the similarity
+between the connected pair of nodes. This can be expressed as:
+𝑤𝑣𝑣′ = 𝒆⊤
+𝑣· 𝒆𝑣′ if⟨𝑣,𝑣′⟩∈R +∪R−, and𝑤𝑣𝑣′ = 0 otherwise. (14)
+It is worth noting that the supervised learning process described
+can be conducted offline. In other words, our relational graphG
+can be pre-constructed following Definition 3.1, where the edge
+weights can be pre-computed using either Eq. (3) or (14), and these
+weights be saved withinG.G can then be stored and only needs to
+be updated when our recommender system𝜓RE(·) is updated. This
+approach can save computational resources in online operations.
+3.5 System Analysis
+The MAGUS system is summarized in Algorithm 1 in Appendix B.
+Furthermore, Appendix B also includes the complexity analysis
+and discusses the connections to rule-based algorithms, showing
+that our MAGUS can be regarded as a hybrid that integrates the
+structured logic of rule-based methods with the flexibility and adapt-
+ability of learning-based techniques.
+4 EXPERIMENTS
+4.1 Experimental Settings
+Dataset Description. We conduct extensive experiments on 3
+industrial real-world e-commerce datasets, namely Amazon§, Ali-
+pay⁄pilcrow, and Tmall∥. For each dataset, we collect user-item interaction
+histories (i.e.,H+𝑢∪H−𝑢 ) of users𝑢∈U , and gather all items to
+formV. In the process of constructing the query setQ, the pivotal
+step is the assembly of the word setW, and one can then derive
+Q following Definition 3.1. Concretely, we initiate the word setW
+by extracting words from the categorical features of items inV.
+Let’s take the Amazon dataset as an example. If an item has the
+brand Coxlures and belongs to the categories Sports and Dance,
+we generate words like coxlures, sports, and dance. By iterating
+through all items inVm we compile the setW. For each dataset,
+we perform a temporal split, dividing it into training, validation,
+and test sets in a ratio of 6:2:2 based on time steps. We exclude
+sequences with a length of less than 30 or those that lack items
+with positive feedback. We then randomly select 30 items to form
+a session. During the random selection of items, we ensure that
+at least one item with positive feedback is included. We provide
+comprehensive details about the datasets, the data prepossessing,
+and the relational graph construction in Appendix C.1, C.2, C.3.
+§https://jmcauley.ucsd.edu/data/amazon/
+⁄pilcrowhttps://tianchi.aliyun.com/dataset/dataDetail?dataId=53
+∥https://tianchi.aliyun.com/dataset/dataDetail?dataId=42
+KDD’25, August X - Y, 2025, Toronto, Canada Jiarui Jin et al.
+Table 1: Results comparison of items recommendations in terms of SAC, and joint recommendations of both queries and items
+in terms of RA@3, SA@3, and SA@5. Since SAC metric measures the performance on the single-round item recommendation
+task, we do not report SAC for MAGUS and MAGUS+. * indicates 𝑝 < 0.001 in significance tests compared to the best baseline.
+Methods Amazon | Alipay | Tmall |
+SAC RA@3 SA@3 SA@5 SAC RA@3 SA@3 SA@5 SAC RA@3 SA@3 SA@5
+MPS 0.332 0.612 0.174 0.255 0.298 0.541 0.125 0.181 0.312 0.575 0.164 0.208
+Hybrid 0.394 0.665 0.312 0.406 0.365 0.592 0.286 0.345 0.344 0.592 0.295 0.337
+FM 0.634 0.773 0.672 0.757 0.716 0.815 0.767 0.846 0.718 0.832 0.745 0.824
+FM+CRM / 0.787 0.675 0.760 / 0.826 0.798 0.867 / 0.880 0.771 0.852
+FM+ME / 0.794 0.688 0.771 / 0.817 0.789 0.860 / 0.847 0.754 0.831
+FM+EAR / 0.795 0.695 0.769 / 0.825 0.796 0.866 / 0.878 0.765 0.850
+FM+MAGUS / 0.816∗ 0.742∗ 0.798∗ / 0.843∗ 0.825∗ 0.888∗ / 0.894∗ 0.791∗ 0.877∗
+DeepFM 0.676 0.784 0.693 0.798 0.730 0.825 0.787 0.875 0.729 0.843 0.766 0.841
+DeepFM+CRM / 0.796 0.705 0.805 / 0.840 0.817 0.882 / 0.879 0.802 0.881
+DeepFM+ME / 0.795 0.698 0.794 / 0.835 0.811 0.879 / 0.856 0.775 0.864
+DeepFM+EAR / 0.810 0.743 0.807 / 0.839 0.818 0.884 / 0.885 0.800 0.885
+DeepFM+MAGUS / 0.833∗ 0.767∗ 0.811∗ / 0.851∗ 0.832∗ 0.895∗ / 0.903∗ 0.814∗ 0.892∗
+PNN 0.688 0.788 0.690 0.792 0.741 0.833 0.775 0.870 0.722 0.823 0.753 0.831
+PNN+CRM / 0.807 0.714 0.798 / 0.851 0.844 0.899 / 0.870 0.798 0.827
+PNN+ME / 0.813 0.749 0.805 / 0.845 0.820 0.884 / 0.855 0.776 0.845
+PNN+EAR / 0.814 0.747 0.802 / 0.853 0.845 0.898 / 0.872 0.801 0.863
+PNN+MAGUS / 0.839∗ 0.772∗ 0.817∗ / 0.865∗ 0.852∗ 0.911∗ / 0.884∗ 0.812∗ 0.876∗
+MMoE 0.631 0.770 0.663 0.744 0.703 0.802 0.745 0.811 0.723 0.842 0.752 0.830
+MMoE+MAGUS / 0.801∗ 0.725∗ 0.776∗ / 0.833∗ 0.820∗ 0.876∗ / 0.898∗ 0.802∗ 0.881∗
+DIN 0.697 0.798 0.696 0.813 0.757 0.845 0.793 0.886 0.736 0.855 0.774 0.848
+DIN+MAGUS / 0.845∗ 0.775∗ 0.828∗ / 0.878∗ 0.865∗ 0.922∗ / 0.904∗ 0.818∗ 0.902∗
+LSTM 0.692 0.789 0.690 0.808 0.752 0.840 0.782 0.876 0.728 0.846 0.759 0.837
+LSTM+MAGUS / 0.840∗ 0.773∗ 0.821∗ / 0.870∗ 0.861∗ 0.918∗ / 0.901∗ 0.808∗ 0.892∗
+GRU 0.707 0.803 0.699 0.818 0.762 0.848 0.799 0.889 0.732 0.852 0.771 0.845
+GRU+MAGUS / 0.848∗ 0.788∗ 0.831∗ / 0.882∗ 0.871∗ 0.926∗ / 0.909∗ 0.821∗ 0.901∗
+RGCN 0.668 0.781 0.687 0.784 0.736 0.828 0.785 0.877 0.722 0.828 0.747 0.825
+RGCN+MAGUS / 0.841∗ 0.775∗ 0.824∗ / 0.873∗ 0.860∗ 0.912∗ / 0.897∗ 0.810∗ 0.893∗
+RGCN+MAGUS+ / 0.852∗ 0.787∗ 0.831∗ / 0.882∗ 0.870∗ 0.925∗ / 0.903∗ 0.820∗ 0.902∗
+RGAT 0.675 0.785 0.695 0.794 0.748 0.838 0.782 0.878 0.730 0.843 0.762 0.839
+RGAT+MAGUS / 0.850∗ 0.785∗ 0.828∗ / 0.878∗ 0.868∗ 0.921∗ / 0.905∗ 0.817∗ 0.897∗
+RGAT+MAGUS+ / 0.867∗ 0.798∗ 0.840∗ / 0.891∗ 0.879∗ 0.933∗ / 0.911∗ 0.826∗ 0.914∗
+GIPA 0.688 0.798 0.707 0.799 0.756 0.847 0.796 0.885 0.751 0.849 0.778 0.843
+GIPA+MAGUS / 0.856∗ 0.798∗ 0.834∗ / 0.877∗ 0.867∗ 0.918∗ / 0.912∗ 0.824∗ 0.902∗
+GIPA+MAGUS+ / 0.881∗ 0.785∗ 0.849∗ / 0.892∗ 0.881∗ 0.934∗ / 0.919∗ 0.832∗ 0.918∗
+Baseline Description. Although our MAGUS framework can en-
+able any recommendation method to recommend queries or items
+in a multiple-round setting, the ultimate goal, as formulated in
+Definition 2.1, is to identify an item satisfying user needs in each
+user session. In this context, we introduce 12 recommendation
+methods as base recommender systems, and our MAGUS is evalu-
+ated in an ablation style. These recommendation methods include
+MPS (Most Popular Suggestion) [5, 26], Hybrid (Hybrid Suggestion)
+[1], FM (Factorization Machine) [23], DeepFM [9], PNN (Product-
+based Neural Network) [22], MMoE (Multi-gate Mixture-of-Experts)
+[19], DIN (Deep Interest Network) [33], LSTM (Long-Short Term
+MAGUS KDD’25, August X - Y, 2025, Toronto, Canada
+Memory) [12], GRU (Gated Recurrent Unit) [11], RGCN (Relational
+Graph Convolutional Network) [25], RGAT (Relational Graph At-
+tention Network) [3], and GIPA (General Information Propagation
+Algorithm) [32]. Regarding the proposed multiple-round recom-
+mendation task for both queries and items, there are currently no
+existing recommendation solutions tailored specifically for this
+task. we extend the action space from considering only itemsV to
+encompass both items and queriesV∪Q . We introduce a recurrent
+neural network to exploit user responses during multiple-round
+interactions. In this approach, the final embedding layer of the
+single-round baselines is fed into a recurrent unit, allowing item
+information and corresponding user feedback from each round to
+be carried forward to subsequent rounds. A detailed description of
+the above adjustment can be found in Appendix C.4.
+Another way to enable the base recommendation methods to
+fit the multiple-round recommendation task is through the devel-
+opment of conversational recommender systems [ 15, 27]. To fit
+these approaches into our joint recommendation task for items and
+queries, we let the set of nodes in our relational graph represent
+the action space of the conversational recommendation methods,
+including ME (Max-Entropy strategy that always queries the nodes
+with the maximum entropy in terms of all candidate items), CRM
+(Conversational Recommender Model) [27], and EAR (Estimation-
+Action-Reflection) [15].
+As detailed in Algorithm 1 (in Appendix B), there are two ver-
+sions of the MAGUS system, each employing a different method to
+calculate the edge weights of the relational graph (i.e., line 3). MA-
+GUS is the MAGUS system computing edge weights using Eq. (3).
+MAGUS+ is a variant of theMAGUS system where the edge weights
+are calculated using Eq. (14).
+We use notations such as X to represent instances where we
+apply the first type of adjustment to method X, and X + ME, X +
+CRM, X + EAR for the second type of adjustment. Additionally,
+X+MAGUS and X+MAGUS+ represent instances where we employ
+method X as 𝜓RE(·). Here, X can represent one of the following
+recommendation bases: FM, DeepFM, PNN, MMoE, DIN, LSTM,
+GRU, RGCN, RGAT, and GIPA.
+Simulation Description. To accomplish the loop between humans
+and the system, we introduce a novel multiple-round recommenda-
+tion simulator supporting both query and item recommendations.
+This simulator comprises two key components: the user agent and
+the recommender agent. In this setup, the recommender agent has
+the option to either select an item or form a query during each
+round of interaction. The response generated by the user agent
+hinges on whether the recommendation𝑎MAGUS corresponds to a
+target item or a query that is part of a target item. If it does, the user
+agent provides a positive response; otherwise, it issues a negative re-
+sponse. We choose to set the length of the recommendation lists as
+3 (denoted as𝑁 ). We also establish a predefined limit on the number
+of interaction rounds (denoted as𝐾MAX), which is explicitly defined
+within the evaluation metrics to be introduced subsequently.
+In order to expand the applicability and versatility of theMAGUS
+system, we have implemented an option to seamlessly integrate
+a large language model with a plug-and-play architecture. This
+innovative enhancement equips MAGUS with the capability to
+engage in natural language communication with human users. A
+	 
+  
++"$*$*$(& &*%)
+
+
+
+	
+
+
+$-&%
+
+	
+
+
+
+
+
+	 
+  
++"$*$*$(& &*%)
+
+
+
+
+
+	
+$##
+	
+
+
+
+
+	
+
+
+
+
+	 
+  
+
+
+
+
+#"',
+#"',
+
+
+	
+	
+		
+	
+	
+	
+&!#&))#"',
+Figure 3: Performance comparisons of MAGUS with different
+maximum numbers of rounds (i.e.,𝐾MAX) in terms of RA@𝐾MAX
+and SA@𝐾MAX with the FM recommendation base.
+detailed description of our simulator and the integration of the
+large language models are provided in Appendix D.1, D.2.
+Evaluation Metrics. In our evaluation, we focus on two primary
+types of metrics in effectively identifying items that match user
+needs within a session. One is round-wise accuracy, denoted as
+RA@𝐾MAX, which evaluates the recommendation performance dur-
+ing each round of interaction. For every round 𝑘, if a user clicks
+on the recommendation at position𝑏𝑘, we calculate RA@𝐾MAX us-
+ing RA@𝐾MAX = 1/log2(𝑏𝑘+ 1). If a user does not click on any
+recommendation during a round, RA@𝐾MAX is set to 0. The final
+RA@𝐾MAX is determined as the average of all the RA@𝐾MAX values.
+The other one is session-wise accuracy, denoted as SA@𝐾MAX, which
+assesses whether the system successfully recommends a target item
+within𝐾MAX interactions in each session. If the system succeeds in
+recommending a target item, SA@𝐾MAX is set to 1 for that session;
+otherwise, it is set to 0. The final SA@ 𝐾MAX is computed as the
+average of all the SA@𝐾MAX values.
+Additionally, to gauge the impact of combining query and item
+recommendations, we provide a single-round accuracy (denoted as
+SAC) metric for each baseline method. In each session, SAC is set
+to 1 if the recommendation list contains at least one target item,
+and 0 otherwise. The final SAC is determined as the average of all
+the SAC values.
+Implementation details along with the code link are available in
+Appendix C.5.
+4.2 Performance Comparisons
+We present the outcomes of our experiments in Table 1. We sum-
+marize our findings as follows.
+Performance Comparisons between Jointly using Queries
+and Items and Solely using Items. As our SAC is evaluating the
+recommendation performance of solely considering items, we com-
+pare the results of single-round performance SAC against multiple-
+round performance RA@3, SA@3, and SA@5 of the base recom-
+mendation method (i.e., rows of FM, DeepFM, PNN, MMoE, DIN,
+LSTM, GRU, RGCN, RGAT, and GIPA). These results show that com-
+bining items and queries in item recommendations can significantly
+improve the recommendation performance across 12 diverse rec-
+ommendation approaches on all 3 datasets. This improvement also
+would be attributed to our multiple-round setting, which allows real-
+time user feedback and better aligns with user preferences. Notably,
+popularity-based methods like MPS and Hybrid perform well in
+KDD’25, August X - Y, 2025, Toronto, Canada Jiarui Jin et al.
+	
+
+%##$(!%$!'($( 
+
+
+
+
+
+	
+	
+#*%$
+
+	
+
+
+
+
+	
+
+%##$(!%$!'($( 
+
+
+
+
+
+
+
+
+
+#""
+
+
+
+
+	
+
+
+
+	
+
+
+
+
+
+"!&)
+"!&)
+
+
+	
+	
+		
+	
+	
+	
+%"%''"!&)
+Figure 4: Performance comparisons of MAGUS using differ-
+ent lengths of the recommendation list in terms of RA@3
+and SA@3 with the FM recommendation base.
+terms of RA@3 but struggle with SA@3 and SA@5, likely because
+high popularity often occurs in queries, leading to an overemphasis
+on recommending queries.
+Performance Comparisons between MAGUS (denoted as MA-
+GUS + X) and using Sequential Neural Networks as Update
+Formula (denoted as X).As described in Section 4.1, we extend the
+existing single-round recommendation methods (i.e., the base rec-
+ommendation methods) to the multiple-round setting by a recurrent
+neural network based framework. When comparing X+MAGUS and
+X in terms of RA@3, SA@3, and SA@5, one can see that X+MAGUS
+significantly outperforms X. This demonstrates that MAGUS pro-
+vides an effective solution for jointly considering queries and items.
+One possible explanation for the improved performance of MA-
+GUS is its capability to leverage the dependence among queries and
+items through the label propagation algorithm. This enables the
+recommender system to encode user feedback over time, resulting
+in more accurate recommendations.
+Performance Comparisons between MAGUS (denoted as X +
+MAGUS) and using Conversational Recommender Systems
+(denoted as X + CRM, X + ME, X + EAR). As described in Sec-
+tion 4.1, we incorporate the existing conversational recommender
+systems into the base recommendation methods FM, DeepFM, and
+PNN. When comparing X+MAGUS and X + CRM, X + ME, X + EAR
+in terms of RA@3, SA@3, and SA@5, one can see that X+MAGUS
+can consistently achieve better performance. This result can be
+attributed to several key differences between MAGUS and the con-
+versational methods, summarized as follows: (i) Unlike the MA-
+GUS system, conversational recommendation methods (along with
+their simulations in the experimental setting) do not take query
+information into account. (ii) Compared to the MAGUS method,
+conversational recommendation methods do not explicitly model
+the rich interdependence among attributes (where attributes corre-
+spond to words and word combinations in the MAGUS method).
+(iii) Many online recommendation methods utilize reinforcement
+learning techniques. While reinforcement learning methods can
+handle complex states and encode multiple factors, they often face
+challenges such as the need for a large number of training samples
+(referred to as the data insufficiency issue) and relatively small
+action space.
+Performance Comparisons between Graph-based Recom-
+mendations and other Recommendations. When considering
+SAC, sequential recommendation methods such as GRU, LSTM, and
+DIN often outperform other baseline methods. However, concern-
+ing RA@3, SA@3, and SA@5, the graph-based methods, namely
+RGCN, RGAT, and GIPA, achieve comparable or superior results
+compared to the sequential recommendation methods. This sug-
+gests that graph-based methods, when applied to our relational
+graph, can effectively exploit the dependence among queries and
+items to make recommendations. This finding also supports the
+advantage of using a relational graph to bridge queries and items.
+Performance Comparisons between MAGUS and MAGUS+.
+When comparing X+MAGUS+ and X+MAGUS (where X is RGCN,
+RGAT, and GIPA), we can observe thatMAGUS+ can bring consis-
+tent enhancements, which indicates that integrating these learned
+edge weights into the multiple-round recommendation process can
+have a positive influence. This can explained as the learned edge
+weights would be capable of capturing more meaningful relation-
+ships between queries and items, which also verifies the superiority
+of using our relational graph.
+4.3 Hyperparameter Study
+Impact of Maximum Number of Rounds 𝐾MAX. One important
+hyper-parameter in MAGUS is the maximum number of rounds,
+denoted as𝐾MAX. We examined how the performance of MAGUS
+changes when setting𝐾MAX to different values, i.e.,𝐾MAX = 2, 3, 4, 5
+on the Amazon and the Tmall datasets. Results depicted in Figure 3
+consistently indicate that multiple-round recommendations with
+more feedback rounds from users outperform those with fewer
+rounds. This highlights the advantages of implementing a multiple-
+round recommendation service.
+Impact of Recommendation Length 𝑁 . The length of the rec-
+ommendation list at each round (denoted as𝑁 ) is another crucial
+hyper-parameter in MAGUS. To investigate its impact, we exper-
+imented with different values, i.e., 𝑁 = 2, 3, 4, 5, on the Amazon
+and the Tmall datasets. Results replayed in Figure 4 show that
+increasing the length of the recommendation list can lead to im-
+proved performance. This improvement can be attributed to the
+fact that a larger list provides users with more choices and options
+to choose from. However, it is worth noting that the performance
+gain achieved by increasing the length of recommendation list𝑁
+is not as substantial as that obtained by increasing the number of
+rounds𝐾MAX. This is because, compared to 𝑁 recommendations
+in one round, recursively recommending one item in 𝑁 rounds
+could enable the model to update the predicted scores to benefit
+the following recommendations, leading to a significant impact on
+overall performance.
+4.4 Study for Deployment Feasibility
+We present a robustness study that incorporates the analysis of
+ambiguous user feedback within our system in Appendix E.1. We
+also derive into a complexity study in Appendix E.2. Furthermore,
+we offer detailed case studies in Appendix E.3. We then discuss
+the deployment architecture, the extension from top-1 to top-N
+recommendation, and the use case for exploratory research in Ap-
+pendix F.1, F.2, F.3.
+MAGUS KDD’25, August X - Y, 2025, Toronto, Canada
+5 CONCLUSION AND FUTURE WORK
+In this paper, we propose a novel recommendation system MAGUS
+of jointly considering queries and items. Importantly, the MAGUS
+framework can be seamlessly integrated into existing recommen-
+dation platforms. In the future, it would be interesting to evaluate
+and deploy the MAGUS system on an online e-commerce platform.
+REFERENCES
+[1] Ziv Bar-Yossef and Naama Kraus. 2011. Context-sensitive query auto-completion.
+In WWW.
+[2] Keping Bi, Qingyao Ai, Yongfeng Zhang, and W Bruce Croft. 2019. Conversa-
+tional product search based on negative feedback. In Proceedings of the 28th acm
+international conference on information and knowledge management . 359–368.
+[3] Dan Busbridge, Dane Sherburn, Pietro Cavallo, and Nils Y Hammerla. 2019.
+Relational graph attention networks. arXiv preprint arXiv:1904.05811 (2019).
+[4] Jiawei Chen, Hande Dong, Xiang Wang, Fuli Feng, Meng Wang, and Xiangnan
+He. 2023. Bias and debias in recommender system: A survey and future directions.
+ACM Transactions on Information Systems 41, 3 (2023), 1–39.
+[5] Mostafa Dehghani, Sascha Rothe, Enrique Alfonseca, and Pascal Fleury. 2017.
+Learning to attend, copy, and generate for session-based query suggestion. In
+CIKM.
+[6] Kounianhua Du, Weinan Zhang, Ruiwen Zhou, Yangkun Wang, Xilong Zhao,
+Jiarui Jin, Quan Gan, Zheng Zhang, and David P Wipf. 2022. Learning enhanced
+representation for tabular data via neighborhood propagation.Advances in Neural
+Information Processing Systems 35 (2022), 16373–16384.
+[7] Chongming Gao, Wenqiang Lei, Xiangnan He, Maarten de Rijke, and Tat-Seng
+Chua. 2021. Advances and challenges in conversational recommender systems:
+A survey. AI Open 2 (2021), 100–126.
+[8] Xavier Glorot and Yoshua Bengio. 2010. Understanding the difficulty of training
+deep feedforward neural networks. In Proceedings of the thirteenth international
+conference on artificial intelligence and statistics . JMLR Workshop and Conference
+Proceedings, 249–256.
+[9] Huifeng Guo, Ruiming Tang, Yunming Ye, Zhenguo Li, and Xiuqiang He. 2017.
+DeepFM: a factorization-machine based neural network for CTR prediction.IJCAI
+(2017).
+[10] Qingyu Guo, Fuzhen Zhuang, Chuan Qin, Hengshu Zhu, Xing Xie, Hui Xiong,
+and Qing He. 2020. A survey on knowledge graph-based recommender systems.
+IEEE Transactions on Knowledge and Data Engineering 34, 8 (2020), 3549–3568.
+[11] Balázs Hidasi, Alexandros Karatzoglou, Linas Baltrunas, and Domonkos Tikk.
+2015. Session-based recommendations with recurrent neural networks. ICLR
+(2015).
+[12] Sepp Hochreiter and Jürgen Schmidhuber. 1997. Long short-term memory.Neural
+computation (1997).
+[13] Dietmar Jannach, Ahtsham Manzoor, Wanling Cai, and Li Chen. 2021. A survey
+on conversational recommender systems. ACM Computing Surveys (CSUR) 54, 5
+(2021), 1–36.
+[14] Jiarui Jin, Xianyu Chen, Weinan Zhang, Junjie Huang, Ziming Feng, and Yong
+Yu. 2022. Learn over Past, Evolve for Future: Search-based Time-aware Recom-
+mendation with Sequential Behavior Data. In WWW.
+[15] Wenqiang Lei, Xiangnan He, Yisong Miao, Qingyun Wu, Richang Hong, Min-
+Yen Kan, and Tat-Seng Chua. 2020. Estimation-action-reflection: Towards deep
+interaction between conversational and recommender systems. In Proceedings of
+the 13th International Conference on Web Search and Data Mining . 304–312.
+[16] Wenqiang Lei, Gangyi Zhang, Xiangnan He, Yisong Miao, Xiang Wang, Liang
+Chen, and Tat-Seng Chua. 2020. Interactive path reasoning on graph for conver-
+sational recommendation. In Proceedings of the 26th ACM SIGKDD international
+conference on knowledge discovery & data mining . 2073–2083.
+[17] Raymond Li, Samira Ebrahimi Kahou, Hannes Schulz, Vincent Michalski, Laurent
+Charlin, and Chris Pal. 2018. Towards deep conversational recommendations.
+Advances in neural information processing systems 31 (2018).
+[18] Tie-Yan Liu et al. 2009. Learning to rank for information retrieval. Foundations
+and Trends® in Information Retrieval 3, 3 (2009), 225–331.
+[19] Jiaqi Ma, Zhe Zhao, Xinyang Yi, Jilin Chen, Lichan Hong, and Ed H Chi. 2018.
+Modeling task relationships in multi-task learning with multi-gate mixture-of-
+experts. In KDD.
+[20] Sabrina J Mielke, Zaid Alyafeai, Elizabeth Salesky, Colin Raffel, Manan Dey,
+Matthias Gallé, Arun Raja, Chenglei Si, Wilson Y Lee, Benoît Sagot, et al. 2021.
+Between words and characters: a brief history of open-vocabulary modeling and
+tokenization in nlp. arXiv preprint arXiv:2112.10508 (2021).
+[21] Jessie Ooi, Xiuqin Ma, Hongwu Qin, and Siau Chuin Liew. 2015. A survey of
+query expansion, query suggestion and query refinement techniques. In 2015 4th
+International Conference on Software Engineering and Computer Systems (ICSECS) .
+IEEE, 112–117.
+[22] Yanru Qu, Han Cai, Kan Ren, Weinan Zhang, Yong Yu, Ying Wen, and Jun Wang.
+2016. Product-based neural networks for user response prediction. In ICDM.
+[23] Steffen Rendle. 2010. Factorization machines. In ICDM.
+[24] Paul Resnick and Hal R Varian. 1997. Recommender systems. Commun. ACM 40,
+3 (1997), 56–58.
+[25] Michael Schlichtkrull, Thomas N Kipf, Peter Bloem, Rianne van den Berg, Ivan
+Titov, and Max Welling. 2018. Modeling relational data with graph convolutional
+networks. In European semantic web conference .
+[26] Alessandro Sordoni, Yoshua Bengio, Hossein Vahabi, Christina Lioma, Jakob
+Grue Simonsen, and Jian-Yun Nie. 2015. A hierarchical recurrent encoder-decoder
+for generative context-aware query suggestion. In CIKM.
+[27] Yueming Sun and Yi Zhang. 2018. Conversational recommender system. InSIGIR.
+[28] Xiang Wang, Xiangnan He, Yixin Cao, Meng Liu, and Tat-Seng Chua. 2019. Kgat:
+Knowledge graph attention network for recommendation. In Proceedings of the
+25th ACM SIGKDD international conference on knowledge discovery & data mining .
+950–958.
+[29] Xiang Wang, Xiangnan He, Meng Wang, Fuli Feng, and Tat-Seng Chua. 2019.
+Neural graph collaborative filtering. In SIGIR.
+[30] Xiang Wang, Tinglin Huang, Dingxian Wang, Yancheng Yuan, Zhenguang Liu,
+Xiangnan He, and Tat-Seng Chua. 2021. Learning intents behind interactions
+with knowledge graph for recommendation. In WWW.
+[31] Xiaoying Zhang, Hong Xie, Hang Li, and John CS Lui. 2020. Conversational
+contextual bandit: Algorithm and application. InProceedings of the web conference
+2020. 662–672.
+[32] Qinkai Zheng, Houyi Li, Peng Zhang, Zhixiong Yang, Guowei Zhang, Xintan
+Zeng, and Yongchao Liu. 2021. GIPA: General Information Propagation Algorithm
+for Graph Learning. arXiv preprint arXiv:2105.06035 (2021).
+[33] Guorui Zhou, Xiaoqiang Zhu, Chenru Song, Ying Fan, Han Zhu, Xiao Ma, Yanghui
+Yan, Junqi Jin, Han Li, and Kun Gai. 2018. Deep interest network for click-through
+rate prediction. In KDD.
+KDD’25, August X - Y, 2025, Toronto, Canada Jiarui Jin et al.
+A A SUMMARY OF NOTATIONS
+Table 2: A summary of notations.
+Notations Explanations
+𝑢∈U ,𝑣 ∈V user𝑢 in setU, item𝑣 in setV
+𝑞∈Q ,𝑤 ∈W query𝑞 in setQ, word𝑤 in setW
+𝑎∈A query or item𝑎 in setA =V∪Q
+G =(E,R) node setE in graphG contains both
+individual wordsW and certain
+combinations of words representing
+queriesQ and itemsV
+R =R+∪R−∪R⊥ edge setR in graphG contains three
+set of relationships between nodes
+H+𝑢,H−𝑢 set of items receiving positive, negative
+feedback from user𝑢
+H𝑞
+𝑢 set of searched queries of user𝑢
+𝒆𝑣,b𝑦𝑣,𝜓 RE(𝑣) embedding vector, updated score,
+predicted score of node𝑣∈E
+B SYSTEM ANALYSIS
+B.1 Overall Algorithm
+The MAGUS system is summarized in Algorithm 1. Lines 1, 2, 3
+and 16 represent the offline training part, while lines 4 to 12 are the
+online update part. As mentioned earlier, the offline training part
+could be pre-computed and stored, making the online interaction
+process more efficient.
+Algorithm 1 The MAGUS System
+INPUT: positive and negative browsed items for all users{H+𝑢|𝑢∈
+U} and{H−𝑢|𝑢∈U} ; optional: searched queries for all users
+{H𝑞
+𝑢|𝑢∈U} .
+OUTPUT: recommended query or item𝑎MAGUS at each round.
+1: Offline train a recommendation model𝜓RE(·) uponH+𝑢 s and
+H−𝑢 s for𝑢∈U .
+2: Offline build a relational graphG =(E,R) by Definition 3.1.
+3: Offline compute the weights of the edges inR using Eq. (3) or
+Eq. (14).
+4: for each online session for user𝑢 do
+5: Initialize𝑘 = 0.
+6: Initialize the scores of all nodes using Eqs. (2), (4), and (5).
+7: repeat
+8: Normalize the scores of all nodes using Eq. (6).
+9: Compute𝑎MAGUS using Eq. (7).
+10: Recommend𝑎MAGUS and receive corresponding response.
+11: Update the scores of the nodes using Eqs. (8) and (9).
+12: Go to next round:𝑘←𝑘+ 1.
+13: until𝑎MAGUS∈V TARGET or𝑘 >𝐾MAX.
+14: Collect session data intoH+𝑢 andH−𝑢 .
+15: end for
+16: Update𝜓RE(·) using data in newH+𝑢 s and newH−𝑢 s.
+Our approach can be regarded as a combination of non-parametric
+recommendation methods relying on connections between queries
+and items, and parametric recommendation methods based on
+user browsing logs. Concretely, our recommendation problem can
+be formulated as a node classification problem on our graph G,
+aiming to recommend a node to a given user. To update our pre-
+dictions in each 𝑘-th round of interaction, we use the formula
+𝒀(𝑘+1) = Θ𝑺𝒀(𝑘)+ 𝒀(0), where 𝑺 is the symmetric normalized
+version of the adjacency matrix 𝑨 given by 𝑺 = 𝑫− 1
+2 𝑨𝑫− 1
+2 and 𝑫
+represents the degree matrix of the graphG, and Θ is a learnable
+weight (as described in Section 3.4). Here, our adjacency matrix𝑨 in-
+corporates the connections among queries and items, as introduced
+in Definition 3.1; whereas 𝒀(0) and Θ are computed using an offline
+learned recommendation method. As a result, our MAGUS system
+exhibits superior generalization and greater capacity for manag-
+ing intricate connections between queries and items, compared
+to either purely parametric or non-parametric recommendation
+methods.
+B.2 Complexity Analysis
+The MAGUS system consists of two key components: the feature
+propagation part during offline training and the label propagation
+part during online inference. Matrix multiplication on graph, which
+is a fundamental operation in these components, has a computa-
+tional complexity of 𝑂(| 𝑺+|· 𝑑2) as stated in [ 29], where|𝑺+| is
+the number of nonzero entities in 𝑺. The dimension of the embed-
+ding vector of nodes, denoted as𝑑, is significant for computational
+considerations. In feature propagation,𝑑 is the dimension of the
+embedding vector of nodes, while in label propagation, 𝑑 is the
+dimension of the label vector of nodes.
+B.3 Connections to Rule-based Algorithms
+Our MAGUS system can be conceptualized as an amalgamation of
+rule-based and learning-based recommendation methods. To eluci-
+date, our approach integrates label propagation, which embodies
+elements of both rule-based and learning-based strategies. Con-
+cretely, we delineate our framework as a node classification task
+within the context of a relational graph, aiming to recommend a
+node to a given user. In each𝑘-th interaction, our interactive cycle is
+characterized by an update formula 𝒀(𝑘+1) =𝜆𝑺𝒀(𝑘)+( 1−𝜆)𝒀(0),
+where 𝒀(𝑘) represents the label matrix at the commencement of
+the𝑘-th iteration. Here, 𝑺 is the symmetric normalized version of
+the adjacency matrix 𝑨 given by 𝑺 = 𝑫− 1
+2 𝑨𝑫− 1
+2 , and 𝑫 repre-
+sents the degree matrix of the graph 𝑨. Our adjacency matrix 𝑨 is
+constructed by integrating rules derived from the user’s browsing
+patterns, as described in Definition 3.1. This incorporation of user
+behaviors into the graph’s structure provides a personalized con-
+text for the recommendation process. Additionally, as detailed in
+Section 3.2, the initial label matrix 𝒀(0) is derived from an offline-
+tuned recommendation model. And, the weights for the graph edges
+{𝑤𝑣𝑣′|⟨𝑣,𝑣′⟩∈R} , as discussed in Section 3.4, also can be computed
+using an offline-learned recommendation model.
+Therefore, our MAGUS system is distinguished by its superior
+generalization capabilities and its enhanced capacity to manage
+complex user patterns that may not conform to predefined rules.
+This attribute sets it apart from traditional rule-based algorithms,
+MAGUS KDD’25, August X - Y, 2025, Toronto, Canada
+which, while they offer clear interpretability, can sometimes fall
+short in adapting to the intricacies of user behavior that extend
+beyond established norms. In comparison to purely learning-based
+algorithms, the MAGUS system offers a distinct advantage in terms
+of interpretability. This system’s design, which incorporates a struc-
+tured graph with labeled nodes, facilitates a more transparent un-
+derstanding of its decision-making process. By examining the graph
+structure and the labels assigned to individual nodes, one can more
+readily deduce the rationale behind the system’s actions.
+We also note that ourMAGUS system can ensure the recommen-
+dations concentrate on the user feedback within the current session
+rather than previous user behaviors. In other words, our MAGUS
+prioritize the user’s current preferences, acknowledging that user
+interests are subject to change over time. For instance, while a
+user’s browsing history may indicate a significant interest in items
+such as “iPhone” items, if the user clearly expresses a preference for
+other items such as “MacBook” items during the current session,
+the MAGUS system will dynamically adjust its recommendations
+accordingly. It will prioritize recommending “MacBook” items over
+“iPhone” items. This is achieved by the design of the mechanisms
+within MAGUS. Specifically, according to Eqs. (5) and (6), even if
+a user has shown great interest in some “iPhone” items in their
+previous behaviors, the prediction scores for all “iPhone” items
+are constrained to be smaller than 1. Furthermore, if a user clearly
+expresses a preference for “MacBook” items, as per Eq. (8), the pre-
+diction scores for “MacBook” items are set to 1. If all edge weights
+are set to 1 forR+ (following Eq. (3)), items related to “MacBook”
+items would receive prediction scores greater than 1 according to
+Eq. (9). In this case, it is unlikely for ourMAGUS system to respond
+with an “iPhone” items when a user clearly prefers “MacBook”.
+C EXPERIMENT CONFIGURATIONS
+C.1 Dataset Description
+We conducted extensive experiments on 3 industrial real-world
+e-commerce datasets, whose statistics are summarized as follows.
+• Amazon∗∗ is a dataset introduced by collected from Amazon, an
+online e-commerce application from May 1996 to July 2014. There
+are 1,114,563 reviews of 133,960 users and 431,827 items with an
+average sequence length of 33 and 6 feature fields.
+• Alipay†† is a dataset collected by Alipay, an online payment
+application from July 2015 to November 2015. There are 35,179,371
+interactions of 498,308 users and 2,200,191 items with an average
+sequence length of 70 and 6 feature fields.
+• Tmall‡‡ is a dataset consisting of 54,925,331 interactions of 424,170
+users and 1,090,390 items. These sequential histories are collected
+by Tmall e-commerce platform from May 2015 to November 2015
+with an average sequence length of 129 and 9 feature fields.
+C.2 Description of Data Pre-processing
+For each dataset, we begin with organizing users and items into
+a set of usersU and a set of itemsV. Also, we can get access to
+user-item interaction histories to build:H+𝑢 , a set of items receiving
+∗∗https://jmcauley.ucsd.edu/data/amazon/
+††https://tianchi.aliyun.com/dataset/dataDetail?dataId=53
+‡‡https://tianchi.aliyun.com/dataset/dataDetail?dataId=42
+positive feedback from user 𝑢; andH−𝑢 , a set of items receiving
+negative feedback from user𝑢, for all user𝑢∈U . As outlined in
+Definition 2.1, we need a query set Q. In the following, we take
+the Amazon dataset as a concrete example of the generation of
+Q. Initially, we create a word setW by extracting terms from the
+categorical features of items withinV. For instance, if there is an
+item with brand Coxlures and belonging to categories such as
+Sports and Dance, then we extract words coxlures, sports, and
+dance. We proceed by enumerating all the items inV. During this
+process, we form combinations of words and individual words as
+the nodes of our relational graph. For example, if we have anItem A
+with a combination like coxlures, sport and dance, then we have
+nodes as individual words such as coxlures, sport, and dance,
+and nodes as combinations of words such as sport and dance. All
+these nodes, except for those representing items, can be considered
+as queries (i.e.,Q). They serve as potential query elements within
+our system. Also, once we have established the nodes representing
+queries and items, we can proceed to construct our relational graph
+G (as defined in Definition 3.1) correspondingly.
+C.3 Description of Relational Graph
+Construction
+We also emphasize the versatility of our relational graphG, which
+can be constructed across various domains. For example, when
+dealing with items like movies or songs, we can create these graphs
+using key features extracted from raw data. For movies, features
+such as directors and genres can be extracted, while for songs, fea-
+tures like singers and genres can be utilized. These features form
+nodesV within the graph, representing combinations of attributes
+(e.g., director A + romantic , director B + fiction ). We define
+mutual improvement relationship between nodesR+ like director
+A and director A + romantic, as users inclined towards the roman-
+tic genre may favor movies directed by director A in that genre.
+Conversely, we define mutual inhibition relationshipR− between
+nodes like romantic and fiction, reflecting the understanding that
+users preferring fiction may not favor movies categorized under
+the romantic genre. Additionally, we define a mutual independence
+relationship between nodesR⊥ between nodes like nodes repre-
+senting directors and nodes representing genres, because there are
+no explicit relations between these two types of nodes, and the im-
+plicit relations are modeled by introducing nodes likedirector A +
+romantic. These relationships capture underlying interdependen-
+cies and refine the system’s recommendations. Our primary focus
+lies in strategically leveraging relational graphs in multiple-round
+settings, while the extraction of relevant information, such as key-
+words, from item descriptions aligns with established tokenization
+practices in the field [20], which is out of the scope of this paper.
+C.4 Descriptions of Adjustments of Baselines
+Consider that our task of multiple-round recommendations sup-
+porting queries and items (as introduced in Definition 2.1) is novel,
+and there are no existing approaches tailored to this specific task. To
+adapt the baseline methods to our context, we introduce two main
+adjustments. The first adjustment involves expanding their action
+space from just items (i.e.,V) to encompass both items and queries
+KDD’25, August X - Y, 2025, Toronto, Canada Jiarui Jin et al.
+(i.e.,A =V∪Q ). The second adjustment enables these meth-
+ods to utilize user responses during multiple-round interactions.
+We introduce a recurrent neural network architecture, outlined
+in Figure 5, to facilitate this process. Initially, we input the final
+embedding layer (i.e., the representation of the final prediction) of
+a single-round baseline method into a unit, enabling information
+from each round to be transmitted to subsequent rounds. Inspired
+by the label trick proposed in [14], we devise representation vectors
+to capture user behaviors, such as clicks. In the case of binary user
+responses, we utilize two vectors to represent positive and negative
+user responses. These representation vectors for user feedback are
+concatenated with user and item features, forming the input of the
+model.
+...
+f
+user
+f
+b
+0
+f
+b
+1
+b
+2
+b
+3
+age
+price
+...
+...
+ user response 
+at 
+1st 
+round
+ user response 
+at 
+2nd 
+round
+Last 
+Embedding 
+Layer 
+of 
+a 
+Single-round 
+Baseline
+embedding 
+vector
+embedding 
+vector
+embedding 
+vector
+embedding 
+vector
+Figure 5: An illustrated example of extending a single-round
+baseline method to our multiple-round setting in the ma-
+sonry layout, where we introduce a recurrent neural network
+to facilitate the flow of information across rounds.
+C.5 Implementation Details
+The learning rate is decreased from the initial value 1× 10−2 to
+1× 10−5 during the training process. The dimensions of all the
+embedding vectors including users and words (and queries and
+items) are set as 64. The batch size is set as 1000. The weight for
+L2 regularization term is 4× 10−4. The dropout rate is set as 0.5.
+We assign the length of recommendation lists (denoted as 𝑁 ) as
+3. The maximum number of rounds (denoted as𝐾MAX) is set in the
+evaluation metrics (see Section 4.1 for details).
+D SIMULATION DESIGN
+D.1 Description of Conversational Agent
+Our simulator introduces a conversational agent built upon the rec-
+ommendation model to interact with a human user. The following
+summarizes the interaction principles.
+Definition D.1 ( Conversational Agent and Human User In-
+teractions). Our conversational agent is designed to act in the
+following 2 ways following Eq. (7).
+• Query an item𝑣∈V , when the corresponding node receives
+the highest score.
+• Query a query𝑞∈Q , when the corresponding node (represent-
+ing a specific word combination) receives the highest score.
+The human user is supposed to respond in the following ways.
+• Upon querying item𝑣, the user should respond with Yes if𝑣
+is one of target items of users, or No otherwise. In the “ Yes”
+case, the session is successfully concluded, because𝑣 is one of
+the target items (i.e., the user has identified an item that meets
+their satisfaction criteria). Conversely, in theNo case, the scores
+assigned to each node are subjected to an update process.
+• Upon querying query𝑞, the user should respond with Yes if
+𝑞 is one of the elements within the word combination of the
+target items, or No otherwise. The scores assigned to each node
+would be updated accordingly.
+We note that in the following definition when a session encom-
+passes multiple target items, the conversational agent’s requirement
+is limited to identifying a single target item that meets the user’s
+criteria. One underlying assumption under this setting is that users
+always have a clear picture of their interests, which may not hold
+in practice, as users often have multiple interests and some of them
+would be ambiguous or not clearly defined. For instance, as de-
+picted in Figure 2, a user may simultaneously express a preference
+for both Item A and Item B . If the conversational agent inquire
+about airpods, the user agent is expected to affirm with a “ Yes”,
+thereby directing the recommender system to identify Item B as a
+potential match. However, in practical scenarios, the user might
+also favor Item A concurrently, given that the user’s preferences
+are not mutually exclusive.
+Therefore, we introduce another setting that permits the user
+to respond with Not Care when faced with a query from the con-
+versational agent that pertains to attributes or features present in
+multiple preferred items. This response option acknowledges the
+ambiguity of user preferences and allows for a more nuanced inter-
+action with the recommender system. The corresponding results
+under this setting are available in Appendix E.1.
+D.2 Empowering MAGUS with Large Language
+Models
+As depicted in Figure 1, ourMAGUS system integrates both queries
+and items in its output layout. However, a potential concern with
+this design is the occasional generation of queries that may seem
+artificial, potentially diverging from user-friendly formulations. To
+mitigate this challenge, a feasible strategy entails harnessing the
+capabilities of large language models while employing targeted
+prompts to steer the generation of queries toward user-friendly,
+natural language formulations.
+Initially, if the expectation is for the final queries to consist of
+combinations of keywords, the following prompt can be utilized:
+prompt = f"""
+You will be provided with text delimited by triple quotes.
+If words in the text can be keywords of a query, then you just return it.
+Otherwise, you should re-organize these words. You should just return
+the original or re-organized words, not sentences.
+“‘text”’"""
+Secondly, if we anticipate the final queries to be in the form of
+completed sentences, we can utilize the following prompt.
+prompt = f"""
+You will be provided with text delimited by triple quotes.
+MAGUS KDD’25, August X - Y, 2025, Toronto, Canada
+Table 3: Results comparison of joint recommendations of
+both queries and items in terms of RA@3, SA@3, and SA@5
+under the user agent configuration introduced in Appen-
+dix D.1. * indicates 𝑝 < 0.001 in significance tests compared
+to the best baseline.
+Methods Amazon | Alipay |
+RA@3 SA@3 SA@5 RA@3 SA@3 SA@5
+FM 0.685 0.602 0.658 0.720 0.700 0.762
+FM+CRM 0.702 0.610 0.668 0.735 0.725 0.776
+FM+ME 0.701 0.608 0.659 0.742 0.729 0.780
+FM+EAR 0.711 0.615 0.674 0.740 0.728 0.786
+FM+MAGUS 0.725∗ 0.625∗ 0.682∗ 0.759∗ 0.750∗ 0.803∗
+DeepFM 0.702 0.612 0.706 0.736 0.698 0.788
+DeepFM+CRM 0.716 0.624 0.719 0.750 0.713 0.805
+DeepFM+ME 0.709 0.615 0.704 0.740 0.704 0.791
+DeepFM+EAR 0.742 0.646 0.746 0.771 0.735 0.824
+DeepFM+MAGUS 0.759∗ 0.655∗ 0.760∗ 0.785∗ 0.749∗ 0.840∗
+The input text can be regarded as a class of items. You should generate
+a sentence to ask whether the user likes this class of items or not. You
+should be gentle.
+“‘text”’"""
+Next, we proceed to assess the performance of the aforemen-
+tioned methods as follows. The first prompt is tailored to extract
+keywords from the input text while eliminating redundancy. For
+instance, if the input text is “blue clothes shirt ”, the output would be
+“blue shirt” with “clothes” considered redundant due to the presence
+of “shirt” in the query. The second prompt is designed to generate
+a sentence or conversation based on the query. For example, if the
+input text is “ blue shirt ”, the output would be “ Do you like blue
+shirts?” This output constitutes a complete sentence suitable for
+use in a conversation.
+We also note that LLM can encode some latent features from the
+conversations. For example, we can add the following statement
+in the input prompt: “ If you can infer the user has a low budget,
+please make recommendations with low prices ”. In response to the
+user mentioning “I am a student ”, the system would subsequently
+provide queries or items characterized by low prices.
+Considering that the above process only requires a large lan-
+guage model API, it is very practical to integrate a large language
+model into our MAGUS system as later discussed in Appendix F.1.
+Training Inference
+0
+200
+400
+600
+800
+1000Time (second)
+Training/Inference Time Comparisons
+FM
+FM+MAGUS
+DIN
+DIN+MAGUS
+GRU
+GRU+MAGUS
+RGCN
+RGCN+MAGUS
+RGCN+MAGUS+
+Figure 6: Comparisons of training and inference time of MA-
+GUS and MAGUS+ against several baselines on Tmall dataset.
+E ADDITIONAL EXPERIMENTS
+E.1 Performance Comparisons with Ambiguous
+User Feedback
+As outlined in Appendix D.1, the user agent, used in Section 4.1,
+is designed to respond with “ Yes” to the conversational agent if
+the query matches any of the designated target items. However,
+this assumption may not always be valid in practice. Consequently,
+an alternative configuration is presented in Appendix D.1 to ac-
+count for the variability and potential ambiguity inherent in user
+feedback.
+Table 3 reports the corresponding results on Amazon and Alipay
+datasets. The table demonstrates that our MAGUS system consis-
+tently outperforms the baseline methods, even when considering
+the ambiguity of user feedback, thereby showcasing the robustness
+of our system. Furthermore, a comparison between Table 3 and
+Table 1 reveals that ambiguity significantly impairs performance,
+particularly for X and X+ME. One possible explanation is that X,
+which incorporates user feedback as input, inevitably introduces
+more noise, and X+ME, which emphasizes querying over item rec-
+ommendation, is more susceptible to user ambiguity, as ambiguity
+frequently arises during the querying process.
+E.2 Complexity Study
+We conducted an investigation into the time complexity ofMAGUS
+and MAGUS+ based on the FM, GRU, DIN, and RGCN, recommen-
+dation bases on Tmall dataset. We report the training and inference
+times for one round of the whole data in Figure 6. In the training
+phase, MAGUS showed almost no significant difference in terms
+of computational time when compared to the baseline methods.
+This is because the computations introduced by MAGUS mainly
+involve building the relational graph, which is relatively efficient.
+In the inference phase, the computational costs of bothMAGUS and
+MAGUS+ are incurred by the label propagation algorithm. The use
+of MAGUS+ introduces some additional computational overhead
+compared to MAGUS, as it involves running the one-round feature
+propagation on the graph.
+E.3 Case Study
+In order to further demonstrate the superiority of MAGUS, we
+conduct a case study on Amazon dataset. Figure 7 illustrates the
+process of MAGUS. MAGUS first initializes scores for nodes in the
+relational graph. These nodes represent individual words and com-
+binations of words, serving as queries and items. After receiving
+responses from a specific user, MAGUS updates the scores accord-
+ingly. This dynamic process allows MAGUS to adapt to the user’s
+preferences and provide personalized recommendations.
+We argue that this practical case holds significance because it
+contrasts a simple and commonly used method [ 1] that always
+recommends highly popular queries or items to users (denoted as
+MPS in our experiment). For clarity, we have also incorporated a
+visualization of each node’s popularity level in the figure. In the
+specific instance, MAGUS recommends clothes as a query in the
+first round and item1940 in the second round, while the popularity-
+based method would suggest food in the first round and clothes
+in the second round.
+KDD’25, August X - Y, 2025, Toronto, Canada Jiarui Jin et al.
+user 
+2742
+(high 
+popularity)
+(low 
+popularity)
+(low 
+popularity)
+(medium 
+popularity)
+item 
+8632
+item 
+1940
+item 
+2401
+(low 
+popularity)
+(medium 
+popularity)
+(medium 
+popularity)
+(medium 
+popularity)
+(low 
+popularity)
+(low 
+popularity)
+Figure 7: An illustrated case of MAGUS providing one recom-
+mendation to user 2742 at each round. The number depicted
+over each node is its score regarding the user. The popularity
+level of each node is computed according to its frequency in
+the user’s browsing log.
+This comparison effectively underscores a key point: popularity-
+based methods tend to overlook the variations in user preferences
+and the dynamic nature of these preferences across different rounds.
+This drawback resembles the well-known popularity bias [4] seen
+in item recommendation tasks, where popular items are favored
+in recommendations without due consideration of individual user
+preferences.
+Real-time 
+Recommendation 
+Server
+The 
+MAGUS 
+System
+Recommendation 
+1
+Recommendation 
+2
+...
+User 
+ID  
++
+Multiple  
+Relational 
+Trees
+User 
+Response
+User 
+Embeddings
+Users 
+Demography 
+Database
+Top-N 
+Recommendations
+Recommender 
+System
+Item 
+Embeddings
+Recommender 
+System 
+Database
+Users 
+Browsing 
+Log 
+Database
+Item 
+Feature 
+Database
+Store 
+Data
+Offline 
+Training
+Plug-and-Play 
+Large 
+Language 
+Model 
+API
+Figure 8: Online deployment of the MAGUS system can be
+seamlessly integrated into existing real-time recommenda-
+tion servers. The diagram below shows the workflow, where
+solid arrows represent the offline training phase, and hollow
+arrows represent the online update phase. Most of the compo-
+nents required for the MAGUS system are already present in
+existing recommender systems. The main additions are the
+multiple relational trees, which store the relational graph
+used by MAGUS. We also incorporate large language models
+in a plug-and-play manner to decorate the artificial queries
+generated by MAGUS.
+F DEPLOYMENT FEASIBILITY
+F.1 System Architecture for Deployment
+Here, we discuss the feasibility of the industrial deployment of our
+MAGUS system. Fortunately, integrating the MAGUS system into
+an existing recommendation platform should not pose a substan-
+tial workload. The primary modifications introduced by MAGUS
+involve the organization of the relational graph and its continuous
+updating based on user responses. The majority of the prediction
+model pipeline remains unchanged.
+Integrating the MAGUS system into an existing recommenda-
+tion platform should not introduce a significant computational
+burden, since the primary modifications only involve organizing
+the relational graph and updating the graph by user responses.
+To optimize the computation costs associated with using the
+graph multiple times, we propose a strategy for simplification. This
+involves creating multiple relational trees, as illustrated in Figure 8.
+Each of these trees originates from a root node, which typically
+represents an item, and then branches out to nodes representing in-
+dividual words. As an example, consider Figure 2(a). In this case, one
+of these trees extends from a node representingItem A and branches
+to nodes that represent individual words like apple and grey. The
+primary benefit of this approach is the ability to parallelize com-
+putations and focus on localized operations within each tree. This
+parallelization can lead to significantly improved efficiency when
+working with the graph in a multiple-round recommender system.
+F.2 Extension of MAGUS from Top-1 to Top-N
+Recommendations
+To extend MAGUS from top-1 recommendations to top-N recom-
+mendations, we only need to make the following modifications to
+Algorithm 1.
+First, instead of selecting only one recommendation 𝑎MAGUS in
+line 9, we now recursively select a list of𝑁 𝑎MAGUSs as recommen-
+dations. Any one of these𝑎MAGUSs can represent either a query or
+an item, and they are chosen based on the top-𝑁 predicted scores
+from the recommender system𝜓RE(·).
+Second, the user’s response and the subsequent updates differ
+from lines 10 and 11. In the case of binary user response (namely, the
+user response is either positive or negative) to a recommendation,
+the response to top-N recommendations fails to two categories. (i)
+If the user clicks on one of the𝑁 𝑎MAGUSs, denoted as𝑎∗
+MAGUS, we set
+the score of the node representing𝑎MAGUS to 1, and the scores of the
+nodes representing the remaining𝑁− 1𝑎MAGUS are set to 0. This
+adjustment is accomplished by modifying Eq. (8) accordingly. (ii) If
+the user does not click on any of the𝑁 𝑎MAGUSs, we assign scores
+of 0 to the nodes representing all 𝑁 𝑎MAGUSs. For any category of
+user responses, we subsequently apply Eq. (9) to propagate these
+updated scores to the other nodes in the graph.
+These modifications enable the MAGUS system to provide top-N
+recommendations and handle user responses accordingly.
+F.3 Deployment Feasibility for Exploratory
+Search
+Here, we extend the example in Figure 1(b) to further illustrate how
+our MAGUS system would enable the exploratory search where
+users often have a vague idea of the items they seek. As introduced
+in Figure 9, a user tends to purchase milk but lacks specific criteria
+such as the preferred brand or price range to give a well-formed
+query. In such an instance, one viable solution is to provide a se-
+lection of recommended milk items alongside suggested queries,
+allowing users to engage in navigating and comparing items prior
+to refining their search queries. Therefore, the user initially chooses
+MAGUS KDD’25, August X - Y, 2025, Toronto, Canada
+Brand 
+A
+Item 
+A
+$
+250
+Milk
+Query 
+A
+Brand 
+C
+Item 
+C
+Semi 
+Skimmed
+2L
+$
+3
+Brand 
+C
+Whole
+2L
+$
+2
+Whole
+Milk
+Query 
+D
+Milk
+Milk
+Brand 
+A
+Whole
+3L
+$
+4
+Item 
+E
+Milk
+Item 
+D
+Earphone
+Brand 
+B
+Item 
+B
+$
+50
+T-Shirt
+Apple
+Query 
+B
+Query 
+C
+Phone
+Brand 
+C
+ (a) Startup Page (b) Recommendation Page
+Figure 9: An illustrated example of exploratory search is
+where users often have a vague idea of the items they seek.
+MAGUS provides a selection of recommended items along-
+side suggested queries, allowing users to engage in navigating
+and comparing items prior to refining their search queries.
+to search for the query Milk from the startup page, comparing it
+with other presented queries and items, as depicted in Figure 9(a).
+Subsequently, MAGUS provides the user with multiple queries
+and items, enabling her to compare suggested queries (at an ab-
+stract level) or recommended items (at a specific level) to determine
+whether to search for a more specific query or directly select an
+item. As a result, the user chooses item D. From the above example,
+we can see that achieving this requires jointly considering queries
+and items; however, almost all the deployments of either query
+recommendations or item recommendations have predominantly
+occurred in isolation from one another.

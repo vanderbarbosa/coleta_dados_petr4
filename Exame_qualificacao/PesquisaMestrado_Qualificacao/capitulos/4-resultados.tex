@@ -1,6 +1,6 @@
 \chapter{Resultados e Discussão} \label{chap:resultados}
 
-Este capítulo apresenta e discute os resultados obtidos sobre o corpus completo, com marcação temporal real, o que supera o caráter preliminar da etapa de qualificação, cujos resultados, baseados em imputação estocástica de datas, foram corretamente considerados inválidos pela banca. A exposição segue a ordem do método. Inicia pela descrição exploratória do corpus de notícias e pela distribuição do sentimento. Passa à modelagem econométrica do risco e ao seu diagnóstico. Chega à previsão de direção, acompanhada de linhas de base e de testes de significância, e aprofunda-se nas análises de robustez: o efeito da ponderação do sentimento, a causalidade de Granger, a avaliação da volatilidade, o estudo de refinamento e a análise de ablação. Encerra com a discussão da distinção entre mercado e ativo, o estado da validação humana e a verificação das hipóteses. Todos os números provêm de execução reproduzível, e a sua interpretação é conduzida com a cautela que a quase-eficiência do mercado impõe.
+Este capítulo apresenta e discute os resultados obtidos sobre o corpus completo, dotado de marcação temporal real. A exposição segue a ordem do método. Inicia pela descrição exploratória do corpus de notícias e pela distribuição do sentimento. Passa à modelagem econométrica do risco e ao seu diagnóstico. Chega à previsão de direção, acompanhada de linhas de base e de testes de significância, e aprofunda-se nas análises de robustez: o efeito da ponderação do sentimento, a causalidade de Granger, a avaliação da volatilidade, o estudo de refinamento e a análise de ablação. Encerra com a discussão da distinção entre mercado e ativo, com os estudos de refinamento e validação do componente de sentimento, e com a verificação das hipóteses. Todos os números provêm de execução reproduzível, e a sua interpretação é conduzida com a cautela que a quase-eficiência do mercado impõe.
 
 \section{Análise Exploratória do Corpus}
 
@@ -608,13 +608,9 @@ Essa leitura tem uma implicação teórica que merece destaque e que reconcilia,
 
 \section{A Distinção entre Mercado e Ativo}
 
-Retoma-se, à luz dos resultados, a questão que a banca considerou central: como o método distingue uma notícia negativa para o mercado de uma negativa para a empresa? A taxonomia temática é o instrumento dessa distinção. Para eventos classificados nas categorias de oferta, como geopolítica e sanções, um choque de tom negativo, a exemplo do fechamento do Estreito de Ormuz, tende a elevar o preço do petróleo e, por essa via, a favorecer a Petrobras, ainda que pressione o índice de ações. Para eventos da própria empresa, como uma intervenção na governança, o efeito segue o sentido do evento. Essa leitura, fundamentada na economia dos choques de petróleo de \citeonline{kilian_not_2009} e \citeonline{hamilton_oil_1983}, é o que permite ao sistema não tratar todo tom negativo como sinal de queda do ativo. A análise de ablação dá sustentação empírica a essa arquitetura, ao mostrar que as categorias de mercado e de empresa desempenham papéis distintos na previsão.
+Retoma-se, à luz dos resultados, uma questão central para a validade do método: como distinguir uma notícia negativa para o mercado de uma notícia negativa para a empresa? A taxonomia temática é o instrumento dessa distinção. Para eventos classificados nas categorias de oferta, como geopolítica e sanções, um choque de tom negativo, a exemplo do fechamento do Estreito de Ormuz, tende a elevar o preço do petróleo e, por essa via, a favorecer a Petrobras, ainda que pressione o índice de ações. Para eventos da própria empresa, como uma intervenção na governança, o efeito segue o sentido do evento. Essa leitura, fundamentada na economia dos choques de petróleo de \citeonline{kilian_not_2009} e \citeonline{hamilton_oil_1983}, é o que permite ao sistema não tratar todo tom negativo como sinal de queda do ativo. A análise de ablação dá sustentação empírica a essa arquitetura, ao mostrar que as categorias de mercado e de empresa desempenham papéis distintos na previsão.
 
 Três casos ilustram a operação dessa distinção. No primeiro, uma manchete sobre o fechamento de uma rota de transporte de petróleo no Oriente Médio, embora de tom inequivocamente negativo, é classificada na categoria de geopolítica e lida como um choque de oferta, favorável a uma produtora. No segundo, uma notícia sobre a troca abrupta do comando da Petrobras por decisão política é classificada na categoria de governança e lida como desfavorável, pois introduz incerteza sobre a gestão da empresa. No terceiro, um anúncio de dividendos recordes, de tom positivo e categoria corporativa, é lido como favorável de forma direta. Em cada caso, a combinação entre o tom, fornecido pelo FinBERT-PT-BR, e a categoria, fornecida pela taxonomia, produz uma leitura econômica que um índice de sentimento agregado, indiferente ao tema, não seria capaz de oferecer. É essa leitura diferenciada que responde, de forma concreta, à preocupação da banca de que o método não confundisse uma má notícia para o mercado com uma má notícia para a empresa.
-
-\section{Validação Humana do Sentimento}
-
-Conforme descrito no método, construiu-se um conjunto-ouro de trezentas notícias, estratificadas por classe e por ano, para a rotulagem manual e o cálculo da acurácia e do coeficiente \textit{kappa} de Cohen contra o FinBERT-PT-BR. A infraestrutura de amostragem e de avaliação encontra-se pronta, e a rotulagem humana compõe a etapa final de validação rumo à defesa. A inclusão dessa validação responde diretamente à recomendação da banca de aferir, por inspeção humana, a confiabilidade do sentimento automático.
 
 \section{Avaliação Econômica}
 
@@ -665,11 +661,24 @@ A quantidade efetivamente comparável entre estudos não é a acurácia absoluta
 
 Há, ainda, dois avanços de natureza distinta. O primeiro é metodológico. Muitos dos trabalhos comparados reportam o melhor resultado entre várias configurações, ou avaliam sobre conjuntos que não isolam de forma estrita o período de teste, práticas que tendem a superestimar o desempenho. Esta dissertação adota a postura oposta, com um único conjunto de teste consultado uma vez, testes de significância e relato transparente, o que confere maior confiabilidade ao número, ainda que menor. O segundo avanço diz respeito à volatilidade. Enquanto a maior parte da literatura concentra-se na direção, este trabalho retoma a linha de \citeonline{silva_o_2018} para o mercado brasileiro e a aprofunda, ao demonstrar, por meio do teste de causalidade de Granger, que o sentimento antecede a volatilidade de forma forte e persistente. Esse é, possivelmente, o ponto em que a presente pesquisa mais claramente avança em relação ao estado da arte nacional.
 
+\section{Estudos de Refinamento e Validação do Componente de Sentimento}
+\label{sec:refinamento_validacao}
+
+As seções anteriores estabeleceram o desempenho do sistema completo. Esta seção examina o
+componente de sentimento em si, que constitui o primeiro elo da cadeia e cuja qualidade limita
+tudo o que vem depois. A ordem da exposição segue a do próprio percurso de investigação: primeiro
+os experimentos de refinamento do classificador de direção, em seguida a validação do sentimento
+automático contra um padrão de referência humano e, por fim, as tentativas sucessivas de elevar
+essa validação, encerradas por um resultado negativo que delimita o alcance da abordagem. Os dois
+últimos itens reportam achados de implementação sobre o artefato público empregado.
+
 \input{capitulos/4d-experimentos-suite}
 \input{capitulos/4e-filtro-relevancia}
 \input{capitulos/4f-estrategia-refinamento}
 \input{capitulos/4g-validacao-sentimento}
 \input{capitulos/4h-experimento-encoder}
+\input{capitulos/4i-adaptacao-dominio}
+\input{capitulos/4j-achados-implementacao}
 
 \section{Síntese e Verificação das Hipóteses}
 
