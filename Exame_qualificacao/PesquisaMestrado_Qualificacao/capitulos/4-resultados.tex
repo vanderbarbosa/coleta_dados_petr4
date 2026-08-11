@@ -409,6 +409,7 @@ A previsão de volatilidade apresenta correlação positiva moderada com a volat
 As seções anteriores avaliaram o sentimento sob a ótica do aprendizado de máquina, que fornece uma medida pontual do seu poder preditivo. Esta seção, fundamentada na Seção~\ref{chap:metodologia} e inspirada em \citeonline{silva_o_2018}, aprofunda a investigação com duas perguntas que a média condicional não responde: o efeito do sentimento é simétrico ao longo da distribuição do retorno, e ele contribui de forma direta para a previsão da volatilidade?
 
 \subsection{Assimetria do efeito do sentimento: regressão quantílica}
+\label{sec:quantilica}
 
 Uma primeira dificuldade motivou esta análise. A regressão de mínimos quadrados do retorno sobre o sentimento defasado produz um efeito médio de aproximadamente $+134$ pontos-base por unidade do índice de sentimento, mas com significância apenas marginal (valor de probabilidade de $0{,}055$). Esse resultado, tomado isoladamente, sugeriria um efeito fraco. A suspeita, à luz do viés de negatividade, era de que a média mascarasse um comportamento heterogêneo: o sentimento poderia importar muito nos dias ruins e pouco nos dias bons. Para investigar essa hipótese, substituiu-se a regressão na média pela regressão quantílica de \citeonline{koenker_regression_1978}, que estima o efeito em diferentes pontos da distribuição do retorno. A Tabela~\ref{tab:quantilica} e a Figura~\ref{fig:quantilica} apresentam o resultado.
 
@@ -670,9 +671,11 @@ tudo o que vem depois. A ordem da exposição segue a do próprio percurso de in
 os experimentos de refinamento do classificador de direção, em seguida a validação do sentimento
 automático contra um padrão de referência humano e, por fim, as tentativas sucessivas de elevar
 essa validação, encerradas por um resultado negativo que delimita o alcance da abordagem. Seguem-se
-os achados de implementação sobre o artefato público empregado e, ao final, o único experimento da
-série que produziu ganho mensurável --- o qual, sintomaticamente, não atua sobre como o modelo lê
-cada notícia, mas sobre quais notícias entram no índice.
+os achados de implementação sobre o artefato público empregado e o único experimento da série que
+produziu ganho mensurável --- o qual, sintomaticamente, não atua sobre como o modelo lê cada notícia,
+mas sobre quais notícias entram no índice. Encerra a seção uma auditoria direta, sem modelo
+interposto, que confronta o rótulo de cada notícia com o pregão que se seguiu e delimita, em números
+verificáveis, o alcance do sinal textual.
 
 \input{capitulos/4d-experimentos-suite}
 \input{capitulos/4e-filtro-relevancia}
@@ -682,6 +685,7 @@ cada notícia, mas sobre quais notícias entram no índice.
 \input{capitulos/4i-adaptacao-dominio}
 \input{capitulos/4j-achados-implementacao}
 \input{capitulos/4k-relevancia-volatilidade}
+\input{capitulos/4l-auditoria-noticia}
 
 \section{Síntese e Verificação das Hipóteses}
 

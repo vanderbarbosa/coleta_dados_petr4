@@ -1,0 +1,212 @@
+% Auditoria direta notícia a notícia — dados reais (2026-08-10).
+% Fonte: Mestrado_PETR4/acertividade_noticia.json
+% Script: src/modelagem/09_acertividade_noticia_a_noticia.py
+\subsection{Auditoria direta: o sentimento acertou o pregão seguinte?}
+\label{sec:auditoria_noticia}
+
+Todas as evidências apresentadas até aqui são mediadas por um modelo. A acurácia direcional provém
+de um classificador treinado sobre o índice diário; a relação com a volatilidade, de testes de
+causalidade e de regressões. São vias legítimas, mas todas interpõem um artefato estatístico entre
+a notícia e o preço, e nenhuma delas responde à pergunta mais simples que um leitor cético formularia:
+tomada uma notícia qualquer do corpus, o sentimento a ela atribuído apontou para o lado certo do
+pregão seguinte?
+
+Esta seção responde a essa pergunta de forma direta e auditável, sobre as 205.697 notícias e os 1.989
+pregões do período. O exercício é descritivo, e não pretende substituir os modelos --- pretende
+ancorá-los. A sua utilidade está em permitir que o leitor verifique, sem intermediação, aquilo que os
+modelos afirmam.
+
+\subsubsection{Dois cuidados que determinam a validade do exercício}
+
+O primeiro diz respeito a \textbf{qual pregão} pode ser atribuído a cada notícia. Uma notícia
+publicada às dez horas de uma terça-feira pode influenciar o fechamento da própria terça; uma
+publicada às dezoito horas só pode influenciar a quarta. Tratar os dois casos de forma idêntica
+produziria um resultado inflado, pois parte do suposto acerto seria apenas a notícia \emph{descrevendo}
+um movimento já ocorrido. Distinguem-se, por isso, dois horizontes: $P_0$, o primeiro pregão cujo
+fechamento é posterior à publicação, que mistura reação e antecipação e serve apenas de diagnóstico;
+e $P_1$, o pregão imediatamente seguinte, estritamente posterior à notícia em todos os casos, que
+constitui a evidência preditiva. Do corpus, 54.259 notícias (26\%) foram publicadas após as dezessete
+horas e tiveram o seu pregão de referência deslocado; o mapeamento considera fins de semana e
+feriados, atribuindo a notícia sempre ao pregão seguinte e nunca ao anterior.
+
+O segundo cuidado é estatístico. As 205.697 notícias distribuem-se por apenas 1.989 pregões, de modo
+que um mesmo retorno é contado, em média, mais de cem vezes. Uma taxa de acerto calculada por notícia
+trata observações dependentes como se fossem independentes, e qualquer teste de significância
+construído sobre ela declararia como robustas diferenças ínfimas. Reportam-se, por isso, as duas
+taxas --- por notícia, de caráter descritivo, e por pregão, obtida por voto majoritário, que é a única
+sobre a qual se aplicam testes.
+
+\subsubsection{O que ocorreu após cada tipo de notícia}
+
+A Tabela~\ref{tab:auditoria_matriz} apresenta o resultado bruto, sem modelo interposto.
+
+\begin{table}[htpb]
+\centering
+\caption{Comportamento da PETR4 após cada classe de sentimento. Referência: a ação subiu em 52,78\% dos pregões do período.}
+\label{tab:auditoria_matriz}
+\begin{tabular}{l r c c c}
+\hline
+\textbf{Sentimento} & \textbf{Notícias} & \textbf{Subiu} & \textbf{Retorno médio} & \textbf{$|$Retorno$|$ médio} \\ \hline
+\multicolumn{5}{l}{\textit{$P_0$ --- pregão que reage (reação e antecipação misturadas)}} \\
+Positivo & 28.755 & 55,0\% & $+0{,}239\%$ & 1,688\% \\
+Neutro   & 77.214 & 53,2\% & $+0{,}094\%$ & 1,739\% \\
+Negativo & 99.728 & 51,6\% & $-0{,}041\%$ & 1,868\% \\[2pt]
+\multicolumn{5}{l}{\textit{$P_1$ --- pregão seguinte (estritamente preditivo)}} \\
+Positivo & 28.755 & 52,5\% & $+0{,}098\%$ & 1,659\% \\
+Neutro   & 77.214 & 52,4\% & $+0{,}108\%$ & 1,672\% \\
+Negativo & 99.728 & 51,5\% & $+0{,}079\%$ & 1,768\% \\
+\hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor (\texttt{src/modelagem/09\_acertividade\_noticia\_a\_noticia.py}, 2026-08-10).}
+\end{table}
+
+A leitura das duas metades da tabela é instrutiva. Em $P_0$, o ordenamento é perfeito e monotônico:
+após notícia positiva a ação subiu em 55,0\% das vezes, após neutra em 53,2\% e após negativa em
+51,6\%, com os retornos médios seguindo a mesma ordem e chegando a mudar de sinal. O sentimento
+separa os pregões, e separa na direção correta.
+
+Em $P_1$, esse ordenamento praticamente se dissolve. A diferença entre notícia positiva e notícia
+neutra reduz-se a um décimo de ponto percentual, e a distância até a negativa cai para um ponto.
+O contraste entre as duas metades é o achado central desta seção: \textbf{o sentimento acompanha o
+mercado muito mais do que o antecede}. A separação visível em $P_0$ é, em boa medida, jornalismo ---
+a imprensa relatando um movimento em curso --- e não previsão.
+
+\subsubsection{A regra direcional ingênua perde para o mercado}
+
+Aplicou-se em seguida a regra mais natural que se poderia derivar do sentimento: apostar na alta
+após notícia positiva, na baixa após notícia negativa e abster-se nas neutras. A
+Tabela~\ref{tab:auditoria_regra} apresenta o desempenho.
+
+\begin{table}[htpb]
+\centering
+\caption{Desempenho da regra direcional ingênua. A referência de 52,78\% corresponde à frequência de pregões de alta no período.}
+\label{tab:auditoria_regra}
+\begin{tabular}{l c c c c}
+\hline
+\textbf{Horizonte} & \textbf{Por notícia} & \textbf{Por pregão} & \textbf{IC 95\%} & \textbf{$p$} \\ \hline
+$P_0$ --- pregão que reage & 49,89\% & 47,69\% & [45,47\%; 49,91\%] & $<0{,}0001$ \\
+$P_1$ --- pregão seguinte  & 49,38\% & 47,59\% & [45,37\%; 49,81\%] & $<0{,}0001$ \\
+\hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor. Teste binomial contra a referência de 52,78\%; 1.988 pregões.}
+\end{table}
+
+O resultado é inequívoco e desfavorável: a regra acerta 47,59\% dos pregões, cinco pontos percentuais
+\emph{abaixo} da referência de mercado, e o intervalo de confiança sequer alcança os 50\% de um
+lançamento de moeda. A diferença é estatisticamente significativa.
+
+A explicação não está em uma suposta capacidade preditiva invertida, e sim na interação entre dois
+fatos já documentados nesta dissertação. O primeiro é o viés de negatividade do classificador,
+analisado na Seção~\ref{sec:validacao_sentimento}: 48,5\% das notícias recebem rótulo negativo, contra
+apenas 14,0\% positivo. O segundo é a tendência de alta do ativo no período, que subiu em 52,78\% dos
+pregões. Uma regra que aposta majoritariamente na baixa, aplicada a um ativo que majoritariamente
+sobe, perde por construção. O que a tabela mede, portanto, não é ausência de informação no texto, mas
+a inadequação de converter um rótulo enviesado em decisão binária sem qualquer calibração --- exatamente
+o problema que a Seção~\ref{sec:validacao_sentimento} havia identificado por outra via.
+
+Cabe registrar que esse resultado não contradiz a acurácia de 54,5\% obtida pelo \textit{XGBoost} e
+reportada na Seção~\ref{sec:refinamento_validacao}. As duas medidas avaliam objetos distintos: aqui,
+uma regra fixa aplicada ao rótulo bruto de cada notícia; ali, um modelo que combina o índice agregado
+com o retorno e a volatilidade defasados, e que aprende, sobre o conjunto de treinamento, a ponderar
+o sentimento em vez de segui-lo literalmente. A comparação entre as duas evidencia, aliás, o valor da
+etapa de aprendizado: o sinal textual bruto é inutilizável para direção, e apenas a sua combinação
+com variáveis de mercado, sob supervisão, produz algum ganho.
+
+\subsubsection{Nenhum recorte salva a regra}
+
+Investigou-se se algum subconjunto do corpus escaparia do padrão. Nenhum escapa. Por categoria
+temática, a taxa de acerto varia entre 48,09\% (Governança) e 50,01\% (Mercado de Petróleo), todas
+abaixo da referência. Por janela de publicação, as notícias divulgadas após o fechamento --- as mais
+promissoras em tese, por serem as únicas cuja informação o mercado ainda não pôde incorporar --- atingem
+49,52\%, praticamente indistinguíveis dos 49,33\% das demais.
+
+O recorte por confiança do modelo produz o achado mais desconfortável da série. Esperava-se que as
+notícias classificadas com maior confiança apresentassem maior taxa de acerto; observa-se o oposto,
+de forma monotônica: 50,18\% no quartil de menor confiança, caindo sucessivamente até 48,83\% no de
+maior. A correlação de Spearman entre quartil de confiança e acerto, calculada sobre pregões, é de
+$-0{,}0346$ com $p = 0{,}0020$. A magnitude é pequena, mas o sinal é o inverso do esperado e é
+estatisticamente detectável: \textbf{o modelo erra mais justamente quando está mais seguro}. Esse
+achado deve ser lido em conjunto com a Seção~\ref{sec:achados_implementacao}, que documentou que as
+probabilidades publicadas pelo artefato são produzidas por função sigmoide, e não pela função
+\textit{softmax} apropriada à classificação exclusiva --- o que compromete a interpretação do escore
+de confiança como probabilidade calibrada.
+
+\subsubsection{Volatilidade: um efeito que existe apenas na cauda}
+
+Repetiu-se o exercício para a volatilidade, e aqui o exame revelou uma limitação do corpus que
+merece registro autônomo. Ao colapsar os pregões pelo sentimento majoritário, verificou-se que
+\textbf{nenhum dos 1.989 pregões do período apresenta maioria de notícias positivas}: 1.488 dias têm
+maioria negativa, 457 têm maioria neutra e nenhum tem maioria positiva. O índice de sentimento diário,
+por sua vez, é negativo em 100\% dos pregões, com mediana de $-0{,}260$. A comparação canônica entre
+dias positivos e dias negativos é, portanto, impossível de realizar neste corpus --- constatação que
+constitui a evidência mais crua do viés discutido na Seção~\ref{sec:validacao_sentimento}, e que
+obriga a substituir a comparação entre classes por uma comparação entre \emph{graus} de pessimismo.
+
+Feita essa substituição, o terço de pregões mais pessimistas é seguido de volatilidade mediana de
+1,248\%, contra 1,190\% do terço menos pessimista. A diferença tem o sinal previsto pela teoria, mas
+corresponde a apenas 4,8\% e não alcança significância ($p = 0{,}210$). O contraste entre dias de
+maioria negativa e dias de maioria neutra conduz à mesma conclusão ($p = 0{,}132$).
+
+Esse resultado parece, à primeira vista, contradizer a associação significativa reportada na
+Seção~\ref{sec:relevancia_volatilidade}. Não contradiz, e a reconciliação entre os dois números é o
+achado mais valioso desta seção. A Tabela~\ref{tab:auditoria_cauda} apresenta as duas medidas lado a
+lado, calculadas sobre exatamente os mesmos pregões.
+
+\begin{table}[htpb]
+\centering
+\caption{Duas medidas da mesma associação entre sentimento e volatilidade (1.989 pregões).}
+\label{tab:auditoria_cauda}
+\begin{tabular}{l c c l}
+\hline
+\textbf{Medida} & \textbf{Valor} & \textbf{$p$} & \textbf{O que capta} \\ \hline
+Correlação de Pearson  & $-0{,}1309$ & $<0{,}0001$ & sensível aos valores extremos \\
+Correlação de Spearman & $-0{,}0268$ & $0{,}2367$  & apenas a ordenação dos dias \\
+Razão entre médias     & $1{,}237\times$ & --- & pessimista contra otimista \\
+Razão entre medianas   & $1{,}048\times$ & --- & pessimista contra otimista \\
+\hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor. Terços extremos do índice de sentimento diário, 649 pregões cada.}
+\end{table}
+
+A divergência entre as duas correlações é o dado decisivo. Pearson, que pondera pela magnitude,
+detecta a associação com folga; Spearman, que descarta as magnitudes e retém apenas a ordenação, não a
+detecta. Do mesmo modo, a razão entre médias é cinco vezes maior que a razão entre medianas. Os quatro
+números apontam para a mesma conclusão: \textbf{a associação entre sentimento e volatilidade é um
+fenômeno de cauda}. Ela se manifesta nos dias excepcionais --- aqueles em que o pessimismo da imprensa
+é extremo e o mercado se move de forma violenta --- e desaparece no pregão típico, que constitui a
+maioria das observações.
+
+Essa leitura converge, por caminho inteiramente independente, com o resultado da regressão quantílica
+da Seção~\ref{sec:quantilica}, que localizara o efeito do sentimento sobre o \emph{retorno} no quantil
+$0{,}05$, com $+542$ pontos-base, e o encontrara indistinguível de zero nos quantis superiores. Duas
+análises com naturezas distintas --- uma paramétrica sobre o retorno, outra não paramétrica sobre a
+volatilidade --- localizam o sinal na mesma região da distribuição. Essa convergência confere ao achado
+uma robustez que nenhuma das duas teria isoladamente, e permite enunciar de forma unificada aquilo
+que a dissertação vinha sustentando de modo fragmentado: o sentimento das notícias não move o pregão
+comum; ele importa nos extremos.
+
+Por fim, converteu-se a associação em decisão, para testar a sua utilidade operacional. Um sinal que
+classificasse como turbulentos os 30\% de dias mais pessimistas, com limiar calibrado apenas sobre o
+período de treinamento, obteria precisão de 32,2\% contra uma taxa-base de 34,4\% --- ou seja, seria
+pior do que marcar dias ao acaso ($p = 0{,}491$). O volume de notícias, testado como \textit{proxy} de
+atenção, tampouco funciona ($p = 0{,}222$). A conclusão acompanha a da Seção~\ref{sec:relevancia_volatilidade}:
+o efeito é real e mensurável, mas não sobrevive à conversão em regra de decisão.
+
+\subsubsection{O que esta auditoria acrescenta}
+
+O exercício não produziu nenhum resultado favorável, e é precisamente nisso que reside a sua
+contribuição. Ele delimita, com números que dispensam a mediação de qualquer modelo, três fronteiras
+do que o sentimento textual pode oferecer neste contexto. A primeira é que o sentimento acompanha o
+mercado mais do que o antecede, como evidencia o colapso do ordenamento entre $P_0$ e $P_1$. A segunda
+é que o rótulo bruto é inutilizável como regra de decisão direcional, e que o valor observado nos
+capítulos anteriores provém da etapa de aprendizado supervisionado, não do texto isolado. A terceira,
+e mais importante, é que o efeito sobre a volatilidade concentra-se na cauda da distribuição, achado
+que unifica sob uma única interpretação resultados que até aqui figuravam dispersos.
+
+Registre-se ainda o valor de auditoria destes números para trabalhos futuros que empreguem o mesmo
+artefato: a constatação de que não existe um único pregão de maioria positiva em quase oito anos de
+corpus é um alerta de calibração que qualquer aplicação do \mbox{FinBERT-PT-BR} a séries temporais
+deveria verificar antes de agregar rótulos em índices.
