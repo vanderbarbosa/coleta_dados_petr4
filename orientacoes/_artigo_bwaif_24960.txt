@@ -1,0 +1,467 @@
+===== PAG 1 =====
+FinBERT-PT-BR: An´alise de Sentimentos de Textos em
+Portuguˆes do Mercado Financeiro
+FinBERT-PT-BR: Sentiment Analysis of Texts in Portuguese from the Financial Market
+Lucas L. Santos 1, Reinaldo A. C. Bianchi 2, Anna H. R. Costa 1
+1Escola Polit´ecnica – Universidade de S˜ao Paulo (USP)
+2Centro Universit´ario da FEI
+lucaslssantos99@usp.br, rbianchi@fei.edu.br, anna.reali@usp.br
+Abstract. This article contributes a sentiment analysis model for financial news
+in Portuguese using the BERT neural network architecture. The model was trai-
+ned in two stages: language modeling and sentiment modeling, with 1.4 million
+texts and 500 labeled texts, respectively. The model showed better performance
+than current state-of-the-art models across various metrics and can be used
+to build sentiment indices, investment strategies, and analyze macroeconomic
+data. The study demonstrates the potential of natural language processing and
+transformers for quantitative finance.
+Resumo. Este artigo contribui com um modelo de an ´alise de sentimento para
+not´ıcias financeiras em l ´ıngua portuguesa usando a arquitetura de rede neu-
+ral BERT. O modelo foi treinado em duas etapas: modelagem de linguagem e
+modelagem de sentimentos, com 1,4 milh ˜ao de textos e 500 textos rotulados,
+respectivamente. O modelo apresentou melhor desempenho do que os modelos
+atuais do estado da arte em diversas m ´etricas e pode ser usado para construir
+´ındices de sentimento, estrat ´egias de investimento e analisar dados macroe-
+conˆomicos. O estudo demonstra o potencial do processamento de linguagem
+natural e transformers para financ ¸as quantitativas.
+1. Introduc ¸˜ao
+O mercado de capitais ´e vivo e dinˆamico, assim como dita a hip ´otese de mercados adap-
+tativos [Lo 2004], em que os prec ¸os dos ativos s ˜ao adaptativos e refletem informac ¸˜oes
+e emoc ¸˜oes da populac ¸˜ao. Os agentes que atuam nessa ´area devem, portanto, ter uma
+excelente capacidade de processamento de informac ¸˜oes, a fim de tomar as melhores de-
+cis˜oes, evitando vieses comportamentais. Um sistema que capture as emoc ¸˜oes refletidas
+nos textos divulgados a respeito do mercado financeiro podem auxiliar nesta tomada de
+decis˜ao.
+Atualmente, os algoritmos no estado da arte em processamento de linguagem
+natural (PLN) s ˜ao baseados em redes neurais profundas com mecanismos de atenc ¸ ˜ao
+[Vaswani et al. 2017] e atingem alto desempenho em diversas tarefas [Devlin et al. 2018].
+Entretanto, a maioria desses modelos s ˜ao treinados na l ´ıngua inglesa e s ˜ao modelos de
+prop´osito geral, os quais podem n ˜ao apresentar resultados t ˜ao bons por conta do voca-
+bul´ario espec´ıfico do mercado financeiro. Portanto, para atingir resultados no estado da
+arte em financ ¸as, o ideal´e treinar os modelos com textos espec´ıficos do dom´ınio e l´ıngua
+desejados [Araci 2019].
+===== PAG 2 =====
+Assim, o objetivo deste artigo ´e apresentar um modelo de linguagem do estado da
+arte no contexto do mercado financeiro em portugu ˆes do Brasil, FinBERT-PT-BR, al´em
+de efetuar um ajuste fino para a tarefa de an´alise de sentimentos, contribuindo com o mo-
+delo SentFinBERT-PT-BR. Por fim, mostramos que o SentFinBERT-PT-BR possibilita a
+construc ¸˜ao de sinais para an´alise e construc ¸˜ao de estrat´egias de investimentos. Para atin-
+gir este objetivo, primeiramente fez-se a coleta de dados textuais extra´ıdos de not´ıcias de
+financ ¸as de ve´ıculos de comunicac ¸˜ao. Parte destes dados foi ent˜ao rotulada manualmente
+para o treinamento do modelo SentFinBERT-PT-BR, avaliando o sentimento expresso nas
+not´ıcias em trˆes classes: positivo, negativo e neutro. O modelo treinado foi ent˜ao avaliado
+e comparado com outros modelos, mostrando desempenho superior.
+O restante do artigo est ´a organizado da seguinte forma: a Sec ¸˜ao 2 apresenta os
+conceitos b ´asicos referentes `a PLN e an ´alise de sentimentos; a Sec ¸˜ao 3 descreve o de-
+senvolvimento dos modelos FinBERT-PT-BR e SentFinBERT-PT-BR. A Sec ¸˜ao 4 mostra
+nossos experimentos e finalmente as conclus ˜oes e alguns direcionamentos futuros s ˜ao
+apresentados na Sec ¸˜ao 5.
+2. Conceitos B ´asicos
+O processamento de linguagem natural (PLN) [Manning and Sch ¨utze 1999] ´e uma ´area
+da inteligˆencia artificial que se concentra em permitir que computadores compreendam e
+processem a linguagem humana. Ele envolve a an´alise de texto escrito ou falado para que
+os computadores possam entender a intenc ¸˜ao, o significado e a estrutura das informac ¸˜oes.
+A an´alise de sentimentos [Pang and Lee 2004, Liu 2012] ´e uma t ´ecnica de PLN
+utilizada para identificar e extrair informac ¸˜oes sobre as emoc ¸˜oes expressas em um texto,
+como positividade, negatividade ou neutralidade. O objetivo ´e entender como as pessoas
+se sentem em relac ¸˜ao a um determinado assunto ou produto, por exemplo. Para realizar a
+an´alise de sentimentos, s˜ao utilizados algoritmos de PLN que examinam o texto em busca
+de palavras ou express ˜oes que indiquem emoc ¸˜oes. Esses algoritmos utilizam t ´ecnicas
+de aprendizado de m ´aquina e minerac ¸˜ao de dados para identificar padr ˜oes e classificar o
+texto em categorias de sentimentos. A an´alise de sentimentos pode ser aplicada em v´arias
+´areas, como marketing, atendimento ao cliente, pol´ıtica e ciˆencias sociais.
+Especificamente para a l´ıngua portuguesa, a an ´alise de sentimentos tem sido uti-
+lizada por diversos autores nas mais diversas tarefas: [Silva 2018] analisa as percepc ¸˜oes
+da populac ¸˜ao sobre corrupc ¸˜ao durante as eleic ¸˜oes presidenciais no Brasil em 2018 uti-
+lizando mensagens postadas no Twitter; [Pereira 2019] tamb ´em realizou uma an ´alise de
+sentimentos da populac ¸˜ao brasileira em relac ¸˜ao a eleic ¸˜ao presidencial de 2018 utilizando
+Twitter; [Xavier et al. 2020] apresentam resultados de estudos demonstrando como a
+an´alise de dados de redes sociais pode ser utilizada nas atividades de vigil ˆancia, tendo
+como estudo de caso a pandemia da Covid-19.
+[Souza et al. 2020] propuseram a criac ¸˜ao e avaliac ¸˜ao de modelos de linguagem
+pr´e-treinados baseados na arquitetura BERT para a l ´ıngua portuguesa do Brasil, utili-
+zando uma grande quantidade de dados textuais em portugu ˆes brasileiro para treinar os
+modelos de linguagem. Os autores tamb ´em avaliaram os modelos em uma variedade de
+tarefas de PLN, incluindo an ´alise de sentimentos, classificac ¸˜ao de textos e previs ˜ao de
+sentenc ¸as seguintes. Os resultados mostraram que os modelos pr´e-treinados BERTimbau
+superaram modelos treinados a partir do zero e outros modelos pr ´e-treinados dispon´ıveis
+===== PAG 3 =====
+publicamente. Entre as conclus ˜oes dos autores, eles indicam que o BERTimbau devem
+ser ´util para uma variedade de aplicac ¸˜oes, incluindo an ´alise de sentimentos no mercado
+financeiro, o que motivou o seu uso no trabalho aqui proposto.
+A an´alise de sentimentos para tarefas relativas ao mercado financeiro [Man et al.
+2019], como predic ¸˜ao de tend ˆencias e de valores de ac ¸˜oes e outras commodities, surgiu
+na d´ecada passada, e ´e uma ´area bastante pesquisada na intersec ¸˜ao entre IA e Mercados
+Financeiros. Um dos artigos mais importantes da ´area, escrito por Bollen, Mao, e Zeng,
+demonstra que o sentimento coletivo expresso no Twitter pode prever a direc ¸˜ao do mer-
+cado de ac ¸˜oes dos EUA com uma precis ˜ao de at ´e 87,6 % [Bollen et al. 2011]. Diversos
+outros trabalhos seguiram esta linha de an´alise, utilizando a relac ¸˜ao entre o sentimento ex-
+presso no Twitter e o comportamento do mercado de ac ¸˜oes [Pagolu et al. 2016, Kordonis
+et al. 2016], o prec ¸o de criptomoedas [Otabek and Choi 2022, Kraaijeveld and De Smedt
+2020], o prec ¸o do ouro [Junjie and Mengoni 2020] e a taxa de cˆambio Euro-D´olar [Ardia
+et al. 2015]. Finalmente, uma revis ˜ao mais recente pode ser encontrada em [Tan et al.
+2023].
+Embora existam poucos estudos espec´ıficos que examinem a relac ¸˜ao entre an´alise
+de sentimento e o mercado financeiro brasileiro, podemos citar algumas refer ˆencias de
+artigos recentes que utilizam PLN para an ´alise de sentimento no mercado financeiro em
+l´ıngua portuguesa: [Medeiros and Borges 2019] realizam uma an ´alise do uso de senti-
+mento em tweets de mercado financeiro em Portuguˆes, de forma similar a [de Souza et al.
+2021] e [Janu ´ario et al. 2022], que al ´em de tweets utilizam tamb ´em outras fontes de
+noticias.
+3. Desenvolvimento dos Modelos
+Neste artigo propomos dois modelos, FinBERT-PT-BR e SentFinBERT-PT-BR. O modelo
+FinBERT-PT-BR´e treinado de modo semi-supervisionado, no contexto de mercado finan-
+ceiro, a partir da sintonia fina (fine-tuning) de um modelo de escopo geral treinado para a
+l´ıngua portuguesa, o BERTimbau [Souza et al. 2020]. O modelo FinBERT-PT-BR´e ent˜ao
+treinado com uma base de dados anotada de not ´ıcias do mercado financeiro para gerar o
+modelo SentFinBERT-PT-BR, que ´e um classificador de sentimentos das sentenc ¸as de
+not´ıcias da ´area financeira. A Figura 1 ilustra esta metodologia.
+Figura 1. Arquitetura de treinamento do FinBERT-PT-BR e do SentFinBERT-PT-
+BR.
+===== PAG 4 =====
+3.1. Desenvolvimento do Modelo FinBERT-PT-BR
+O modelo FinBERT-PT-BR foi gerado a partir dofine-tuning do BERTimbau [Souza et al.
+2020], com not ´ıcias coletadas de canais de not ´ıcias financeiras das plataformas Valor
+Econˆomico, Exame e Infomoney.
+O processo de aquisic ¸˜ao foi automatizado por meio da ferramenta Scrapy, utili-
+zada para percorrer os s ´ıtios de not´ıcias financeiras e coletar os textos e metadados das
+not´ıcias, como t ´ıtulo, subt´ıtulo, data de publicac ¸˜ao, data de atualizac ¸˜ao da publicac ¸˜ao,
+nome e p ´agina do autor e links. No total foram coletadas 2,7 milh ˜oes de sentenc ¸as de
+not´ıcias do mercado financeiro entre 2006 e 2022. A distribuic ¸˜ao dos textos coletados por
+plataforma ´e apresentada na Tabela 1.
+Tabela 1. N ´ umero total de 2,7 milh˜oes de textos financeiros coletados, englo-
+bando 130 milh˜oes de palavras.
+Valor Econˆomico 1,23 milh˜oes
+Exame 1,01 milh˜oes
+Infomoney 0,46 milh˜oes
+Ap´os a coleta dos textos foi necess´ario realizar uma limpeza dos dados utilizando
+express˜oes regulares que identificaram padr ˜ao de textos que n ˜ao eram relevantes para o
+modelo, como, por exemplo, textos com m´a formac ¸˜ao que possu´ıam caracteres especiais
+e c´odigos fonte, resultando em uma base final com 1,6 milh˜ao de sentenc ¸as.
+FinBERT-PT-BR foi treinado utilizando PyTorch e Hugging Face, tendo como
+pesos iniciais os pesos do modelo BERTimbau [Souza et al. 2020]. Como o modelo
+BERT suporta at ´e 512 tokens na sua entrada, foi necess ´ario realizar uma filtragem dos
+textos para que fossem utilizados apenas os textos com at ´e 512 tokens, resultando em
+1.428.867 sentenc ¸as de not´ıcias.
+O treinamento foi realizado em uma m ´aquina do Kaggle com 30GB de RAM e
+30GB de GPU (2x Nvidia T4), o que limitou o tamanho do lote ( batch size) e o carrega-
+mento de todos os textos em mem ´oria. O batch size foi definido como 16, por limitac ¸˜ao
+de alocac ¸˜ao do modelo e dos textos na GPU simultaneamente. Devido `a abund ˆancia
+de textos foi necess ´ario implementar o processo de treinamento com alocac ¸˜ao dinˆamica
+de mem ´oria, ou seja, ao longo do treinamento os textos s ˜ao carregados do disco para a
+mem´oria e depois para a GPU. Apesar das limitac ¸˜oes, foi poss´ıvel realizar o treinamento
+de duas ´epocas em 11 horas.
+Para o treinamento do modelo de linguagem, os dois principais par ˆametros que
+n˜ao dependem diretamente de recursos computacionais s ˜ao: taxa de aprendizado ( lear-
+ning rate) e probabilidade de m ´ascara. A taxa de aprendizado foi definida como 2e-5,
+o valor recomendado pela literatura [Sun et al. 2019] para o fine tunning de modelos
+de linguagem. A probabilidade de m ´ascara ´e a probabilidade da ocultac ¸˜ao de tokens e
+foi definida como 15%, sendo a mesma utilizada no treinamento do modelo BERT origi-
+nal [Devlin et al. 2018].
+Para avaliar o modelo de linguagem foi utilizada a m´etrica de perplexidade
+[Chen et al. 1998], que indica o qu˜ao bem o modelo consegue prever uma palavra dado o
+contexto. Essa m ´etrica foi calculada numa amostra de 100 mil sentenc ¸as, que n˜ao foram
+===== PAG 5 =====
+utilizadas no treinamento do modelo. FinBERT-PT-BR apresentou uma perplexidade de
+1,24, sendo uma m ´etrica satisfat´oria, visto que o modelo BERTimbau original apresenta
+uma perplexidade de 1,51.
+3.2. Desenvolvimento do Modelo SentFinBERT-PT-BR
+O modelo SentFinBERT-PT-BR recebe um texto como entrada e classifica em uma das
+trˆes categorias: positivo, negativo ou neutro. Para isso, SentFinBERT-PT-BR foi treinado
+com uma base de dados anotada manualmente por trˆes pessoas, sendo duas com formac ¸˜ao
+em engenharia e uma com formac ¸˜ao em linguistica. Cada um dos textos foi anotado por
+pelo menos duas pessoas.
+No total foram anotados 1000 textos, sendo 497 textos descartados, pois foram
+classificados como “N˜ao se aplica” ou n˜ao houve concordˆancia entre os anotadores. Ap´os
+a remoc ¸˜ao dos textos descartados, a base de treinamento ficou com 503 textos, sendo 160
+textos positivos, 203 textos negativos e 140 textos neutros.
+A concord ˆancia entre os anotadores foi verificada utilizando a porcentagem de
+concordˆancia e o Krippendorff’s alpha [Artstein and Poesio 2008].
+A porcentagem de concord ˆancia varia entre 0% e 100%, sendo 100% a con-
+cordˆancia perfeita e, para N textos, ´e dada por:
+%Concordˆancia = 1
+N
+NX
+i=1
+agri, com (1)
+agri =
+(
+1, Se os avaliadores classificaram o texto na mesma categoria
+0, Se os avaliadores n˜ao classificaram o texto na mesma categoria . (2)
+Por conta da sua simplicidade, a porcentagem de concord ˆancia possui algumas desvan-
+tagens como: vi ´es para bases de dados desbalanceadas e baixa robustez para mais de 2
+avaliadores. A m´etrica obtida na base final de anotac ¸˜ao foi de 90,4%.
+J´a o Krippendorff’s alpha [Krippendorff 2018] varia entre −1 e 1, sendo 1 a con-
+cordˆancia perfeita, −1 a discordˆancia perfeita e 0 representa anotac ¸˜ao aleat´oria e ´e base-
+ada em duas principais vari ´aveis, Do que ´e a variˆancia amostral das respostas dos anota-
+dores e De que ´e a variˆancia esperada dos anotadores computada a partir das frequ ˆencias
+das classes presentes na base dados:
+α = 1− Do
+De
+. (3)
+Quando todos os avaliadores concordam, a vari ˆancia amostral ser ´a Do = 0, resultando
+assim num α = 1, indicando uma alta confiabilidade na base de anotac ¸˜oes. Um α = 0
+ocorre quando n˜ao poss´ıvel distinguir as anotac ¸˜oes de dados puramente aleat´orios, pois a
+variˆancia amostral das classificac ¸˜oes ser´a alta, indicando assim uma baixa confiabilidade.
+A m ´etrica obtida na base final de anotac ¸˜ao foi de α = 0, 88, indicando que a anotac ¸˜ao
+foi realizada consistentemente entre os anotadores. Os resultados das duas m´etricas est˜ao
+mostrados na Tabela 2.
+O modelo de sentimentos SentFinBERT-PT-BR foi treinado utilizando o modelo
+de linguagem FinBERT-PT-BR pr´e-treinado com os textos do mercado financeiro, por´em
+===== PAG 6 =====
+Tabela 2. M´etricas de concordˆancia entre os anotadores.
+M´etrica Valor
+Porcentagem de concordˆancia 90,4%
+Krippendorff’s alpha (α) 0,88
+com a adic ¸˜ao de uma camada de classificac ¸˜ao de sentimentos na arquitetura da rede neu-
+ral. Essa camada foi adicionada na primeira dimens ˜ao de sa ´ıda do BERT, seguindo a
+recomendac ¸˜ao da literatura [Devlin et al. 2018], conforme ilustra a Figura 2.
+Figura 2. Arquitetura do modelo de classificac ¸˜ao de sentimento.
+O processo de utilizar o modelo de linguagem FinBERT-PT-BR para a tarefa de
+an´alise de sentimento ´e caracterizado como um transfer learning. Um problema comum
+durante a aplicac ¸˜ao de transfer learning em modelos de linguagem ´e o esquecimento de
+informac ¸˜oes durante o treinamento. Para evitar o esquecimento foi aplicada a t ´ecnica de
+Gradual Unfreezing [Devlin et al. 2018] durante o treinamento do modelo de sentimentos
+SentFinBERT-PT-BR. Essa t´ecnica consiste em desbloquear a atualizac ¸˜ao dos pesos da
+rede neural gradativamente durante o treinamento. Dessa forma, a rede neural consegue
+aprender a tarefa de classificac ¸˜ao de sentimento sem esquecer as informac ¸˜oes aprendidas
+durante o treinamento do modelo de linguagem. Visto que o BERT possui 11 camadas
+de Encoder, a t ´ecnica de Gradual Unfreezing foi aplicada para desbloquear as camadas
+de Encoder gradativamente. A taxa de aprendizado adotada foi de 5e-6 e o n ´umero de
+´epocas foi 11.
+Foi tamb ´em utilizada a t ´ecnica de validac ¸˜ao cruzada com 70% da base com 5
+divis˜oes, isto ´e, a base de treinamento foi dividida em 5 partes, sendo 4 partes para
+treinamento e 1 parte para validac ¸˜ao. O processo de validac ¸˜ao cruzada foi realizado 5
+vezes, sendo que em cada iterac ¸˜ao uma parte da base foi utilizada para validac ¸ ˜ao e as
+outras 4 partes para treinamento. O modelo de sentimento com a melhor convergˆencia da
+===== PAG 7 =====
+validac ¸˜ao (dada pela m ´ınima func ¸˜ao de custo) foi utilizado para realizar a classificac ¸˜ao
+dos sentimentos dos textos da base de teste, que corresponde a 30% da base classificada.
+Para comparac ¸˜ao do desempenho do nosso sistema proposto, SentFinBERT-PT-
+BR, foi treinado o modelo Sent-BERTimbau, no qual foi tamb ´em realizado um transfer
+learning do BERTimbau original [Souza et al. 2020] para a tarefa de classificac ¸ ˜ao de
+sentimentos. SentFinBERT-PT-BR obteve o melhor resultado na base de teste, com uma
+acur´acia de 0,76 e um F1-Score de 0,73 para predic ¸ ˜ao das 3 categorias de sentimento,
+conforme mostra a Tabela 3. Sent-BERTimbau apresentou uma acur ´acia de 0,67 e um
+F1-Score de 0,63.
+Tabela 3. Resultados dos modelos de classificac ¸˜ao de texto
+Nome do Modelo Acur´acia F1-Score
+Sent-BERTimbau 0,67 0,63
+SentFinBERT-PT-BR 0,76 0,73
+4. Aplicac ¸˜oes do SentFinBERT-PT-BR
+Visando avaliar o SentFinBERT-PT-BR em tarefas relacionadas a financ ¸as, um´ındice de
+sentimentos de mercado foi constru ´ıdo e sua relac ¸˜ao com os fatos ocorridos no Brasil e
+no mundo foi avaliada. Al ´em disso, tamb ´em ´e proposta uma estrat ´egia de investimento
+que toma como base o ´ındice de sentimentos.
+4.1. ´Indice de Sentimentos e sua Relac ¸˜ao com o Mercado
+O ´ındice de sentimento ´e uma s ´erie temporal constru ´ıda a partir das classificac ¸˜oes das
+not´ıcias ao longo do tempo [Hiew et al. 2019]. Cada ponto desta s ´erie temporal ´e dado
+pelo ´ındice de um intervalo entre t e t − k,
+´Indicet−k,t = Post−k,t − Negt−k,t
+Post−k,t + Neut−k,t + Negt−k,t
+, (4)
+onde Post−k,t, Negt−k,t, Neut−k,t representam o n ´umero de not´ıcias positivas, negativas e
+neutras compreendido entre o intervalo de tempo t − k e t, respectivamente.
+Como o ´ındice de sentimentos reflete a maior parte de not ´ıcias coletadas sobre
+o mercado no per ´ıodo, ´e poss´ıvel realizar uma an ´alise de correlac ¸˜ao para entender mo-
+mentos em que ele se apresenta mais otimista ou pessimista. O ´ındice aqui foi calcu-
+lado a partir de uma amostra das not ´ıcias gerais coletadas e pode ser visto na Figura 3,
+relacionando-o a alguns fatos relevantes de quebra de expectativa do mercado de capitais,
+que ocasionaram grande volatilidade na economia.
+O primeiro fato relevante destacado no ´ındice de sentimentos foram as
+manifestac ¸˜oes de 2013, que ocorreram no Brasil por conta da alta do prec ¸o dos trans-
+portes p ´ublicos, marcadas por protestos e vandalismo. Avaliando o ´ındice de sentimen-
+tos, ´e poss´ıvel perceber que o sentimento do mercado teve uma grande variac ¸˜ao negativa
+no mˆes de junho de 2013, quando ocorreu o primeiro protesto. Logo ap ´os a finalizac ¸˜ao
+das manifestac ¸˜oes, o sentimento do mercado apresentou outra grande variac ¸˜ao, dessa vez
+positiva, no mˆes de agosto.
+===== PAG 8 =====
+Figura 3. ´Indice de sentimentos e fatos relevantes da economia.
+O segundo fato relevante destacado no ´ındice de sentimentos foi o in ´ıcio da
+operac ¸˜ao Lava Jato, que ocorreu em marc ¸o de 2014. Esse per ´ıodo foi marcado por
+uma sequˆencia de meses com revelac ¸˜oes de escˆandalos de corrupc ¸˜ao envolvendo diversos
+pol´ıticos e empresas. Nota-se que no m´edio prazo houve uma tendˆencia de queda no sen-
+timento do mercado, que deve ter sido causado pelo ac ´umulo de not´ıcias negativas sobre
+corrupc ¸˜ao. O valor m ´ınimo do ´ındice de sentimentos foi atingido em marc ¸o de 2015,
+quando grandes executivos foram presos.
+O final de 2015 foi marcado pelo in ´ıcio do processo de impeachment da presi-
+dente Dilma Rousseff, finalizado em agosto de 2016. Logo ap ´os o in´ıcio do processo de
+impeachment, o sentimento do mercado apresentou uma grande variac ¸˜ao positiva seguida
+de uma queda no sentimento do mercado. Visto que o pa ´ıs estava em recess ˜ao, o senti-
+mento do mercado tendeu a um valor positivo por uma expectativa de resoluc ¸˜ao da crise
+econˆomica, por´em foi apenas uma pequena janela de euforia.
+Ap´os o impeachment, j´a no governo de Michel Temer, o sentimento do mercado
+apresentou uma grande variac ¸˜ao negativa no denominado “Joesley Day”. Esse dia, 17 de
+maio de 2017, foi marcado pela divulgac ¸˜ao de uma gravac ¸˜ao de uma conversa entre o
+empres´ario Joesley Batista e o presidente Michel Temer, em que o assunto da conversa
+era a compra do sil ˆencio do ex-presidente da C ˆamara dos Deputados Eduardo Cunha,
+que estava preso por corrupc ¸˜ao. Por envolver o presidente da Rep ´ublica, houve muita
+incerteza sobre o futuro do governo, e o sentimento do mercado apresentou uma grande
+variac ¸˜ao negativa. Visto que o presidente n˜ao foi destitu´ıdo, o sentimento de mercado foi
+amenizado e voltou a um valor positivo.
+Em 2018, o sentimento de mercado apresentou um leve aumento ap´os a conclus˜ao
+das eleic ¸˜oes presidenciais. Tal aumento pode ser explicado pelo fato de que o mercado es-
+tava otimista com a vit´oria de Jair Bolsonaro, que era visto como um candidato favor´avel
+ao mercado. Por ´em, ap´os a posse de Bolsonaro, o sentimento de mercado retornou a um
+valor negativo, o que pode ser explicado pela incerteza sobre o futuro do governo. De-
+pois, ao longo do primeiro ano de governo, o sentimento apresentou algumas sequ ˆencias
+de alta que podem ser atribu ´ıdas a not ´ıcias positivas, como a aprovac ¸˜ao da reforma da
+previdˆencia. O principal destaque de 2020 foi a pandemia da COVID-19, que comec ¸ou
+em janeiro, classificada como pandemia pela OMS em marc ¸o. A pandemia trouxe ao
+mundo muitas incertezas, e o sentimento de mercado n ˜ao apresentou grandes variac ¸˜oes
+===== PAG 9 =====
+justamente por conta das incertezas. Enquanto o v ´ırus ainda n˜ao havia se espalhado pelo
+Brasil, alguns ve´ıculos comunicavam que no Brasil a crise sanit´aria n˜ao seria t˜ao grave por
+conta do clima tropical, j ´a outros ve´ıculos noticiavam que o Brasil estava despreparado
+para lidar com a pandemia. Portanto, devido a essa incerteza, o sentimento de mercado
+n˜ao apresentou grandes variac ¸˜oes.
+Mais para o final de 2020, o sentimento de mercado apresentou uma grande
+variac ¸˜ao positiva, que pode ser explicada pelo desenvolvimento de vacinas e est ´ımulos
+econˆomicos dos governos. O valor de pico do sentimento de mercado foi atingido no fi-
+nal do ano, quando alguns pa´ıses comec ¸aram a vacinar a populac ¸˜ao. Outro fato que pode
+ter contribu´ıdo para o aumento do ´ındice de sentimento do mercado foram os est ´ımulos
+econˆomicos do governo, implementados para tentar minimizar os efeitos da pandemia, e
+que acarretaram grandes altas nos mercados.
+Por fim, o ´ultimo fato relevante destacado no ´ındice de sentimentos foi in ´ıcio da
+invas˜ao da Ucr ˆania pela R ´ussia. De longe, esse foi o fato que mais impactou o senti-
+mento de mercado. Com o in´ıcio da guerra, v´arios pa´ıses impuseram sanc ¸˜oes econˆomicas
+`a R ´ussia, e o sentimento de mercado apresentou uma grande variac ¸ ˜ao negativa. Nesse
+per´ıodo o mundo ainda estava se recuperando da pandemia, havia sinais inflacion´arios por
+conta dos est´ımulos econ ˆomicos e a guerra trouxe mais press ˜ao inflacion´aria ao mundo.
+Por conta disso, o sentimento de mercado apresentou uma grande variac ¸˜ao negativa.
+4.2. Apostando contra o sentimento
+Nesta sec ¸˜ao ´e proposta uma nova estrat ´egia de investimento baseada no ´ındice de senti-
+mento constru´ıdo, denominada apostando contra o sentimento . Essa estrat ´egia consiste
+em apostar contra o sentimento do mercado, ou seja, investir em ac ¸˜oes que possuem uma
+alta relac ¸˜ao negativa de seu prec ¸o com o´ındice de sentimentos. O racioc ´ınio para essa
+estrat´egia ´e que investidores pessimistas ou ansiosos tendem a vender ac ¸˜oes influencia-
+dos pelas not´ıcias negativas, mas os fundamentos das empresas n ˜ao s˜ao necessariamente
+afetados pelas not´ıcias negativas de todo o mercado, mas sim s ˜ao influenciados por fato-
+res macroecon ˆomicos e intr´ınsecos da empresa. Ent ˜ao, quando investidores pessimistas
+vendem tais ac ¸˜oes, h ´a um aumento no pr ˆemio de risco dessas ac ¸˜oes. Portanto, investir
+em ac ¸˜oes com alta correlac ¸˜ao negativa com o ´ındice de sentimentos ´e uma estrat ´egia de
+investimento que pode gerar retornos positivos, visto que o pr ˆemio de risco dessas ac ¸˜oes
+tende a ser maior que as demais ac ¸˜oes.
+Para testar essa estrat ´egia, foi utilizado o ´ındice de sentimentos e uma base de
+prec ¸os de ativos da bolsa de valores brasileira. A base de prec ¸os de ativos foi obtida do
+site Yahoo Finance e cont´em os prec ¸os de fechamento das ac ¸˜oes negociadas na bolsa de
+valores brasileira. A base de prec ¸os de ativos cont´em os prec ¸os de fechamento das ac ¸˜oes
+de 2014 a 2022. Para cada ac ¸˜ao, foi calculada a correlac ¸˜ao entre o ´ındice de sentimentos e
+os retornos hist´oricos de cada ac ¸˜ao, e as ac ¸˜oes com alta correlac ¸˜ao negativa com o ´ındice
+de sentimentos foram selecionadas a cada mˆes.
+O resultado da simulac ¸˜ao da estrat´egia de investimento apostando contra o senti-
+mento ´e mostrado na Figura 4. A estrat ´egia proposta apresentou um retorno acumulado
+de 683% ao longo de 8 anos, enquanto o ´ındice Bovespa apresentou um retorno acumu-
+lado de 254% no mesmo per´ıodo. O retorno acumulado da estrat ´egia apostando contra o
+sentimento foi 2,7 vezes maior que o retorno acumulado do ´ındice Bovespa.
+===== PAG 10 =====
+Figura 4. Simulac ¸ ˜ao da estrat ´egia de investimento apostando contra o senti-
+mento e do ´ ındice Bovespa.
+5. Conclus ˜ao
+O presente trabalho apresentou um modelo de an ´alise de sentimentos de textos em por-
+tuguˆes referentes ao mercado financeiro, SentFinBERT-PT-BR, a partir de um modelo de
+linguagem sintonizado para a l´ıngua portuguesa do Brasil e para o contexto de textos da
+´area financeira, denominado FinBERT-PT-BR.
+FinBERT-PT-BR foi gerado a partir do treinamento do BERTimbau, um modelo
+BERT geral para a l´ıngua portuguesa, com 1,4 milh ˜ao de textos no contexto do mercado
+financeiro. J ´a SentFinBERT-PT-BR´e um classificador treinado com 503 not´ıcias com os
+sentimentos anotados, tamb´em fruto deste trabalho.
+O trabalho de anotac ¸˜ao foi um trabalho cuidadoso realizado por tr ˆes pessoas e
+cada texto teve pelo menos duas anotac ¸˜oes de pessoas distintas. O cuidado na anotac ¸˜ao se
+evidencia pelas altas m´etricas de concordˆancia, com porcentagem de concord ˆancia 90,4,
+e Krippendorff’s alpha de 0,88.
+Os modelos treinados conseguiram superar as m´etricas dos principais modelos no
+estado da arte, com destaque para as m ´etricas do modelo de an ´alise de sentimento, com
+acur´acia e F1-Score 0,76 e 0,73, respectivamente.
+Al´em do treinamento dos modelos, foram apresentadas aplicac ¸˜oes relevantes para
+o mercado financeiro, como a an ´alise de sentimento de not´ıcias e ´ındices de sentimento,
+incluindo uma an´alise qualitativa do ´ındice de sentimento com fatos relevantes da econo-
+mia brasileira. Por fim, foi introduzido um fator de investimento denominado apostando
+contra o sentimento , que consiste em investir em ac ¸˜oes que apresentam alta correlac ¸˜ao
+negativa com o ´ındice de sentimento. Essa estrat ´egia apresentou um retorno ajustado
+ao risco satisfat ´orio e ainda pode ser utilizada para a explicabilidade do desempenho do
+´ındice Ibovespa.
+Para trabalhos futuros, ´e poss´ıvel aprimorar o modelo de an ´alise de sentimentos,
+utilizando uma base maior e mais espec ´ıfica de textos financeiros para o treinamento do
+modelo de linguagem. Al ´em disso, ´e poss´ıvel aprimorar o modelo de an ´alise de senti-
+mentos, aumentando a quantidade de textos rotulados, e mantendo altas m´etricas de con-
+cordˆancia. Em relac ¸˜ao `as aplicac ¸˜oes, ´e poss´ıvel aprimorar a forma de c ´alculo do ´ındice
+de sentimento e ainda aplicar a metodologia para setores espec´ıficos da bolsa de valores.
+===== PAG 11 =====
+E por fim, a an ´alise dos fatos relevantes da economia pode ser expandida para avaliar a
+relac ¸˜ao do ´ındice de sentimentos com dados macroecon ˆomicos, como: inflac ¸˜ao, PIB e a
+taxa de desemprego.
+Acknowledgments
+The authors would like to thank the Brazilian National Council for Scientific and Tech-
+nological Development (CNPq Grant N. 310085/2020-9) for the support.
+Referˆencias
+Araci, D. (2019). Finbert: Financial sentiment analysis with pre-trained language models.
+arXiv preprint arXiv:1908.10063.
+Ardia, D., Chopard, B., and Boudt, K. (2015). Using twitter to model the eur/usd ex-
+change rate. Economics Letters, 132:23–26.
+Artstein, R. and Poesio, M. (2008). Inter-coder agreement for computational linguistics.
+Computational linguistics, 34(4):555–596.
+Bollen, J., Mao, H., and Zeng, X. (2011). Twitter mood predicts the stock market.
+Chen, S. F., Beeferman, D., and Rosenfeld, R. (1998). Evaluation metrics for language
+models.
+de Souza, V . A., de Souza, F., and Meinerz, G. V . (2021). An ´alise de sentimento em
+tempo real de not ´ıcias do mercado de ac ¸˜oes / real-time sentiment analysis of stock
+market news. Brazilian Journal of Development, 7(1):11084–11091.
+Devlin, J., Chang, M.-W., Lee, K., and Toutanova, K. (2018). Bert: Pre-training
+of deep bidirectional transformers for language understanding. arXiv preprint ar-
+Xiv:1810.04805.
+Hiew, J. Z. G., Huang, X., Mou, H., Li, D., Wu, Q., and Xu, Y . (2019). Bert-based
+financial sentiment index and lstm-based stock return predictability. arXiv preprint
+arXiv:1906.09024.
+Janu´ario, B. A., Carosia, A. E. d. O., Silva, A. E. A. d., and Coelho, G. P. (2022). Sen-
+timent analysis applied to news from the brazilian stock market. IEEE Latin America
+Transactions, 20(3):512–518.
+Junjie, Z. and Mengoni, P. (2020). Spot gold price prediction using financial news senti-
+ment analysis. In 2020 IEEE/WIC/ACM International Joint Conference on Web Intel-
+ligence and Intelligent Agent Technology (WI-IAT), pages 758–763.
+Kordonis, J., Symeonidis, S., and Arampatzis, A. (2016). Stock price forecasting via
+sentiment analysis on twitter. In Proceedings of the 20th Pan-Hellenic Conference on
+Informatics, PCI ’16, New York, NY , USA. Association for Computing Machinery.
+Kraaijeveld, O. and De Smedt, J. (2020). The predictive power of public twitter sentiment
+for forecasting cryptocurrency prices. Journal of International Financial Markets,
+Institutions and Money, 65:101188.
+Krippendorff, K. (2018). Content analysis: An introduction to its methodology . Sage
+publications.
+===== PAG 12 =====
+Liu, B. (2012). Sentiment analysis and opinion mining. Synthesis Lectures on Human
+Language Technologies, 5(1):1–167.
+Lo, A. W. (2004). The adaptive markets hypothesis. The Journal of Portfolio Manage-
+ment, 30(5):15–29.
+Man, X., Luo, T., and Lin, J. (2019). Financial sentiment analysis(fsa): A survey. In2019
+IEEE International Conference on Industrial Cyber Physical Systems (ICPS) , pages
+617–622.
+Manning, C. D. and Sch ¨utze, H. (1999). Foundations of Statistical Natural Language
+Processing. The MIT Press.
+Medeiros, M. and Borges, V . (2019). Tweet sentiment analysis regarding the brazilian
+stock market. In Anais do VIII Brazilian Workshop on Social Network Analysis and
+Mining, pages 71–82, Porto Alegre, RS, Brasil. SBC.
+Otabek, S. and Choi, J. (2022). Twitter attribute classification with q-learning on bitcoin
+price prediction. IEEE Access, 10:96136–96148.
+Pagolu, V . S., Reddy, K. N., Panda, G., and Majhi, B. (2016). Sentiment analysis of twitter
+data for predicting stock market movements. In 2016 Int. Conf. on Signal Processing,
+Communication, Power and Embedded System, pages 1345–1350.
+Pang, B. and Lee, L. (2004). A sentimental education: Sentiment analysis using sub-
+jectivity summarization based on minimum cuts. In Proceedings of the 42Nd Annual
+Meeting on Association for Computational Linguistics, ACL ’04, pages 271–278.
+Pereira, J. G. (2019). An´alise de sentimentos da populac ¸˜ao brasileira em relac ¸˜ao a eleic ¸˜ao
+presidencial de 2018 atrav´es da rede social twitter.
+Silva, M. C. A. (2018). Percepc ¸˜oes sobre corrupc ¸˜ao durante as eleic ¸˜oes presidenciais no
+brasil em 2018: uma an´alise baseada no twitter.
+Souza, F., Nogueira, R., and Lotufo, R. (2020). Bertimbau: pretrained bert models for
+brazilian portuguese. In Brazilian Conference on Intelligent Systems, pages 403–417.
+Springer.
+Sun, C., Qiu, X., Xu, Y ., and Huang, X. (2019). How to fine-tune bert for text classi-
+fication? In China national conference on Chinese computational linguistics , pages
+194–206. Springer.
+Tan, K. L., Lee, C. P., and Lim, K. M. (2023). A survey of sentiment analysis: Approa-
+ches, datasets, and future research. Applied Sciences, 13(7).
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł.,
+and Polosukhin, I. (2017). Attention is all you need. Advances in neural information
+processing systems, 30.
+Xavier, F., OLENSCKI, J. R. W., ACOSTA, A. L., SALLUM, M. A. M., and SARAIV A,
+A. M. (2020). An´alise de redes sociais como estrat´egia de apoio `a vigilˆancia em sa´ude
+durante a covid-19. Estudos Avanc ¸ados, 34(99):261–282.

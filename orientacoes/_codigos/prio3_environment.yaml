@@ -1,0 +1,27 @@
+name: prio3
+channels:
+  - conda-forge
+dependencies:
+  # ── core ──────────────────────────────
+  - python=3.11
+  - pandas=2.2
+  - numpy=2.3
+  - pyarrow   # latest patch
+  - duckdb
+  - yfinance
+  # ── NLP / ML ─────────────────────────
+  - spacy=3.7
+  - transformers=4.41
+  - pytorch=2.4    # cpu build
+  - nltk
+  # ── stats / viz ──────────────────────
+  - scipy
+  - statsmodels
+  - matplotlib
+  - seaborn
+  - ipykernel
+  - tqdm
+  # ── pip section for spaCy PT model ───
+  - pip
+  - pip:
+      - pt-core-news-sm==3.7.0

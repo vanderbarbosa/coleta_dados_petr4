@@ -1,0 +1,64 @@
+% Achados de implementação sobre o artefato publicado — 2026-08.
+% Fontes: Mestrado_PETR4/normalizacao_caixa_relatorio.json,
+%         Mestrado_PETR4/recalculo_ism_softmax.json
+\subsection{Achados de implementação sobre o artefato publicado}
+\label{sec:achados_implementacao}
+
+A auditoria do artefato distribuído publicamente, conduzida durante os experimentos das seções
+anteriores, revelou duas incompatibilidades entre o modelo tal como publicado e o uso que dele se
+faz nesta pesquisa. Ambas são reportadas por afetarem a interpretação dos resultados e por
+constituírem informação de interesse para outros trabalhos que empreguem o mesmo recurso.
+
+\subsubsection{Manchetes em caixa alta e o vocabulário do modelo}
+
+O \mbox{FinBERT-PT-BR} herda do BERTimbau \cite{souza_bertimbau_2020} um vocabulário sensível à
+caixa: o arquivo de configuração declara \texttt{do\_lower\_case: false}. Um dos cinco portais que
+compõem o corpus publica a totalidade de suas manchetes em caixa alta, o que corresponde a 21.619
+registros, ou 10,5\% do total.
+
+A consequência é mensurável no próprio vocabulário. Nenhum dos doze termos mais frequentes do
+domínio --- entre os quais \textit{Petrobras}, \textit{gasolina}, \textit{lucro} e
+\textit{petróleo} --- consta do vocabulário em versão integralmente maiúscula. A cobertura, medida
+como a proporção de palavras inteiras presentes no vocabulário de 29.794 tokens, cai de 78,6\% nas
+fontes de caixa normal para 22,2\% na fonte afetada. O efeito sobre a classificação é
+correspondente: o modelo atribui a classe neutra a 84,3\% dessas manchetes, contra 32,0\% nas
+demais.
+
+Adotou-se, como tratamento, a normalização para forma de sentença com preservação das siglas do
+domínio. A intervenção recupera a cobertura de vocabulário para 77,6\%, patamar equivalente ao das
+fontes não afetadas. Avaliada contra o conjunto-ouro, a normalização não altera a acurácia no
+subconjunto afetado, mas reduz em 57\% o erro de distribuição entre classes, aproximando as
+proporções preditas das observadas na anotação humana. O efeito sobre o índice agregado é modesto
+--- da ordem de 0,005 --- em razão da participação limitada da fonte no corpus.
+
+\subsubsection{Escala das probabilidades e o cálculo do índice}
+
+O arquivo de configuração publicado declara \texttt{problem\_type: multi\_label\_classification},
+atributo inadequado a uma tarefa de três classes mutuamente exclusivas. A declaração produz dois
+efeitos.
+
+O primeiro é operacional: a função de custo selecionada por padrão passa a ser a entropia cruzada
+binária, incompatível com alvos de classe única, o que impede o ajuste fino sem intervenção
+explícita. O segundo é substantivo: a rotina de inferência da biblioteca seleciona a função de
+ativação a partir desse mesmo atributo e aplica a função sigmoide, quando a normalização adequada
+seria a \textit{softmax}.
+
+Cumpre delimitar o alcance do problema. Como a sigmoide é monotônica, o rótulo predito é idêntico
+sob as duas funções --- verificação conduzida sobre o conjunto-ouro confirmou coincidência de
+100\%. Todas as medidas de desempenho reportadas nesta dissertação, por dependerem exclusivamente
+do rótulo, permanecem válidas. O que se altera é a \textbf{escala} da probabilidade associada: no
+conjunto-ouro, a média passa de 0,667 sob a sigmoide para 0,755 sob a \textit{softmax}, e o máximo
+de 0,856 para 0,939.
+
+A distinção é relevante porque o Índice de Sentimento da Mídia, conforme definido na
+Seção~\ref{sec:metodologia_ism}, pondera a polaridade pela probabilidade da classe predita. A
+correção eleva a magnitude do índice em aproximadamente 13\%, preservando o sinal e a ordenação
+temporal --- o que implica que estimativas baseadas em variação, como correlações e coeficientes de
+regressão com intercepto, são pouco sensíveis à correção, ao passo que regras de limiar e
+classificações de regime são diretamente afetadas.
+
+Ambos os achados foram comunicados ao autor do modelo. Não constituem crítica ao trabalho original,
+cujo mérito permanece intacto, mas informação de interesse para a comunidade que emprega o
+artefato: a primeira incompatibilidade afeta qualquer corpus que contenha fontes com padrão
+editorial de caixa alta, e a segunda afeta qualquer aplicação que utilize a probabilidade
+retornada, e não apenas o rótulo.

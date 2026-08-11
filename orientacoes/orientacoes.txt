@@ -1,0 +1,21 @@
+
+Orientações: 
+	1. buscar informações sobre o uso do Bert financeiro em pesquisas diversas, como classificação, etc. (por ex., o próprio autor)
+	2. Identificar como os artigos utilizaram o fimbert_Pt;
+	3. Verificar se há outro encoder BERT melhor para usar na pesquisa;
+	4. Verificar se alguns desses Bert está tentando fazer o mesmo que eu;
+	5. Entrar no link: https://sol.sbc.org.br/index.php/bwaif/article/view/24960:
+		A. Ler, entender, e fazer um resumo desse artigo;
+		B. Verificar se há relação e se há algo que possamos usar na nossa pesquisa;
+		C. Ler todas as referências citadas neste artigo e fazer:
+				1. um resumo compilado de todas as referências contendo para cada uma das referências;
+				2. Enconders  e tecnologias utilizadas;
+				3. Objetivo;
+				4. Resultados obtidos;
+				5. Aplicação;
+				6. Dizer se tem relação com nossa pesquisa;
+				7. Se tiver relação com a nossa pesquisa o que podemos aproveitar e usar na nossa pesquisa;
+				8. Data;
+	6. Estudar tudo que tem no site: https://huggingface.co/lucas-leme/FinBERT-PT-BR/tree/main, esse site é do criador do FinBERT-PT-BR, fazer um resumo e ver o que podemos usar na nossa pesquisa;
+	7. Entrar no Link abaixo, esse link contem 12 citações ao trabalho de pesquisa do lucas-leme que é o autor do FinBET-PT-BR, verificar se esses trabalhos usaram o enconder, como, resultados, se usou outro enconder/tecnologia qual o resultado, resumo, data, autor, e se eu posso/devo usar algunos desses na minha pesquisa, se é algo mais recente e que pode trazer um melhor resultado.
+		LINK: https://scholar.google.com.br/scholar?oi=bibs&hl=pt-BR&cites=3248174171765827162

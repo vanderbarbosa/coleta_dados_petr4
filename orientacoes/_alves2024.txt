@@ -1,0 +1,245 @@
+Sentimentos em Cena: uma An ´alise dos Coment´arios em
+Trailers de Filmes da Netflix Brasil no YouTube
+Matheus Rodrigues Alves1, Mateus Barros Macedo2, Jaqueline Ribeiro1,
+L´ıvia Mancine1, Cleon Xavier Pereira J´unior2
+1Instituto Federal Goiano (IF Goiano) – Campus Ceres – Ceres-GO – Brasil
+2Instituto Federal Goiano (IF Goiano) – Campus Ipor´a – Ipor´a-GO – Brasil
+{matheus.alves2, mateus.barros }@estudante.ifgoiano.edu.br,
+{jaqueline.ribeiro, cleon.junior }@ifgoiano.edu.br,
+livia.mancine@ifgoiano.edu.br
+Abstract. The production of audiovisual content is an essential part of the en-
+tertainment industry, and the Netflix platform stands out in this market. Trai-
+lers of Netflix movies posted on platforms like YouTube generate a large volume
+of interaction data, making manual analysis impossible. Additionally, studies
+analyzing interaction data are scarce in the Portuguese language. The aim of
+this study was to investigate interaction data on movie trailers on YouTube th-
+rough the Netflix Brazil channel. Initial results revealed a peak in comments
+post-trailer release, which tends to decrease drastically over time, as well as
+strong correlations among interaction indices.
+Resumo. A produc ¸˜ao de conte ´udo audiovisual ´e uma parte essencial da
+ind´ustria do entretenimento, e a plataforma Netflix se destaca nesse mercado.
+Trailers de filmes da Netflix postados em plataformas como YouTube, geram um
+grande volume de dados de interac ¸˜ao, impossibilitando uma an ´alise manual.
+Al´em disso, trabalhos para analisar dados de interac ¸˜ao s˜ao escassos na l´ıngua
+portuguesa. O objetivo desse trabalho foi investigar dados de interac ¸˜ao em trai-
+lers de filmes no YouTube atrav´es do canal Netflix Brasil. Os resultados iniciais
+revelaram um pico de coment´arios p´os-lanc ¸amento dos trailers, mas que tende
+a reduzir drasticamente com o tempo, assim como fortes correlac ¸˜oes entre os
+´ındices de interac ¸˜ao.
+1. Introduc ¸˜ao
+A produc ¸˜ao de filmes e s ´eries desempenha um papel fundamental no ramo do en-
+tretenimento. Neste cen ´ario, uma das plataformas mais relevantes e populares ´e a
+Netflix1. Esta plataforma est ´a entre os maiores servic ¸os de produc ¸ ˜ao e streaming
+[Marchi and Ladeira 2023]. A Netflix oferece uma variedade de conte ´udo sob demanda,
+incluindo filmes, al ´em de investir fortemente em produc ¸˜oes originais que atraem uma
+gama de telespectadores e cr´ıticos da ´area.
+Postagens de trailers em plataformas como YouTube 2 ´e uma estrat ´egia adotada
+pela Netflix para movimentar os telespectadores [Kappaun and Oliveira 2022]. Este
+1https://www.netflix.com/
+2https://www.youtube.com/
+p´ublico, por sua vez, mostra suas impress˜oes, opini˜oes e expectativas quanto as produc ¸˜oes
+a partir de curtidas e coment ´arios [MacLeod et al. 2015]. Portanto, analisar essas
+interac ¸˜oes, ´e uma estrat ´egia para medir o impacto e a aceitac ¸ ˜ao dos materiais da Net-
+flix [Falico et al. 2021], al ´em de permitir compreender as tend ˆencias das interac ¸˜oes
+[Silva and Serrano 2023].
+Diante do volume de dados de novas produc ¸ ˜oes, bem como dos co-
+ment´arios feitos, fazer a an ´alise desses dados manualmente se torna invi ´avel
+[Coutinho and Malheiros 2020]. Assim, utilizar de t ´ecnicas de Intelig ˆencia Artifi-
+cial (IA), como o Processamento de Linguagem Natural (PLN), possibilita lidar com
+grande volume de dados, otimizando o processo de an ´alise. Uma an ´alise poss ´ıvel
+diz respeito aos sentimentos (positivo, neutro ou negativo) contidos nos coment ´arios
+[Silva and Serrano 2023]. Investigar esse grande volume de dados pode fornecer
+informac ¸˜oes valiosas tanto para a criac ¸˜ao de recomendac ¸˜oes personalizadas de filmes,
+quanto para entender tend ˆencias de interac ¸˜ao e aceitac ¸˜ao do p ´ublico. Por ´em, existe uma
+predominac ¸˜ao de an´alises de textos em inglˆes, demonstrando assim uma falta de trabalhos
+na l´ıngua portuguesa [Santos et al. 2023].
+Em [Silva and Serrano 2023], s ˜ao realizadas comparac ¸˜oes entre as avaliac ¸˜oes e
+classificac ¸˜oes de sentimentos realizadas em diferentes redes sociais como Instagram,
+Twitter e YouTube, mostrando diferenc ¸as entre t´ecnicas de classificac ¸˜ao de sentimentos,
+incluindo o uso da interface ChatGPT3 como eficiente para an´alise de sentimento. Ainda
+nesse sentido, os trabalhos a seguir apresentam contribuic ¸ ˜oes com relac ¸˜ao `a an ´alise de
+coment´arios em filmes.
+O trabalho de [Coelho et al. 2017] apresentou uma pesquisa envolvendo a
+minerac ¸˜ao de opini ˜oes sobre filmes e livros, utilizando bases de dados de redes soci-
+ais diferentes, como Twitter e Amazon. Este trabalho concentrou-se principalmente na
+an´alise das discuss ˜oes em torno dos sentimentos extra ´ıdos das obras cinematogr ´aficas e
+liter´arias. O trabalho de [Hu et al. 2023] desenvolveu uma an ´alise de coment´arios posta-
+dos em trailers em inglˆes, estabelecendo uma comparac ¸˜ao entre os sentimentos presentes
+em diferentes redes sociais, como o YouTube e Facebook. Em [Chen et al. 2020], os au-
+tores analisaram sentimentos sobre produc ¸˜oes da Netflix, e focaram especificamente em
+coment´arios do YouTube da s´erie La Casa de Papel, os autores buscaram compreender as
+expectativas quanto aos coment´arios em trailers acerca da continuidade da s´erie.
+O objetivo deste trabalho foi fazer um estudo de an ´alise temporal de coment´arios
+a partir dos sentimentos contidos nestes coment´arios, utilizando trailers de filmes em por-
+tuguˆes, postados na plataforma YouTube pela Netflix Brasil 4, com foco em conte ´udo na
+l´ıngua portuguesa. A pesquisa tamb ´em traz uma an ´alise quanto a quantidade de senti-
+mentos positivos, negativos e neutros destes coment ´arios. Neste trabalho foi utilizado
+como ferramenta de classificac ¸˜ao o GPT por meio da interface ChatGPT. De acordo
+com [Macedo et al. 2023, Silva and Serrano 2023], o uso do GPT como ferramenta de
+classificac ¸˜ao se mostrou mais eficaz em relac ¸˜ao a outros m´etodos tradicionais.
+3https://chat.openai.com
+4https://www.youtube.com/@NetflixBrasil
+2. Metodologia
+A fim de atingir o objetivo desta pesquisa, foram realizadas algumas etapas que permiti-
+ram a execuc ¸˜ao deste trabalho. Foi inicialmente realizada uma busca explorat ´oria a fim
+de definir o escopo. A partir disso, foram selecionados v´ıdeos postados pelo canal Netflix
+Brasil, que continham em seu t´ıtulo a palavra “trailer” e que tinham como idioma princi-
+pal a l´ıngua portuguesa (note que n˜ao necessariamente s˜ao produc ¸˜oes nacionais). Um dos
+parˆametros de limitac ¸˜ao da busca foi o tempo, onde foram selecionados apenas v ´ıdeos
+que foram publicados entre os anos de 2019 a 2024. Este parˆametro foi estipulado com o
+intuito de delimitar o escopo da pesquisa e fornecer dados mais atuais.
+Ao t´ermino da etapa de selec ¸˜ao, foi criada uma base com metadados de 5 trailers
+de filmes e 5 trailers de s ´eries que continham o maior n ´umero de visualizac ¸˜oes no canal
+da Netflix Brasil (Tabela 1). Ainda, foram descartados document´arios e demais categorias
+de conte ´udos audiovisuais. O n ´umero de v´ıdeos foi escolhido tamb ´em com o intuito de
+proporcionar uma melhor delimitac ¸˜ao do escopo da pesquisa. As requisic ¸˜oes dos v´ıdeos
+e dos metadados foram feitas usando a Application Programming Interface (API) dispo-
+nibilizada pelo YouTube. A partir da selec ¸˜ao dos v´ıdeos, foram realizadas requisic ¸˜oes na
+API, extraindo dados dos contidos nos v´ıdeos como os n´umeros de coment´arios, n´umero
+de visualizac ¸˜oes, durac ¸˜ao dos v´ıdeos, n ´umero de curtidas, quanto os coment ´arios em si.
+Estes dados foram considerados como as vari´aveis deste estudo.
+Tabela 1. V´ ıdeos selecionados e data de publicac ¸˜ao
+idVideo title data mes ano
+1 La Casa de Papel: Parte 3 — Trailer oficial — Netflix 03/06/2019
+2 Pequenos Grandes Her´ois, com Priyanka Chopra
+Jonas e Pedro Pascal — Trailer oficial — Netflix 04/12/2020
+3 Round 6 — Trailer oficial — Netflix 02/09/2021
+4 365 Dias: Hoje — Trailer oficial — Netflix 07/04/2022
+5 Contin ˆencia ao Amor — Trailer oficial — Netflix 03/08/2022
+6 O Enfermeiro da Noite — Trailer oficial — Netflix 07/09/2022
+7 Enola Holmes 2 — Trailer oficial: Parte 2 — Netflix 11/10/2022
+8 The Crown — Temporada 5 Trailer oficial — Netflix 20/10/2022
+9 ONE PIECE - Live Action — Trailer teaser
+oficial — Netflix 17/06/2023
+10 ONE PIECE: A S ´erie — Trailer oficial — Netflix 22/07/2023
+Esse processo de coleta com a API, foi feito utilizando a linguagem de
+programac ¸˜ao Python no Google Collaboratory 5. Essa etapa resultou em um conjunto de
+25.049 coment´arios retirados dos v´ıdeos. A partir da coleta dessa base inicial de dados,
+foi retirada uma amostra do conjunto de dados. Essa amostra foi retirada considerando
+todos os meses a partir da publicac ¸˜ao de cada v ´ıdeo, coletando ent ˜ao aproximadamente
+10% dos coment´arios de forma aleat´oria, resultando em 2.496 coment´arios.
+A partir da coleta da amostra do conjunto de dados, foi realizada a an ´alise de
+sentimentos dos 2.496 coment ´arios, usando GPT-3.5, com a interface ChatGPT. Para a
+classificac ¸˜ao foi definido o seguinte prompt “V oc ˆe ´e um classificador de texto, e est ´a
+classificando os sentimentos contidos nesses textos entre positivo, negativo ou neutro.
+Classifique os textos abaixo levando em considerac ¸˜ao esses sentimentos (positivo, nega-
+tivo ou neutro) classificando entre -1 e 1 no formato de ponto flutuante. Onde -1 significa
+totalmente negativo e 1 completamente positivo. Retorne em formato de tabela”.
+5https://colab.google/
+A partir da classificac ¸˜ao de ponto flutuante realizada pela an ´alise de sentimento
+do GPT, foram definidos valores que representam sentimentos positivos, negativos e neu-
+tros. Definindo os coment´arios positivos como aqueles classificados entre 0.5 e 1, neutros
+aqueles classificados entre -0.5 e 0.5 e negativos aqueles classificados entre -0.5 e -1.
+Uma das etapas de an ´alise buscou identificar a correlac ¸ ˜ao entre os dados de
+interac ¸˜ao, como curtidas e coment´arios, e metadados do v´ıdeo, como tempo de durac ¸˜ao e
+engajamento, foi feito um mapa de correlac ¸˜oes de Pearson, tamb´em chamado de mapa de
+calor (Figura 1). Tamb´em foram feitos gr´aficos de variac ¸˜ao do n´umero de coment´arios por
+sentimento pelo tempo (em meses) de toda a base de dados, buscando identificar padr˜oes
+de ocorrˆencia dos sentimentos (Figura 3).
+3. Resultados e discuss ˜ao
+Um mapa de calor foi criado para entender o comportamento dos dados, conforme mos-
+trado na Figura 1. N ´umeros negativos indicam uma correlac ¸˜ao negativa, o que signi-
+fica serem grandezas inversamente proporcionais, enquanto n ´umeros positivos indicam
+correlac ¸˜oes positivas, indicando grandezas diretamente proporcionais. Neste trabalho, fo-
+ram feitas as seguintes interpretac ¸˜oes das correlac ¸˜oes: valores entre 0.7 e 1 indicam uma
+correlac ¸˜ao forte, entre 0.5 e 0.7, uma correlac ¸˜ao moderada; entre 0.3 e 0.5, uma correlac ¸˜ao
+fraca; e valores entre 0 e 0.3 indicam uma correlac ¸˜ao desprez´ıvel [Akoglu 2018].
+Figura 1. Mapa de Correlac ¸˜ao
+A partir do mapa de calor foi poss´ıvel perceber que existe uma correlac ¸˜ao negativa
+fraca entre o n ´umero de visualizac ¸˜oes e as demais vari ´aveis. Esse fator ocorre possivel-
+mente pelo motivo de que com o passar do tempo e lanc ¸amento de novos t´ıtulos, mesmo
+que o n ´umero de visualizac ¸˜oes aumente, a atenc ¸˜ao e o engajamento dos telespectadores
+se voltam para os conte´udos mais recentes e em alta.
+A medida de engajamento diz respeito a participac ¸ ˜ao dos usu ´arios em determi-
+nada publicac ¸˜ao. Nesse caso o c ´alculo desse n ´umero foi feito com base na metodologia
+proposta por [Silva et al. 2021], no qual o c ´alculo de engajamento ´e realizado a partir da
+m´edia ponderada das m´etricas de interac ¸˜ao. Com esse m´etodo os pesos para o c´alculo s˜ao
+definidos considerando os valores das m´etricas.
+Uma correlac ¸˜ao apresentada no gr ´afico da Figura 1 diz respeito a quantidade de
+coment´arios positivos e o n ´umero de curtidas nos v ´ıdeos. O mapa de calor mostra que
+v´ıdeos com coment´arios positivos tem uma correlac ¸˜ao positiva forte com n´umero de cur-
+tidas. Uma correlac ¸˜ao positiva fraca presente no mapa (Figura 1), ´e com relac ¸˜ao aos
+coment´arios positivos e a durac ¸˜ao do v´ıdeo, mostrando que v´ıdeos maiores tem mais co-
+ment´arios classificados como positivo. O mesmo ocorre com ´ındice de engajamento, que
+cresce com o tempo de durac ¸˜ao do v´ıdeo, podendo indicar que os telespectadores mos-
+tram mais coment´arios positivos e um maior engajamento com tempos de v´ıdeos maiores,
+possivelmente por ser poss´ıvel tem um panorama melhor do lanc ¸amento, como tamb´em
+proporcionar um maior tempo de interac ¸˜ao com o conte´udo.
+No tocante a an´alise de sentimentos, foram mostrados resultados condizentes com
+a literatura. O contingente de coment ´arios classificados como “POSITIVO”obtiveram
+um percentual de 55.3%, apresentando a maior taxa de ocorr ˆencia. Coment ´arios que
+se enquadraram na classe “NEGATIVO” representaram 16.9% e a ocorr ˆencias da classe
+“NEUTRO” representou 27.8%.
+Figura 2. Ocorr ˆencia de sentimentos por tempo
+A partir da tendˆencia expressa na Figura 1 e tamb´em nos gr´aficos das Figuras 2 e
+3, com o passar do tempo e n ´umero de visualizac ¸˜oes a quantidade de interac ¸˜oes diminui.
+Al´em disso, a intensidade dos sentimentos nos coment ´arios ´e alterada, provavelmente
+devido `a diminuic ¸˜ao do engajamento e/ou coment´arios. A Figura 2, mostra a variac ¸˜ao dos
+sentimentos nos coment ´arios em uma escala temporal. ´E poss´ıvel perceber que existem
+momentos onde ocorre uma concentrac ¸˜ao de coment´arios. Esses momentos s˜ao os dias de
+lanc ¸amento dos trailers, onde os usu´arios assistem e interagem mais. A figura 3, mostra
+a variac ¸˜ao de sentimentos por tempo em cada v ´ıdeo, apresentando um comportamento
+padr˜ao, onde o trailer ´e lanc ¸ado, ocorre um pico de coment´arios, principalmente positivos,
+e com o tempo a quantidade de coment´arios cai para pr´oximo de 0.
+Figura 3. Ocorr ˆencia de sentimentos por tempo e por v´ ıdeo
+Trailers como o de “O Enfermeiro da Noite” e “Pequenos Grandes Her ´ois” mos-
+traram ap ´os seu lanc ¸amento, uma diferenc ¸a sutil com relac ¸˜ao `a variac ¸˜ao de coment ´arios
+em comparac ¸˜ao com outros trailers. Eles continuaram tendo ocorr ˆencia de coment ´arios,
+o que n ˜ao ´e comum nos outros v ´ıdeos. Com isso, os dados e an ´alises s˜ao inconclusivos
+com relac ¸˜ao a essa variac ¸˜ao de coment´arios.
+4. Considerac ¸˜oes finais
+O uso de t ´ecnicas para o processamento dos dados dispon´ıveis em redes sociais, como o
+YouTube, se mostra um campo promissor por gerar metadados que permitem diferentes
+an´alises. Conhecimento a respeito das tend ˆencias dos usu ´arios, bem como a recepc ¸˜ao e
+engajamento dos mesmos com relac ¸˜ao a um conte ´udo, podem direcionar a produtora no
+planejamento e criac ¸˜ao de conte´udos mais direcionados a um p´ublico. A explorac ¸˜ao des-
+ses dados tamb ´em podem colaborar com o p ´ublico, oferecendo conte ´udo personalizado.
+Como trabalhos futuros, fica a possibilidade de realizar comparac ¸˜oes entre os sentimen-
+tos presentes em coment ´arios de trailers de filmes e s ´eries selecionados em redes sociais
+diferentes. Tal motivac ¸˜ao ocorre uma vez que trabalhos como o de [Hu et al. 2023] apre-
+sentam pesquisas nesse sentido, mas em l ´ıngua inglesa. ´E importante ressaltar que estes
+resultados est˜ao delimitados e devem ser analisados e interpretados no contexto da pes-
+quisa em andamento, de modo que uma base de dados diferente ou at ´e mesmo a escolha
+de outros v ´ıdeos, podem apresentar resultados diferentes, reforc ¸ando a necessidade de
+continuidade da pesquisa.
+Agradecimentos
+As pessoas autoras deste trabalho agradecem o IF Goiano pelo apoio.
+Referˆencias
+Akoglu, H. (2018). User’s guide to correlation coefficients. Turkish journal of emergency
+medicine, 18(3):91–93.
+Chen, R. N., Callista, A. S., Pratama, D. N., and Puspita, C. E. (2020). Sentiment analysis
+of youtube movie trailer comments using na¨ıve bayes. In Bulletin of Computer Science
+and Electrical Engineering.
+Coelho, U. M., Lima, A. C. S., and O, N. (2017). Analisador de express ˜oes positivas e
+negativas aplicado em coment´arios de livros e filmes.
+Coutinho, V . M. d. M. S. and Malheiros, Y . (2020). Detecc ¸ao de mensagens homof´obicas
+em portugu ˆes no twitter usando an ´alise de sentimentos. In Anais do IX Brazilian
+Workshop on Social Network Analysis and Mining, pages 1–12. SBC.
+Falico, L. L., Neves, S. C., and Romanelli, R. A. (2021). Balanc ¸o de produc ¸˜ao: M´ıdia e
+educac ¸˜ao: A influ ˆencia do youtube no imagin´ario de crianc ¸as e adolescentes. InGT 2
+– Educac ¸˜ao e Comunicac ¸˜ao. Mato Grosso, Brazil.
+Hu, Y ., Chen, M., and Hui, S. (2023). Sentiment deviations in responses to movie trailers
+across social media platforms. In Springer, editor, Marketing Letters: A Journal of
+Research in Marketing.
+Kappaun, A. and Oliveira, J. (2022). An´alise sobre vi´es de gˆenero no youtube: Um estudo
+sobre as eleic ¸˜oes presidenciais de 2018 e 2022. In Programa de P ´os-Graduac ¸˜ao em
+Inform´atica (PPGI). Rio de Janeiro, RJ, Brazil.
+Macedo, M. B., Morais, B. G. S., de Almeida Ribeiro, L., da Costa, N. T., de Santana,
+T. S., and Junior, C. P. (2023). An´alise comparativa de v´ıdeos do youtube de canais de
+homens e mulheres na ´area de computac ¸˜ao: uma investigac ¸˜ao a partir dos coment´arios.
+In Anais do XXXIV Simp ´osio Brasileiro de Inform ´atica na Educac ¸˜ao, pages 1862–
+1873. SBC.
+MacLeod, L., Storey, M.-A., and Bergen, A. (2015). Code, camera, action: How software
+developers document and share program knowledge using youtube. In2015 IEEE 23rd
+International Conference on Program Comprehension, pages 104–114.
+Marchi, L. and Ladeira, J. M. (2023). Originais netflix: Um panorama da produc ¸ ˜ao
+audiovisual da netflix no brasil 2016-2019. In Escola de comunicac ¸˜ao, a. e. d., editor,
+REVISTA FAMECOS: m´ıdia, cultura e tecnologia.
+Santos, L. L., Bianchi, R. A., and Costa, A. H. (2023). Finbert-pt-br: An´alise de sentimen-
+tos de textos em portuguˆes do mercado financeiro. In Anais do II Brazilian Workshop
+on Artificial Intelligence in Finance, pages 144–155. SBC.
+Silva, I. O. d., Gouveia, F. C., et al. (2021). Engajamento informacional nas redes sociais:
+como calcular?
+Silva, M. E. R. and Serrano, P. H. S. M. (2023). An ´alise de sentimentos em textos de
+redes sociais: uma comparac ¸˜ao entre o chatgpt e m ´etodos tradicionais. Cadernos de
+Comunicac ¸˜ao, 27(3).

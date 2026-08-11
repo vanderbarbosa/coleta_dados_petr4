@@ -36,13 +36,21 @@ codificador de propósito geral muito competente, sem rótulos suficientes ele c
 zero). Em suma, um encoder maior não melhora automaticamente o resultado; o que falta, antes, são
 \textbf{rótulos}.
 
-Há, porém, um indício promissor. O \textbf{BERTimbau-large} ficou a apenas um vírgula sete ponto
+Há, porém, um indício a registrar. O \textbf{BERTimbau-large} ficou a apenas um vírgula sete ponto
 percentual do \mbox{FinBERT-PT-BR} --- e não por acaso, pois é da \emph{mesma família} que serve de
-base ao próprio FinBERT, apenas em versão maior. Essa proximidade, alcançada com uma base rotulada
-mínima, sugere que a ampliação do conjunto-ouro (estima-se entre quinhentos e mil exemplos) tende a
-permitir que um BERTimbau-large ajustado \emph{iguale ou supere} o modelo atual, ao passo que um salto
-de arquitetura, como o Albertina, exigiria um volume de rótulos consideravelmente maior, ou um
-pré-treino de domínio sobre o próprio corpus. A conclusão prática, portanto, é dupla: no estágio atual,
-o \mbox{FinBERT-PT-BR} permanece a melhor escolha; e a via mais eficiente para superá-lo é, primeiro,
-\textbf{rotular mais}, e depois ajustar um codificador da mesma família, porém maior. O experimento é
-integralmente reprodutível em GPU gratuita, por meio do \textit{notebook} que acompanha o projeto.
+base ao próprio FinBERT, apenas em versão maior. Cabe observar, contudo, que uma diferença dessa
+ordem, em um conjunto de trezentos itens, situa-se dentro da margem de incerteza amostral: o
+intervalo de confiança do F1-macro tem, nesse regime, amplitude aproximada de 0,11. A leitura
+adequada não é, portanto, a de que o BERTimbau-large seja inferior, e sim a de que os codificadores
+testados são \emph{indistinguíveis} entre si sob o volume de supervisão disponível.
+
+Duas hipóteses restavam ao término deste experimento: ampliar o conjunto de rótulos ou submeter o
+modelo a um pré-treino de domínio sobre o próprio corpus. A primeira permaneceu inviabilizada pela
+suspensão da rotulagem manual, discutida na Seção~\ref{sec:validacao_sentimento}. A segunda ---
+recomendada tanto pela literatura de aprendizado por transferência \cite{gururangan_dont_2020}
+quanto pelas direções futuras declaradas por \citeonline{santos_finbert_2023}, e com a vantagem
+decisiva de não consumir anotação humana --- foi testada e é objeto da
+Seção~\ref{sec:adaptacao_dominio}, cujo resultado contraria a expectativa aqui formulada. No
+estágio atual, portanto, o \mbox{FinBERT-PT-BR} permanece a melhor escolha entre as alternativas
+avaliadas. O experimento é integralmente reprodutível em GPU gratuita, por meio do \textit{notebook}
+que acompanha o projeto.

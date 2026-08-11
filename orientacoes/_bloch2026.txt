@@ -1,0 +1,1589 @@
+ OPEN ACCESS
+1   O artigo foi financiado no âmbito do projeto “Imperial Commoners of Brazil and West Africa (1640–1822): A Global History from a Cor -
+respondence Network Perspective”, do Centro Nacional de Ciências da Polônia (Narodowe Centrum Nauki – National Science Center of 
+Poland), 2022/45/B/HS3/00473.
+2  Instituto de História Tadeusz Manteuffel, Academia de Ciências da Polônia, IH-PAN, Varsóvia, Polônia. 
+3  University of California Davis, USA; Instituto de História Tadeusz Manteuffel, Academia de Ciências da Polônia, IH-PAN, Varsóvia, 
+Polônia.
+4  Universidade Salgado de Oliveira (Universo) e Universidade do Estado do Rio de Janeiro (UERJ), Rio de Janeiro (RJ), Brasil.
+Este é um artigo de acesso aberto distribuído 
+sob a licença CC-BY 4.0, que permite a cópia 
+e redistribuição do material em qualquer for -
+mato e para qualquer finalidade, desde que 
+a autoria original e os créditos de publicação 
+sejam mantidos.
+Estudos Ibero-Americanos, Porto Alegre, v. 52, n. 1, p. 1-23, jan.-dez. 2026
+e-ISSN: 1980-864X | ISSN-L: 0101-4064
+Resumo: O artigo investiga o impacto das tecnologias digitais no ofício do 
+historiador, destacando as oportunidades e os desafios que essas ferramentas 
+trazem consigo. Concentrando-se na análise da presença da Companhia de 
+Jesus nos registros do Arquivo Histórico Ultramarino, entre 1642 e 1822, o texto 
+examina como a inteligência artificial (AI) pode contribuir para o enriquecimento 
+da pesquisa histórica. Destaca-se, assim, a necessidade de um diálogo entre o 
+historiador e as tecnologias, sem negligenciar o papel humano neste processo. 
+A análise discute, de modo especial, um algoritmo conhecido por “análise de 
+sentimentos”, tomando-o como um exemplo que ilustra o quanto a qualidade 
+dos dados influencia o desempenho da AI.
+Palavras-chave: humanidades digitais; análise de sentimentos; História Digital; 
+jesuítas; correspondência.
+Abstract: The article examines the impact of digital technologies on the his-
+torian’s craft and discusses the opportunities and challenges that these tools 
+bring. The authors focus on analyzing the presence of the Society of Jesus in the 
+records of the Portuguese Overseas Historical Archives (AHU) between 1642 and 
+1822 and explore how artificial intelligence (AI) can contribute to the enrichment 
+of historical research. The paper discusses the need for more dialogue between 
+historians and technologies, without neglecting the human role in this process. In 
+particular, it analyzes an algorithm known as “sentiment analysis” as an example 
+of how data quality affects the performance of AI.
+Keywords: digital humanities; sentiment analysis; Digital History; Jesuits; cor -
+respondence.
+Resumen: El artículo investiga el impacto de las tecnologías digitales en el oficio 
+del historiador, destacando las oportunidades y desafíos que estas herramientas 
+traen consigo. Centrándose en el análisis de la presencia de la Compañía de 
+Jesús en los registros del Archivo Histórico de Ultramar, entre 1642 y 1822, la 
+investigación examina cómo la inteligencia artificial (IA) puede contribuir al enri-
+quecimiento de la investigación histórica. Se destaca, por tanto, la necesidad de 
+un diálogo entre el historiador y las tecnologías, sin descuidar el papel humano 
+en este proceso. El análisis analiza un algoritmo conocido como “análisis de 
+sentimiento” como ejemplo que ilustra cómo la calidad de los datos influye en 
+DOSSIÊ: HISTÓRIA DIGITAL E HISTÓRIA DIGITAL DA EDUCAÇÃO
+Os jesuítas e a Era do Algoritmo. Uma introdução à análise 
+de sentimentos da correspondência colonial ultramarina 
+portuguesa
+The Jesuits and the Age of the Algorithm. An Introduction to Sentiment Analysis of 
+Portuguese Overseas Colonial Correspondence
+Los jesuitas y la era del algoritmo: una introducción al análisis de sentimientos de la 
+correspondencia colonial portuguesa de ultramar
+Agata Błoch2
+orcid.org/0000-0002-2070-2750
+abloch@ihpan.edu.pl
+Clodomir Santana 3
+orcid.org/0000-0001-7869-7184
+clsantana@ucdavis.edu
+Marcia Amantino4
+orcid.org/0000-0003-3229-9142
+marciaamantino@gmail.com
+Recebido: 29 maio. 2024.  
+Aprovado: 22 jun. 2025
+. 
+Publicado: 13 abr. 2026.
+2/23 Estudos Ibero-Americanos, Porto Alegre, v. 52, n. 1, p. 1-23, jan.-dez. 2026 | e-46315
+el rendimiento de la IA.
+Palabras clave:  humanidades digitales; análisis de 
+sentimientos; Historia Digital; jesuitas; correspondencia.
+1 Rumo à construção da História 
+Computacional
+As humanidades digitais englobam uma vasta 
+gama de ferramentas digitais, como a digitali -
+zação de documentos, a análise de corpus tex-
+tual, a edição de textos (TEI), a criação de mapas 
+históricos por meio de ferramentas de Sistema 
+de Informação Geográfica (GIS), ou até mesmo 
+a visualização dos dados. Embora todas essas 
+ferramentas tenham desempenhado um papel 
+significativo no avanço das pesquisas da área, 
+neste estudo, direcionamos nossa atenção a um 
+ramo específico da História Digital, conhecido 
+como Humanities Computing, ou mais precis -
+amente Computational History (Betti; Van Den 
+Berg, 2016; Piotrowski; Fafinski, 2020; Svensso, 
+2016). Uma explicação clara de o que é a História 
+Computacional, com a qual concordamos e que 
+será demonstrada ao longo deste artigo, é forne-
+cida por Laubichler, Maienschein e Renn (2013, 
+p. 120), ao afirmarem que:
+A hist ória computacional da ciência introduz 
+abordagens baseadas em big data e métodos 
+analíticos computacionais. Isso permite novos 
+tipos de questionamentos, como avaliações 
+de longa duração da evolução do conheci -
+mento em escala global, análises detalhadas 
+da natureza das transformações e revoluções 
+5  Sobre os projetos de digitalização das fontes históricas, convém destacar o Projeto Endangered Archives da British Library. Ver: SU-
+PPLE, Barry. Preserving the past: creating the Endangered Archives Programme. From Dust to Digital: Ten Years of the Endangered Ar -
+chives Programme. Cambridge: Open Book Publishers, 2015. p. XXXIX–XLI. No âmbito do projeto Endangered Archives, foi financiado o 
+projeto EAP626 – Documentos ameaçados: digitalização de fontes secular e eclesiástica do século XVII ao XIX em São João do Cariri e João 
+Pessoa, Paraíba, Brasil. Ver: LIMA, Maria da Vitória Barbosa et al. Acervos Digitais em Sociedades Escravistas: a perspectiva de estudo da 
+família de escravizados na Paraíba do Norte, América Portuguesa, século XVIII. In: VASQUES FILHO et al. Memórias Digitais. Democrati-
+zando informações, histórias e tecnologias. São José do Rio Preto: HN, 2024. p. 31-52. Outro projeto a ser mencionado é o Projeto Resgate 
+da Documentação Histórica Barão do Rio Branco, que microfilmou e digitalizou a documentação do Arquivo Histórico Ultramarino de 
+Lisboa. Ver: BERTOLETTI, Esther Caldas et al. O Projeto Resgate de Documentação Histórica Barão do Rio Branco: acesso às fontes da 
+História do Brasil existentes no exterior. Clio: revista de pesquisa histórica do programa de pós-graduação em História da Universidade 
+Federal de Pernambuco, Recife, p. 29-31, 2011. 
+6  A dependência de servidores é crucial para o armazenamento de diversos tipos de dados históricos. Por exemplo, bancos de dados, 
+como no Project Slave Voyages ( https:/ /www.slavevoyages.org/); cartas, panfletos e fotografias, como preservados pela Wiener Holo-
+caust Library ( https:/ /wienerholocaustlibrary.org/); e gravações de áudio, como arquivadas pelo Pacific and Regional Archive for Digital 
+Sources in Endangered Cultures (PARADISEC) ( https:/ /www.paradisec.org.au/). Existem também arquivos digitais que incluem coleções 
+nato-digitais, ou seja, aqueles que desde o início foram criados em formato digital e nunca existiram em papel. Ver: MARINO, Ian Kisil et 
+al. Como contar a história da Covid-19? Reflexões a partir dos arquivos digitais no Brasil. Esboços: histórias em contextos globais, [s. l.], v. 
+28, n. 48, p. 558-583, 2021.
+científicas, e comparações em amplas escalas 
+temporais e espaciais.
+Anteriormente, já havíamos considerado três 
+principais vertentes da História Digital: o Digitali-
+zado, o Digital e o Computacional (Vasques Filho 
+et al., 2024). O Digitalizado refere-se ao processo 
+da democratização das informações históricas 
+por meio da digitalização. Essa etapa exige inves-
+timentos significativos em infraestrutura, como 
+scanners de alta qualidade, além de um grande 
+esforço humano para sistematização e padroni-
+zação da digitalização das fontes 5. O Digital, por 
+sua vez, diz respeito à disponibilização dessas 
+fontes de maneira acessível, por meio de biblio-
+tecas digitais e outros projetos na internet. Essa 
+fase depende, em grande parte, do financiamento 
+de servidores de hospedagem de longo prazo, 
+garantindo a preservação e o acesso contínuo aos 
+documentos digitalizados 6. Por fim, o Computa-
+cional introduz perspectivas analíticas baseadas 
+em métodos computacionais e algoritmos apli-
+cados às pesquisas históricas contemporâneas. 
+Essa vertente depende amplamente das etapas 
+anteriores, pois necessita de fontes históricas 
+digitalizadas e, preferencialmente, processadas 
+em formatos machine-readable para a aplicação 
+de algoritmos avançados. Além disso, essa etapa 
+exige hardware de alto desempenho, geralmente 
+otimizado para cargas de trabalho baseadas em 
+inteligência artificial, como GPUs especializadas. 
+Esses recursos são essenciais para operações 
+Agata Błoch • Clodomir Santana • Marcia Amantino
+Os jesuítas e a Era do Algoritmo  3/23
+como extração automatizada de dados, miner -
+ação de dados e texto, visualização de redes e 
+análise estatística, entre outras 7.
+Com base em tais abordagens, o artigo ob -
+jetiva investigar as oportunidades de pesquisa 
+proporcionadas pelas ferramentas digitais, utili-
+zando-se para isso de um conjunto documental 
+do Arquivo Ultramarino Português, entre 1642 e 
+1822, que tem como objeto principal a Companhia 
+de Jesus. Como essa ordem se espalhou pelas 
+“quatro partes do mundo” (Gruzinski, 2014) a partir 
+de 1540, tornando-se “mundializada”, essa é uma 
+problemática factível para averiguarmos a viabil-
+idade das ferramentas digitais quando utilizadas 
+para o entendimento histórico.
+Em linha com Jesse Torgerson (2022), que 
+observa que a História Digital não é apenas algo 
+novo, mas, sim, algo diferente, começaremos 
+nossa discussão. Em seguida, compararemos os 
+resultados obtidos com o conhecimento histo-
+riográfico, avaliando a confiabilidade dos métodos 
+da História Digital. A utilização dessas ferramen-
+tas nos coloca diante do questionamento típico 
+de boa parte dos historiadores: até que ponto 
+podemos confiar nos resultados que as fontes 
+nos oferecem?
+Antes de adentrarmos no debate proposto, 
+convém apresentar brevemente o conjunto de 
+dados que foi construído a partir dos fundos da 
+correspondência do Arquivo Histórico Ultramarino 
+de Lisboa, abarcando um período desde a primei-
+ra carta incorporada no fundo (a Carta de Con-
+firmação do Rei D. João III, de 7 de dezembro de 
+1538) até o ofício do governador e capitão-geral 
+7  Diversas abordagens computacionais têm sido empregadas na pesquisa histórica. Para análise espacial, ver, de Adam Mertel et al., 
+Historical geocoding assistant (SoftwareX, 2021) e, de Bogumił Szady, Spatio-temporal databases as a research tool in historical geogra-
+phy (Geographia Polonica, 2016). Para análise de redes, consulte, de Agata Błoch, Vasques Filho e Bojanowski, Networks from archives: 
+Reconstructing networks of official correspondence in the early modern Portuguese empire (Social Networks, 2022) e, de Sam Fields et al., 
+Using named entity recognition and network analysis to distinguish personal networks from the social milieu in nineteenth-century Otto-
+man–Iraqi personal diaries (Digital Scholarship in the Humanities, 2023). No campo da codificação de grandes corpora com XML-TEI, ver, 
+de Marie Puren et al., From parliamentary history to digital and computational history: a NLP-friendly TEI model for historical parliamentary 
+proceedings (Digital Scholarship in the Humanities, 2025). Já para análise de sentimentos, consulte, de Maisie Jane Brigham e Katherine 
+Elkins, Narrative Structures in American History: Using Sentiment Analysis to Identify Trends in Historiography (IPHS 200: Programming Hu-
+manity, 2024).
+8  CARTA DE CONFIRMAÇÃO (cópia) do rei [D. João III] ao privilégio de liberdade dado por D. Manuel I – São Tomé, cx. 1, doc. 1. AHU_
+CU_070, Cx. 1, D. 1. | OFÍCIO do conde da Ponte [João de Saldanha da Gama Melo Torres Guedes de Brito, governador e capitão general 
+da Bahia] ao visconde de Anadia [João Rodrigues de Sá e Melo], AHU_CU_005-01, Cx. 149, D. 29.981.
+9  A construção da nossa base de dados foi minuciosamente delineada nos artigos “Networks from archives: Reconstructing networks 
+of official correspondence in the early modern Portuguese empire” e “ Cracking the Historical Code”. Neles, explicamos em detalhes como 
+processamos a correspondência administrativa do Arquivo Histórico Ultramarino.
+10  Para mais informações sobre as práticas digitais de transformar as fontes históricas em machine-readable, ver: Elo (2020); Elwert 
+(2020); Petz e Pfeffer (2021); Ye (2022); Zbíral e Shaw (2022).
+11  Trata-se dos sites https:/ /digitarq.ahu.arquivos.pt/ e resgate.bn.br.
+da Bahia, João de Saldanha da Gama Melo Torres 
+Guedes de Brito, datado de 8 de agosto de 18978. 
+Para analisar esse conjunto documental, utiliza-
+mos técnicas de Natural Language Processing e 
+Data Mining, a fim de consolidar as 31 coleções 
+ultramarinas da África Ocidental e Oriental (An-
+gola, Cabo Verde, São Tomé e Príncipe, Guiné, 
+Moçambique) e das colônias brasileiras (fundos 
+conhecidos como Projeto Resgate) (Boschi, 2018) 
+em um único conjunto de dados, estruturando 
+os metadados necessários para a análise com-
+putacional de correspondência 9.
+Dessa forma, é importante ressaltar que essa 
+metodologia representa uma inovação em relação 
+a transformar dados anteriormente inacessíveis 
+para as máquinas — como registros de fundos 
+históricos — em informações agora processáveis, 
+sendo tal procedimento habitualmente empre-
+gado nas práticas digitais de hoje 10. Em outras 
+palavras, atualmente, já somos capazes de não 
+apenas identificar tudo o que um pesquisador 
+normalmente procuraria manualmente nos sites 
+do Projeto Resgate, mantido pela Biblioteca Na-
+cional, e no Arquivo Histórico Ultramarino (AHU), 
+mas, também, de processar essas informações e 
+preparar as análises computacionais11. No entanto, 
+é importante notar que o escopo de trabalho não 
+inclui o uso de técnicas de Reconhecimento Ótico 
+de Caracteres (HTR) para examinar o conteúdo 
+das fontes históricas.
+A nossa base de dados está salva em um 
+arquivo tab (do inglês, texto delimitado por tabu-
+lação) e tem um tamanho total de 65 kilobytes. 
+Esse arquivo pode ser lido e editado utilizando 
+4/23 Estudos Ibero-Americanos, Porto Alegre, v. 52, n. 1, p. 1-23, jan.-dez. 2026 | e-46315
+ferramentas como editores de textos, planilhas 
+eletrônicas ou linguagens de programação. Em 
+nosso estudo, optamos por utilizar a linguagem 
+de programação Python, que, além de leitura, 
+edição e escrita, fornece também ferramentas 
+para análise dos dados. Um exemplo de regis-
+12  Processamento de Linguagem Natural é o campo de Inteligência Artificial que transforma a linguagem humana em dados que po-
+dem ser processados pelo computador.
+tro da nossa base está apresentado na figura 1. 
+Embora o uso de linguagem de programação 
+atenda às nossas demandas atuais, ressaltamos 
+que a implementação de uma interface gráfica 
+seria uma valiosa adição no futuro.
+ 
+Figura 1 – Texto estruturado no formato machine-readable de um documento proveniente do 
+Projeto Resgate
+Fonte: elaboração própria.
+Legenda: a imagem exibe os seguintes metadados, extraídos semiautomaticamente: doc_id : ID 
+único atribuído a cada correspondência; doc_type : tipo de documento, que pode variar entre reque -
+rimento, consulta, despacho, entre outros; text: texto original conforme consta nos registros; sender : 
+remetente da correspondência; recipient : destinatário da correspondência; occupations : ocupação 
+profissional ou cargo; affiliation: afiliação institucional; titles: títulos de nobreza; date: data da corres-
+pondência.
+A aplicação de ferramentas digitais para 
+integrar, processar e extrair informações das 
+correspondências não é uma prática incomum, 
+como evidenciado em outros projetos, tais como 
+“Circulation of Knowledge and Learned Practices 
+in the 17th-Century Dutch Republic: a Web-based 
+Humanities Collaboratory on Correspondences”, 
+no qual se trabalhou com um total de 19.239 
+cartas (Wittek; Ravenek, 2011). Em comparação, 
+nossa dataset contém quase 170.000 registros 
+de correspondência, abrangendo cartas com 
+uma vasta gama de tópicos, desde questões 
+administrativas, sociopolíticas e econômicas até 
+aspectos religiosos, enviados por centenas de 
+remetentes de diferentes estratos sociais — in-
+cluindo oficiais, mercadores, religiosos, pessoas  
+ 
+marginalizadas, entre outros.
+Diante da vasta diversidade de possibilidades, 
+optamos, conforme já explicitado, por concentrar 
+nosso foco neste artigo nas questões pertinen-
+tes aos jesuítas. Assim, exploramos a interseção 
+entre história e tecnologia digital com recorte na 
+Companhia de Jesus. Decidimos, também, de-
+limitar nossa análise à região atlântica, excluindo 
+Moçambique, e restringindo as datas entre 1642 
+e 1822. Esse intervalo temporal abarca desde a 
+fundação do Conselho Ultramarino em Lisboa 
+até a declaração da Independência no Brasil.
+Neste artigo, propomos testar, desenvolver e 
+aplicar um dos modelos do campo de Processa-
+mento de Linguagem Natural (Natural Language 
+Processing)12, nomeadamente a análise de sen-
+Agata Błoch • Clodomir Santana • Marcia Amantino
+Os jesuítas e a Era do Algoritmo  5/23
+timentos, que será explicada posteriormente. 
+Essa pode ser de particular interesse para os 
+historiadores, porém ainda apresenta diversos 
+desafios tanto do ponto de vista teórico quanto 
+do metodológico. É crucial concluir esta seção 
+destacando que os modelos criados e os desa-
+fios a eles associados representam uma porta 
+de entrada para variada gama de investigações. 
+Tais técnicas podem ser aplicadas a qualquer 
+estudo, tópico ou grupo social relevante iden -
+tificado em nosso conjunto de dados, sendo o 
+objetivo primordial assegurar a reprodutibilidade 
+de nossa pesquisa. O estudo de caso dos jesuítas, 
+por exemplo, representa apenas uma entre as 
+diversas possíveis linhas de pesquisa a serem 
+exploradas. Finalmente, a partir da perspectiva 
+da análise de sentimentos, buscamos avaliar 
+a confiabilidade dos métodos empregados no 
+campo da História Computacional.
+2 T eias digitais e espirituais: a 
+interseção entre a História Digital e a 
+Companhia de Jesus
+A Companhia de Jesus fez parte do projeto co-
+lonial português. Durante mais de 200 anos, atuou 
+ativamente no reino e em suas áreas ultramarinas, 
+não somente levando a palavra de Cristo aos con-
+siderados pagãos, mas também divulgando as 
+determinações reais a povos e a culturas díspares. 
+Em função dessa importância religiosa-política, 
+enviou e recebeu informações das autoridades 
+ou foi citada na documentação administrativa do 
+império luso. Isso proporcionou uma significativa 
+presença dos termos “Companhia de Jesus”, 
+“Companhia” e “Jesuítas” na documentação do 
+Arquivo Histórico Ultramarino. Trata-se, pois, de 
+um tema recorrente nesse conjunto documental 
+no período recortado para análise.
+Essa constatação desencadeou algumas 
+questões, que, na medida do possível, serão 
+respondidas neste artigo:
+13  A bibliografia sobre a Companhia de Jesus é muito vasta. Ver, por exemplo, as obras de Alden (1996), Assunção (2004), Burrieza Sán-
+chez (2007), Tavares (1985) e o clássico Leite e Serafim (2004).
+1. Qual teria sido, em termos quanti -
+tativos, a constância desses temas no 
+conjunto documental?
+2. Os sentimentos e as temáticas refe -
+rentes a eles foram os mesmos entre 
+os séculos XVII e XIX, ou sofreram alte-
+rações de acordo com as modificações 
+do próprio império?
+3. Com relação ao processo de expul -
+são da ordem, em 1759, teriam ocorrido 
+mudanças quantitativas na troca de do-
+cumentos sobre eles entre as diversas 
+autoridades?
+4. Documentos produzidos pelos pró -
+prios religiosos teriam percorrido os 
+trâmites burocráticos após a derrocada 
+da ordem?
+5. Seria possível perceber um padrão 
+na análise dos documentos do Arquivo 
+Ultramarino ao longo dos anos de 1642 
+a 1822, referentes a essa ordem?
+Antes de mais nada, para a busca dessas res-
+postas, faz-se necessário o entendimento, ainda 
+que de maneira superficial, dos principais acon-
+tecimentos que marcaram a história desse grupo 
+religioso13. A Companhia de Jesus, ordem religiosa 
+surgida e aprovada pelo Papa no século XVI, no 
+contexto da Reforma Protestante e da Reforma 
+Católica, teve ampla aceitação pela monarquia 
+lusa até, pelo menos, a segunda metade do sé-
+culo XVIII. Seus religiosos foram enviados para 
+os variados cantos do império português para 
+divulgarem o Evangelho e para converterem 
+povos de culturas, hábitos e fé variados.
+Seu “modo de proceder” em cada uma das 
+sociedades onde se inseriram fez com que esses 
+religiosos fossem identificados como represen-
+tantes do rei (Eisenberg, 2000). Desse modo, nas 
+regiões onde se estabeleciam, buscavam apoio 
+das autoridades e das elites locais, a fim de 
+facilitar sua chegada, criar seus colégios e suas 
+estruturas produtivas, desenvolver o projeto mis-
+sionário. A partir dessa dinâmica, quase sempre 
+estiveram próximos às decisões de poder nas 
+esferas locais e regionais, interferindo sempre 
+6/23 Estudos Ibero-Americanos, Porto Alegre, v. 52, n. 1, p. 1-23, jan.-dez. 2026 | e-46315
+que podiam e influenciando tomadas de decisões 
+tanto nas localidades em que estavam quanto 
+no império português. Isso não significa que não 
+vivenciassem conflitos, disputas e, que algumas 
+vezes, perdessem espaços de luta, fossem expul-
+sos ou tivessem de negociar formas alternativas 
+de inserção local (Alencastro, 2000).
+A proximidade e a aliança entre os membros 
+da Companhia de Jesus e a Coroa se refletem na 
+análise da documentação do Arquivo Histórico 
+Ultramarino considerando as capitanias do Brasil 
+e das regiões da África Ocidental. Embora essa 
+documentação tenha eminentemente um caráter 
+administrativo, e poucos assuntos ligados à re-
+ligião estejam ali registrados, percebe-se que, 
+desde 1642 até o ano de 1822, temas relativos 
+a tais religiosos estiveram presentes, com uma 
+média de 8,61 documentos por ano, distribuídos 
+de maneira irregular.
+De 1642 até 1750, houve uma média de quase 
+cinco documentos por ano, mas, depois dessa 
+última data, a média anual passou para quase 15 
+documentos. Quase sempre esses documentos 
+mostram fatos e questões em que a Compan-
+hia aparece como uma instituição de apoio ao 
+processo colonial, na sujeição dos povos e na 
+conversão dos nativos, transformando-os em 
+vassalos úteis ao império. Por outro lado, também 
+foi relativamente comum encontrar documentos 
+em que os moradores das áreas ultramarinas 
+se queixavam de algum comportamento dos 
+padres, normalmente ligado ao controle sobre 
+a mão de obra indígena ou sobre a ocupação e 
+a exploração de terras.
+Entretanto, a partir de 1750, quando D. José 
+I assumiu o trono, auxiliado pelo secretário de 
+Estado, Sebastião José de Carvalho e Melo, a 
+situação política de Portugal sofreu uma signifi-
+cativa mudança. Ambos eram homens ilustrados 
+e tinham como um dos maiores objetivos retirar 
+Portugal do que se considerava atraso 14. Para 
+isso, cercaram-se, de maneiras variadas, por 
+pessoas que também percebiam a necessidade 
+14  A propaganda contrária aos inacianos pregava, dentre outros elementos, a ideia de que as atividades produtivas em Portugal se 
+desenvolviam pouco ou quase nada por pressões da Igreja Católica, principalmente da Companhia de Jesus, que tinha grande influência 
+na sociedade. Sobre esse assunto, ver Franco (2006). 
+de modernizar Portugal e seu império.
+A Ilustração portuguesa era eminentemente 
+de ordem prática e projetava, por meio da ciên-
+cia e das explicações racionais, desenvolver 
+mecanismos que favorecessem o aumento das 
+produções, a diminuição das importações — prin-
+cipalmente a inglesa e a francesa —, o aumento 
+sobre o controle das riquezas saídas das áreas 
+ultramarinas e o incremento demográfico visando 
+à ocupação de territórios em litígios. Para isso, 
+algumas medidas foram colocadas em prática. 
+Em termos políticos, o regalismo passou a ser a 
+ferramenta que criaria as condições para as mu-
+danças necessárias (Souza, 2015; Van Kley, 2008). 
+Dessa forma, na segunda metade do século XVIII, 
+o antigo sistema corporativo de governação ce-
+deu espaço para atitudes que fortaleciam o poder 
+real em detrimento de outras forças, e todos os 
+que impusessem algum tipo de oposição às 
+determinações reais eram considerados inimigos 
+(Hespanha, 2012). Assim, centenas de pessoas, in-
+clusive nobres, foram presas acusadas de traição 
+(Franco, 2006; Vogel, 2017).
+Naquele momento de grandes mudanças no 
+império, a Companhia de Jesus se apresenta -
+va como um problema a ser sanado. Uma das 
+primeiras providências da governação josefina 
+foi fazer cumprir o Tratado de Madri assinado 
+por D. João V, pouco tempo antes de morrer e 
+debelar a oposição que grupos nativos faziam 
+à sua execução. Nesse contexto, os religiosos 
+da Companhia de Jesus foram acusados de 
+incentivarem a desobediência real (Golin, 1998).
+Antes, a Companhia de Jesus era mais uma 
+das muitas ordens religiosas em Portugal — e 
+provavelmente uma das mais importantes —, 
+mas gradativamente começou a ser percebida 
+como um entrave às ideias modernizantes, que 
+objetivavam deslanchar a economia e, principal-
+mente, centralizar o poder em torno da figura de 
+D. José I. Como seus religiosos controlavam a 
+Universidade de Coimbra e os grandes colégios 
+onde estudavam os filhos das elites nas variadas 
+Agata Błoch • Clodomir Santana • Marcia Amantino
+Os jesuítas e a Era do Algoritmo  7/23
+localidades do império, foram considerados re-
+sponsáveis pelo comportamento antiquado e 
+excessivamente religioso da elite portuguesa e 
+por seu afastamento das modernizações pelas 
+quais passava parte da Europa.
+A situação crítica entre a Coroa e a Companhia 
+de Jesus foi piorando ao longo do ano de 1750, 
+e uma série de medidas foi tomada visando di-
+minuir o seu poder. Para tanto, o governo josefino, 
+tendo como principal expoente Sebastião José 
+de Carvalho e Melo, deu início a uma campanha 
+de desmoralização dos membros da ordem, 
+alardeando que haviam se tornado comerciantes, 
+ladrões, corruptos, imorais e desleais. Nesse 
+processo, eles foram expulsos do palácio, ti -
+veram seus bens confiscados, sofreram devassas, 
+prisões, deportações e, por fim, com a tentativa de 
+regicídio, foram expulsos do reino e de suas áreas 
+ultramarinas. Portugal foi a primeira monarquia 
+europeia a receber sistematicamente os inacia-
+nos, mas foi também a primeira a expulsá-los — e 
+no momento em que estavam no auge de seu 
+poder econômico.
+A perseguição à ordem, todavia, não parou com 
+a expulsão. Dessa forma, pressões diplomáticas 
+se intensificaram, estendendo a política antije-
+suítica pombalina a outras monarquias católicas 
+europeias. Assim, em 1764, a França tomou a 
+mesma atitude de bani-los de seu reino, ação 
+seguida pela Espanha em 1767, por Nápoles e 
+Parma no ano seguinte.
+Entre 1767 e 1768, a campanha contra a Com-
+panhia esteve no seu auge, momento no qual o 
+Papa Clemente XIII acabou envolvido nas disputas 
+tentando proteger a ordem, que, segundo ele, 
+havia sido (e era) essencial ao cristianismo, mas 
+que sofria uma absurda perseguição por parte 
+de seus inimigos. Tentando impedir a expulsão 
+do grupo da Espanha, ele decretou em 1767 
+um breve sobre a importância da ordem para a 
+cristandade, além de outro no ano seguinte 15. O 
+apoio do Papa provocou um novo acirramento das 
+tensões com a Coroa portuguesa. Desse modo, 
+em 1768, o rei D. José I lançou uma ordem para 
+15  O breve papal Apostolicum Pascendi foi promulgado em 7 de janeiro de 1765, e o Animarum Saluti, em 10 de setembro de 1766.
+que todos os egressos da Companhia de Jesus 
+fossem identificados e se apresentassem ao reino, 
+bem como os que houvessem recebido cartas 
+de confrarias inacianas. Todos deveriam prestar 
+juramento de fidelidade ao rei e, caso tivessem 
+algum contato com o restante da Companhia de 
+Jesus, seriam presos (Amantino, 2023).
+Esses movimentos descritos de maneira rápida 
+são conhecidos da historiografia que se dedica a 
+analisar a Companhia de Jesus e as suas relações 
+com o império português. Há anos, essa vertente 
+afirma que os inacianos haviam se tornado vítimas 
+de um “ódio patológico” por Sebastião José de 
+Carvalho e Melo e que o poderoso secretário fez 
+de tudo para acabar com a ordem (Boxer, 2011). 
+Uma das formas para ele conseguir o apoio 
+real foi o convencimento, reforçado por meio 
+de propagandas impressas e trocas de men -
+sagens, informações e notícias contrárias aos 
+jesuítas, que circularam não apenas pelo império, 
+mas também por outras monarquias europeias 
+(Amantino, 2023).
+A transformação da Companhia de Jesus em 
+um “problema de Estado” — a partir do momento 
+em que ela foi acusada de tentar matar o rei, 
+em 1758, e de conspirar contra os interesses do 
+povo português — desencadeou um aumento na 
+correspondência que circulava no império, mov-
+imentação que pode ser verificada nos milhares 
+de registros do Projeto Resgate. Pela análise dos 
+dados, é possível inferir que a média anual de 
+registros que, de alguma forma, tratavam sobre 
+a Companhia de Jesus saltou de 5 para cerca de 
+15 documentos.
+3 O humano por trás da Inteligência 
+Artificial
+Nesta seção, é fundamental esclarecer dois 
+pontos essenciais. Em primeiro lugar, como hu-
+manistas digitais, queremos ressaltar que as 
+ferramentas digitais não fornecem resultados 
+prontos por si só, e nós não devemos esperar 
+que o façam. Quando nos referimos a ferra -
+mentas digitais neste artigo, estamos tratando 
+8/23 Estudos Ibero-Americanos, Porto Alegre, v. 52, n. 1, p. 1-23, jan.-dez. 2026 | e-46315
+especificamente de algoritmos de análise de 
+sentimentos. Benjamin Schmidt (2016) obser -
+vou e criticou o uso puramente instrumental de 
+algoritmos, destacando a tendência de esperar 
+resultados milagrosos, que, muitas vezes, não se 
+concretizam. O segundo ponto a ser elucidado é 
+o de que nós, por outro lado, defendemos que o 
+processo computacional e tudo que a ele está 
+associado, juntamente com o refinamento de 
+algoritmos e de modelos, é um processo cria-
+tivo. De tal forma, as visualizações e os gráficos 
+apresentados neste artigo não são apenas os 
+produtos visuais dos modelos e dos algoritmos, 
+considerando que foram ativamente discutidos 
+em cada etapa do processo. Consequentemente, 
+isso ressalta o papel fundamental do ser humano 
+por trás da Inteligência Artificial, pois demanda a 
+perícia de especialistas, em nosso caso, da área 
+de estudo de História Digital.
+De início, é crucial detalhar as decisões tom-
+adas para o alinhamento metodológico do big 
+data proposto. Dentre os quase 170 mil registros 
+disponíveis, optamos por delinear um estudo de 
+caso centrado nos jesuítas, que abrange, aprox-
+imadamente, 1.369 registros. Ao mencionarmos 
+“jesuítas”, referimo-nos especificamente aos doc-
+umentos relacionados a esse grupo, envolvendo 
+correspondências de, para e dentro do contexto 
+das palavras-chave “jesuíta”, “Companhia de Je-
+sus”, “Companhia”, “inaciano” e “jesuítico”, assim 
+como mostra a figura 2.
+ 
+Figura 2 – Filtragem de palavra “jesuíta”
+Fonte: elaboração própria.
+A partir disso, demonstramos a distribuição 
+global dos números de correspondência refer -
+ente aos jesuítas ao longo dos anos, observando 
+maior pico em 1760, conforme a figura 3. Essa 
+constatação está plenamente justificada pelo 
+fato de que, no ano anterior, ou seja, em 3 de 
+setembro de 1759, houve a decretação da ordem 
+de expulsão dos jesuítas do império português, 
+motivada, dentre outros, pela acusação de terem 
+tentado matar o rei no ano anterior. Em muitos 
+casos, essa ordem só chegou nos variados cantos 
+do império meses depois.
+Em 1760, centenas de documentos circu -
+laram detalhando aos vice-reis, aos governa -
+dores, aos ouvidores, aos desembargadores, 
+aos capitães-mores, aos bispos, aos vigários e a 
+outros como deveriam proceder para confiscar 
+os bens dos inacianos, prendê-los nos principais  
+ 
+colégios, evitar que eles se comunicassem entre 
+si e com membros da sociedade, transformar seus 
+aldeamentos em vilas, colocar padres de outras 
+ordens ou regulares nos estabelecimentos indí-
+genas e outros assuntos de caráter econômico. Da 
+mesma forma, são encontrados nesse momento 
+centenas de outros documentos produzidos 
+por todas as autoridades locais endereçadas ao 
+Conselho Ultramarino, ao secretário de Estado, 
+ao patriarca de Lisboa e ao rei, fornecendo as 
+informações pedidas e apresentando todos os 
+tipos de dúvidas e de atitudes. Essa intensa 
+movimentação de documentos foi atestada ao 
+se analisar as informações do banco de dados. 
+Nesse momento, percebe-se uma confluência 
+entre a historiografia, as fontes e a análise da 
+Inteligência Artificial.
+Agata Błoch • Clodomir Santana • Marcia Amantino
+Os jesuítas e a Era do Algoritmo  9/23
+Figura 3 – A correspondência referente aos Jesuítas no Arquivo Histórico Ultramarino, Brasil e África 
+Ocidental, 1642–1822
+Fonte: elaboração própria.
+Embora o gráfico forneça uma visão geral da 
+correspondência administrativa ultramarina rel -
+acionada aos jesuítas, ele ressalta uma preocu-
+pação já levantada antes por Trevor Barnes (2013): 
+o fato de que o big data nem sempre oferece 
+informações historicamente relevantes e, muitas 
+vezes, apenas produz ruído. Concordamos com 
+essa observação, pois percebemos que uma 
+análise de todos os documentos em conjunto 
+traz uma compreensão limitada das dinâmicas 
+entre os possíveis atores sociais existentes no big 
+data. Nesse ponto, entra o elemento humano por 
+trás da Inteligência Artificial, pronto para dialogar 
+com ela e explicar seu raciocínio para prosseguir 
+com as análises computacionais.
+Como proposta para mitigar os efeitos do 
+“ruído” produzido pelo big data e perceber as 
+dinâmicas sociais inseridas nessa macrovisão, 
+foram utilizadas análises de sentimento na seção 
+4. Após compreendermos razoavelmente bem 
+nosso conjunto de dados, que consiste, princi-
+palmente, em correspondência de caráter admin-
+istrativo, decidimos adotar, para esta análise, a 
+tipologia proposta por Érika Dias (2012) e Heloísa 
+Bellotto (2004). Tal tipologia inclui a categorização 
+da documentação ultramarina em três tipos prin-
+cipais: ascendente ou bottom-up; descendente 
+ou top-down; informativa ou horizontal.
+O primeiro grupo, conhecido como bottom-up, 
+engloba 410 documentos, como representação, 
+requerimento e carta. Esses são considerados  
+ 
+documentos diplomáticos informativos ascen -
+dentes, enviados por vassalos, súditos, autori -
+dades subalternas, grupos de pessoas ou órgãos 
+colegiados. Esses documentos apresentam que-
+ixas, pedidos, reclamações ou abordam assuntos 
+correntes, como observado por Érica Dias (2012). 
+Incluímos também pareceres e consultas nesse 
+grupo, especialmente quando relacionados aos 
+requerimentos elaborados pelos colonos.
+No segundo grupo, com 444 registros, de -
+nominado top-down, temos alvará, aviso, carta 
+régia, decreto, ofício régio e provisão régia. Es-
+ses documentos são descendentes, emanando 
+diretamente a vontade do monarca e assinados 
+por ele. Eles foram despachados em nome do 
+monarca por seus secretários para outras auto-
+ridades, com o propósito de estabelecer novas 
+diretrizes ou regulamentações.
+Com a mesma metodologia, foram identifi -
+cados 613 documentos de natureza informativa 
+(horizontais), dentre os quais provisão, certidão, 
+despacho, ofício, auto, mandado, escrito e in -
+formação. Esses são todos documentos de teor 
+informativo ou testemunhal, enviados pelas au-
+toridades competentes para abordar diversos 
+assuntos e fornecer uma variedade de infor -
+mações (Dias, 2012).
+Acreditamos que tal categorização nos pos-
+sibilita examinar como a correspondência que 
+tratava sobre os jesuítas se manifestava em di-
+versos contextos, e como ela se transformava 
+10/23 Estudos Ibero-Americanos, Porto Alegre, v. 52, n. 1, p. 1-23, jan.-dez. 2026 | e-46315
+dependendo se era iniciada pelas autoridades 
+superiores ou se partia da base da sociedade. 
+É importante, todavia, salientar que vários doc -
+umentos puderam ser classificados em mais de 
+uma categoria – por isso, a totalidade de 1.467 
+documentos.
+Conforme o exposto, buscamos seguir as sug-
+estões feitas por Benjamin Schmidt (2016) de que 
+os historiadores digitais não devem se restringir 
+ao simples uso de algoritmos para validar suas 
+afirmações e verificar a autenticidade. Em vez 
+disso, aspiramos a ser usuários criativos desses 
+algoritmos, utilizando-os para elaborar conceitos 
+relevantes e aplicáveis.
+4 Descobrindo sentimentos na 
+correspondência sobre os jesuítas: 
+abordagens metodológicas e 
+resultados preliminares
+Iniciaremos o nosso estudo no campo da 
+História Digital com um experimento que consiste 
+na análise de sentimentos (AS). As técnicas de 
+análise de sentimento visam identificar e extrair 
+emoções, opiniões e sentimentos de um texto. 
+No contexto da História Digital, essas técnicas 
+possibilitam a análise automática de um grande 
+volume de documentos. Existem diversas ferra-
+mentas de análise de sentimentos, as quais, de 
+acordo com a forma como funcionam, podem 
+ser classificadas em três grandes categorias: 
+baseada em regras, aprendizado de máquina ou 
+híbrida, como descrito na figura 4.
+ 
+Figura 4 – Classificação de abordagens para análise de sentimentos
+Fonte: elaboração própria.
+A abordagem baseada em regras consiste 
+na definição de regras manuais para identificar 
+palavras e frases que indicam sentimentos espe-
+cíficos. Por exemplo, uma regra poderia determi-
+nar que as palavras “mau”, “péssimo” e “horrível” 
+estariam associadas a um sentimento negativo, 
+enquanto “maravilhoso”, “ótimo” e “excelente” de-
+veriam ser classificadas como positivas. A criação 
+das regras é feita a partir da análise lexical dos 
+textos e pode ser baseada em dicionários que 
+associam termos à sua respectiva classificação 
+ou em métodos estatístico-semânticos.
+Uma alternativa às técnicas baseadas em  
+ 
+regras são as sustentadas em algoritmos de 
+aprendizado de máquina. O aprendizado de 
+máquina utiliza algoritmos capazes de aprender 
+e identificar sentimentos a partir de um conjunto 
+de dados de treino. Dependendo das carac -
+terísticas desse conjunto de treino, as técnicas 
+podem ser classificadas em supervisionadas, 
+semissupervisionadas, não supervisionadas e 
+autossupervisionadas.
+No aprendizado supervisionado, além de for -
+necer um conjunto de treino, deve-se também 
+incluir a classificação dos dados. Por exemplo, 
+a frase “Os jesuítas foram expulsos” deve ser 
+Agata Błoch • Clodomir Santana • Marcia Amantino
+Os jesuítas e a Era do Algoritmo  11/23
+acompanhada da classificação “negativa”. No 
+aprendizado semissupervisionado, temos uma 
+classificação parcial da base de treino, enquanto 
+no aprendizado não supervisionado a base de 
+treino não tem dados classificados. Por último, 
+temos o autossupervisionado, que também não 
+necessita de uma base previamente classificada 
+para treino, já que o algoritmo aprende a criar a 
+sua própria classificação de forma automática.
+A abordagem híbrida combina elementos das 
+abordagens anteriores. Nesse caso, poderemos 
+ter uma classificação de duas etapas ou que em-
+pregue um conjunto de regras para melhorar a 
+classificação do aprendizado de máquina. Apesar 
+das evidências da sua eficiência e da sua acurácia, 
+a análise de sentimento pode ter dificuldade em 
+interpretar linguagens ambíguas, sarcásticas ou 
+irônicas, levando em consideração o seu caráter 
+por vezes não objetivo.
+Neste trabalho, optamos por utilizar uma abor-
+dagem autossupervisionada, tendo em vista que 
+os textos na nossa base não estão classificados, 
+para evitar o trabalho de criar uma base de treino 
+classificada. Utilizamos uma estratégia chamada 
+Máquina de Comitê, na qual dois ou mais modelos 
+trabalham em conjunto para gerar a análise de 
+sentimentos do texto. A figura 5 apresenta um 
+exemplo de comitê composto por três modelos 
+de análise de sentimento. Nesse exemplo, po-
+demos ver a presença de um moderador que 
+analisa os resultados parciais de cada modelo 
+e gera um resultado final. Em um sistema de 
+voto simples, esse é o que foi identificado pela 
+maioria dos modelos. No exemplo da figura 5, 
+como a maioria dos modelos identificou que o 
+sentimento do texto era negativo, a classificação 
+final foi negativa.
+ 
+Figura 5 – Exemplo de máquina de comitê para análise de sentimentos (AS)
+Fonte: elaboração própria. 
+Para que a abordagem de comitê produza 
+resultados promissores, é essencial a seleção 
+de modelos de análise de sentimentos que ten-
+ham características distintas e complementares. 
+Os modelos que selecionamos se enquadram 
+nesse requisito, pois um deles — treinado em 
+uma base financeira (Santos; Bianchi; Costa, 2023) 
+— mostra resultados fortemente influenciados 
+pela presença de termos negativos ou positivos, 
+enquanto o segundo — treinado em uma base 
+mais geral com conteúdo em português (Pérez 
+et al., 2021) — analisa mais o contexto em que os  
+ 
+termos aparecem. Em conjunto, os dois modelos 
+apresentam uma boa capacidade de identificação 
+de sentimentos, o que pode ser verificado nos 
+experimentos em que comparamos, para um 
+subconjunto de textos, a classificação do comitê 
+com a de um historiador.
+Para uma melhor compreensão, iniciemos com 
+a análise dos sentimentos presentes na totalidade 
+da correspondência discutida (figura 6a). No -
+ta-se claramente a prevalência de dois estados 
+emocionais predominantes: neutro e negativo. 
+Ressalta-se, contudo, que a natureza burocrática 
+12/23 Estudos Ibero-Americanos, Porto Alegre, v. 52, n. 1, p. 1-23, jan.-dez. 2026 | e-46315
+intrínseca à correspondência ultramarina impõe 
+uma estrutura formal, caracterizada pela ausência 
+de linguagem cotidiana e vulgar. Dessa forma, é 
+compreensível que a maior parcela das cartas 
+exiba um tom neutro.
+ 
+Figura 6 – Análise de sentimentos: a) de toda a correspondência ultramarina entre 1642–1822; b) 
+referente aos jesuítas entre 1642–1822; c) referente aos jesuítas entre 1755 e 1800 (Arquivo Histórico 
+Ultramarino, Brasil e África Ocidental, 1642–1822)
+a) 
+b) 
+c) 
+Fonte: elaboração própria.
+Nota: Percebe-se que no mesmo gráfico, para uma melhor visualização, sobrepõem-se os números 
+de documentos neutros (à esquerda), que chegam até 4.000, e os negativos (à direita), com numera -
+ção alcançando 175.
+A pergunta que se impõe é: dentre os três 
+grupos mencionados — bottom-up, top-down e 
+horizontal —, qual é o responsável por suscitar 
+esse sentimento, e como esse sentimento se 
+modifica em relação a esses grupos?
+Assim sendo, a seguir, apresentamos análises 
+de sentimento específicas para cada grupo: bot-
+tom-up (figura 7), top-down (figura 8) e horizontal 
+(figura 9). 
+Agata Błoch • Clodomir Santana • Marcia Amantino
+Os jesuítas e a Era do Algoritmo  13/23
+Figura 7 – Análise de sentimentos bottom-up  da correspondência sobre os jesuítas (Arquivo 
+Histórico Ultramarino, Brasil e África Ocidental, 1642–1822)
+Fonte: elaboração própria.
+No grupo bottom-up (figura 7), organizado 
+por décadas, podemos observar que, em linhas 
+gerais, o tom adotado nas correspondências 
+sobre os jesuítas tem sido predominantemente 
+neutro. No entanto, é crucial ressaltar que, ao 
+longo dos séculos XVII e XVIII, persistem resul -
+tados negativos, embora em menor número e 
+com breves intervalos. Isso sugere que a docu-
+mentação, originária dos estratos mais baixos da 
+sociedade e direcionada às instâncias superiores, 
+continha permanentemente críticas aos jesuítas 
+tanto antes quanto após a sua expulsão.
+É interessante cruzar os dados do banco de 
+dados com a cronologia que envolve os inacianos 
+e os indígenas. Em 1639, uma bula papal versando 
+sobre a liberdade dos indígenas das Américas 
+provocou rebeliões no ano seguinte entre os colo-
+nos e os jesuítas em São Paulo, de onde foram 
+expulsos, e no Rio de Janeiro. Nessa capitania, 
+a situação foi acalmada graças ao governador 
+Salvador Correia de Sá e Benevides, aliado dos 
+inacianos. Entretanto, os padres precisaram fazer 
+um acordo com os moradores aceitando que 
+os indígenas que estivessem sob o domínio das 
+famílias assim permanecessem (Boxer, 1973). Já 
+em São Paulo, a situação só foi solucionada em 
+1653, quando foi permitido o retorno dos padres 
+à capitania (Monteiro, 1994). 
+Portanto, esses documentos negativos são 
+produtos desse contexto de crise e de confli-
+tos entre a Companhia de Jesus e a sociedade. 
+Além da questão indígena, que sempre foi objeto  
+ 
+de disputas entre os padres da Companhia de 
+Jesus e os colonos, é importante destacar que 
+os conflitos por terras também aparecem nessa 
+documentação com grande persistência. Todavia, 
+o que mais chama a atenção no gráfico é que, de 
+1720 a 1760, a produção de documentos sobre 
+a Companhia de Jesus mais do que dobrou se 
+comparada à média histórica, que era de quase 
+nove documentos por ano. Nesse intervalo de 
+tempo, foram produzidos em torno de 15,82 doc-
+umentos por ano tratando sobre esses religiosos.
+Se olharmos os dados com mais apuro, per -
+ceberemos que, na realidade, de 1759 (ano da 
+expulsão) até 1761, quando os trâmites legais 
+ainda estavam sendo colocados em prática, os 
+padres estavam sendo deportados, presos e os 
+seus bens eram vendidos, houve a produção 
+média de 99,33 documentos anuais sobre essas 
+temáticas. O grande ápice foi no ano de 1760, 
+quando as autoridades e mesmo os moradores 
+das áreas ultramarinas estavam vivenciando 
+em seus cotidianos relações conflituosas com 
+os membros da Companhia de Jesus. A imensa 
+maioria ainda estava presa em seus colégios e 
+começava a ser embarcada naquele momento. 
+Ao todo, foram produzidos 109 documentos 
+discutindo, de alguma forma, temas ligados à 
+Companhia de Jesus.
+A análise de sentimentos top-down  (figura 
+8) mostra que, ao longo do século XVII e início 
+do século XVIII, os documentos emitidos pelas 
+autoridades superiores mantiveram uma postura 
+14/23 Estudos Ibero-Americanos, Porto Alegre, v. 52, n. 1, p. 1-23, jan.-dez. 2026 | e-46315
+bastante neutra em sua comunicação referente 
+aos jesuítas, com exceção do período por volta 
+de 1650. A negatividade na documentação de-
+scendente aparece efetivamente duas décadas 
+antes da expulsão dos jesuítas e permanece 
+presente até 1760, para depois retornar a uma 
+postura neutra. Isso pode indicar que, mesmo 
+antes de ser deflagrada a grande crise entre o 
+Estado português e a Companhia de Jesus, já 
+havia alguns pequenos conflitos ocasionados, 
+provavelmente, pelas queixas dos moradores 
+contrárias aos padres, conforme visto no grupo 
+bottom-up.
+ 
+Figura 8 – Análise de sentimentos top-down da correspondência sobre os jesuítas (Arquivo Histórico 
+Ultramarino, Brasil e África Ocidental, 1642–1822)
+Fonte: elaboração própria.
+Uma dinâmica semelhante à abordagem top-
+down é evidenciada na análise de sentimentos 
+da correspondência horizontal (figura 9). Pres -
+supõe-se que os documentos de cunho infor -
+mativo geralmente buscam oferecer informações 
+de maneira imparcial, especialmente quando 
+circulam entre diferentes órgãos, mantendo um 
+tom predominantemente neutro. No entanto, é 
+notável uma mudança nessa dinâmica ao lidar  
+ 
+ 
+com a documentação relacionada aos jesuítas, o 
+que pode ser esperado, considerando as datas 
+que precedem e sucedem a expulsão da ordem. 
+Nesse contexto específico, observa-se um viés 
+negativo nas comunicações horizontais entre os 
+órgãos administrativos durante as décadas de 
+1750 e 1760, demonstrando que as autoridades, 
+pelo menos no papel, não ousaram discordar da 
+política pombalina contrária aos inacianos.
+Figura 9 – Análise de sentimentos da correspondência horizontal sobre os jesuítas (Arquivo Histórico 
+Ultramarino, Brasil e África Ocidental, 1642–1822)
+Fonte: elaboração própria.
+Agata Błoch • Clodomir Santana • Marcia Amantino
+Os jesuítas e a Era do Algoritmo  15/23
+A análise de sentimentos apresentada até 
+agora baseia-se na classificação de documentos 
+(bottom-up, top-down e horizontal), juntamente 
+com a dimensão temporal, demonstrando a 
+dinâmica de sentimentos ao longo dos séculos 
+XVII e XVIII. Outras possibilidades de realizar 
+essas análises incluem a análise espacial e a de 
+polarização de sentimentos, que envolvem mais 
+nuances de sentimentos neutros, negativos e 
+positivos (Song; Xia, 2016). Na análise espacial, no 
+contexto da nossa pesquisa, é possível examinar 
+os sentimentos distribuídos geograficamente, 
+por exemplo, nas colônias (Brasil, Cabo Verde, 
+Angola, Guiné e São Tomé), mas também no 
+contexto das regiões (nordeste e norte brasile-
+iros, entre outros), ou até mesmo nas cidades 
+(Luanda, Rio de Janeiro, Recife, etc.). Quanto à 
+polarização de sentimentos, trata-se de classificar 
+os documentos que vão além apenas de negati-
+vo, neutro e positivo, tentando localizar aqueles 
+que ultrapassam essa escala. Assim, na figura 10, 
+demonstramos a combinação da análise espacial 
+de três regiões nas quais os jesuítas possuíam 
+muito poder em virtude da quantidade de terras, 
+aldeamentos e produções econômicas variadas 
+— Rio de Janeiro, Bahia e estado do Grão-Pará e 
+Maranhão —, tentando identificar os sentimentos 
+negativos e muito negativos.
+ 
+Figura 10 – A polarização dos sentimentos no Rio de Janeiro, na Bahia e no estado do Grão-Pará e 
+Maranhão
+Fonte: elaboração própria.
+16/23 Estudos Ibero-Americanos, Porto Alegre, v. 52, n. 1, p. 1-23, jan.-dez. 2026 | e-46315
+Nossa intenção com esta análise foi questionar 
+se seria possível identificar a polarização de sen-
+timentos em relação aos jesuítas nas capitanias 
+referidas, visando identificar documentos que 
+refletissem uma perspectiva muito negativa, 
+negativa, neutra e positiva16. Consideramos como 
+muito negativos aqueles registros que ambos os 
+modelos de análise de sentimentos (conforme 
+figura 5) classificariam como negativos com alta 
+confiança. Dessa forma, conseguimos localizar 
+o primeiro documento muito negativo oriundo 
+do estado do Maranhão e do Pará, já em 1737, 
+enviado pelo Procurador dos Superiores e Mis-
+sionários das Missões da Companhia de Jesus, 
+o qual se queixava da “repugnância” de alguns 
+membros da Companhia em fornecer índios para 
+o serviço real17.
+Após a expulsão dos jesuítas em 1759, por 
+sua vez, o governador e capitão-geral desse 
+estado, Francisco Xavier de Mendonça Furtado, 
+denunciou o comércio “escandaloso” praticado 
+pelos jesuítas e suas graves consequências para a 
+economia daquela capitania, elogiando, portanto, 
+a decisão real de expulsar a ordem dos domínios 
+ultramarinos18. Na Bahia, em 1760, o documento 
+muito negativo que se referia à expulsão dos 
+jesuítas abordava também a questão da desor -
+ganização e da indisciplina das tropas19. No Rio de 
+Janeiro, no entanto, em 1761, havia queixas sobre 
+16  No Rio de Janeiro, o primeiro documento identificado como negativo é datado de 1720.
+17  OFÍCIO do procurador dos superiores e missionários das Missões da Companhia de Jesus, Colégio de Santo Alexandre, 30 de setem-
+bro de 1737, AHU_CU_013, Cx. 20, D. 1874.
+18  OFÍCIO do governador e capitão-geral do Estado do Maranhão e Pará, Francisco Xavier de Mendonça Furtado, 10 de fevereiro de 
+1759, AHU_CU_013, Cx. 44, D. 4001. | OFÍCIO do governador e capitão-geral do Estado do Maranhão e Pará, Francisco Xavier de Mendonça 
+Furtado, 14 de fevereiro de 1759, AHU_CU_013, Cx. 44, D. 4024.
+19  OFÍCIO do vice-rei, marquês do Lavradio, ao conde de Oeiras, 16 de abril de 1760, AHU_CU_005-01, Cx. 26, D. 4957.
+20  OFÍCIO do governador do Rio de Janeiro, Minas Gerais e São Paulo, conde de Bobadela, Gomes Freire de Andrade, 9 de fevereiro de 
+1761, AHU_CU_017, Cx. 61, D. 5825.
+21  PARECER do Conselho Ultramarino sobre expulsão de religiosos da Companhia de Jesus das aldeias da Bahia. AHU-Baía, cx. 3, doc. 
+71 AHU_ACL_CU_005, Cx. 3, D. 281.
+22  CARTA do senado da câmara da Bahia ao rei D. João V sobre o descaso dos reitores padres do colégio da Companhia de Jesus da 
+Bahia em introduzir no cais do Lixa e Sodré uma corda de um cais a outro para demarcarem a dita enseada e fabricarem casas ou qual -
+quer outra obra. AHU_ACL_CU_005, Cx. 56, D. 4862.
+23  CARTA de Manuel Dias de Jesus à rainha D. Maria I sobre a situação de miséria de Vila Verde e as violências e arbitrariedades come-
+tidas pelos Missionários da Companhia de Jesus contra os índios aldeados na comarca de Porto Seguro, seus compatriotas, solicitando, 
+por isso, a criação de vilas independentes do poder tirânico jesuítico. AHU-Pará, n. v. 758. AHU_ACL_CU_005, Cx. 189, D. 13915.
+24  REQUERIMENTO procurador da província da Bahia, religiosos da Companhia de Jesus António Andrade ao rei D. João V solicitando 
+demarcação e posse por parte dos índios das terras da aldeia de Matuba nos sertões da Bahia. AHU_ACL_CU_005, Cx. 11, D. 917. | CARTA 
+do vice-rei e governador-geral do Brasil Vasco Fernandes César de Menezes para o governador do Rio de Janeiro Aires de Saldanha de 
+Albuquerque comunicando a partida para o Rio da Fragatinha dos padres da companhia de Jesus. AHU_ACL_CU_005, Cx. 16, D. 1369. | 
+REQUERIMENTO do procurador geral da Companhia de Jesus, padre António Cardoso ao rei D. João V solicitando certidão da cópia de 
+provisão pela qual foi servido de dois mil cruzados para as obras da igreja de Natuba nos sertões da Bahia. AHU_ACL_CU_005, Cx. 24, 
+D. 2182.
+25  CARTA do vice-rei e governador-geral do Estado do Brasil, conde dos Arcos, D. Marcos de Noronha ao rei D. José sobre o registo 
+nos livros das ouvidorias da câmara desta cidade da ordem para que São Francisco de Borja da Companhia de Jesus seja venerado e 
+invocado como patrono e protetor dos terramotos. AHU-Baía, cx. 137, doc. 14 AHU_ACL_CU_005, Cx. 133, D. 10358.
+a “má formação” proporcionada pelos padres da 
+Companhia aos “índios aldeados”, tornando-os 
+“incapazes”, “indolentes” e “insolentes” 20.
+Negativos, por sua vez, foram considerados 
+pelo modelo os casos como a expulsão de religio-
+sos da Companhia de Jesus das aldeias da Bahia 
+em 1699 21, os relatos de negligência por parte 
+dos reitores e padres do colégio da Companhia 
+de Jesus, em 1736 22, e as informações sobre as 
+violências e as arbitrariedades cometidas pelos 
+missionários da Companhia de Jesus contra os 
+índios aldeados na comarca de Porto Seguro, 
+em 178723. Por outro lado, as informações neu-
+tras foram aquelas de natureza administrativa, 
+desprovidas de julgamento, como registros sobre 
+as demarcações de terras nos sertões da Bahia, 
+em 1716, comunicações referentes à partida 
+dos padres da Companhia de Jesus para o Rio 
+de Janeiro, em 1722, e decisões administrativas 
+relacionadas a questões financeiras das obras de 
+uma igreja nos sertões da Bahia, em 172524. Dentre 
+os documentos analisados nas três capitanias, 
+apenas um foi identificado pelo nosso modelo 
+como positivo, relatando que São Francisco de 
+Borja, da Companhia de Jesus, foi venerado e 
+invocado como patrono e protetor contra os 
+terremotos25.
+Agata Błoch • Clodomir Santana • Marcia Amantino
+Os jesuítas e a Era do Algoritmo  17/23
+5 Desafios enfrentados
+Durante a análise de sentimentos proposta, 
+surgiram determinadas preocupações, uma delas 
+de suma relevância: a confiabilidade do modelo 
+para pesquisas históricas e sua capacidade de 
+adaptação ao texto histórico, especialmente no 
+contexto do nosso trabalho, centrado nos reg-
+26  “Depois de ter dado resposta a todas as Cartas de Vossa Excelência, fui informado por pessoa fidelíssima que alguns religiosos da 
+Companhia existentes neste Colégio tinham feito liga entre si para embaraçarem os Santos e virtuosos fins a que se dirige a Reforma de 
+que estou encarregado, sendo cabeça desta parcialidade o Padre José de Moraes. Este Padre que presentemente estava escrevendo 
+a Crônica desta Província, ainda que é dotado de curtíssimo talento, é bastantemente dissimulado e fingido de sorte, que valendo-se 
+dos audientes de modesto e humilde, tem toda a aptidão para fomentar semelhantes desordens. Esta verdade nos faz aqui notória na 
+ocasião que se publicou a Santíssima Lei da Liberdade dos Índios, na qual o referido Padre principiando a lamentar a summa pobreza 
+a que eles ficavam reduzidos na falta de escravos, poderia naturalmente introduzir neste Povo uma sublevação contra a observância 
+da dita Real Lei, se o mesmo Povo não contemplasse a grande força, e autoridade do Governo para reprimir e castigar exemplarmente 
+qualquer insulto. Ao mesmo tempo que me deram esta informação, chegou a mesma notícia ao Governador e Capitão General do Esta-
+do, Francisco Xavier de Mendonça Furtado, o qual persuadindo-se justamente que para remediar este dano só podia ser meio eficaz a ir 
+este Padre exterminado para o Reino me escreveu a carta de que remeto a Vossa Excelência a cópia. Desta carta, e daquela informação 
+resultou a expedir logo ao Padre Reitor a ordem, que consta da cópia inclusa. Em virtude dela passa o sobredito Padre para esse Reino 
+a ordem de Sua Majestade. O que Vossa Excelência porá na Sua Real Presença para que o dito Senhor determine a este respeito o que 
+lhe parecer justo. Pará, 1 de março de 1759. Bispo do Pará para o Senhor Tomé Joaquim da Costa Corte Real”.
+istros de correspondência (figura 11a), e não nas 
+fontes primárias (figura 11b). Assim, emergiu a 
+questão da confiabilidade desses registros e da 
+possível manipulação, uma vez que eles podem 
+não capturar integralmente o contexto das fontes 
+originais, e sua preparação pode ser questionável.
+Figura 11 – a) Registro e b) Fonte
+a) 
+Fonte: Catálogo de documentos manuscritos avulsos referentes à capitania do Pará existentes 
+no Arquivo Histórico Ultramarino de Lisboa ( https:/ /actd.iict.pt/eserv/actd:CUc013/CU-Para.pdf).
+b) 
+Fonte: AHU_CU_013, Cx.44, D. 4057.
+Nota: transcrição26.
+18/23 Estudos Ibero-Americanos, Porto Alegre, v. 52, n. 1, p. 1-23, jan.-dez. 2026 | e-46315
+Para examinar possíveis discrepâncias entre os 
+resultados da IA e um humano, realizamos testes 
+comparativos, nos quais historiadores avaliaram 
+um subconjunto de texto. Foram selecionados 32 
+documentos de forma aleatória, e a classificação 
+do sentimento foi baseada nas suas transcrições. 
+A figura 12 mostra a matriz de confusão (Haghighi 
+et al., 2018, p. 729), comparando a classificação 
+do historiador com a da Inteligência Artificial.
+No aprendizado de máquina, uma matriz de 
+confusão é uma tabela que permite visualizar o 
+desempenho de um modelo de classificação. Na 
+matriz, a classificação dada pelo modelo a um 
+conjunto de dados é comparada a outra classifi-
+cação nesse conjunto. Essa segunda classificação 
+pode ser a correta (também conhecida como 
+ground truth) ou uma classificação alternativa, 
+oriunda de outro modelo (Monard; Baranauskas, 
+2003). Num cenário em que ambos os modelos 
+apresentem as mesmas classificações, a matriz 
+terá apenas valores na sua diagonal principal. A 
+análise dessa matriz permite comparar os dois 
+modelos e analisar onde ocorreram divergências 
+de classificação. Por exemplo, na figura 12, o valor 
+15 da célula da primeira linha, segunda coluna 
+indica que 15 documentos classificados pelo 
+historiador como negativo foram considerados 
+neutros pela IA.
+Como pode ser visto na figura 12, a maior 
+diferença ocorre em textos classificados como 
+neutros pela IA, mas que o historiador considera 
+negativos. Nesses casos, essa diferença ocorre 
+por conta do texto utilizado pela IA para fazer a 
+análise de sentimentos. Enquanto o historiador 
+dispunha de uma transcrição do texto original, a 
+IA utilizou uma ementa desse texto. Analisando as 
+ementas utilizadas, observou-se a ausência das 
+palavras-chave que o historiador considerou para 
+rotular o texto como negativo. Em outras palavras, 
+a diferença nas marcações neutras-negativas se 
+dá por uma limitação da base, e não da técnica.
+ 
+Figura 12 – Comparação resultados da IA nas ementas dos documentos versus humano
+Fonte: elaboração própria.
+Os resultados apresentados na figura 13, por 
+sua vez, comparam o desempenho da IA, apli-
+cada na base com os textos das ementas, com 
+a transcrição desses textos. Nesses experimen-
+tos, criamos uma base com a transcrição dos 
+32 documentos avaliados pelos historiadores. 
+Esses documentos foram, então, analisados pela 
+Inteligência Artificial e, como pode ser visto tan-
+to na figura 13 quanto na figura 14, houve uma  
+ 
+discrepância, principalmente associada a docu-
+mentos identificados como neutros nas ementas, 
+mas negativos na transcrição.
+Na comparação entre a IA e o historiador, 
+também vale ressaltar as diferenças relativas às 
+classificações positivas. Como pode ser visto nas 
+figura 12 e figura 14, dois documentos avaliados 
+como neutros pela IA foram classificados como 
+positivos pelo historiador. Essa diferença se deve 
+Agata Błoch • Clodomir Santana • Marcia Amantino
+Os jesuítas e a Era do Algoritmo  19/23
+a subjetividades relacionadas à classificação dos 
+documentos. Como pode ser visto no exemp -
+lo da figura 15, o termo destacado foi avaliado 
+como positivo pelo historiador e não apresenta 
+palavras fortemente positivas para a IA. Nesse 
+caso, a classificação positiva tem também um 
+caráter subjetivo.
+Figura 13 – Comparação resultados da IA em ementas versus IA em transcrição dos documentos
+Fonte: elaboração própria.
+Ao comparar os resultados da IA baseada 
+nas transcrições com o historiador, o resultado 
+apresentado na figura 14 indica uma maior con-
+cordância entre a avaliação do historiador e a da  
+ 
+IA. Nesses casos, apenas três documentos aval-
+iados como neutros pela IA foram considerados 
+negativos pelo historiador. 
+ 
+Figura 14 – Comparação resultados da IA em transcrição dos documentos versus historiador
+Fonte: elaboração própria.
+Figura 15 – Exemplo de texto classificado como positivo pelo historiador
+Fonte: elaboração própria.
+20/23Estudos Ibero-Americanos, Porto Alegre, v. 52, n. 1, p. 1-23, jan.-dez. 2026 | e-46315
+Encerrando esta seção, é essencial na pesqui-
+sa histórica compreender como o historiador 
+pretende abordar o sentimento  e definir esse 
+conceito. Os historiadores enfrentam o desafio 
+de identificar se a análise de sentimentos é uma 
+ferramenta teórica para decifrar a linguagem 
+emocional ou uma prática destinada a examinar 
+dinâmicas e tendências, bem como a distinguir 
+e a contextualizar documentos históricos entre 
+si. As análises desse gênero, assim como outras 
+que empregam algoritmos, são comumente 
+direcionadas a discursos contemporâneos, por 
+exemplo, os presentes em mídias sociais como o 
+antigo Twitter (Song; Xia, 2016), atual X, enquanto 
+seu uso em contextos de documentação históri-
+ca é menos frequente. Isso representa mais um 
+desafio para os historiadores.
+Ainda assim, com toda a cautela devida aos 
+resultados preliminares da análise de sentimen-
+tos, é inegável que o modelo desempenha uma 
+função consideravelmente eficaz ao auxiliar his-
+toriadores na identificação e na localização de 
+documentos que expressam um sentimento 
+específico. Embora não esteja isenta de imper -
+feições, demonstramos a capacidade de identi-
+ficar documentos que refletem um sentimento 
+específico dentro do contexto, do espaço e do 
+tempo estabelecidos.
+6 Reflexões sobre o papel do 
+historiador na era da Inteligência 
+Artificial
+O ofício do historiador tem sofrido inúmeras 
+mudanças com os avanços tecnológicos digitais 
+e computacionais. Se, por um lado, tem havido 
+uma maior democratização ao acesso às fontes, 
+por outro, tem-se exigido do pesquisador — além 
+da erudição acadêmica — o conhecimento, ainda 
+que mínimo, de técnicas que permitam organi-
+zar, analisar, situar e perceber padrões em seu 
+conjunto documental.
+O que se tentou apresentar neste texto foi 
+uma verificação do quanto as novas técnicas, 
+que nem são tão novas assim, podem ajudar o 
+especialista no seu ofício diário. Analisar como a 
+Companhia de Jesus aparece na documentação 
+do gigantesco banco de dados dos projetos do 
+Arquivo Histórico Ultramarino referente ao Brasil 
+e à África Ocidental, no período compreendido 
+entre os anos de 1642 a 1822, foi uma tentativa de 
+entender até que ponto os dados obtidos pela IA 
+ou por outros programas computacionais podem 
+servir à pesquisa histórica.
+Mostramos, portanto, que o historiador precisa 
+aprender a dialogar com a IA sem opor o ele -
+mento humano ao digital. Isso é especialmente 
+relevante em análises que transitam entre am-
+bos, como a análise de sentimentos. Ainda no 
+contexto das limitações da abordagem utilizada, 
+vale salientar que o desempenho das técnicas de 
+Inteligência Artificial é limitado pelo tipo e pela 
+qualidade dos dados utilizados no seu treino e 
+na sua aplicação.
+Novamente, destacamos o papel fundamen-
+tal do pesquisador no processo de seleção das 
+técnicas adequadas, na preparação da base de 
+dados e na identificação de possíveis vieses e 
+limitações da metodologia e dos dados utiliza-
+dos. Por exemplo, nos resultados da análise de 
+sentimentos, de acordo com a historiografia, era 
+esperado um número bem maior de documentos 
+classificados como negativos a partir de 1750. 
+Esse resultado poderia levar a interpretações 
+precipitadas de que esse tipo de técnica de 
+análise de documentos não funcionaria e que 
+os pesquisadores deveriam evitá-la. O resultado 
+abaixo do esperado está, na verdade, relacionado 
+à natureza da base de dados utilizada. Nessa 
+situação, a limitação reside na base de dados, e 
+não no desempenho da IA. Como discutido no 
+artigo, em um conjunto de dados composto por 
+transcrições de documentos, o desempenho da 
+Inteligência Artificial se aproximaria mais do que 
+é descrito na historiografia.
+Embora a IA seja uma ferramenta que se apre-
+senta, mesmo que ainda em construção, com 
+muitas possibilidades para a pesquisa histórica, 
+ficou evidenciado nessa experimentação que o 
+papel do historiador como definidor de métodos 
+e analista das informações históricas precisa 
+caminhar ao lado da ferramenta. Ela, por si só, não 
+resolve os problemas apresentados — teóricos, 
+Agata Błoch • Clodomir Santana • Marcia Amantino
+Os jesuítas e a Era do Algoritmo  21/23
+metodológicos e de conteúdo —, mas aponta 
+caminhos possíveis. Cabe ao pesquisador identi-
+ficar a partir de qual conteúdo a máquina operou 
+e, acima de tudo, compreender os resultados não 
+como informações em si, mas como indicativos 
+que precisam ser verificados.
+Referências Bibliográficas
+ALDEN, Dauril. The Making of an enterprise: the Society 
+of Jesus in Portugal, its Empire and Beyond 1540–1750. 
+Califórnia: Stanford University Press, 1996.
+ALENCASTRO, Luiz Felipe de. O trato dos viventes: 
+formação do Brasil no Atlântico Sul, séculos XVI e XVII. 
+São Paulo: Companhia das Letras, 2000.
+AMANTINO, Marcia. A construção de um discurso 
+antijesuítico nas devassas religiosas na capitania do 
+Rio de Janeiro: estatutos de verdade. Clio: revista de 
+pesquisa histórica do Programa de Pós-Graduação 
+em História da Universidade Federal de Pernambuco, 
+Recife  v. 41, n. 2, jul./dez. 2023. Disponível em: https:/ /
+periodicos.ufpe.br/revistas/index.php/revistaclio/
+article/view/260740. Acesso em: 10 mar. 2025. 
+AMANTINO, Marcia. Deslocamentos no império portu-
+guês: o caso dos egressos da Companhia de Jesus e a 
+lei de 1767. Tempo, Niterói, v. 29, n. 1, p. 87-105, jan./abr. 
+2023. Disponível em: https:/ /www.scielo.br/j/tem/a/
+mpxsckKqJXLt3tS3DrDSvPs/?format=pdf&lang=pt. 
+Acesso em: 10 mar. 2025.
+ASSUNÇÃO, Paulo de. Negócios Jesuíticos: o cotidiano 
+da administração dos bens divinos. São Paulo: Edusp, 
+2004.
+BARNES, Trevor J. Big data, little history. Dialogues in 
+Human Geography, London, v. 3, n. 3, p. 297-302, 2013.
+BELLOTTO, Heloísa Liberalli. Arquivos permanentes: 
+tratamento documental. Rio de Janeiro: FGV, 2004. 
+BERTOLETTI, Esther Caldas; BELLOTTO, Heloísa Libe-
+ralli; DIAS, Erika Simone de Almeida Carlos. O Projeto 
+Resgate de Documentação Histórica Barão do Rio Bran-
+co: acesso às fontes da História do Brasil existentes no 
+exterior. Clio: revista de pesquisa histórica do Programa 
+de Pós-Graduação em História da Universidade Federal 
+de Pernambuco, Recife, v. 29, n. 1, 2011.
+BETTI, Arianna; VAN DEN BERG, Hein. Towards a Com-
+putational History of Ideas: Proceedings of the Third 
+Conference on Digital Humanities in Luxembourg 
+with a Special Focus on Reading Historical Sources in 
+the Digital Age. Luxembourg: Ceur Workshop Proce-
+edings, 2016.
+BŁOCH, Agata; SANTANA, Clodomir; VASQUES FILHO, 
+Demival; BOJANOWSKI, Michał. Cracking the Historical 
+Code. From Unstructured Correspondence Corpora to 
+Computational Analysis. In: RAINES, D. (ed.). Models of 
+Data Extraction and Architecture in Relational Databases 
+of Early Modern Private Political Archives. Venezia: Edi-
+zioni Ca’ Foscari, 2025. Studi di archivistica, bibliografia, 
+paleografia 8,  p. 115-142. 
+BŁOCH, Agata; VASQUES FILHO, Demival; BOJA -
+NOWSKI, Michał. Networks from archives: Recons -
+tructing networks of official correspondence in the 
+early modern Portuguese empire. Social Networks, 
+Lausanne, v. 69, p. 123-135, 2022.
+BOSCHI, Caio César. Projeto Resgate: história e arqui-
+vística (1982–2014). Revista Brasileira de História, São 
+Paulo, v. 38, p. 187-208, 2018.
+BOXER, Charles. O Império Marítimo português, 1415–
+1825. Lisboa: Ed. 70, 2011.
+BOXER, Charles. Salvador de Sá e a luta pelo Brasil e 
+Angola, 1602–1686. São Paulo: Editora Nacional, 1973.
+BRIGHAM, Maisie Jane; ELKINS, Katherine. Narrati -
+ve Structures in American History: Using Sentiment 
+Analysis to Identify Trends in Historiography. IPHS 200: 
+Programming Humanity, Ohio, 2024. Paper 80.
+BURRIEZA SÁNCHEZ, Javier. Jesuitas en las Indias: 
+entre la utopía y el conflicto: trabajos y misiones de la 
+Compañía de Jesús en la América Moderna. Valladolid: 
+Universidad de Valladolid, 2007.
+DIAS, Érika S. de Almeida Carlos. Informação e memória: 
+o Projeto Resgate e a administração do Brasil colonial 
+no século XVIII. IRIS-Revista de Informação, Memória 
+e Tecnologia, Recife, v. 1, n. 1, p. 43-66, jul./dez. 2012.
+EISENBERG, José. As Missões Jesuíticas e o pensamento 
+Político Moderno. Belo Horizonte: Ed. UFMG, 2000.
+ELO, Kimmo. Utilizing historical network analysis on 
+meta-data to model East German foreign intelligence 
+cycle in the Baltic Sea Region 1975–89. The Power of 
+Networks. Routledge, London, p. 153-171, 2020.
+ELWERT, Frederik. Social and semantic network analysis 
+in the study of religions. In: KERSCHBAUMER, F. et al. The 
+Power of Networks. London: Routledge, 2020. p. 172-186.
+FIELDS, Sam; COLE, Camille Lyans; OEI, Catherine; 
+CHEN, Annie T. Using named entity recognition and 
+network analysis to distinguish personal networks from 
+the social milieu in nineteenth-century Ottoman-Iraqi 
+personal diaries. Digital Scholarship in the Humanities, 
+Oxford University Press, v. 38, p. 66-86, 2022.
+FRANCO, José Eduardo. O mito dos jesuítas: em Por -
+tugal, no Brasil e no Oriente, séculos XVI a XX. Lisboa: 
+Gradiva, 2006. v. 1: Das origens ao marquês de Pombal.
+GOLIN, Tau. A Guerra Guaranítica (1750–1756). Porto 
+Alegre: Ed. da Universidade; Passo Fundo: UPF Edi -
+tora, 1998.
+GRUZINSKI, Serge. As quatro partes do mundo: história 
+de uma mundialização. Belo Horizonte: EdUFMG, 2014.
+HAGHIGHI, Sepand; JASEMI, Masoomeh; HESSABI, 
+Shaahin; ZOLANVARI, Alireza. PyCM: Multiclass con -
+fusion matrix library in Python. Journal of Open Source 
+Software, Chicago, v. 3, n. 25, 2018.
+HESPANHA, Manuel. Caleidoscópio do Antigo Regime. 
+São Paulo: Alameda, 2012.
+22/23 Estudos Ibero-Americanos, Porto Alegre, v. 52, n. 1, p. 1-23, jan.-dez. 2026 | e-46315
+LAUBICHLER, Manfred D.; MAIENSCHEIN, Jane; RENN, 
+Jürgen. Computational Perspectives in the History 
+of Science: To the Memory of Peter Damerow. Isis, 
+Maryland,  v. 104, n. 1, p. 119-130, 2013.
+LEITE, Serafim. História da Companhia de Jesus no 
+Brasil. Petrópolis: Vozes, 2004.
+LIMA, Maria da Vitória Barbosa; ROCHA, Solange Pereira 
+da; CAMPBELL, Courtney J.; ALVES, Solange Mouzinho; 
+LIMA, Lesleyanne Rodrigues de. Acervos Digitais em 
+Sociedades Escravistas: a perspectiva de estudo da 
+família de escravizados na Paraíba do Norte, América 
+Portuguesa, século XVIII. In: VASQUES FILHO, Demival 
+et al. Memórias Digitais. Democratizando informações, 
+histórias e tecnologias. São José do Rio Preto: HN, 
+2024. p. 31-52.
+MARINO, Ian Kisil; GAJANIGO, Paulo Rodrigues; DE 
+SOUZA, Rogério Ferreira; NICODEMO, Thiago Lima. 
+Como contar a história da Covid-19? Reflexões a partir 
+dos arquivos digitais no Brasil. Esboços: Histórias em 
+Contextos Globais, Florianópolis, v. 28, n. 48, p. 558-
+583, 2021.
+MERTEL, Adam; ZBÍRAL, David; STACHOŇ, Zdeněk; 
+HOŘÍNKOVÁ, Hana. Historical geocoding assistant. 
+SoftwareX, [s. l.], v. 14, p. 100682, 2021. 
+MONARD, Maria Carolina; BARANAUSKAS, José Augus-
+to. Conceitos sobre aprendizado de máquina. Sistemas 
+inteligentes-Fundamentos e aplicações, Barueri, v. 1, n. 
+1, p. 39-56, 2003.
+MONTEIRO, John Manuel. Negros da terra: índios e 
+bandeirantes nas origens de São Paulo. São Paulo: 
+Companhia das Letras, 1994. 
+PÉREZ, Juan Manuel et al. Pysentimiento: a python 
+toolkit for opinion mining and social NLP tasks. arXiv, 
+[s. l.], n. 26, p. 1-13, 2021.
+PETZ, Cindarella; PFEFFER, Juergen. Configuration to 
+conviction: Network structures of political judiciary in 
+the Austrian Corporate State. Social Networks, [s. l.], v. 
+66, p. 185-201, 2021.
+PIOTROWSKI, Michael; FAFINSKI, Mateusz. Nothing 
+New Under the Sun? Computational Humanities and 
+the Methodology of History. Computational Humanities 
+Research, Amsterdan, v. 2723, p. 171-181, 2020. Dispo-
+nível em: https:/ /ceur-ws.org/Vol-2723/short16.pdf. 
+Acesso em: 10 mar. 2025.
+SANTOS, Lucas L.; BIANCHI, Reinaldo A. C.; COSTA, 
+Anna H. R. FinBERT-PT-BR: Análise de Sentimentos 
+de Textos em português do Mercado Financeiro. In: 
+Brazilian Workshop on Artificial Intelligence in Finance 
+(BWAIF), João Pessoa. Anais [...]. Porto Alegre: Sociedade 
+Brasileira de Computação, 2023. p. 144-155.
+SCHMIDT, Benjamin M. Digital Humanists Need to Un-
+derstand Algorithms? Debates in the Digital Humanities. 
+Minnessota: University of Minnesota Press, 2016. p. 
+546-555.
+SONG, Zhiwen; XIA, Jianhong (Cecilia). Spatial and Tem-
+poral Sentiment Analysis of Twitter Data. In: CAPINERI, 
+Cristina; HAKLAY, Muki; HUANG, Haosheng; ANTONIOU, 
+Vyron; KETTUNEN, Juhani; OSTERMANN, Frank; PUR-
+VES, Ross (ed.). European Handbook of Crowdsourced 
+Geographic Information. London: Ubiquity Press, 2016. 
+p. 205-222.
+SOROKA, Stuart; YOUNG, Lori; BALMAS, Meital. Bad 
+News or Mad News? Sentiment Scoring of Negativity, 
+Fear, and Anger in News Content. The Annals of the 
+American Academy of Political and Social Science, 
+London, v. 659, p. 108-121, 2015.
+SOUZA, Evergton Sales. Igreja e Estado no período 
+pombalino. In: FALCON, Francisco; RODRIGUES, Cláudia. 
+A “Época pombalina” no mundo luso-brasileiro. Rio de 
+Janeiro: FGV/Faperj, 2015, p.277-306.
+SUPPLE, Barry. Preserving the past: creating the En -
+dangered Archives Programme. From Dust to Digital: 
+Ten Years of the Endangered Archives Programme. 
+Cambridge: Open Book Publishers, 2015. p. XXXIX–XLI.
+SVENSSON, Patrik. Big Digital Humanities: Imagining 
+a Meeting Place for the Humanities and the Digital. 
+Michigan: University of Michigan Press, 2016. p. 1-35. 
+Disponível em: https:/ /doi.org/10.2307/j.ctv65sx0t. 
+Acesso em: 29 mar. 2024. 
+SZADY, Bogumił. Spatio-temporal databases as a rese-
+arch tool in historical geography. Geographia Polonica, 
+Warsaw, v. 89, n. 3, p. 359-370, 2016.
+TAVARES, Célia Cristina da Silva. Entre a cruz e a espa-
+da: jesuítas e a América portuguesa. 1985. Dissertação 
+(Mestrado em História) — Universidade Federal Flumi-
+nense, Niterói, 1985.
+TORGERSON, Jesse W. Historical practice in the era of 
+digital history. History and Theory, Connecticut, v. 61, n. 
+4, p. 37-63, 2022.
+VAN KLEY, Dale K. Jansenism and the international su-
+ppression of the Jesuits. In: BROWN, Stewart; TACKETT, 
+Timothy. The Cambridge History of Christianity: Enligh-
+tenment, Reawakening and Revolution, 1660–1815. 
+Cambridge: University Press, 2008. p. 302-328.
+VASQUES FILHO, Demival; BŁOCH, Agata; CARDOSO, 
+Juciene Ricarte; NARA JÚNIOR, João Carlos. Memórias 
+Digitais. Democratizando informações, histórias e tec-
+nologias. São José do Rio Preto: HN, 2024.
+VOGEL, Cristine. Guerra aos jesuítas: a propaganda 
+antijesuítica do marquês de Pombal em Portugal e na 
+Europa. Lisboa: Círculo de Leitores, 2017.
+WITTEK, Peter; RAVENEK, Walter. Supporting the Ex -
+ploration of a Corpus of 17th-Century Scholarly Corres-
+pondences by Topic Modeling. SDH Supporting Digital 
+Humanities: Answering the unaskable. Copenhagen: 
+University of Copenhagen, 2011.
+YE, Michelle Jia. A history from below: Translators in the 
+publication network of four magazines issued by the 
+China Book Company, 1913–1923. Translation Studies, 
+London,  v. 15, n. 1, p. 37-53, 2022. 
+Agata Błoch • Clodomir Santana • Marcia Amantino
+Os jesuítas e a Era do Algoritmo  23/23
+ZBÍRAL, David; SHAW, Robert L. J. Hearing Voices: 
+Reapproaching Medieval Inquisition Records. Religions, 
+Brno, v. 13, n. 12, p. 1-25, 2022.
+Agata Bloch
+Doutora em História pelo Instituto de História Tadeusz 
+Manteuffel, Academia de Ciências da Polônia, onde 
+coordena o projeto “Imperial commoners of Brazil and 
+West Africa (1640-1822): global history from a corres -
+pondence network perspective”, financiado pelo Centro 
+Nacional de Ciência da Polônia. Integra a equipe de 
+pesquisadores do projeto MAPE (Mapping the Atlantic 
+Portuguese Empire).
+Clodomir Santana
+Doutor em ciência da computação pela Universidade 
+de Exeter, no Reino Unido. Colaborador externo do 
+Instituto de História Tadeusz Manteuffel, Academia de 
+Ciências da Polônia, onde desenvolve pesquisa em 
+aplicações de técnicas de inteligência computacional 
+na análise de correspondências oficiais que abrangem 
+quase dois séculos da história do Império português 
+do Atlântico. Integra a equipe de pesquisadores do 
+projeto MAPE (Mapping the Atlantic Portuguese Em-
+pire). Atua também como pesquisador pós-doutoral no 
+Instituto de Insuficiência Cardíaca da Universidade da 
+Califórnia, Davis (UC Davis), onde desenvolve modelos 
+de aprendizado de máquina aplicados à medicina car-
+diovascular. Os seus interesses de pesquisa incluem 
+história digital, ciência das redes, inteligência artificial 
+e processamento de linguagem natural.
+Marcia Amantino
+Doutora em História Social pela Universidade Federal 
+do Rio de Janeiro. Professora do PPGH em História da 
+Universidade Salgado de Oliveira e professora adjunta 
+do Departamento de História da UERJ. Pesquisa a eco-
+nomia e a inserção social da Companhia de Jesus na 
+capitania do Rio de Janeiro e a escravidão de negros 
+e de indígenas. Lidera o Grupo de Pesquisa CNPq 
+“Historicidade dos Corpos nas Sociedades Americanas”. 
+Integra a equipe de pesquisadores do projeto MAPE 
+(Mapping the Atlantic Portuguese Empire).
+Endereço para correspondência
+AGATA BLOCH 
+Rynek Starego Miasta 31, 00-272 
+Varsóvia, Polônia
+CLODOMIR SANTANA 
+Universidade da Califórnia, Davis (UC Davis)
+4860 Y Street, Suite 2820, 95817
+Sacramento, USA
+MARCIA AMANTINO 
+Rua Carvalho Alvim, 476, Tijuca, 
+Rio de Janeiro (RJ), Brasil
+Como citar este artigo
+Bloch, A., Santana, C., & Amantino, M. Os jesuítas e a 
+Era do Algoritmo. Uma introdução à análise de sen-
+timentos da correspondência colonial ultramarina 
+portuguesa: An Introduction to Sentiment Analysis in 
+the Portuguese Overseas Colonial Correspondence. 
+Estudos Ibero-Americanos, e46315 . https:/ /doi.or -
+g/10.15448/1980-864X.2026.1.46315
+Os textos deste artigo foram revisados por Araceli 
+Pimentel Godinho e submetidos para validação dos 
+autores antes da publicação.

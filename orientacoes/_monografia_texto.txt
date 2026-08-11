@@ -1,0 +1,1473 @@
+===== PAG 1 =====
+LUCAS LEME SANTOS
+FINBERTPTBR: AN ´ALISE DE SENTIMENTOS
+DE TEXTOS EM PORTUGU ˆES REFERENTES AO
+MERCADO FINANCEIRO
+S˜ ao Paulo
+2022
+===== PAG 2 =====
+LUCAS LEME SANTOS
+FINBERTPTBR: AN ´ALISE DE SENTIMENTOS
+DE TEXTOS EM PORTUGU ˆES REFERENTES AO
+MERCADO FINANCEIRO
+Trabalho apresentado ` a Escola Polit´ ecnica
+da Universidade de S˜ ao Paulo para obten¸ c˜ ao
+do T ´ ıtulo de Engenheiro da Computa¸ c˜ ao.
+S˜ ao Paulo
+2022
+===== PAG 3 =====
+LUCAS LEME SANTOS
+FINBERTPTBR: AN ´ALISE DE SENTIMENTOS
+DE TEXTOS EM PORTUGU ˆES REFERENTES AO
+MERCADO FINANCEIRO
+Trabalho apresentado ` a Escola Polit´ ecnica
+da Universidade de S˜ ao Paulo para obten¸ c˜ ao
+do T ´ ıtulo de Engenheiro da Computa¸ c˜ ao.
+Orientadora:
+Anna Helena Reali Costa
+S˜ ao Paulo
+2022
+===== PAG 4 =====
+AGRADECIMENTOS
+Agrade¸ co aos meus pais, por todo o apoio e incentivo durante a minha vida.
+Agrade¸ co a minha orientadora, Professora Doutora Anna Helena Reali Costa, por todo
+o ensino e apoio durante o meu projeto. E tamb´ em agrade¸ co aos demais colaboradores
+pelos conselhos e aux ´ ılios ao longo do projeto: Julia Pocciotti, Kevin Ujiie, Thomas
+Ferraz, Vin ´ ıcius Carmo, Professor Doutor F´ abio Levy.
+===== PAG 5 =====
+RESUMO
+Esse trabalho se prop˜ oe a aprimorar o processo de tomada de decis˜ oes no mercado
+financeiro por meio do uso de inteligˆ encia artificial. Para isso, foi desenvolvido um modelo
+de an´ alise de sentimentos de textos em portuguˆ es, utilizando a arquitetura de rede neu-
+rais BERT. Com a utiliza¸ c˜ ao desse modelo usu´ arios podem processar grandes quantidades
+de dados de forma r´ apida e eficiente, obtendo informa¸ c˜ oes relevantes para a tomada de
+decis˜ oes. O modelo foi treinado em duas principais etapas: modelagem de linguagem e
+modelagem de sentimentos. Na primeira etapa, foi treinado um modelo de linguagem
+com mais de 1,4 milh˜ oes de textos de not ´ ıcias financeiras em portuguˆ es. A partir desse
+primeiro treinamento, foi poss ´ ıvel construir um classificador de sentimentos com poucos
+textos rotulados (500) com uma convergˆ encia satisfat´ oria. Ao final do trabalho, apresenta-
+se uma an´ alise comparativa com outros modelos e tamb´ em as poss ´ ıveis aplica¸ c˜ oes do
+modelo desenvolvido. Na an´ alise comparativa, foi poss ´ ıvel observar que o modelo desen-
+volvido apresentou resultados superiores aos atuais modelos no estado da arte. Dentre as
+aplica¸ c˜ oes, foi demonstrado que o modelo pode ser utilizado para a constru¸ c˜ ao de ´ ındices
+de sentimento, estrat´ egias de investimento e an´ alise de dados macroeconˆ omicos, como a
+infla¸ c˜ ao.
+Palavras-Chave – Processamento de Linguagem Natural, Transformers, Finan¸ cas
+Quantitativas.
+===== PAG 6 =====
+ABSTRACT
+This work aims to improve the decision-making process in the financial market through
+the use of artificial intelligence. To do this, a model of sentiment analysis of texts in
+Portuguese was developed, using the BERT neural network architecture. With the use
+of this model, users can process large amounts of data quickly and efficiently, obtaining
+relevant information for decision-making. The model was trained in two main stages:
+language modeling and sentiment modeling. In the first stage, a language model was
+trained with more than 1.4 million texts of financial news in Portuguese. From this first
+training, it was possible to build a sentiment classifier with few labeled texts (500) that
+presented a satisfactory convergence. At the end of the work, a comparative analysis
+with other models and the possible applications of the developed model are presented. In
+the comparative analysis, it was possible to observe that the developed model presented
+better results than the current models in the state of the art. Among the applications,
+it was demonstrated that the model can be used to build sentiment indices, investment
+strategies and macroeconomic data analysis, such as inflation.
+Keywords – Natural Language Processing, Transformers, Quantitative Finance.
+===== PAG 7 =====
+LISTA DE FIGURAS
+1 As 3 fontes de alfa no mercado de capitais. . . . . . . . . . . . . . . . . . . 11
+2 Neurˆ onio de uma rede neural artificial. . . . . . . . . . . . . . . . . . . . . 15
+3 Modelo de linguagem baseado numa arquitetura de rede neural. . . . . . . 17
+4 Arquitetura da camada de Self Attention. . . . . . . . . . . . . . . . . . . . 18
+5 Arquitetura da camada de Multi-head Attention. . . . . . . . . . . . . . . . 19
+6 Valida¸ c˜ ao por holdout e valida¸ c˜ ao cruzada. . . . . . . . . . . . . . . . . . . 24
+7 Matriz de confus˜ ao. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+8 Retorno acumulado de uma carteira de investimento comprada na estrat´ egia
+de momentum. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+9 Retorno acumulado de uma carteira de investimento comprada na estrat´ egia
+de baixa volatilidade . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+10 Arquitetura de treinamento do FinBERT PT BR. . . . . . . . . . . . . . . 34
+11 Distribui¸ c˜ ao de textos por fonte de dados . . . . . . . . . . . . . . . . . . . 39
+12 Treinamento do modelo de linguagem com textos no contexto do mercado
+financeiro. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+13 Resultado da anota¸ c˜ ao da base de sentimentos. . . . . . . . . . . . . . . . 43
+14 Arquitetura do modelo de classifica¸ c˜ ao de sentimento . . . . . . . . . . . . 44
+15 Intervalo de confian¸ ca da acur´ acia dos modelos de classifica¸ c˜ ao de texto . . 46
+16 Intervalo de confian¸ ca do F1-Score dos modelos de classifica¸ c˜ ao de texto . . 47
+17 ´Indice de sentimentos e fatos relevantes da economia. . . . . . . . . . . . . 48
+18 Correla¸ c˜ ao entre o ´ ındice de sentimentos e a infla¸ c˜ ao . . . . . . . . . . . . . 51
+19 Simula¸ c˜ ao da estrat´ egia de investimentoapostando contra o sentimento e
+do ´ ındice Bovespa. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52
+20 Simula¸ c˜ ao da estrat´ egia de investimentoapostando contra o sentimento e
+de outros fatores de risco. . . . . . . . . . . . . . . . . . . . . . . . . . . . 53
+===== PAG 8 =====
+LISTA DE TABELAS
+1 Tipo de momentum e respectivo modelo de aloca¸ c˜ ao . . . . . . . . . . . . . 29
+2 Perplexidade dos modelos de linguagem . . . . . . . . . . . . . . . . . . . . 42
+3 M´ etricas de concordˆ ancia entre os anotadores. . . . . . . . . . . . . . . . . 43
+4 Resultados dos modelos de classifica¸ c˜ ao de texto . . . . . . . . . . . . . . . 45
+5 Resultados da regress˜ ao linear com o ´ ındice de mercado como vari´ avel de-
+pendente e fatores de investimento como vari´ aveis independentes . . . . . . 53
+===== PAG 9 =====
+SUM ´ARIO
+1 Introdu¸ c˜ ao 10
+1.1 Objetivo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+1.2 Justificativa . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+1.2.1 Finan¸ cas comportamentais . . . . . . . . . . . . . . . . . . . . . . . 11
+1.2.2 Modelos de processamento de linguagem natural em portuguˆ es . . . 12
+1.3 Organiza¸ c˜ ao do Trabalho . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+2 Aspectos Conceituais 14
+2.1 Redes Neurais Artificiais . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+2.2 Processamento de Linguagem Natural . . . . . . . . . . . . . . . . . . . . . 15
+2.2.1 Modelos de Linguagem . . . . . . . . . . . . . . . . . . . . . . . . . 16
+2.2.2 Modelos de Aten¸ c˜ ao . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+2.2.3 An´ alise de Sentimentos . . . . . . . . . . . . . . . . . . . . . . . . . 19
+2.3 T´ ecnicas de valida¸ c˜ ao de dados e modelos . . . . . . . . . . . . . . . . . . 20
+2.3.1 Anota¸ c˜ ao de dados . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+2.3.1.1 Sele¸ c˜ ao de Textos representativos . . . . . . . . . . . . . . 21
+2.3.1.2 M´ etricas de concordˆ ancia . . . . . . . . . . . . . . . . . . 22
+2.3.2 Valida¸ c˜ ao de modelos . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+2.3.2.1 Vi´ es e variˆ ancia . . . . . . . . . . . . . . . . . . . . . . . . 23
+2.3.2.2 T´ ecnicas de valida¸ c˜ ao de modelos . . . . . . . . . . . . . . 24
+2.3.2.3 M´ etricas de avalia¸ c˜ ao . . . . . . . . . . . . . . . . . . . . . 25
+2.4 Finan¸ cas Quantitativas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+2.4.1 Momentum . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+2.4.2 Baixa Volatilidade . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+===== PAG 10 =====
+3 Metodologia do Trabalho 33
+3.1 Aquisi¸ c˜ ao de Dados . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+3.2 Anota¸ c˜ ao de Dados . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+3.3 Treinamento do Modelo . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+3.4 Valida¸ c˜ ao do Modelo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+3.4.1 ´Indice de Sentimentos . . . . . . . . . . . . . . . . . . . . . . . . . 34
+3.5 Requisitos do projeto . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+3.5.1 Requisitos funcionais . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+3.5.2 Requisitos n˜ ao funcionais . . . . . . . . . . . . . . . . . . . . . . . . 35
+4 Desenvolvimento do Trabalho 37
+4.1 Tecnologias Utilizadas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+4.1.1 Python . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+4.1.2 Scrapy . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+4.1.3 Hugging Face . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+4.1.4 PyTorch . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+4.1.5 Kedro . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+4.1.6 Kaggle . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+4.1.7 Wandb . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+4.2 Projeto e Implementa¸ c˜ ao . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+4.2.1 Aquisi¸ c˜ ao de dados . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+4.2.2 Treinamento de modelo de linguagem . . . . . . . . . . . . . . . . . 40
+4.2.3 Anota¸ c˜ ao de dados . . . . . . . . . . . . . . . . . . . . . . . . . . . 42
+4.2.4 Treinamento do modelo de sentimentos . . . . . . . . . . . . . . . . 44
+4.3 Aplica¸ c˜ oes do modelo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+4.3.1 ´Indice de sentimentos . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+4.3.2 Rela¸ c˜ ao com dados macroeconˆ omicos . . . . . . . . . . . . . . . . . 50
+===== PAG 11 =====
+4.3.3 Apostando contra o sentimento . . . . . . . . . . . . . . . . . . . . 51
+5 Considera¸ c˜ oes finais 55
+5.1 Conclus˜ ao . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+5.2 Trabalhos futuros . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 56
+Referˆ encias 57
+===== PAG 12 =====
+10
+1 INTRODUC ¸ ˜AO
+O mercado de capitais ´ e algo vivo e muito dinˆ amico; ele reflete todas as informa¸ c˜ oes
+e emo¸ c˜ oes da popula¸ c˜ ao, assim como dita a hip´ otese de mercados adaptativos [1]. Que
+diz que os pre¸ cos dos ativos refletem todas as informa¸ c˜ oes e emo¸ c˜ oes da popula¸ c˜ ao, e
+que os pre¸ cos s˜ ao adaptativos, ou seja, mudam de acordo com as novas informa¸ c˜ oes e
+emo¸ c˜ oes. Sendo assim, os agentes que atuam nessa ´ area devem ter uma excelente capa-
+cidade de processamento de informa¸ c˜ oes, a fim de tomar as melhores decis˜ oes, evitando
+vieses comportamentais.
+Com o aumento da quantidade de informa¸ c˜ oes, uma ferramenta muito importante
+para aux ´ ılio na tomada de decis˜ oes ´ e a inteligˆ encia artificial (IA). Essa tecnologia visa
+implementar sistemas que imitam a inteligˆ encia humana. Existem diversas aplica¸ c˜ oes
+de IA: vis˜ ao computacional, processamento de linguagem natural (PLN), sistemas de
+recomenda¸ c˜ ao, entre outros. O interesse desse projeto reside em aplicar PLN no contexto
+do mercado financeiro, facilitando assim a tomada de decis˜ oes em vista da abundante
+quantidade de informa¸ c˜ oes textuais existentes.
+Atualmente, os algoritmos no estado da arte em PLN s˜ ao baseados em redes neurais
+profundas com mecanismos de aten¸ c˜ ao [2] e a maioria desses modelos s˜ ao treinados na
+l ´ ıngua inglesa. Tais algoritmos se mostram bastante ´ uteis para a realiza¸ c˜ ao define-
+tuning e atingem desempenho no estado da arte em diversas tarefas [3]. Por´ em, no
+contexto de finan¸ cas, esses modelos de prop´ osito geral n˜ ao convergem t˜ ao bem por conta
+do vocabul´ ario espec ´ ıfico do mercado financeiro. Portanto, para atingir resultados no
+estado da arte em finan¸ cas, ´ e necess´ ario o treinamento de modelos em tal dom ´ ınio [4].
+1.1 Objetivo
+Este trabalho visa realizar o treinamento e an´ alise de um modelo de linguagem do
+estado da arte no contexto do mercado financeiro em portuguˆ es. Para realizar esse ob-
+jetivo, ser´ a necess´ aria a aquisi¸ c˜ ao e tratamento de dados textuais no dom ´ ınio financeiro.
+===== PAG 13 =====
+11
+Por fim, para a avalia¸ c˜ ao do modelo ser´ a realizado umfine-tuning para a tarefa de an´ alise
+de sentimentos, que posteriormente poder´ a ser utilizado para a constru¸ c˜ ao de sinais para
+an´ alise e constru¸ c˜ ao de estrat´ egias de investimentos.
+1.2 Justificativa
+Esse projeto tem como o seu principal foco o processamento de informa¸ c˜ oes textuais
+para a an´ alise e tomada de decis˜ oes no contexto de mercado de capitais. Para isso ser˜ ao
+constru ´ ıdas bases de dados e algoritmos de PLN em linguagens com poucos recursos como
+portuguˆ es. A solu¸ c˜ ao proposta por esse trabalho visa facilitar a obten¸ c˜ ao de retornos
+acima da m´ edia por agentes do mercado financeiro e aumentar a disponibiliza¸ c˜ ao de
+modelos e bases de dados para PLN em portuguˆ es brasileiro. Portando, as principais
+justificativas s˜ ao baseadas em finan¸ cas comportamentais e a escassez de algoritmos e
+dados em linguagens com recursos reduzidos, conforme explicado a seguir.
+1.2.1 Finan¸ cas comportamentais
+No mercado de capitais, define-se a busca de alfa como os retornos gerados acima de
+um benchmark. Assim, os agentes financeiros buscam constantemente por formas para
+“bater o mercado”, e com isso gerar alfa para os seus investidores. Durante o processo
+decis´ orio, com objetivo de obter lucro, os investidores realizam opera¸ c˜ oes com base em
+suas expectativas futuras acerca dos ativos. Desse modo, para obter alfa, os agentes devem
+possuir expectativas melhores que o mercado, ou seja, adiantar a precifica¸ c˜ ao dos ativos
+a partir de suas hip´ oteses de investimentos. A Figura 1 apresenta a formas de obten¸ c˜ ao
+de alfa de cada gestor de investimentos.
+Figura 1: As 3 fontes de alfa no mercado de capitais.
+A literatura de finan¸ cas comportamentais aponta que existem 3 principais fontes de
+===== PAG 14 =====
+12
+alfa [5]: informa¸ c˜ ao superior, vieses comportamentais e melhor processamento de in-
+forma¸ c˜ ao, conforme descrito a seguir.
+Informa¸ c˜ ao superior– Utilizada por gestores tradicionais que por possu ´ ırem um pro-
+fundo conhecimento acerca do mercado podem realizar estimativas acerca do futuro
+dos ativos, gerando assim uma informa¸ c˜ ao superior. Um exemplo da aplica¸ c˜ ao dessa
+metologia ´ e a realiza¸ c˜ ao de proje¸ c˜ ao de lucratividade de um setor da economia.
+Vieses comportamentais – Baseado na teoria dos mercados adaptativos, gestores com-
+portamentais assumem que os agentes que operam no mercado nem sempre s˜ ao raci-
+onais, e por conta disso cometem erros comportamentais que podem ser explorados
+financeiramente. Tais erros geralmente ocorrem em momentos de grande euforia,
+quando os investidores agem pela emo¸ c˜ ao e realizam uma precifica¸ c˜ ao errada a
+acerca dos ativos.
+Melhor processamento de informa¸ c˜ oes– Alguns investidores assumem que as in-
+forma¸ c˜ oes p´ ublicas dispon ´ ıveis s˜ ao suficiente para o processo decis´ orio de inves-
+timento, e focam em melhorar a utiliza¸ c˜ ao desses dados. Gestores quantitativos
+seguem esse processo utilizando t´ ecnicas de modelagem matem´ atica e estat ´ ıstica,
+assim podem identificar anomalias comportamentais ou realizar uma larga escala de
+estimativas para todas as empresas da bolsa.
+1.2.2 Modelos de processamento de linguagem natural em por-
+tuguˆ es
+Um problema atual em PLN ´ e a constru¸ c˜ ao de bases de dados e algoritmos em lingua-
+gens com poucos recursos. Por outro lado, com o avan¸ co das pesquisas de PLN, muitas
+t´ ecnicas que eram baseadas em regras est´ aticas passaram a ser baseadas em modelos es-
+tat ´ ısticos. Entretanto, a maioria das pesquisas de modelagem focam na constru¸ c˜ ao de
+algoritmos de apenas 20 l ´ ınguas das mais de 7000 l ´ ınguas do mundo, [6], e essas lingua-
+gens carentes de estudos s˜ ao denominadas linguagens de poucos recursos (ou, em inglˆ es,
+low-resource languages).
+O portuguˆ es, apesar de possuir diversos avan¸ cos em PLN, ainda ´ e considerada uma
+linguagem de poucos recursos, pois existe uma deficiˆ encia de bases de dados para modelos
+supervisionados e uma carˆ encia de modelos treinados unicamente na l ´ ıngua portuguesa.
+Pelo Hugging Face [7], uma plataforma de disponibiliza¸ c˜ ao de modelos de PLN, pode-
+se estimar a quantidade de modelos no estado da arte publicados na l ´ ıngua inglesa e
+===== PAG 15 =====
+13
+portuguesa: por exemplo, existem cerca de 6000 algoritmos dispon ´ ıveis, j´ a em portuguˆ es
+h´ a apenas 200, sendo a maioria deles treinados em m´ ultiplas linguagens. Portando, para
+aumentar o n´ umero de recursos dispon ´ ıveis em portuguˆ es, esse trabalho visa construir
+bases de dados e algoritmos no contexto do portuguˆ es brasileiro.
+1.3 Organiza¸ c˜ ao do Trabalho
+A seguir, no cap ´ ıtulo 2 est˜ ao expostos os conceitos fundamentais para o desenvol-
+vimento do trabalho. S˜ ao abordados os conceitos t´ ecnicos dos algoritmos, os processos
+aplicados nos dados utilizados no projeto e por fim a descri¸ c˜ ao de t´ opicos relacionados a
+finan¸ cas quantitativas.
+Na sequˆ encia, no cap ´ ıtulo 3 ´ e descriminada a metodologia empregada no desenvolvi-
+mento do projeto, sendo descritos os principais requisitos do projeto, divididos em requi-
+sitos funcionais e n˜ ao funcionais.
+No cap ´ ıtulo 4, s˜ ao apresentados os principais passos adotados durante o decorrer do
+desenvolvimento do projeto, desde as tecnologias utilizadas at´ e os resultados obtidos a
+partir da modelagem de dados.
+Por fim, no cap ´ ıtulo 5 s˜ ao discutidas as considera¸ c˜ oes finais do projeto e trabalhos
+futuros.
+===== PAG 16 =====
+14
+2 ASPECTOS CONCEITUAIS
+Nesta se¸ c˜ ao ser˜ ao apresentados os conceitos fundamentais para o desenvolvimento do
+trabalho. Ser˜ ao expostos tantos os conceitos t´ ecnicos dos algoritmos abordados, quanto
+os processos aplicados nos dados utilizados no projeto.
+Na primeira parte est˜ ao cobertos os principais conceitos sobre redes neurais, na se-
+gunda ser˜ ao discutidos os principais avan¸ cos em processamento de linguagem natural, na
+seguinte est˜ ao cobertos conceitos referentes a anota¸ c˜ ao de bases de dados. E por fim, na
+´ ultima parte, s˜ ao abordados t´ opicos relevantes sobre o mercado de capitais.
+2.1 Redes Neurais Artificiais
+Redes neurais artificiais s˜ ao poderosos modelos de aprendizado inspirados em estrutu-
+ras de organismos inteligentes, em que o seu objetivo ´ e aproximar uma fun¸ c˜ aoy = f (x; θ),
+que mapeia dados independentes ( x) em vari´ aveis dependentes (y), onde θ representa os
+parˆ ametros do modelo [8]. A estrutura desse algoritmo ´ e constitu ´ ıda de diversas camadas
+de neurˆ onios, as unidades b´ asicas do modelo.
+Um neurˆ onio ´ e composto por uma pondera¸ c˜ ao das entradas e uma fun¸ c˜ ao de ativa¸ c˜ ao.
+Os sinais de entrada da rede s˜ ao ponderados por pesos, que indicam a contribui¸ c˜ ao de
+cada sinal de entrada para o neurˆ onio. Assim, com objetivo de capturar rela¸ c˜ oes n˜ ao
+lineares entre os dados, ´ e aplicada uma fun¸ c˜ ao de ativa¸ c˜ ao n˜ ao linear no sinal ponderado,
+resultando assim no valor de sa ´ ıda (Figura 2), que pode ser utilizado para tarefas de
+regress˜ ao ou classifica¸ c˜ ao.
+===== PAG 17 =====
+15
+Figura 2: Neurˆ onio de uma rede neural artificial.
+A arquitetura b´ asica de uma rede neural possui trˆ es categorias de camadas: Input
+Layer, Hidden Layer e Output Layer. Os neurˆ onios presentes na Input Layer cumprem
+um papel passivo de repassar os sinais iniciais para as demais camadas da Hidden Layer.
+Por fim, a ´ ultima camada da rede neural ´ e chamada deOutput Layer, interface onde que
+os sinais da Hidden Layer s˜ ao transmitidos para a camada de sa ´ ıda.
+A composi¸ c˜ ao das fun¸ c˜ oes da rede neural podem ser descritas como um grafo ac ´ ıclico
+de fun¸ c˜ oes em cadeia [8]. Por exemplo, uma rede com 3 camadas pode ser representada
+pelas fun¸ c˜ oesf (1), f (2) e f (3), que em forma de cadeia s˜ ao representadas da seguinte
+forma f (x) = f (3)(f (2)(f (1)(x))). Em geral, quanto maior o tamanho da cadeia, maior ´ e
+a profundidade da rede e maior ´ e complexidade que o algoritmo consegue capturar. O
+termo Deep Learning surgiu dessa terminologia de profundidade.
+O treinamento de uma rede neural ´ e um processo iterativo de tentativa e erro composto
+por duas principais etapas: feedfowarding e backpropagation. Na etapa de feedfowarding
+s˜ ao realizadas as predi¸ c˜ oes, com os parˆ ametros de pesoθ, e a partir de uma fun¸ c˜ ao de
+custo J(θ) s˜ ao avaliadas as predi¸ c˜ oes. E logo ap´ os, durante obackpropagation ´ e executada
+a otimiza¸ c˜ ao dos pesosθ visando minimizar a fun¸ c˜ ao de custoJ(θ). Assim ´ e desempe-
+nhado o processo de alternˆ ancia entrefeedfowarding e backpropagation com o objetivo da
+convergˆ encia da rede neural.
+2.2 Processamento de Linguagem Natural
+Processamento de linguagem natural (PLN) ´ e a ´ area da ciˆ encia de dados focada na
+gera¸ c˜ ao e compreens˜ ao das l ´ ınguas humanas. Essa ´ area de pesquisa teve seu in ´ ıcio em
+===== PAG 18 =====
+16
+1950, como uma intersec¸ c˜ ao entre a inteligˆ encia artificial e a lingu ´ ıstica [9]. Atualmente,
+o campo de estudo de PLN ´ e vasto e complexo, e ´ e pautando principal pela aplica¸ c˜ ao de
+t´ ecnicas de machine learning.
+2.2.1 Modelos de Linguagem
+As t´ ecnicas iniciais envolvendo modelagem de dados em PLN tratavam elementos tex-
+tuais como unidades isoladas, isto ´ e, n˜ ao havia no¸ c˜ ao de similaridade ou rela¸ c˜ ao semˆ antica.
+Com o progresso do poder computacional tornou-se poss ´ ıvel treinar modelos cada vez mais
+complexos, sendo um dos principais avan¸ cos em PLN o emprego de redes neurais para
+modelagem de textos [10], de forma que se tornou poss ´ ıvel treinar modelos que aprendem
+informa¸ c˜ oes de similaridade e semˆ antica dos dados.
+Modelo de linguagem ´ e aquele modelo que dado um texto de contexto estima a pro-
+babilidade da pr´ oxima palavra ou frase. Existem diversas t´ ecnicas para o treinamento
+dessa categoria de modelo, dentre as principais s˜ ao as probabil ´ ısticas e as baseadas em
+redes neurais, conforme explicado a seguir:
+Modelos Probabil ´ ısticos– As t´ ecnicas probabil ´ ısticas visam estimar as probabilidades
+condicionais dos textos presentes em um corpus, sendo que, uma forma de estimar
+essas probabilidades ´ e por meio do n´ umero de ocorrˆ encias dos textos diante dos
+contextos. Essa estimativa de probabilidade ´ e gerada a partir de todos os pares
+(contexto, texto) presentes em um corpus. Um exemplo resultante dessa estimativa:
+dado o contexto “A ma¸ c˜ a caiu da” a probabilidade da palavra ´ arvore ´ e dada por:
+P ( ´Arvore|A ma¸ c˜ a caiu da).
+Uma t´ ecnica probabil ´ ıstica para estimar a probabilidade de um texto ´ e o TFIDF
+(Term Frequency - Inverse Document Frequency ). O TFIDF ´ e uma t´ ecnica de
+normaliza¸ c˜ ao de frequˆ encia de palavras, cujo objetivo ´ e diminuir a influˆ encia de
+palavras comuns em um corpus. A t´ ecnica ´ e calculada a partir da multiplica¸ c˜ ao
+da frequˆ encia de uma palavra no contexto pelo inverso da frequˆ encia da palavra no
+corpus. A equa¸ c˜ ao do TFIDF ´ e:
+TFIDF(t, d) = TF(t, d) × IDF(t), (2.1)
+onde t ´ e a palavra ed ´ e o documento.
+===== PAG 19 =====
+17
+A frequˆ encia de uma palavra no contexto ´ e dada por:
+TF(t, d) = N´ umero de ocorrˆ encias det no contexto d
+N´ umero total de palavras no contextod (2.2)
+e a frequˆ encia de uma palavra nocorpus ´ e dada por:
+IDF(t) = log N´ umero total de documentos no corpus
+N´ umero de documentos que cont´ emt . (2.3)
+Modelos Baseados em Redes Neurais – Modelos de linguagem baseados em redes
+neurais tamb´ em visam estimar as probabilidades condicionais, por´ em, realizam isso
+a partir da seguinte aproxima¸ c˜ ao da rede neural:texto = f (contexto; θ). Assim,
+atrav´ es dos valores resultantes daHidden layer , ´ e poss ´ ıvel extrair a representa¸ c˜ ao
+vetorial dos textos, o denominado word embedding.
+Uma caracter ´ ıstica muito importante dos word embeddings ´ e a possibilidade de
+opera¸ c˜ oes vetoriais com os textos. No artigo do algoritmo Word2Vec [10], o autor
+demonstra o aprendizado das rela¸ c˜ oes semˆ anticas por meio das opera¸ c˜ oes vetoriais
+como: ⃗Rei − ⃗Homem + ⃗Mulher ≈ ⃗Rainha.
+Figura 3: Modelo de linguagem baseado numa arquitetura de rede neural.
+Uma das principais vantagens dos modelos de linguagem ´ e o seu processo de trei-
+namento, que ´ e semi-supervisionado. Tal metodologia de treinamento possui uma
+vari´ avel alvo que pode ser constru ´ ıda a partir dos dados de entrada, que no caso
+de modelos de linguagem, os dados de treinamento s˜ ao contexto e texto, e ambos
+s˜ ao constru ´ ıdos a partir do corpus. Portando, esse m´ etodo torna-se bastante ´ util,
+pois possibilita a utiliza¸ c˜ ao de grandes bases de dados, visto que n˜ ao ´ e necess´ aria a
+anota¸ c˜ ao manual dos dados.
+===== PAG 20 =====
+18
+Outra caracter ´ ıstica muito importante dos modelos de linguagem ´ e a sua grande
+utilidade para transfer learning. Durante o pr´ e-treinamento a rede neural aprende
+diversas rela¸ c˜ oes semˆ anticas e sint´ aticas, consolidando assim um vasto conhecimento
+acerca da linguagem. Esse conhecimento facilita a convergˆ encia durante o treina-
+mento para tarefas com diferentes escopos, o que ´ e ideal paratransfer learning.
+2.2.2 Modelos de Aten¸ c˜ ao
+Outra t´ ecnica muito importante que as redes neurais em estado da arte utilizam s˜ ao os
+mecanismos de aten¸ c˜ ao, introduzidos no artigoAttention is all you need [2]. Essa t´ ecnica
+visa identificar partes mais importantes de um determinado texto para que a rede neural
+foque nas partes mais relevantes.
+A t´ ecnica ´ e fundamentada na opera¸ c˜ ao deSelf Attention, ilustrada na Figura 4, que
+recebe n vetores de embedding e retorna n vetores contextualizados com a importˆ ancia
+de cada palavra para senten¸ ca. A fim de obter essa pondera¸ c˜ ao s˜ ao utilizados trˆ es meca-
+nismos de aten¸ c˜ ao baseados nos vetores de entrada:Query, Key e Value. A ideia central
+desses mecanismos ´ e baseada em sistemas de busca, em que um usu´ ario pesquisa um
+termo (Query) dentre diversas possibilidades (Key) sendo retornado o valor (Value) mais
+pr´ oximo ao procurado. Por analogia, no contexto de PLN o algoritmo visa aprender quais
+palavras do texto s˜ ao mais relevantes para retornar o valor procurado. Assim, para que
+esse processo seja aprendido pela rede neural, cada mecanismo de aten¸ c˜ ao (Query, Key
+e Value) possui uma matriz de pesos associada, assim ´ e poss ´ ıvel realizar o processo de
+convergˆ encia das partes mais importante dosembeddings de uma senten¸ ca.
+Figura 4: Arquitetura da camada de Self Attention.
+Outro conceito introduzido pelo artigo Attention is all you need [2] s˜ ao as camadas de
+===== PAG 21 =====
+19
+Multi-head Attention, que servem como uma expans˜ ao da contextualiza¸ c˜ ao do mecanismo
+de Self Attention . Ao realizar essa expans˜ ao, o modelo pode aplicar os mecanismos de
+aten¸ c˜ ao para diversas partes do texto paralelamente. Para isso, basta adicionarh camadas
+de Self Attention, o que resultar´ a emh vetores com diferentes contextualiza¸ c˜ oes. Com isso,
+ao realizar diferentes pondera¸ c˜ oes de importˆ ancia das palavras, o modelo pode identificar
+m´ ultiplas rela¸ c˜ oes semˆ anticas dentro de um texto.
+Figura 5: Arquitetura da camada de Multi-head Attention.
+2.2.3 An´ alise de Sentimentos
+An´ alise de sentimentos ´ e um campo de PLN que implementa algoritmos para deter-
+minar sentimentos a partir de textos [11]. Geralmente essa t´ ecnica ´ e bastante empregada
+para an´ alises dereviews de produto do varejo, mas tamb´ em pode ser empregada para
+an´ alises de not ´ ıcias e discursos pol ´ ıticos.
+Existem 3 principais segmenta¸ c˜ oes acerca da tarefa de classifica¸ c˜ ao de sentimentos:
+n ´ ıvel de documento, n ´ ıvel de frase e ao n ´ ıvel de aspectos. A classifica¸ c˜ ao ao n ´ ıvel de
+documento ´ e respons´ avel por determinar o sentimento de um conjunto de textos, j´ a ao
+n ´ ıvel de frase a determina¸ c˜ ao de sentimento ´ e para um ´ unico texto. Apesar da diferen¸ ca
+dos textos alvos, n˜ ao h´ a nenhuma distin¸ c˜ ao fundamental para a constru¸ c˜ ao de algoritmos
+de an´ alise de sentimentos para n ´ ıvel de documento e senten¸ ca. A tarefa de an´ alise de
+sentimento ao n ´ ıvel de aspecto visa definir o sentimento de uma frase em seus diversos
+pontos de vista, sendo um poss ´ ıvel exemplo a frase “A qualidade do celular ´ e boa, por´ em a
+bateria ´ e ruim”, essa frase possui dois sentimentos, sendo o positivo em rela¸ c˜ ao ` a qualidade
+do aparelho e o negativo, em rela¸ c˜ ao ` a bateria. Portanto, para construir algoritmos para
+===== PAG 22 =====
+20
+a tarefa ao n ´ ıvel de aspecto ´ e necess´ ario a identifica¸ c˜ ao das principais entidades da frase.
+Dentre as principais tarefas empregadas de an´ alise de sentimentos est˜ ao [12]: com-
+posi¸ c˜ ao de sentimentos, an´ alise temporal e de emo¸ c˜ oes, conforme descrito a seguir.
+Composi¸ c˜ ao de sentimentos– Tarefas de composi¸ c˜ ao de sentimentos consideram que
+cada constituinte de um texto pode representar uma orienta¸ c˜ ao de sentimento, e
+portanto, o sentimento de uma senten¸ ca depende de todos os seus elementos. Al´ em
+disso, um dos principais desafios na constru¸ c˜ ao de algoritmos para essa categoria
+de tarefa s˜ ao as polaridades presentes nos textos, como em frases “N˜ ao feliz” e
+“Um feliz acidente” temos sentimentos divergentes, dificultando a classifica¸ c˜ ao do
+sentimento da frase.
+An´ alise temporal– Outra dimens˜ ao de an´ alise empregada ´ e o sentimento ao longo do
+tempo. Com o decorrer do tempo, indiv ´ ıduos tˆ em seus pontos de vista alterados, e
+com o uso de algoritmos de an´ alise de sentimento ´ e poss ´ ıvel analisar o passado ou
+at´ e mesmo prever tendˆ encia de sentimentos.
+An´ alise de emo¸ c˜ oes– Outro n ´ ıvel de an´ alise que se aproxima de sentimentos e pen-
+samentos humanos ´ e a tarefa de an´ alise de emo¸ c˜ oes. Algoritmos constru ´ ıdos para
+essa categoria de tarefa visam classificar as principais emo¸ c˜ oes humanas como s˜ ao:
+amor, felicidade, alegria, surpresa, raiva, triste e medo.
+2.3 T´ ecnicas de valida¸ c˜ ao de dados e modelos
+Para realizar o treinamento de um modelo de aprendizado supervisionado ´ e necess´ aria
+uma boa defini¸ c˜ ao da vari´ avel a ser predita. Para casos em que est´ a vari´ avel n˜ ao est´ a
+classificada ´ e preciso realizar o processo de anota¸ c˜ ao manual, em que avaliadores catalo-
+gam a base de dados. Esse processo deve seguir uma metodologia de anota¸ c˜ ao que ser´ a
+descrita nesta se¸ c˜ ao.
+Outro fator relevante ´ e a valida¸ c˜ ao de modelos para garantir boa qualidade dos mo-
+delos de aprendizado de m´ aquina. Estes aspectos tamb´ em s˜ ao considerados nesta se¸ c˜ ao.
+2.3.1 Anota¸ c˜ ao de dados
+Para a constru¸ c˜ ao de uma base poranota¸ c˜ ao manual´ e ideal que o processo de
+classifica¸ c˜ ao seja realizado por mais de uma pessoa para evitar vieses na base de dados.
+===== PAG 23 =====
+21
+Esse processo possui uma metodologia recomendada [13], que pode ser aplicada pelas
+seguintes etapas:
+1. Sele¸ c˜ ao de textos representativos.
+2. Defini¸ c˜ ao clara sobre as classes a serem classificadas.
+3. Anota¸ c˜ ao inicial coletiva de uma amostra da base de textos.
+4. Avalia¸ c˜ ao do n ´ ıvel de concordˆ ancia dos avaliadores.
+(a) Caso o n ´ ıvel de concordˆ ancia n˜ ao seja suficiente, retornar para a etapa 2;
+(b) Caso o n ´ ıvel de concordˆ ancia seja suficiente, prosseguir para etapa 5.
+5. Anota¸ c˜ ao do “corpus” inteiro conduzindo an´ alises de concordˆ ancia cont ´ ınuas.
+6. Treinamento de modelo realizando t´ ecnicas de valida¸ c˜ ao cruzada para avalia¸ c˜ ao da
+base de textos classificados.
+2.3.1.1 Sele¸ c˜ ao de Textos representativos
+Um processo que pode auxiliar a tarefa de anota¸ c˜ ao manual ´ e modelagem de t´ opicos.
+Com ela, ´ e poss ´ ıvel selecionar textos representativos antes da classifica¸ c˜ ao pelos ano-
+tadores. Artigos apontam haver um aumento de eficiˆ encia quando anotadores utilizam
+informa¸ c˜ oes de modelos de t´ opicos [14].
+T´ ecnicas tradicionais de classifica¸ c˜ ao de textos requerem uma abundante quantidade
+de textos classificados, e em linguagens com pouco recursos o treinamento de modelos e
+a constru¸ c˜ ao de bases de dados se torna mais dif ´ ıcil. Com isso, a modelagem de t´ opicos ´ e
+uma t´ ecnica de aprendizado n˜ ao supervisionado que visa identificar os principais t´ opicos
+presentes em um conjunto de documentos, ou seja, ´ e um processo de classifica¸ c˜ ao au-
+tom´ atica. O processo de classifica¸ c˜ ao dessa t´ ecnica pode ser efetuado de duas maneiras:
+n˜ ao supervisionada, onde o modelo determina os principais t´ opicos apenas a partir dos do-
+cumentos, e Zero-shot learning em que s˜ ao definidas as classes que o modelo deve agrupar
+os documentos.
+A configura¸ c˜ ao deZero-shot learning em PLN visa realizar a seguinte tarefa: dados
+n documentos D = {d1, d2, ...dn} e m classes a serem classificadas L = {l1, l2, ...lm}
+estima-se a probabilidade de pertencimento do documento di na classe li. Existem dois
+modelos que abordam essa categoria de problema: XLM-R Transformer [15] e ZeroBERTo
+===== PAG 24 =====
+22
+[16]. O primeiro ´ e treinado em um escopo de linguagens com grandes recursos de dados,
+como o inglˆ es, j´ a o segundo tem uma arquitetura baseada em clusteriza¸ c˜ ao e modelos de
+linguagem, permitindo sua implementa¸ c˜ ao em linguagem com poucos recursos.
+Assim, ao utilizar tais modelos ´ e poss ´ ıvel definir a probabilidade de pertencimento
+para cada classe a ser avaliada pelos anotadores. Portando, com essas informa¸ c˜ oes extras,
+fica facilitada a tomada de decis˜ ao para definir a classe de cada texto.
+2.3.1.2 M´ etricas de concordˆ ancia
+Uma importante etapa no processo de anota¸ c˜ ao manual ´ e a realiza¸ c˜ ao de an´ alises do
+n ´ ıvel de concordˆ ancia dos avaliadores. A an´ alise do n ´ ıvel de concordˆ ancia pode ser realizar
+por 3 m´ etricas [17]: porcentagem de concordˆ ancia,Fleiss’s Kappa e Krippendorff ’s alpha,
+descritas a seguir.
+Porcentagem de concordˆ ancia:A porcentagem de concordˆ ancia ´ e a m´ etrica mais sim-
+ples, e visa calcular dentre todos os textos anotados qual foi a porcentagem de
+concordˆ ancia entre os avaliadores. Por conta da sua simplicidade, a porcentagem
+de concordˆ ancia possui algumas desvantagens como: vi´ es para bases de dados des-
+balanceadas e baixa robustez para mais de 2 avaliadores. Essa m´ etrica pode ser
+calculada da seguinte forma:
+%Concordˆ ancia =1
+N
+NX
+i=1
+agri, (2.4)
+com
+agri =
+
+
+
+1, Se os avaliadores classificaram o texto na mesma categoria
+0, Se os avaliadores n˜ ao classificaram o texto na mesma categoria
+.
+(2.5)
+Fleiss’s Kappa A m´ etricaFleiss’s Kappa utiliza l´ ogica combinat´ oria para medir a con-
+cordˆ ancia em projetos que possuem mais de 2 anotadores. Uma das principais
+vantagens dessa m´ etrica ´ e a possibilidade de um n´ umero vari´ avel de anotadores
+para um determinado texto. A m´ etrica deFleiss’s Kappa para um texto anotado ´ e
+dada por:
+agri = 1
+c(c − 1)
+X
+k∈K
+nik(nik − 1), (2.6)
+onde c ´ e o n´ umero de avaliadores,K o conjunto de classes de anota¸ c˜ ao enik o
+n´ umero de classes anotadas comok no texto i. A concordˆ ancia para todos os textos
+===== PAG 25 =====
+23
+classificados pode ser computada pela m´ edia doagri de todos os textos. Para o caso
+de um n´ umero de avaliadores constante para todos os textos, o n ´ ıvel de concordˆ ancia
+´ e dado por:
+%Concordˆ ancia =1
+N
+X
+i∈N
+1
+c(c − 1)
+X
+k∈K
+nik(nik − 1). (2.7)
+Krippendorff ’s alpha: O Krippendorff ’s alpha visa estimar o n ´ ıvel de concordˆ ancia
+para o caso de m´ ultiplos avaliadores e sua metodologia ´ e baseada apenas na distri-
+bui¸ c˜ ao das anota¸ c˜ oes, possibilitando o seu c´ alculo diversas categorias de dados al´ em
+de categ´ oricos. Sua metodologia ´ e baseada em duas principais vari´ aveis,Do que ´ e a
+varian¸ ca amostral das respostas dos anotadores eDe que ´ e a varian¸ ca esperada dos
+anotadores computada a partir das frequˆ encias das classes presentes na base dados:
+α = 1 − Do
+De
+. (2.8)
+Quando todos os avaliadores concordam, a varian¸ ca amostral ser´ aDo = 0, resul-
+tando assim num α = 1, indicando uma alta confiabilidade na base de anota¸ c˜ oes.
+Um α = 0 ocorre quando n˜ ao poss ´ ıvel distinguir as anota¸ c˜ oes de dados puramente
+aleat´ orios, pois a varian¸ ca amostral das classifica¸ c˜ oes ser´ a alta, indicando assim uma
+baixa confiabilidade.
+2.3.2 Valida¸ c˜ ao de modelos
+A valida¸ c˜ ao de modelos ´ e um processo importante para garantir a qualidade dos
+modelos de aprendizado de m´ aquina. Tal garantia de qualidade ´ e importante para a
+verifica¸ c˜ ao da capacidade de generaliza¸ c˜ ao do modelo, ou seja, a capacidade do modelo de
+generalizar para dados n˜ ao vistos durante o treinamento. A valida¸ c˜ ao de modelos pode
+ser realizada de diversas formas, sendo as mais comuns a valida¸ c˜ ao cruzada e a valida¸ c˜ ao
+por holdout. Nesta se¸ c˜ ao ser˜ ao discutidos os conceitos de vi´ es e variˆ ancia e t´ ecnicas de
+valida¸ c˜ ao de modelos.
+2.3.2.1 Vi´ es e variˆ ancia
+O vi´ es e a variˆ ancia s˜ ao duas medidas de erro que podem ocorrer durante o treinamento
+de um modelo de aprendizado de m´ aquina. O vi´ es ´ e a diferen¸ ca entre o valor esperado
+do modelo e o seu valor real, enquanto a variˆ ancia ´ e a varia¸ c˜ ao do modelo em rela¸ c˜ ao ao
+valor esperado. Idealmente o modelo deve ter um vi´ es baixo e uma variˆ ancia baixa, pois
+isso indica que o modelo est´ a generalizando bem para dados n˜ ao vistos.
+===== PAG 26 =====
+24
+Outro conceito importante relacionado ao vi´ es e a variˆ ancia ´ e o deoverfitting e under-
+fitting. O overfitting ocorre quando modelo se ajusta muito bem aos dados de treinamento,
+mas n˜ ao generaliza bem para dados n˜ ao vistos, assim o modelo apresenta uma variˆ ancia
+alta por conta do sobre-ajuste aos dados de treinamento. J´ a ounderfitting ocorre quando
+o modelo n˜ ao consegue se ajustar bem aos dados de treinamento, assim o modelo apre-
+senta um vi´ es alto por n˜ ao conseguir generalizar bem para dados n˜ ao vistos. O cen´ ario
+ideal de uma modelagem ´ e quando o modelo consegue se ajustar bem aos dados de treina-
+mento e generalizar bem para dados n˜ ao vistos, assim o modelo apresenta um vi´ es baixo
+e uma variˆ ancia baixa, evitando assim ooverfitting e o underfitting.
+2.3.2.2 T´ ecnicas de valida¸ c˜ ao de modelos
+Visando evitar o overfitting e o underfitting ´ e importante realizar a valida¸ c˜ ao de
+modelos para verificar a capacidade de generaliza¸ c˜ ao do modelo. A valida¸ c˜ ao de modelos
+pode ser realizada de diversas formas, sendo as mais comuns a valida¸ c˜ ao cruzada e a
+valida¸ c˜ ao porholdout, que ser˜ ao discutidas a seguir e s˜ ao apresentadas na figura 6.
+Figura 6: Valida¸ c˜ ao porholdout e valida¸ c˜ ao cruzada.
+Valida¸ c˜ ao porholdout: A valida¸ c˜ ao porholdout ´ e uma t´ ecnica de valida¸ c˜ ao de mode-
+los que consiste em dividir a base de dados em duas partes, uma para treinamento,
+e outra para teste. A base de dados ´ e dividida em duas partes de forma aleat´ oria,
+sendo que a propor¸ c˜ ao entre elas ´ e definida pelo usu´ ario. A base de dados de treina-
+mento ´ e utilizada para treinar o modelo e a base de dados de teste ´ e utilizada para
+avaliar a capacidade de generaliza¸ c˜ ao do modelo a partir de m´ etricas de avalia¸ c˜ ao.
+Valida¸ c˜ ao cruzada:A valida¸ c˜ ao cruzada ´ e uma t´ ecnica que consiste em dividir a base
+de dados em k partes, sendo k − 1 partes utilizadas para treinamento e a restante
+para teste. O processo de valida¸ c˜ ao cruzada ´ e repetidok vezes, sendo que cada
+===== PAG 27 =====
+25
+parte ´ e utilizada uma vez para teste ek − 1 vezes para treinamento. Geralmente a
+valida¸ c˜ ao cruzada ´ e preferida em rela¸ c˜ ao ` a valida¸ c˜ ao porholdout, pois a valida¸ c˜ ao
+cruzada ´ e mais robusta e possui uma estimativa mais precisa da capacidade de
+generaliza¸ c˜ ao do modelo, visto que utiliza todos os dados para treinamento e teste.
+Por´ em, a valida¸ c˜ ao cruzada ´ e mais custosa computacionalmente, visto que o modelo
+´ e treinadok vezes, sendo que k ´ e o n´ umero de parti¸ c˜ oes da base de dados.
+2.3.2.3 M´ etricas de avalia¸ c˜ ao
+Al´ em da t´ ecnica de divis˜ ao dos dados, ´ e importante escolher as m´ etricas que ser˜ ao
+utilizadas para teste do modelo. As m´ etricas s˜ ao utilizadas para avaliar a desempenho
+do modelo, sendo que as m´ etricas mais comuns s˜ ao a acur´ acia, a precis˜ ao, a revoca¸ c˜ ao e
+F1-Score.
+A acur´ acia ´ e a propor¸ c˜ ao de acertos do modelo, ou seja, a propor¸ c˜ ao de dados classi-
+ficados corretamente pelo modelo. No entanto, a principal desvantagem dessa m´ etrica ´ e
+a avalia¸ c˜ ao modelos de classifica¸ c˜ ao desbalanceados, pois ela n˜ ao considera a distribui¸ c˜ ao
+de classes.
+Em alguns casos, al´ em de classificar corretamente uma classe, tamb´ em importante
+reduzir o n´ umero de falsos positivos e falsos negativos, e para isso ´ e importante avaliar a
+precis˜ ao e a revoca¸ c˜ ao. A precis˜ ao ´ e a propor¸ c˜ ao de acertos positivos, ou seja, a propor¸ c˜ ao
+de dados classificados como positivos que realmente s˜ ao positivos, enquanto a revoca¸ c˜ ao
+´ e a propor¸ c˜ ao de acertos verdadeiros, ou seja, dentre as amostras positivas quantas foram
+classificadas corretamente. Portanto, a precis˜ ao ´ e utilizada quando ´ e importante reduzir o
+n´ umero de falsos positivos, j´ a a revoca¸ c˜ ao ´ e usada quando ´ e importante reduzir o n´ umero
+de falsos negativos.
+Para computar tais m´ etricas utiliza-se a matriz de confus˜ ao, sendo esta uma tabela
+que mostra a quantidade de acertos e erros do modelo, como apresentado na figura 7. A
+partir da matriz de confus˜ ao, a precis˜ ao pode ser calculada da seguinte forma:
+precis˜ ao = V P
+V P+ F P, (2.9)
+onde V P´ e o n´ umero de verdadeiros positivos eF P´ e o n´ umero de falsos positivos. J´ a a
+revoca¸ c˜ ao pode ser calculado da seguinte forma:
+revoca¸ c˜ ao = V P
+T P+ F N, (2.10)
+onde F N´ e o n´ umero de falsos negativos.
+===== PAG 28 =====
+26
+Figura 7: Matriz de confus˜ ao.
+A partir da precis˜ ao e revoca¸ c˜ ao pode-se avaliar um enfoque na redu¸ c˜ ao de falsos
+positivos ou falsos negativos, mas e no caso que a redu¸ c˜ ao de ambos ´ e importante? Para
+esse caso ´ e utilizado o F1-Score, o qual ´ e a m´ edia harmˆ onica entre a precis˜ ao e a revoca¸ c˜ ao,
+calculado da seguinte forma:
+F1-Score = 2 × precis˜ ao× revoca¸ c˜ ao
+precis˜ ao + revoca¸ c˜ ao. (2.11)
+Portanto, o F1-Score ´ e uma m´ etrica que considera a precis˜ ao e a revoca¸ c˜ ao, sendo que
+quanto maior o F1-Score melhor ´ e o modelo.
+2.4 Finan¸ cas Quantitativas
+Uma das ´ areas do mercado de capitais que mais cresce ´ e a definan¸ cas quantitativas.
+Os profissionais desta ´ area visam aplicar modelagem matem´ atica e programa¸ c˜ ao para
+a resolu¸ c˜ ao de problemas financeiros. Por exemplo, a concep¸ c˜ ao de um portf´ olio de
+investimentos, a avalia¸ c˜ ao de risco de cr´ edito, a precifica¸ c˜ ao de derivativos, a avalia¸ c˜ ao
+de ativos, entre outros problemas, podem ser resolvidos por meio de t´ ecnicas de finan¸ cas
+quantitativas. Para isso, ´ e necess´ ario um profissional com uma base de forma¸ c˜ ao voltada
+` a pesquisa.
+Um dos t´ opicos de finan¸ cas quantitativas com mais pesquisa ´ e a descri¸ c˜ ao da origem
+dos retornos dos ativos financeiros, ou seja, a descri¸ c˜ ao dos fatores que explicam os retornos
+dos ativos. A ´ area de concentra¸ c˜ ao desse tipo de pesquisa ´ e a literatura de investimento
+de fatores — fortemente baseada nos trabalhos de William F. Sharpe [18] — que visa
+representar de maneira quantitativa o retorno dos ativos. Artigos apontam que existem
+===== PAG 29 =====
+27
+6 principais fatores que explicam os retornos [19]: valor, qualidade, alto rendimento,
+tamanho, baixa volatilidade e momentum. A seguir ser˜ ao apresentados um resumo de
+cada um desses fatores.
+• Valor: consiste em comprar ativos com baixo pre¸ co relativo ao seu valor intr ´ ınseco
+• Qualidade: consiste em comprar ativos com alta qualidade, independente do seu
+valor intr ´ ınseco, ou seja, ativos com finan¸ cas saud´ aveis.
+• Alto rendimento: consiste em comprar ativos com alta lucratividade.
+• Tamanho: consiste em comprar ativos com alto valor de mercado, ent˜ ao, em geral
+s˜ ao ativos de grandes empresas com alta liquidez e geralmente l ´ ıderes de mercado.
+• Baixa volatilidade: consiste em comprar ativos com baixa volatilidade, portanto
+com baixa variabilidade de pre¸ cos, ou seja, ativos com baixo risco.
+• Momentum: consiste em comprar ativos que tiveram alta rentabilidade no passado,
+ou seja, com a premissa de que ativos que tiveram alta rentabilidade no passado
+tendem a ter alta rentabilidade no futuro.
+A maioria dos fatores aqui apresentados depende de informa¸ c˜ oes externas do mercado,
+como, por exemplo, o valor intr ´ ınseco ou a lucratividade de um ativo, que s˜ ao informa¸ c˜ oes
+presentes no balan¸ co patrimonial das empresas. Dada a dependˆ encia de informa¸ c˜ oes
+externas, os fatores de investimento s˜ ao considerados ex´ ogenos, ou seja, n˜ ao podem ser
+explicados apenas pelas vari´ aveis do sistema, que no caso s˜ ao os pre¸ cos dos ativos. Os
+ativos que apresentam uma exce¸ c˜ ao s˜ aomomentum e baixa volatilidade, pois eles n˜ ao
+dependem de informa¸ c˜ oes externas, portanto s˜ ao end´ ogenos. Nosso interesse aqui consiste
+em analisar a rela¸ c˜ ao do sentimento de not ´ ıcias com os fatores de investimento end´ ogenos,
+ou seja, momentum e baixa volatilidade. Esses fatores end´ ogenos ser˜ ao explicados mais a
+fundo a seguir.
+2.4.1 Momentum
+Momentum ´ e uma palavra de origem latina, que na f ´ ısica cl´ assica significa quanti-
+dade de movimento ou embalo, ele indica duas informa¸ c˜ oes: a dire¸ c˜ ao e a magnitude de
+um corpo em movimento. Al´ em disso, outro elemento importante ´ e a lei da in´ ercia, a
+tendˆ encia natural de um objeto manter seu estado de repouso ou movimento. Com esses
+===== PAG 30 =====
+28
+dois conceitos, o momentum pode indicar para onde e o qu˜ ao r´ apido um objeto est´ a se
+movendo, e que se n˜ ao houver interferˆ encia externa, ser´ a constante.
+No contexto de finan¸ cas, omomentum ´ e uma estrat´ egia de investimento fundamentada
+no embalo dos pre¸ cos, que considera a tendˆ encia dos pre¸ cos para uma tomada de decis˜ ao
+de um investimento. Esse fator pode ser descrito por meio da equa¸ c˜ ao do retorno de um
+ativo,
+rt−k,t = Pre¸ cot − Pre¸ cot−k
+Pre¸ cot−k
+, (2.12)
+onde k ´ e o per ´ ıodo do sinal.
+A ideia central da estrat´ egia demomentum [20] ´ e que as tendˆ encias dos pre¸ cos tendem
+a continuar para cima ou para baixo. O racional da estrat´ egia ´ e baseado em vieses
+comportamentais que apontam que investidores tendem a investir em ativos que est˜ ao
+se valorizando ou desinvestir naqueles que est˜ ao se desvalorizando. Artigos apontam que
+essa categoria de estrat´ egia apresenta uma baixa correla¸ c˜ ao com o mercado e funciona h´ a
+mais de 100 anos [21].
+O retorno das estrat´ egias de momentum pode ser representando pela equa¸ c˜ ao do
+retorno de uma carteira de investimento:
+rcarteira,t =
+StX
+s=1
+ws
+t rs
+t,t+1, (2.13)
+onde St representa o n´ umero de ativos dispon ´ ıveis at´ e o tempot; ws
+t o peso de cada ativo
+s na carteira. E rs
+t,t+1 ´ e o retorno do ativos entre os per ´ ıodost e t + 1.
+Existem duas principais categorias de estrat´ egias de momentum: Time Series Mo-
+mentum [22] e Cross Sectional Momentum . A principal diferen¸ ca entre elas ´ e a sele¸ c˜ ao
+dos ativos, sendo que na primeira todos os ativos s˜ ao inseridos na carteira de investi-
+mento, e j´ a na segunda apenas os ativos com os maiores momentums em absoluto s˜ ao
+inseridos, conforme ilustra a Tabela 1, sendo σs
+t a m´ etrica de volatilidade do ativo (desvio
+padr˜ ao), enu e nd, o n´ umero de ativos no quartil superior e inferior do sinal de momentum,
+respectivamente.
+O desempenho hist´ orico domomentum ´ e bastante positivo, como pode ser visto na
+Figura 8, onde o gr´ afico mostra o retorno acumulado de uma carteira de investimento
+comprada na estrat´ egia de momentum, isto ´ e apenas o retorno de se investir em ativos
+com maior momentum positivo. O gr´ afico mostra que o retorno acumulado ´ e bastante
+positivo, e que a estrat´ egia demomentum ´ e bastante robusta, pois apresenta um retorno
+acima do mercado. Um ponto negativo a ser destacado ´ e que a estrat´ egia demomentum
+===== PAG 31 =====
+29
+Tabela 1: Tipo de momentum e respectivo modelo de aloca¸ c˜ ao
+Tipo de Momentum Modelo de aloca¸ c˜ ao.
+Time Series ws
+t = sign(rs
+t−12,t)
+Stσs
+t
+Cross Sectional ws
+t =
+
+
+
+1
+nu
+, para ativos com momentum no ´ ultima quartil
+−1
+nd
+, para ativos com momentum no primeiro quartil
+0, para o restante dos ativos
+comprada apresenta uma alta correla¸ c˜ ao com o mercado.
+Figura 8: Retorno acumulado de uma carteira de investimento comprada na estrat´ egia de
+momentum.
+2.4.2 Baixa Volatilidade
+Baixa Volatilidade ´ e um fator de investimento que consiste em selecionar ativos com
+baixa volatilidade, ou seja, ativos que apresentam baixa varia¸ c˜ ao nos pre¸ cos. A ideia
+central ´ e que ativos com baixa volatilidade tendem a apresentar retornos mais est´ aveis e
+menos risco para o investidor, visto que ao investir nesses ativos o investidor n˜ ao arrisca
+perder muito dinheiro em um curto per ´ ıodo.
+A volatilidade ´ e uma medida de risco, que indica a varia¸ c˜ ao dos pre¸ cos de um ativo e ´ e
+geralmente medida pelo desvio padr˜ ao. Pois, o desvio padr˜ ao ´ e uma medida de dispers˜ ao
+dos dados em rela¸ c˜ ao a sua m´ edia, ou seja, quanto maior o desvio padr˜ ao, maior a varia¸ c˜ ao
+dos pre¸ cos. Portanto, ativos com baixa volatilidade s˜ ao aqueles que apresentam menor
+varia¸ c˜ ao nos pre¸ cos.
+A estrat´ egia de baixa volatilidade tamb´ em pode ser representada pela equa¸ c˜ ao do
+retorno de uma carteira de investimento 2.13. A diferen¸ ca ´ e que, ao inv´ es de selecionar
+===== PAG 32 =====
+30
+os ativos a partir dos retornos, selecionam-se os ativos a partir da volatilidade dos pre¸ cos.
+Essa sele¸ c˜ ao ´ e dada por meio dos quantis da volatilidade de todos os ativos,
+ws
+t =
+
+
+
+1
+nu
+, para ativos com menor volatilidade no ´ ultimo quartil
+−1
+nd
+, para ativos com menor volatilidade no primeiro quartil
+0, para o restante dos ativos
+(2.14)
+sendo nu e nd, o n´ umero de ativos no quartil superior e inferior da volatilidade, respecti-
+vamente.
+O desempenho hist´ orico do fator de baixa volatilidade tamb´ em ´ e bastante positivo,
+como pode ser visto na Figura 9, onde o gr´ afico mostra o retorno acumulado de uma
+carteira de investimento comprada na estrat´ egia de baixa volatilidade, isto ´ e apenas o
+retorno de se investir em ativos com menor volatilidade. Diferente do momentum, o
+retorno dessa estrat´ egia comprada apresenta uma menor correla¸ c˜ ao com o mercado.
+Figura 9: Retorno acumulado de uma carteira de investimento comprada na estrat´ egia de
+baixa volatilidade
+Outro t´ opico bastante pesquisado em finan¸ cas quantitativas ´ e a avalia¸ c˜ ao de ativos, ou
+seja, como avaliar se um investimento ´ e bom ou ruim. A avalia¸ c˜ ao de ativos ´ e um t´ opico
+bastante importante, pois ´ e a partir dela que se pode tomar decis˜ oes de investimento.
+Para isso, pode-se avaliar o investimento individualmente a partir de m´ etricas ou pode-
+se avaliar o investimento relativo a outros ativos, ou seja, comparar o investimento com
+outros ativos.
+M´ etricas de avalia¸ c˜ ao de ativosAs m´ etricas de avalia¸ c˜ ao de ativos avaliam o
+investimento individualmente, ou seja, n˜ ao ´ e necess´ ario compar´ a-lo com outros ativos. As
+m´ etricas de avalia¸ c˜ ao de ativos mais comuns s˜ ao o retorno, o risco e uma jun¸ c˜ ao das duas
+===== PAG 33 =====
+31
+m´ etricas, oSharpe Ratio, o retorno ajustado ao risco. Tais m´ etricas ser˜ ao apresentadas a
+seguir.
+• Retorno: Ganho ou perda de um investimento em um determinado tempo. Muito
+´ util para determinar o ganho de capital, por´ em n˜ ao avalia o risco incorrido ao longo
+do per ´ ıodo.
+• Risco: Medida de incerteza de um investimento, ou seja, quanto maior o risco,
+maior a incerteza de um investimento. No entanto, olhando apenas o risco n˜ ao ´ e
+poss ´ ıvel avaliar se o investimento ´ e bom ou ruim, pois o risco pode ser alto, mas ele
+n˜ ao indica informa¸ c˜ oes sobre o retorno. Para quantificar o risco, pode-se utilizar o
+desvio padr˜ ao, sendo uma medida de dispers˜ ao dos dados em rela¸ c˜ ao a sua m´ edia,
+ou seja, quanto maior o desvio padr˜ ao, maior a varia¸ c˜ ao dos pre¸ cos.
+• Retorno Ajustado ao Risco: Avalia o investimento a partir de unidades de
+retorno em rela¸ c˜ ao ao risco, ou seja, quanto maior o retorno ajustado ao risco,
+melhor o investimento. Essa m´ etrica ´ e muito utilizada em finan¸ cas quantitativas,
+pois ´ e uma m´ etrica que avalia o investimento de forma mais completa. Uma forma
+de calcular tal m´ etrica ´ e a partir doSharpe Ratio, que ´ e determinado pela seguinte
+equa¸ c˜ ao:Rp − Rf
+σp
+, onde Rp ´ e o retorno do investimento,Rf ´ e o retorno livre de risco
+e σp ´ e o desvio padr˜ ao do investimento. O retorno livre de risco ´ e o retorno de um
+investimento sem risco, como, por exemplo, um investimento em t ´ ıtulos p´ ublicos.
+Esse retorno ´ e utilizado para ajustar o retorno do investimento ao risco, pois se um
+ativo com alto risco apresentar um retorno menor que um ativo livre de risco, n˜ ao
+faz sentido investir nesse ativo com alto risco, pois o retorno n˜ ao compensa o risco.
+Compara¸ c˜ ao de ativosA avalia¸ c˜ ao de ativos relativa a outros ativos ´ e uma forma
+de avaliar o investimento comparando-o com outros ativos. Para essa an´ alise pode-se ava-
+liar os seguintes aspectos: rentabilidade relativa, correla¸ c˜ ao entre os ativos e decomposi¸ c˜ ao
+da rentabilidade.
+• Rentabilidade relativa: Avalia o investimento comparando-o com outros ativos.
+Portanto, se o investimento apresenta um retorno maior que o mercado, ent˜ ao o
+investimento ´ e bom, caso contr´ ario, o investimento ´ e ruim.
+• Correla¸ c˜ ao entre os ativos:Avalia a rela¸ c˜ ao entre os ativos, ou seja, se eles
+apresentam uma correla¸ c˜ ao alta, ent˜ ao os ativos s˜ ao similares, portanto se um apre-
+senta um bom desempenho, o outro tamb´ em apresentar´ a um bom desempenho. Essa
+===== PAG 34 =====
+32
+an´ alise ´ e bastante ´ util para avaliar a diversifica¸ c˜ ao de uma carteira de investimentos.
+Se um ativo ´ e muito correlacionado com outros ativos investidos da carteira, n˜ ao
+faz sentido investir nesse ativo, pois ele n˜ ao diversifica a carteira, ou seja, quando os
+outros ativos apresentarem uma rentabilidade ruim, o ativo correlacionado tamb´ em
+apresentar´ a uma rentabilidade ruim.
+• Decomposi¸ c˜ ao da rentabilidade:A decomposi¸ c˜ ao de retornos visa entender
+todas as fontes de rentabilidade de um determinado ativo, caso a fonte de renta-
+bilidade de um ativo seja fortemente influenciada pelo mercado talvez fa¸ ca mais
+sentindo investir no mercado. A t´ ecnica mais famosa para decompor a rentabili-
+dade ´ e a decomposi¸ c˜ ao a partir do alfa de Jensen [23], determinado pela seguinte
+equa¸ c˜ ao:α = Rp − Rf − β(Rm − Rf ), onde Rp ´ e o retorno do investimento,Rf ´ e o
+retorno livre de risco, Rm ´ e o retorno do mercado eβ ´ e o beta do investimento. O
+racional dessa equa¸ c˜ ao ´ e que se o alfa for positivo, ent˜ ao o investimento apresenta
+um retorno maior que o mercado, portanto o investimento ´ e bom, caso contr´ ario, o
+investimento ´ e ruim. Investidores tamb´ em podem adicionar os fatores de risco al´ em
+do mercado na equa¸ c˜ ao, dentre esses fatores est˜ ao os descritos no in ´ ıcio dessa se¸ c˜ ao:
+momentum, baixa volatilidade, dentre outros.
+===== PAG 35 =====
+33
+3 METODOLOGIA DO TRABALHO
+Neste capitulo ser´ a apresentada a metodologia do projeto, apontando os principais
+passos e requisitos para a realiza¸ c˜ ao.
+3.1 Aquisi¸ c˜ ao de Dados
+No projeto ser˜ ao utilizados dois tipos de dados: os textuais para o processamento de
+linguagem natural e os financeiros para a modelagem de estrat´ egias quantitativas. Para
+a aquisi¸ c˜ ao de dados textuais ser˜ ao extra ´ ıdas not ´ ıcias de ve ´ ıculos de comunica¸ c˜ ao que
+possuem o foco em finan¸ cas. J´ a para os dados financeiros ser˜ ao utilizadas bases de dados
+p´ ublicas de pre¸ cos de a¸ c˜ oes.
+3.2 Anota¸ c˜ ao de Dados
+Para o treinamento do modelo de sentimento ´ e preciso realizar a anota¸ c˜ ao manual
+dos sentimentos (positivo, neutro e negativo). Esse processo ser´ a efetuado segundo a
+metodologia recomendada [13], que visa a sele¸ c˜ ao de textos representativos e anota¸ c˜ ao
+dos sentimentos por mais de uma pessoa para evitar vieses.
+3.3 Treinamento do Modelo
+O modelo proposto por esse projeto ´ e um modelo de linguagem baseado na arquitetura
+BERT [3]. Para realizar o treinamento do FinBERT PT BR h´ a duas principais etapas
+(Figura 2):
+1. Treinamento de modelo de linguagem semi-supervisionado: para treinar o modelo
+de linguagem no contexto de mercado financeiro ser´ a realizandotransfer learning no
+BERTimbau [24], sendo uma rede neural treinada num escopo generalista. E visto
+===== PAG 36 =====
+34
+que um modelo de linguagem n˜ ao precisa de classifica¸ c˜ ao dos dados, ofine-tuning
+da rede neural ser´ a feito numa grande base de not ´ ıcias no contexto do mercado
+financeiro.
+2. Treinamento de modelo de sentimentos supervisionado: Tendo como base o modelo
+de linguagem no contexto do mercado financeiro ser´ a realizado o transfer learning
+para uma tarefa de classifica¸ c˜ ao de sentimento. O segundo modelo ser´ a treinando
+numa base de not ´ ıcias com os sentimentos classificados.
+Figura 10: Arquitetura de treinamento do FinBERT PT BR.
+3.4 Valida¸ c˜ ao do Modelo
+Os principais artigos de modelos de linguagem no estado da arte, al´ em de apresentarem
+o desempenho do modelo, tamb´ em apresentam a generaliza¸ c˜ ao para a aplica¸ c˜ ao de outras
+tarefas como: classifica¸ c˜ ao, tradu¸ c˜ ao, respostas a perguntas e entre outras. Visando
+avaliar o FinBERT PT BR em tarefas relacionadas a finan¸ cas, ser´ a constru ´ ıdo um ´ ındice
+de sentimentos de mercado e avaliado sua rela¸ c˜ ao com dados macroeconˆ omicos e fatores
+de investimento.
+3.4.1 ´Indice de Sentimentos
+O ´ ındice de sentimento ser´ a uma s´ erie temporal constru ´ ıda a partir das classifica¸ c˜ oes
+das not ´ ıcias ao longo do tempo [25].
+===== PAG 37 =====
+35
+´Indicet−k,t = Post−k,t − Negt−k,t
+Post−k,t + Neut−k,t + Negt−k,t
+(3.1)
+Onde Post−k,t, Negt−k,t, Neut−k,t representam o n´ umero de not ´ ıcias positivas, negativas
+e neutras compreendido entre o intervalo de tempo t − k e t respectivamente.
+3.5 Requisitos do projeto
+Nesta se¸ c˜ ao ser˜ ao apresentados os requisitos funcionais e n˜ ao funcionais do projeto.
+3.5.1 Requisitos funcionais
+O projeto possui diversos requisitos funcionais que devem ser cumpridos e ser˜ ao des-
+critos a seguir:
+Aquisi¸ c˜ ao de dadosEm projetos de modelagem de dados com redes neurais ´ e de suma
+importˆ ancia a aquisi¸ c˜ ao de uma grande base de dados para o treinamento do modelo.
+Neste projeto h´ a dois principais categorias de dados: os textuais e financeiros (para
+valida¸ c˜ ao do modelo).
+Os dados textuais al´ em de possu ´ ırem informa¸ c˜ oes como t ´ ıtulo, corpo e autor tamb´ em
+devem ter as informa¸ c˜ oes sobre data da postagem. J´ a os dados financeiros devem
+possuir os pre¸ cos di´ arios hist´ oricos das a¸ c˜ oes da bolsa de valores brasileira.
+Classifica¸ c˜ ao de sentimentosO principal objetivo do modelo treinado ser´ a a predi¸ c˜ ao
+de sentimentos a partir dos textos. Os textos poder˜ ao ser classificados em trˆ es
+categorias: positivo, neutro e negativo.
+Constru¸ c˜ ao de ´ ındice de sentimentosA partir dos textos classificados e suas respec-
+tivas datas de publica¸ c˜ oes, ser´ a constru ´ ıdo um ´ ındice de sentimento do mercado, que
+ser´ a uma s´ erie temporal. Esse ´ ındice ser´ a calculado a partir do n´ umero de not ´ ıcias
+positivas, negativas e neutras [25] ao longo do tempo.
+3.5.2 Requisitos n˜ ao funcionais
+O projeto possui diversos requisitos n˜ ao funcionais relacionados ao uso da aplica¸ c˜ ao
+que descritos a seguir:
+===== PAG 38 =====
+36
+Boas m´ etricas de erroAo longo do treinamento do modelo para a tarefa de classi-
+fica¸ c˜ ao de sentimentos, ´ e ideal que o classificador apresente boas m´ etricas de classi-
+fica¸ c˜ ao, para assim determinar os sentimentos das senten¸ cas com uma maior asser-
+tividade.
+As m´ etricas utilizadas ser˜ ao as m´ etricas de algoritmos de classifica¸ c˜ ao: Matriz de
+confus˜ ao, acur´ acia, revoca¸ c˜ ao, precis˜ ao.
+Alto n ´ ıvel de concordˆ ancia na anota¸ c˜ ao de sentimentosA base de dados de sen-
+timentos classificados ´ e fundamental para o treinamento do modelo de sentimen-
+tos. E para uma modelagem sem vieses dos avaliadores ´ e ideal que o n ´ ıvel de con-
+cordˆ ancia dos avaliadores seja alto e sem vieses sistˆ emicos. Para garantir um alto
+n ´ ıvel de concordˆ ancia dos sentimentos durante o processo de anota¸ c˜ ao ´ e necess´ ario
+o acompanhamento das m´ etricas definidas na se¸ c˜ ao 2.3.1.2.
+Base de dados balanceada Durante o aprendizado estat ´ ıstico de modelos de classi-
+fica¸ c˜ ao ´ e ideal que as classes expostas durante do treinamento sejam balanceadas.
+Isto ´ e o n´ umero de textos com sentimentos devem estar equilibrados em rela¸ c˜ ao a
+todas as classes, assim a rede pode convergir bem para todas elas.
+===== PAG 39 =====
+37
+4 DESENVOL VIMENTO DO TRABALHO
+Neste cap ´ ıtulo ser´ a apresentado o desenvolvimento do trabalho, desde a listagem de
+tecnologias utilizadas at´ e a apresenta¸ c˜ ao dos resultados e aplica¸ c˜ oes do projeto.
+4.1 Tecnologias Utilizadas
+Nesta se¸ c˜ ao ser˜ ao descritas as principais tecnologias utilizadas durante o desenvolvi-
+mento do projeto.
+4.1.1 Python
+O Python ´ e uma linguagem de programa¸ c˜ ao de alto n ´ ıvel utilizada em diversos tipos de
+aplica¸ c˜ oes, como desenvolvimento web e aprendizado de m´ aquina. No contexto de ciˆ encia
+de dados essa linguagem ´ e extremamente popular e possui uma ampla comunidade. O que
+possibilita a constru¸ c˜ ao de solu¸ c˜ oes de aprendizado de m´ aquina por meio das bibliotecas
+e frameworks de c´ odigo aberto.
+4.1.2 Scrapy
+Scrapy ´ e um framework python completo para aquisi¸ c˜ ao de dados de sites em larga
+escala. Com ele ´ e poss ´ ıvel percorrer todos os sites de uma plataforma de uma maneira
+eficiente. A ferramenta consegue realizar a coleta de forma distribu ´ ıda, e respeita as
+limita¸ c˜ oes, como n´ umero de requisi¸ c˜ oes simultˆ aneas, da plataforma descrita pelorobots.txt.
+Para projetos de PLN que utilizam da metodologia de web-as-corpus [26] essa ferramenta
+se demonstra bastante ´ util para a aquisi¸ c˜ ao textos.
+===== PAG 40 =====
+38
+4.1.3 Hugging Face
+O Hugging Face ´ e uma plataforma de machine learning que disponibiliza grandes
+bases de dados e modelos pr´ e-treinados para a comunidade. Atrav´ es do m´ odulo python
+disponibilizado ´ e poss ´ ıvel utilizar, treinar e disponibilizar modelos no estado da arte.
+4.1.4 PyTorch
+O PyTorch ´ e uma biblioteca de c´ odigo aberto com um conjunto de ferramentas que
+auxiliam o treinamento de modelos de machine learning. Dentre as principais funciona-
+lidade est˜ ao o c´ alculo de gradiente de forma autom´ atica e integra¸ c˜ ao com GPU, o que
+acelera o processo de treinamento de modelos.
+4.1.5 Kedro
+O Kedro ´ e um framework de c´ odigo aberto que aplica conceitos de engenharia de
+software e engenharia de dados para o desenvolvimento de projetos de ciˆ encia de da-
+dos. Destaca-se a possibilidade de constru¸ c˜ ao de fluxos de dados por meio de c´ odigos
+modulares, o que facilita a manuten¸ c˜ ao e a reprodutividade dos experimentos.
+4.1.6 Kaggle
+O Kaggle ´ e uma plataforma de ciˆ encia de dados que disponibiliza bases de dados e com-
+peti¸ c˜ oes para a comunidade. Atrav´ es da plataforma ´ e poss ´ ıvel participar de competi¸ c˜ oes e
+compartilhar solu¸ c˜ oes para problemas de ciˆ encia de dados. A plataforma tamb´ em dispo-
+nibiliza notebooks para a execu¸ c˜ ao de c´ odigos com recursos computacionais como placas
+de v ´ ıdeo.
+4.1.7 Wandb
+O Wandb ´ e uma plataforma de c´ odigo aberto que disponibiliza recursos para o mo-
+nitoramento de experimentos de machine learning . Atrav´ es da plataforma ´ e poss ´ ıvel
+acompanhar m´ etricas de modelos, visualizar gr´ aficos e compartilhar resultados.
+===== PAG 41 =====
+39
+4.2 Projeto e Implementa¸ c˜ ao
+4.2.1 Aquisi¸ c˜ ao de dados
+A aquisi¸ c˜ ao de dados ´ e um dos passos mais importantes de um projeto de ciˆ encia de
+dados. Visto que o projeto visa realizar a constru¸ c˜ ao de modelos aplicados a finan¸ cas,
+foram coletadas not ´ ıcias de canais de not ´ ıcias financeiras. As plataformas escolhidas foram
+o Valor Econˆ omico, Exame e Infomoney.
+O processo de aquisi¸ c˜ ao foi automatizado por meio da ferramenta Scrapy, utilizada
+para percorrer os sites de not ´ ıcias financeiras e coletar os textos e metadados das not ´ ıcias.
+O Scrapy consegue percorrer um site via um grafo de links entre os sites e tamb´ em via
+sitemap, o qual ´ e um arquivo que descreve todos os links poss ´ ıveis para um site.
+No total, foram coletados 2,51 milh˜ oes de senten¸ cas de not ´ ıcias do mercado financeiro
+entre 2006 e 2022. De forma mais espec ´ ıfica, foi poss ´ ıvel coletar um maior volume de
+not ´ ıcias dos canais que disponibilizavam ositemap, como o Valor Econˆ omicoe Exame,
+que retornaram mais de 1 milh˜ ao de textos cada. O Infomoney retornou um volume
+menor de textos, cerca de 460 mil, devido ` a falta de sitemap. A distribui¸ c˜ ao dos textos
+coletados por plataforma ´ e apresentada na Figura 11.
+Al´ em dos textos das not ´ ıcias, tamb´ em foram coletados os metadados das not ´ ıcias,
+como t ´ ıtulo, subt ´ ıtulo, data de publica¸ c˜ ao, data de atualiza¸ c˜ ao da publica¸ c˜ ao, nome e
+p´ agina do autor e links.
+Figura 11: Distribui¸ c˜ ao de textos por fonte de dados
+Ap´ os a coleta dos textos foi necess´ ario realizar alimpeza dos dados. A limpeza dos
+===== PAG 42 =====
+40
+dados foi realizada por meio de express˜ oes regulares que identificaram padr˜ ao de textos
+que n˜ ao eram relevantes para o projeto. A maioria dos textos com m´ a forma¸ c˜ ao possu ´ ıam
+caracteres especiais e c´ odigos de fonte. Ap´ os a limpeza dos dados, a base final ficou com
+1,6 milh˜ ao de senten¸ cas.
+4.2.2 Treinamento de modelo de linguagem
+O modelo de linguagem foi treinado utilizando o PyTorch e o Hugging Face, tendo
+como pesos iniciais os pesos do modelo BERTimbau [24]. Os principais aspectos acerca
+do treinamento est˜ ao descritos a seguir:
+Dados de treinamento – Os dados utilizados foram textos das not ´ ıcias coletadas, e no
+total de 1,6 milh˜ ao de senten¸ cas de not ´ ıcias, 1,4 milh˜ ao foram utilizadas. Visto que
+a arquitetura BERT suporta at´ e 512 tokens na entrada do modelo, foi necess´ ario
+realizar uma filtragem dos textos para que fossem utilizados apenas os textos com
+at´ e 512 tokens, resultando em 1.428.867 milh˜ oes de senten¸ cas de not ´ ıcias.
+Para fim de compara¸ c˜ ao, o modelo FinBERT (EN) [4] teve o seu modelo de lingua-
+gem treinado com 400 mil senten¸ cas de not ´ ıcias. A base de dados utilizada foi uma
+amostra da base TRC2 [27] da Reuters, que cont´ em 1,8 milh˜ oes de not ´ ıcias de 2008
+a 2010. A base de dados utilizada no projeto ´ e maior que a utilizada no modelo
+FinBERT (EN), e tamb´ em possui um maior per ´ ıodo, o que pode ser um fator que
+contribui para a melhoria do modelo.
+Recursos Computacionais – O treinamento foi realizado em uma m´ aquina doKaggle
+que possu ´ ıa 30 GB de RAM e 30 GB de GPU (2x Nvidia T4), o que limitou o
+tamanho do lote ( batch size ) e o carregamento de todos os textos em mem´ oria. O
+batch size foi definido como 16, por limita¸ c˜ ao de aloca¸ c˜ ao do modelo e dos textos na
+GPU simultaneamente. Devida a abundˆ ancia de textos foi necess´ ario implementar
+o processo de treinamento com aloca¸ c˜ ao dinˆ amica de mem´ oria, ou seja, ao longo
+do treinamento os textos s˜ ao carregados do disco para a mem´ oria e depois para a
+GPU. Apesar das limita¸ c˜ oes, foi poss ´ ıvel realizar o treinamento de duas ´ epocas em
+11 horas.
+Parˆ ametros de treinamento– Para o treinamento do modelo de linguagem, os dois
+principais parˆ ametros que n˜ ao dependem de recursos computacionais diretamente
+s˜ ao: taxa de aprendizado (learning rate ) e probabilidade de m´ ascara. A taxa de
+aprendizado foi definida como 2e-5, o valor recomendado pela literatura [28] para
+===== PAG 43 =====
+41
+o fine tunning de modelos de linguagem que ser˜ ao treinados para outras tarefas
+depois. A probabilidade de m´ ascara, sendo a probabilidade da oculta¸ c˜ ao de tokens,
+foi definida como 15%, sendo a mesma utilizada no treinamento do modelo BERT
+original [3].
+Resultados – Para avaliar o modelo de linguagem foi utilizada a m´ etrica de perplexidade.
+A perplexidade ´ e uma m´ etrica que indica o qu˜ ao bem o modelo consegue prever
+uma palavra dado o contexto. Essa m´ etrica foi calculada numa amostra de 100 mil
+senten¸ cas, que n˜ ao foram utilizadas no treinamento do modelo. O modelo treinado
+apresentou uma perplexidade de 1,24, sendo uma m´ etrica satisfat´ oria, visto que o
+modelo BERTimbau original apresenta uma perplexidade de 1,51. A convergˆ encia
+do modelo pode ser visualizada na figura 12 e as m´ etricas de perplexidade na tabela
+2.
+Figura 12: Treinamento do modelo de linguagem com textos no contexto do mercado
+financeiro.
+===== PAG 44 =====
+42
+Tabela 2: Perplexidade dos modelos de linguagem
+M´ etrica Perplexidade
+BERTimbau 1.51
+FinBERT PT BR 1.24
+4.2.3 Anota¸ c˜ ao de dados
+O processo de anota¸ c˜ ao foi realizado por 3 pessoas, para garantir a consistˆ encia das
+anota¸ c˜ oes, com todos os textos anotados por pelo menos 2 pessoas. A anota¸ c˜ ao teve
+como objetivo identificar o sentimento das senten¸ cas de not ´ ıcias do mercado financeiro.
+O processo de anota¸ c˜ ao e concordˆ ancia da base final est˜ ao descritos a seguir:
+Processo de anota¸ c˜ ao– As categorias de anota¸ c˜ ao definidas previamente foram: po-
+sitivo, negativo, neutro e n˜ ao se aplica. A defini¸ c˜ ao de anota¸ c˜ ao foi: “Classifique a
+not ´ ıcia considerando se o texto implicaria em uma rentabilidade Positiva, Negativa
+ou Neutra. “N˜ ao se aplica” para textos n˜ ao relacionados a finan¸ cas, de pol ´ ıticos ou
+sem sentido.” Ap´ os a defini¸ c˜ ao da anota¸ c˜ ao foi realizada a anota¸ c˜ ao em uma amos-
+tra da base para verificar a concordˆ ancia dos anotadores, assim que a concordˆ ancia
+foi verificada, foi realizada a anota¸ c˜ ao completa da base.
+No total foram anotados 1000 textos, sendo 497 textos descartados, pois foram
+classificados como “N˜ ao se aplica” ou n˜ ao houve concordˆ ancia entre os anotadores.
+Ap´ os a remo¸ c˜ ao dos textos descartados, a base de treinamento ficou com 503 textos,
+sendo 160 textos positivos, 203 textos negativos e 140 textos neutros. A Figura 13
+mostra a distribui¸ c˜ ao dos textos por categoria.
+===== PAG 45 =====
+43
+Figura 13: Resultado da anota¸ c˜ ao da base de sentimentos.
+An´ alise de concordˆ ancia– A concordˆ ancia entre os anotadores foi verificada utilizando
+a porcentagem de concordˆ ancia e o Krippendorff ’s alpha [17]. A porcentagem de
+concordˆ ancia varia entre 0% e 100%, sendo 100% a concordˆ ancia perfeita e a m´ etrica
+obtida na base final de anota¸ c˜ ao foi de 90,4%. J´ a oKrippendorff ’s alpha varia entre
+-1 e 1, sendo 1 a concordˆ ancia perfeita, -1 a discordˆ ancia perfeita e 0 representa
+anota¸ c˜ ao aleat´ oria, a m´ etrica obtida na base final de anota¸ c˜ ao foi de 0,88. As
+m´ etricas de concordˆ ancia apontam que a anota¸ c˜ ao foi realizada consistentemente
+entre os anotadores.
+Tabela 3: M´ etricas de concordˆ ancia entre os anotadores.
+M´ etrica Valor
+Porcentagem de concordˆ ancia 90,4%
+Krippendorff ’s alpha 0,88
+===== PAG 46 =====
+44
+4.2.4 Treinamento do modelo de sentimentos
+Figura 14: Arquitetura do modelo de classifica¸ c˜ ao de sentimento
+O modelo de sentimentos foi treinado utilizando o modelo de linguagem pr´ e-treinado
+com os textos do mercado financeiro com a adi¸ c˜ ao de uma camada de classifica¸ c˜ ao de
+sentimentos. Essa camada foi adicionada na primeira dimens˜ ao de sa ´ ıda do BERT, se-
+guindo a recomenda¸ c˜ ao da literatura [3], conforme a figura 14. O processo de treinamento
+e valida¸ c˜ ao dos resultados do modelo de sentimentos est˜ ao expostos a seguir:
+Processo de treinamento – O processo de utilizar o modelo de linguagem para a tarefa
+de an´ alise de sentimento ´ e caracterizado como umtransfer learning. Um problema
+comum durante a aplica¸ c˜ ao detransfer learning em modelos de linguagem ´ e o es-
+quecimento de informa¸ c˜ oes durante o treinamento. Para evitar o esquecimento foi
+aplicada a t´ ecnica deGradual Unfreezing [3] durante o treinamento do modelo de
+sentimentos. Essa t´ ecnica consiste em desbloquear a atualiza¸ c˜ ao dos pesos da rede
+neural gradativamente durante o treinamento, dessa forma a rede neural consegue
+aprender a tarefa de classifica¸ c˜ ao de sentimento sem esquecer as informa¸ c˜ oes apren-
+didas durante o treinamento do modelo de linguagem.
+Visto que o BERT possui 11 camadas de Encoder, a t´ ecnica deGradual Unfreezing
+foi aplicada para desbloquear as camadas de Encoder gradativamente. A taxa de
+aprendizado adotada foi de 5e-6 e o n´ umero de ´ epocas foi 11.
+===== PAG 47 =====
+45
+Valida¸ c˜ ao do modelo– Para realizar o treinamento do classificador de sentimentos foi
+utilizada a t´ ecnica de valida¸ c˜ ao cruzada com 5 divis˜ oes. A base de treinamento foi
+dividida em 5 partes, sendo 4 partes para treinamento e 1 parte para valida¸ c˜ ao. O
+processo de valida¸ c˜ ao cruzada foi realizado 5 vezes, sendo que em cada itera¸ c˜ ao uma
+parte da base foi utilizada para valida¸ c˜ ao e as outras 4 partes para treinamento. O
+modelo de sentimento com a melhor convergˆ encia (fun¸ c˜ ao de custo) da valida¸ c˜ ao foi
+utilizado para realizar a predi¸ c˜ ao dos textos da base de teste.
+Modelos de compra¸ c˜ ao– Para compara¸ c˜ ao ser˜ ao utilizados os seguintes modelos de
+classifica¸ c˜ ao de texto: Random Forest com TFIDF, FinBERT com textos traduzidos
+para o inglˆ es como o modelo, BERT e BERT com modelagem de linguagem com
+textos no contexto do mercado financeiro (FinBERT PT BR).
+• Random Forest com TFIDF: O modelo de Random Forest com TFIDF, t´ ecnica
+descrita na se¸ c˜ ao 2.2.1, foi treinado utilizando o algoritmo de classifica¸ c˜ ao de
+texto do scikit-learn [29].
+• FinBERT (EN): O modelo FinBERT [4] foi utilizando com textos traduzidos
+com o modelo multilingual do Facebook [30].
+• BERTimbau: Transfer Learning do BERTimbau [24] para a tarefa de classi-
+fica¸ c˜ ao de sentimentos.
+• FinBERT PT BR: Utilizado o modelo de sentimento treinamento a partir do
+modelo de linguagem pr´ e-treinado com textos do mercado financeiro.
+Resultados – O FinBERT PT BR obteve o melhor resultado na base de teste, com uma
+acur´ acia de 0,76 para predi¸ c˜ ao das 3 categorias de sentimento, conforme a tabela 4.
+O segundo modelo em desempenho foi o BERTimbau, com uma acur´ acia de 0,67,
+seguido pelo FinBERT (EN) com uma acur´ acia de 0,69 e o Random Forest com
+TFIDF com uma acur´ acia de 0,45. Em rela¸ c˜ ao ao F1-Score, o modelo FinBERT
+PT BR obteve o melhor resultado com 0,73, seguido pelo FinBERT (EN) com 0,67,
+BERTimbau com 0,63 e Random Forest com TFIDF com 0,35.
+Tabela 4: Resultados dos modelos de classifica¸ c˜ ao de texto
+Nome do Modelo Acur´ acia F1-Score
+Random Forest com TFIDF 0.45 0,35
+FinBERT (EN) 0.67 0.67
+BERTimbau 0.69 0,63
+FinBERT PT BR 0.76 0,73
+===== PAG 48 =====
+46
+Visando avaliar o intervalo de confian¸ ca das m´ etricas dos modelos de classifica¸ c˜ ao
+de texto, foi utilizado o m´ etodobootstrapping [31]. O m´ etodobootstrapping consiste
+em realizar a amostragem com reposi¸ c˜ ao dos dados de teste, dessa forma ´ e poss ´ ıvel
+estimar o intervalo de confian¸ ca das m´ etricas de avalia¸ c˜ ao dos modelos. Com um
+intervalo de confian¸ ca de 80% ´ e poss ´ ıvel afirmar que o modelo FinBERT PT BR ´ e o
+melhor modelo de classifica¸ c˜ ao de sentimento, visto que o intervalo de confian¸ ca da
+acur´ acia e do F1-Score do modelo FinBERT PT BR n˜ ao se sobrep˜ oe aos intervalos
+de confian¸ ca dos outros modelos, como pode ser visto pelas figuras 15 e 16.
+Figura 15: Intervalo de confian¸ ca da acur´ acia dos modelos de classifica¸ c˜ ao de texto
+===== PAG 49 =====
+47
+Figura 16: Intervalo de confian¸ ca do F1-Score dos modelos de classifica¸ c˜ ao de texto
+Por fim, foi realizado o teste de hip´ otese para verificar se existe diferen¸ ca estat ´ ıstica
+entre os modelos de classifica¸ c˜ ao de texto. O teste foi constru ´ ıdo a partir da re-
+amostragem com reposi¸ c˜ ao dos dados de valida¸ c˜ ao do modelo. Dado que com a
+utiliza¸ c˜ ao de t´ ecnicas de re-amostragem as estat ´ ısticas tendem para uma gaussiana
+pelo teorema do limite central, ´ e poss ´ ıvel construir testes de hip´ otese na distribui¸ c˜ ao
+emp ´ ırica da estat ´ ıstica. Ent˜ ao foram constru ´ ıdas distribui¸ c˜ oes emp ´ ıricas da acur´ acia
+e f1 score de todos os modelos, e com um teste Z foi possui realizar o teste com as
+seguintes hip´ oteses:
+A hip´ otese nula do teste de hip´ otese ´ e que n˜ ao existe diferen¸ ca estat ´ ıstica entre as
+m´ etricas dos modelos de classifica¸ c˜ ao de texto. A hip´ otese alternativa do teste de
+hip´ otese ´ e que existe diferen¸ ca estat ´ ıstica entre as m´ etricas dos modelos de classi-
+fica¸ c˜ ao de texto. A conclus˜ ao do teste de hip´ otese ´ e que existe diferen¸ ca estat ´ ıstica
+entre as m´ etricas dos modelos de classifica¸ c˜ ao de texto, visto que o p-valor ´ e nume-
+ricamente igual a 0. Com isso, ´ e poss ´ ıvel afirmar que o modelo FinBERT PT BR ´ e o
+melhor modelo de classifica¸ c˜ ao de texto para a tarefa de classifica¸ c˜ ao de sentimento
+de not ´ ıcias do contexto do mercado financeiro.
+===== PAG 50 =====
+48
+4.3 Aplica¸ c˜ oes do modelo
+4.3.1 ´Indice de sentimentos
+O modelo de classifica¸ c˜ ao de sentimento pode ser utilizado para gerar um ´ ındice de
+sentimentos, sendo um indicador que mede a percep¸ c˜ ao do mercado sobre o sentimento
+do mercado. O ´ ındice de sentimentos ´ e calculado a partir da m´ edia dos sentimentos dos
+textos classificados como positivos, negativos e neutros ao longo do tempo. A f´ ormula do
+´ ındice de sentimentos ´ e definida pela equa¸ c˜ ao 3.1.
+Ao longo do tempo, o ´ ındice de sentimentos pode ser utilizado para identificar se o
+mercado ou um determinado setor est´ a otimista, ou pessimista. No caso dessa aplica¸ c˜ ao,
+o ´ ındice ´ e calculado a partir de uma amostra das not ´ ıcias gerais coletadas e pode ser visto
+na figura 17 com alguns fatos relevantes da economia.
+Figura 17: ´Indice de sentimentos e fatos relevantes da economia.
+O primeiro fato relevante destacado no ´ ındice de sentimentos foram as manifesta¸ c˜ oes
+de 2013, que ocorreram no Brasil por conta da alta do pre¸ co dos transportes p´ ublicos,
+marcadas por protestos e vandalismo. Avaliando o ´ ındice de sentimentos, ´ e poss ´ ıvel
+perceber que o sentimento do mercado teve uma grande varia¸ c˜ ao negativa no mˆ es de junho
+de 2013, quando ocorreu o primeiro protesto. Logo ap´ os a finaliza¸ c˜ ao das manifesta¸ c˜ oes,
+o sentimento do mercado apresentou outra grande varia¸ c˜ ao, dessa vez positiva, no mˆ es de
+agosto.
+O segundo fato relevante destacado no ´ ındice de sentimentos foi o in ´ ıcio da opera¸ c˜ ao
+Lava Jato, que ocorreu em mar¸ co de 2014. Esse per ´ ıodo foi mercado por uma sequˆ encia de
+meses com revela¸ c˜ oes de escˆ andalos de corrup¸ c˜ ao envolvendo diversos pol ´ ıticos e empresas.
+Olhando para o ´ ındice de sentimentos, nota-se que no m´ edio prazo houve uma tendˆ encia
+===== PAG 51 =====
+49
+de queda no sentimento do mercado, isso deve pelo ac´ umulo de not ´ ıcias negativas sobre
+corrup¸ c˜ ao. O valor m ´ ınimo do ´ ındice de sentimentos foi atingido em mar¸ co de 2015,
+quando grandes executivos da Petrobras foram presos.
+O final de 2015 foi marcado pelo in ´ ıcio do processo de impeachment da presidente
+Dilma Rousseff, finalizado em agosto de 2016. Logo ap´ os o in ´ ıcio do processo de impeach-
+ment, o sentimento do mercado apresentou uma grande varia¸ c˜ ao positiva seguida de uma
+queda no sentimento do mercado. Visto que o pa ´ ıs estava em recess˜ ao, o sentimento do
+mercado tendeu a um valor positivo por uma expectativa de resolu¸ c˜ ao da crise econˆ omica,
+por´ em foi apenas uma pequena janela de euforia.
+Ap´ os o impeachment, j´ a no governo de Michel Temer, o sentimento do mercado apre-
+sentou uma grande varia¸ c˜ ao negativa no denominado ”Joesley Day”. Esse dia, 17 de maio
+de 2017, foi marcado pela divulga¸ c˜ ao de uma grava¸ c˜ ao de uma conversa entre o empres´ ario
+Joesley Batista e o presidente Michel Temer, em que o assunto da conversa era a compra
+do silˆ encio do ex-presidente da Cˆ amara dos Deputados Eduardo Cunha, que estava preso
+por corrup¸ c˜ ao. Por envolver o presidente da Rep´ ublica, houve muita incerteza sobre o
+futuro do governo, e o sentimento do mercado apresentou uma grande varia¸ c˜ ao negativa.
+Visto que o presidente n˜ ao foi destitu ´ ıdo, o sentimento de mercado foi amenizado e voltou
+a um valor positivo.
+Em 2018, o sentimento de mercado apresentou um leve aumento ap´ os a conclus˜ ao das
+elei¸ c˜ oes presidenciais. Tal aumento pode ser explicado pelo fato de que o mercado estava
+otimista com a vit´ oria de Jair Bolsonaro, que era visto como um candidato favor´ avel
+ao mercado. Por´ em, ap´ os a posse de Bolsonaro, o sentimento de mercado retornou a um
+valor negativo, que pode ser explicada pela incerteza sobre o futuro do governo. Depois, ao
+longo do primeiro ano de governo, o sentimento apresentou algumas sequˆ encias de alta que
+podem ser atribu ´ ıdas a not ´ ıcias positivas, como a aprova¸ c˜ ao da reforma da previdˆ encia.
+O principal destaque de 2020 foi a pandemia da COVID-19, que come¸ cou em janeiro,
+classificada como pandemia pela OMS em mar¸ co. A pandemia trouxe ao mundo muitas
+incertezas, e o sentimento de mercado n˜ ao apresentou grandes varia¸ c˜ oes justamente por
+conta das incertezas. Enquanto o v ´ ırus ainda n˜ ao havia se espalhado pelo Brasil, alguns
+ve ´ ıculos not ´ ıcias comunicavam que no Brasil a crise sanit´ aria n˜ ao seria t˜ ao grave por
+conta do clima tropical, j´ a outros ve ´ ıculos noticiavam que o Brasil estava despreparado
+para lidar com a pandemia. Portanto, devido a essa incerteza, o sentimento de mercado
+n˜ ao apresentou grandes varia¸ c˜ oes.
+Mais para o final de 2020, o sentimento de mercado apresentou uma grande varia¸ c˜ ao
+===== PAG 52 =====
+50
+positiva, que pode ser explicada pelo desenvolvimento de vacinas e est ´ ımulos econˆ omicos
+dos governos. O valor de pico do sentimento de mercado foi atingido no final do ano,
+quando alguns pa ´ ıses come¸ caram a vacinar a popula¸ c˜ ao. Outro fato, que pode ter con-
+tribu ´ ıdo para o aumento do sentimento de mercado, foram os est ´ ımulos econˆ omicos dos
+governos, implementados para tentar minimizar os efeitos da pandemia e acarretaram
+grandes altas nos mercados.
+Por fim, o ´ ultimo fato relevante destacado no ´ ındice de sentimentos foi in ´ ıcio da
+guerra da R´ ussia e Ucrˆ ania. De longe, esse foi o fato que mais impactou o sentimento de
+mercado, com o in ´ ıcio da guerra v´ arios pa ´ ıses impuseram san¸ c˜ oes econˆ omicas ` a R´ ussia,
+e o sentimento de mercado apresentou uma grande varia¸ c˜ ao negativa. Nesse per ´ ıodo o
+mundo ainda estava se recuperando da pandemia, haviam sinais inflacion´ arios por conta
+dos est ´ ımulos econˆ omicos, e a guerra trouxe mais press˜ ao inflacion´ aria ao mundo. Por
+conta disso, o sentimento de mercado apresentou uma grande varia¸ c˜ ao negativa.
+4.3.2 Rela¸ c˜ ao com dados macroeconˆ omicos
+O modelo de classifica¸ c˜ ao de sentimento pode ser utilizado para identificar se existe
+correla¸ c˜ ao entre o sentimento do mercado e a infla¸ c˜ ao. Dado que a infla¸ c˜ ao ´ e um indicador
+importante para a economia, e ´ e fortemente influenciado pelas expectativas acerca do
+futuro da economia, ´ e poss ´ ıvel que o sentimento tenha alguma correla¸ c˜ ao com a infla¸ c˜ ao.
+Ou seja, se a popula¸ c˜ ao est´ a pessimista em rela¸ c˜ ao ` a infla¸ c˜ ao, ela tende a gastar menos, e
+consequentemente a infla¸ c˜ ao tende a ser menor. E visto que com o ´ ındice de sentimentos
+´ e poss ´ ıvel captar sinais de otimismo ou pessimismo do mercado, ´ e poss ´ ıvel verificar se
+existe correla¸ c˜ ao entre o ´ ındice de sentimentos e a infla¸ c˜ ao.
+===== PAG 53 =====
+51
+Figura 18: Correla¸ c˜ ao entre o ´ ındice de sentimentos e a infla¸ c˜ ao
+A figura 18 mostra que existe uma rela¸ c˜ ao entre a expectativa da infla¸ c˜ ao e o ´ ındice
+de sentimentos. A correla¸ c˜ ao linear entre o ´ ındice de sentimentos e a infla¸ c˜ ao ´ e de 0,52,
+indicando uma correla¸ c˜ ao moderada. O fato da correla¸ c˜ ao linear ser positiva indica que
+quando o ´ ındice de sentimentos ´ e maior, a expectativa da infla¸ c˜ ao ´ e maior e vice-versa.
+4.3.3 Apostando contra o sentimento
+Nesta se¸ c˜ ao, introduzimos uma nova estrat´ egia de investimento baseada no ´ ındice de
+sentimento constru ´ ıdo, a estrat´ egia ´ e denominada comoapostando contra o sentimento .
+Essa estrat´ egia consiste em apostar contra o sentimento do mercado, ou seja, investir
+em a¸ c˜ oes que possuem alta correla¸ c˜ ao negativa com o ´ ındice de sentimentos. O racional
+dessa estrat´ egia ´ e que investidores pessimistas tendem a vender a¸ c˜ oes influenciados pelas
+not ´ ıcias negativas. Por´ em, os fundamentos das a¸ c˜ oes com alta correla¸ c˜ ao negativa n˜ ao
+s˜ ao necessariamente afetados pelas not ´ ıcias negativas do mercado na totalidade, mas s˜ ao
+influenciados por fatores macroeconˆ omicos e/ou intr ´ ınsecos da empresa. Ent˜ ao, quando
+investidores pessimistas vendem tais a¸ c˜ oes, h´ a um aumento no prˆ emio de risco dessas
+a¸ c˜ oes. Portanto, investir em a¸ c˜ oes com alta correla¸ c˜ ao negativa com o ´ ındice de senti-
+mentos ´ e uma estrat´ egia de investimento que pode gerar retornos positivos, visto que o
+===== PAG 54 =====
+52
+prˆ emio de risco dessas a¸ c˜ oes tende a ser maior que as demais a¸ c˜ oes.
+Para testar essa estrat´ egia, foi utilizado o ´ ındice de sentimentos constru ´ ıdos e uma
+base de pre¸ cos de ativos da bolsa de valores brasileira. A base de pre¸ cos de ativos foi
+obtida do site Yahoo Finance e cont´ em os pre¸ cos de fechamento das a¸ c˜ oes negociadas na
+bolsa de valores brasileira. A base de pre¸ cos de ativos cont´ em os pre¸ cos de fechamento
+das a¸ c˜ oes de 2014 a 2022. Para cada a¸ c˜ ao, foi calculada a correla¸ c˜ ao entre o ´ ındice de
+sentimentos e os retornos hist´ oricos de cada a¸ c˜ ao, e as a¸ c˜ oes com alta correla¸ c˜ ao negativa
+com o ´ ındice de sentimentos foram selecionadas.
+O resultado da simula¸ c˜ ao da estrat´ egia de investimentoapostando contra o sentimento
+´ e mostrado na figura 19. A estrat´ egia proposta apresentou um retorno acumulado de 683%
+ao longo de 8 anos, enquanto o ´ ındice Bovespa apresentou um retorno acumulado de 254%
+no mesmo per ´ ıodo. O retorno acumulado da estrat´ egiaapostando contra o sentimento foi
+2,7 vezes maior que o retorno acumulado do ´ ındice Bovespa.
+Figura 19: Simula¸ c˜ ao da estrat´ egia de investimentoapostando contra o sentimento e do
+´ ındice Bovespa.
+Outra an´ alise realizada foi a compara¸ c˜ ao do retorno acumulado da estrat´ egiaapos-
+tando contra o sentimento com outros fatores de risco (Momentum e Baixa Volatilidade),
+e o resultado ´ e mostrado na figura 20. E, para a compara¸ c˜ ao de desempenho das es-
+trat´ egias foi utilizado o ´ ındice de Sharpe. A estrat´ egiaapostando contra o sentimento
+apresentou um ´ ındice de Sharpe de 0,68, enquanto os demais fatores momentum e baixa
+volatilidade ambos apresentaram 0,86. Portanto, apesar da estrat´ egia apresentar retornos
+acima da m´ edia de mercado, seu desempenho n˜ ao ´ e superior aos demais fatores de risco.
+===== PAG 55 =====
+53
+Figura 20: Simula¸ c˜ ao da estrat´ egia de investimentoapostando contra o sentimento e de
+outros fatores de risco.
+Visto que os fatores de investimento visam explicar os retornos do mercado, tamb´ em
+foi elaborada uma regress˜ ao linear para explicar os retornos do mercado com os fatores
+de investimento. A regress˜ ao linear foi realizada com os retornos do mercado, taxa livre
+de risco (SELIC) e os retornos das estrat´ egiasapostando contra o sentimento, momentum
+e baixa volatilidade. A regress˜ ao linear foi realizada com os retornos do mercado de 2014
+a 2021, e os resultados s˜ ao mostrados na tabela 5.
+Tabela 5: Resultados da regress˜ ao linear com o ´ ındice de mercado como vari´ avel depen-
+dente e fatores de investimento como vari´ aveis independentes
+Fator de Risco Coeficiente P-Valor T-Valor
+Termo Constante -0,0008 0,105 -1,621
+Apostando Contra o Sentimento 0,3806 0,000 15,715
+Momentum 0,2670 0,000 11,197
+Baixa Volatilidade 0,2455 0,000 10,200
+Taxa Livre de Risco Anualizada 0,0052 0,364 0,909
+A regress˜ ao linear apresentou um R quadrado de 0,62, o que indica que os fatores
+de investimento explicam 66% dos retornos do mercado. Al´ em disso, o termo constante
+e taxa livre de risco apresentaram P-valores acima de 5%, refor¸ cando que os fatores
+de investimento explicam boa parte dos retornos do mercado. E, dentre os fatores de
+investimento, o apostando contra o sentimento apresentou o maior coeficiente e mais
+significativo, o que indica que a estrat´ egia apostando contra o sentimento ´ e o fator de
+investimento que mais explica os retornos do mercado. Portanto, a partir dos resultados
+da regress˜ ao linear, pode-se concluir que a estrat´ egiaapostando contra o sentimento ´ e
+===== PAG 56 =====
+54
+um fator de investimento relevante e que pode ser utilizado para explicar os retornos do
+mercado.
+===== PAG 57 =====
+55
+5 CONSIDERAC ¸ ˜OES FINAIS
+Neste cap ´ ıtulo, ser˜ ao apresentadas as considera¸ c˜ oes finais do trabalho, com a conclus˜ ao
+dos resultados e os trabalhos futuros.
+5.1 Conclus˜ ao
+O presente trabalho apresentou um modelo de an´ alise de sentimentos de textos em
+portuguˆ es referentes ao mercado financeiro, utilizando a arquitetura de redes neurais
+BERT, denominado FinBERT PT BR. O modelo foi treinado em duas principais etapas:
+modelagem de linguagem com 1,4 milh˜ ao de textos no contexto do mercado financeiro e
+modelagem de sentimentos com 503 not ´ ıcias com os sentimentos anotados.
+A base de sentimentos anotados apresentou altas m´ etricas de concordˆ ancia, com por-
+centagem de concordˆ ancia 90,4 eKrippendorff ’s alpha de 0,88. E os modelos treinados
+conseguiram superar as m´ etricas dos principais modelos no estado da arte, com desta-
+que para as m´ etricas do modelo de an´ alise de sentimento, com acur´ acia e F1-Score 0,76
+e 0,73, respectivamente. Sendo que os modelos de referˆ encia apresentaram acur´ acia e
+F1-Score de 0,69 e 0,67, respectivamente como as maiores m´ etricas Al´ em do treinamento
+dos modelos, foram apresentadas aplica¸ c˜ oes relevantes para o mercado financeiro, como
+a an´ alise de sentimento de not ´ ıcias, constru¸ c˜ ao de ´ ındices de sentimento e an´ alise de da-
+dos macroeconˆ omicos. Com o ´ ındice de sentimentos, foi poss ´ ıvel verificar uma correla¸ c˜ ao
+positiva entre o sentimento de mercado e a expectativa de infla¸ c˜ ao, e tamb´ em foi reali-
+zada uma an´ alise qualitativa do ´ ındice com fatos relevantes da economia brasileira. Por
+fim, foi introduzido um fator de investimento denominado apostando contra o sentimento,
+que consiste em investir em a¸ c˜ oes apresentam alta correla¸ c˜ ao negativa com o ´ ındice de
+sentimento, al´ em dessa estrat´ egia apresentar um retorno ajustado ao risco satisfat´ orio ela
+pode ser utilizada para explicabilidade do desempenho do ´ ındice Ibovespa.
+===== PAG 58 =====
+56
+5.2 Trabalhos futuros
+Para trabalhos futuros, ´ e poss ´ ıvel aprimorar o modelo de an´ alise de sentimentos, uti-
+lizando uma base maior e mais espec ´ ıfica de textos financeiros para o treinamento do
+modelo de linguagem. Al´ em disso, ´ e poss ´ ıvel aprimorar o modelo de an´ alise de senti-
+mentos, aumentando a quantidade de textos rotulados, e mantendo altas m´ etricas de
+concordˆ ancia. Em rela¸ c˜ ao ` as aplica¸ c˜ oes, ´ e poss ´ ıvel aprimorar a f´ ormula de c´ alculo do
+´ ındice de sentimento ou aplicar a metodologia para setores espec ´ ıficos da bolsa de valores.
+A an´ alise de dados macroeconˆ omicos pode ser expandida para outros indicadores al´ em
+da infla¸ c˜ ao, como PIB e taxa de desemprego. Por fim, a explicabilidade dos retornos da
+bolsa de valores pode ser expandida para outros ativos financeiros, como a¸ c˜ oes e fundos
+de investimentos.
+===== PAG 59 =====
+57
+REFERˆENCIAS
+[1] LO, A. W. The adaptive markets hypothesis. The Journal of Portfolio Management ,
+Institutional Investor Journals Umbrella, v. 30, n. 5, p. 15–29, 2004.
+[2] V ASW ANI, A. et al. Attention is all you need. Advances in neural information pro-
+cessing systems, v. 30, 2017.
+[3] DEVLIN, J. et al. Bert: Pre-training of deep bidirectional transformers for language
+understanding. arXiv preprint arXiv:1810.04805 , 2018.
+[4] ARACI, D. Finbert: Financial sentiment analysis with pre-trained language models.
+arXiv preprint arXiv:1908.10063 , 2019.
+[5] FULLER, R. J. Behavioral finance and the sources of alpha. Journal of Pension Plan
+Investing, v. 2, n. 3, p. 291–293, 1998.
+[6] MAGUERESSE, A.; CARLES, V.; HEETDERKS, E. Low-resource languages: A
+review of past work and future challenges. arXiv preprint arXiv:2006.07264 , 2020.
+[7] WOLF, T. et al. Transformers: State-of-the-art natural language processing. In: Pro-
+ceedings of the 2020 Conference on Empirical Methods in Natural Language Processing:
+System Demonstrations . Online: Association for Computational Linguistics, 2020. p.
+38–45. Dispon ´ ıvel em:<https://www.aclweb.org/anthology/2020.emnlp-demos.6>.
+[8] GOODFELLOW, I.; BENGIO, Y.; COUR VILLE, A. Deep learning. [S.l.]: MIT press,
+2016.
+[9] NADKARNI, P. M.; OHNO-MACHADO, L.; CHAPMAN, W. W. Natural language
+processing: an introduction. Journal of the American Medical Informatics Association ,
+Oxford Academic, v. 18, n. 5, p. 544–551, 2011.
+[10] MIKOLOV, T. et al. Efficient estimation of word representations in vector space.
+arXiv preprint arXiv:1301.3781 , 2013.
+[11] MEDHAT, W.; HASSAN, A.; KORASHY, H. Sentiment analysis algorithms and
+applications: A survey. Ain Shams engineering journal , Elsevier, v. 5, n. 4, p. 1093–
+1113, 2014.
+[12] ZHANG, L.; W ANG, S.; LIU, B. Deep learning for sentiment analysis: A survey.
+Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery , Wiley Online
+Library, v. 8, n. 4, p. e1253, 2018.
+[13] HOVY, E.; LA VID, J. Towards a ‘science’of corpus annotation: a new methodological
+challenge for corpus linguistics.International journal of translation, v. 22, n. 1, p. 13–36,
+2010.
+===== PAG 60 =====
+58
+[14] POURSABZI-SANGDEH, F.; BOYD-GRABER, J. Speeding document annotation
+with topic models. In: Proceedings of the 2015 Conference of the North American
+Chapter of the Association for Computational Linguistics: Student Research Workshop .
+[S.l.: s.n.], 2015. p. 126–132.
+[15] GOYAL, N. et al. Larger-scale transformers for multilingual masked language mode-
+ling. arXiv preprint arXiv:2105.00572 , 2021.
+[16] ALCOFORADO, A. et al. Zeroberto: Leveraging zero-shot text clas-
+sification by topic modeling. CoRR, abs/2201.01337, 2022. Dispon ´ ıvel em:
+<https://arxiv.org/abs/2201.01337>.
+[17] ARTSTEIN, R.; POESIO, M. Inter-coder agreement for computational linguistics.
+Computational linguistics, MIT Press One Rogers Street, Cambridge, MA 02142-1209,
+USA journals-info . . . , v. 34, n. 4, p. 555–596, 2008.
+[18] SHARPE, W. F. Capital asset prices: A theory of market equilibrium under con-
+ditions of risk. The journal of finance , Wiley Online Library, v. 19, n. 3, p. 425–442,
+1964.
+[19] BENDER, J. et al. Foundations of factor investing. Available at SSRN 2543990, 2013.
+[20] CHAN, L. K.; JEGADEESH, N.; LAKONISHOK, J. Momentum strategies. The
+Journal of Finance , Wiley Online Library, v. 51, n. 5, p. 1681–1713, 1996.
+[21] HURST, B.; OOI, Y. H.; PEDERSEN, L. H. A century of evidence on trend-following
+investing. The Journal of Portfolio Management , Institutional Investor Journals Um-
+brella, v. 44, n. 1, p. 15–29, 2017.
+[22] MOSKOWITZ, T. J.; OOI, Y. H.; PEDERSEN, L. H. Time series momentum. Jour-
+nal of financial economics , Elsevier, v. 104, n. 2, p. 228–250, 2012.
+[23] JENSEN, M. C. The performance of mutual funds in the period 1945-1964. The
+Journal of finance , JSTOR, v. 23, n. 2, p. 389–416, 1968.
+[24] SOUZA, F.; NOGUEIRA, R.; LOTUFO, R. Bertimbau: pretrained bert models for
+brazilian portuguese. In: SPRINGER. Brazilian Conference on Intelligent Systems .
+[S.l.], 2020. p. 403–417.
+[25] HIEW, J. Z. G. et al. Bert-based financial sentiment index and lstm-based stock
+return predictability. arXiv preprint arXiv:1906.09024 , 2019.
+[26] KILGARRIFF, A.; GREFENSTETTE, G. Introduction to the special issue on the
+web as corpus. Computational linguistics , MIT Press One Rogers Street, Cambridge,
+MA 02142-1209, USA journals-info . . . , v. 29, n. 3, p. 333–347, 2003.
+[27] AMINI, M. R.; USUNIER, N.; GOUTTE, C. Learning from multiple partially ob-
+served views-an application to multilingual text categorization. Advances in neural in-
+formation processing systems, v. 22, 2009.
+[28] SUN, C. et al. How to fine-tune bert for text classification? In: SPRINGER. China
+national conference on Chinese computational linguistics . [S.l.], 2019. p. 194–206.
+===== PAG 61 =====
+59
+[29] PEDREGOSA, F. et al. Scikit-learn: Machine learning in Python. Journal of Ma-
+chine Learning Research, v. 12, p. 2825–2830, 2011.
+[30] F AN, A. et al. Beyond english-centric multilingual machine translation. J. Mach.
+Learn. Res., v. 22, n. 107, p. 1–48, 2021.
+[31] EFRON, B. Bootstrap methods: another look at the jackknife. In: Breakthroughs in
+statistics. [S.l.]: Springer, 1992. p. 569–593.
