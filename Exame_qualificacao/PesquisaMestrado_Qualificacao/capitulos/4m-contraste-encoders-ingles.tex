@@ -1,0 +1,171 @@
+% Contraste com os codificadores financeiros em inglês — levantamento de 13/08/2026.
+% Fonte: orientacoes/encoders_ingles/ (fichas 01 a 08)
+\subsection{Contraste com os codificadores financeiros em inglês}
+\label{sec:contraste_ingles}
+
+As seções anteriores estabeleceram um conjunto de resultados sobre o componente de sentimento cujo
+sentido, tomados isoladamente, é ambíguo: uma acurácia de $0{,}580$ contra padrão humano, nove
+intervenções das quais apenas uma produziu ganho, e um efeito sobre a volatilidade que existe mas
+não supera um modelo econométrico maduro. Resta saber se esses números indicam uma deficiência
+específica do recurso em português ou o comportamento esperado da abordagem. Esta seção responde a
+essa questão por comparação com a literatura de língua inglesa, onde os recursos são mais maduros e
+os corpora, de ordem de grandeza superior.
+
+\subsubsection{Os dois artefatos de referência em inglês}
+
+Convém registrar, de início, uma ambiguidade da literatura: existem \textbf{dois} modelos distintos
+sob a denominação FinBERT. O primeiro \cite{araci_finbert_2019} resulta de uma dissertação de
+mestrado da Universidade de Amsterdã e adapta o \texttt{bert-base-uncased} sobre cerca de 1,8 milhão
+de notícias da Reuters, ajustando-o em seguida sobre o \textit{Financial PhraseBank}
+\cite{malo_good_2014}. O segundo \cite{yang_finbert_2020,huang_finbert_2023}, desenvolvido na
+\textit{Hong Kong University of Science and Technology}, é pré-treinado sobre 4,9 bilhões de
+\textit{tokens} de relatórios corporativos, teleconferências de resultados e relatórios de
+analistas, e foi publicado na \textit{Contemporary Accounting Research}. Trabalhos que mencionam
+apenas ``FinBERT'', sem identificar o repositório, são por isso ambíguos.
+
+A comparação de escala com o recurso em português é reveladora. O modelo de
+\citeonline{santos_finbert_2023} adapta o BERTimbau sobre 1,4 milhão de textos e o ajusta sobre 503
+exemplos anotados; o modelo de \citeonline{huang_finbert_2023} parte de 4,9 bilhões de
+\textit{tokens} e é ajustado sobre dez mil sentenças anotadas. A distância não está na arquitetura,
+que é a mesma, nem no idioma: está no volume de dados, e é de ordens de grandeza.
+
+Registre-se ainda uma decisão de projeto de \citeonline{araci_finbert_2019} que a versão em
+português não replicou. O modelo em inglês parte de uma base \texttt{uncased}, que converte todo
+texto para minúsculas antes do processamento, e é por isso \emph{imune} ao problema de caixa alta
+documentado na Seção~\ref{sec:achados_implementacao}. As 21.619 manchetes em caixa alta do corpus
+desta pesquisa degradam o FinBERT-PT-BR precisamente porque este parte de uma base \texttt{cased}.
+
+\subsubsection{O desempenho de 0,580 em perspectiva}
+
+O dado central desta seção provém de um estudo de 2025 que construiu um conjunto de referência de
+1.500 manchetes financeiras setoriais anotadas manualmente e mediu sobre ele o FinBERT em inglês.
+A Tabela~\ref{tab:contraste_f1} apresenta o contraste com o resultado desta pesquisa.
+
+\begin{table}[htpb]
+\centering
+\caption{Desempenho de codificadores financeiros aplicados a manchetes de subdomínio específico.}
+\label{tab:contraste_f1}
+\begin{tabular}{l l c}
+\hline
+\textbf{Modelo} & \textbf{Condição} & \textbf{F1-macro} \\ \hline
+FinBERT (inglês) & manchetes setoriais, sem ajuste & $0{,}555$ \\
+\textbf{FinBERT-PT-BR} & \textbf{manchetes da PETR4, sem ajuste} & $\mathbf{0{,}579}$ \\
+FinBERT (inglês) & ajustado sobre 1.500 manchetes do subdomínio & $0{,}707$ \\
+\hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor a partir de \textit{Electronics}, v.~14, n.~23, art.~4680, 2025, e da Seção~\ref{sec:validacao_sentimento} desta dissertação.}
+\end{table}
+
+O resultado obtido nesta pesquisa é \emph{ligeiramente superior} ao que o artefato em inglês obtém
+em condição equivalente. Trata-se de uma constatação de consequências consideráveis para a
+interpretação de todo o Capítulo~\ref{chap:resultados}: \textbf{o patamar de $0{,}58$ não constitui
+deficiência do recurso em português nem da escolha de arquitetura, e sim o comportamento esperado de
+qualquer codificador financeiro aplicado, sem supervisão adicional, a um subdomínio específico}. A
+degradação por transferência de domínio quantificada na Seção~\ref{sec:validacao_sentimento} é um
+fenômeno geral da abordagem, e não uma idiossincrasia deste trabalho.
+
+A terceira linha da tabela impõe, contudo, uma qualificação ao resultado do experimento de adaptação
+de domínio reportado na Seção~\ref{sec:adaptacao_dominio}. Ali se concluiu que a adaptação degradou
+a classificação de forma estatisticamente significativa, a partir de um conjunto de 352 exemplos de
+ajuste. O estudo em inglês eleva o F1-macro de $0{,}555$ para $0{,}707$ com 1.500 exemplos anotados
+do subdomínio. A leitura mais parcimoniosa dos dois resultados conjuntos não é a de que a
+especialização por supervisão seja ineficaz, e sim a de que \textbf{o volume de supervisão empregado
+nesta pesquisa era insuficiente}. Acrescente-se a hipótese de \citeonline{shah_when_2022}, para
+quem o mascaramento aleatório de \citeonline{devlin_bert_2019} é subótimo no domínio financeiro,
+por dispersar o orçamento de treinamento em termos irrelevantes; o mascaramento preferencial de
+termos do domínio, que os autores propõem, é uma explicação plausível e não testada para o
+insucesso do experimento aqui reportado.
+
+\subsubsection{Dois trabalhos de desenho equivalente}
+
+Identificaram-se dois estudos recentes cujo desenho coincide substancialmente com o desta
+dissertação, e cuja leitura conjunta é instrutiva em direções opostas.
+
+\citeonline{mino_sentiment_2025} extraem sentimento de mais de dez mil manchetes por meio de um
+BERT ajustado ao domínio financeiro e estimam a sua relação com a volatilidade do S\&P~500 por meio
+de um GARCH(1,1) com distribuição \textit{t}-Student --- a mesma especificação adotada na
+Seção~\ref{sec:metodologia_modelagem}. O coeficiente que obtêm é de $-0{,}2275$ ($p = 0{,}0016$),
+contra os $-0{,}2924$ ($p = 0{,}0002$) obtidos nesta pesquisa com o índice filtrado. \textbf{As duas
+estimativas são de magnitude equivalente e de mesmo sinal}, obtidas em mercados, idiomas,
+codificadores e períodos distintos. A convergência sustenta que a medida aqui reportada não
+constitui artefato do mercado brasileiro nem do processamento em português.
+
+Cabe registrar, todavia, que aqueles autores limitam-se ao ajuste dentro da amostra, sem métrica de
+previsão fora dela nem teste de comparação preditiva, e declaram como limitação explícita a ausência
+de estratificação entre períodos de crise e períodos normais. São exatamente os dois procedimentos
+executados nas Seções~\ref{sec:relevancia_volatilidade} e~\ref{sec:auditoria_noticia}. A observação
+não é de mérito comparativo, e sim de consequência metodológica: \textbf{fosse a avaliação desta
+dissertação encerrada onde a daquele trabalho se encerra, o resultado reportado teria sido de
+sucesso} --- coeficiente significativo, sinal conforme a teoria --- e a delimitação estabelecida na
+Seção~\ref{sec:relevancia_volatilidade}, segundo a qual esse efeito não se converte em ganho
+preditivo, permaneceria invisível.
+
+O segundo estudo aponta na direção inversa. \citeonline{halouskova_forecasting_2025} combinam o
+FinBERT com o modelo HAR de \citeonline{corsi_simple_2009} sobre 404 ações do S\&P~500, entre 2010 e
+2021, e \textbf{superam a referência em $98{,}76\%$ dos casos}, com redução média de $12{,}74\%$ no
+erro quadrático. A Seção~\ref{sec:relevancia_volatilidade} desta dissertação não detectou superação
+equivalente. Quatro diferenças de desenho, apresentadas na Tabela~\ref{tab:contraste_desenho},
+oferecem explicação plausível.
+
+\begin{table}[htpb]
+\centering
+\caption{Diferenças de desenho entre \citeonline{halouskova_forecasting_2025} e esta pesquisa.}
+\label{tab:contraste_desenho}
+\begin{tabular}{l l l}
+\hline
+\textbf{Elemento} & \textbf{Halousková e Lyócsa (2025)} & \textbf{Esta pesquisa} \\ \hline
+Ativos & 404 ações & 1 ativo \\
+Medida de volatilidade & variância realizada de 5 minutos & Parkinson diário \\
+Método de combinação & subconjuntos completos; LASSO adaptativo & mínimos quadrados \\
+Fontes de sinal & notícias, buscas, redes sociais & notícias \\
+\hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor.}
+\end{table}
+
+As duas primeiras diferenças dizem respeito ao poder estatístico do teste. Uma medida de
+volatilidade construída a partir de retornos intradiários é substancialmente menos ruidosa que uma
+medida diária, e ruído na variável dependente reduz a capacidade de detectar efeitos verdadeiros;
+quatrocentas séries oferecem poder que uma série isolada não pode oferecer. Impõe-se, por
+conseguinte, uma reformulação da limitação declarada na
+Seção~\ref{sec:relevancia_volatilidade}: o que os dados desta pesquisa sustentam não é que o
+sentimento seja incapaz de superar o HAR, e sim que \textbf{não foi possível detectar tal superação
+com uma medida diária de volatilidade sobre um único ativo}, ao passo que a literatura a detecta com
+medida intradiária sobre quatrocentos.
+
+\subsubsection{A confirmação externa do efeito de cauda}
+
+O achado mais relevante deste contraste diz respeito, contudo, não ao que a literatura cobra desta
+pesquisa, mas ao que confirma. \citeonline{halouskova_forecasting_2025} reportam que o ganho de
+seus modelos é máximo \textbf{nos dias de variação extrema de preço}, atingindo ali $14{,}99\%$
+contra os $12{,}74\%$ da média geral.
+
+Esse é precisamente o resultado estabelecido na Seção~\ref{sec:auditoria_noticia} pela divergência
+entre as correlações de Pearson e de Spearman, e na Seção~\ref{sec:quantilica} pela regressão
+quantílica. Três análises independentes --- uma regressão quantílica sobre o retorno de um ativo
+brasileiro, um contraste não paramétrico sobre a volatilidade do mesmo ativo, e uma avaliação
+preditiva sobre quatrocentas ações norte-americanas com dados intradiários --- localizam o efeito do
+sentimento na mesma região da distribuição. A tese central desta dissertação, de que \emph{o
+sentimento não move o pregão comum e importa nos extremos}, deixa de apoiar-se exclusivamente em
+evidência própria.
+
+\subsubsection{O protocolo de anotação de referência}
+
+Por fim, o levantamento esclarece a questão da qualificação dos anotadores, discutida na
+Seção~\ref{sec:validacao_sentimento}. O \textit{Financial PhraseBank} \cite{malo_good_2014}, base
+sobre a qual ambos os FinBERT em inglês são ajustados, foi anotado por \textbf{dezesseis pessoas com
+formação em mercados financeiros} --- três pesquisadores e treze mestrandos em finanças,
+contabilidade e economia ---, com \textbf{cinco a oito anotações por sentença} e publicação em
+quatro subconjuntos por nível de concordância. O critério de rotulagem declarado é o modo como a
+informação poderia afetar o preço da ação mencionada, coincidente com o adotado nesta pesquisa.
+
+Dois elementos merecem registro. O primeiro é que apenas $46{,}7\%$ das sentenças alcançaram
+concordância unânime entre anotadores qualificados, o que atesta a ambiguidade intrínseca da tarefa
+e oferece contexto ao patamar de desempenho aqui obtido. O segundo é que a distância entre aquele
+protocolo e o desta pesquisa não se resume à formação do anotador: reside sobretudo na
+\textbf{redundância da anotação}, de cinco a oito contra uma. É essa redundância, e não a
+qualificação em si, que viabiliza o cálculo de concordância entre anotadores --- cuja ausência
+constitui, conforme já declarado no Capítulo~\ref{chap:conclusao}, a principal fragilidade do
+padrão de referência aqui empregado.
