@@ -1,0 +1,111 @@
+% Revisão da ponderação por confiança — reexame de 17/08/2026.
+% Fontes: Mestrado_PETR4/ponderacao_confianca.json
+%         Mestrado_PETR4/ponderacao_confianca_apos17h.json
+% Script: src/sentimento/testar_ponderacao_confianca.py
+\subsection{Revisão da ponderação por confiança}
+\label{sec:revisao_ponderacao}
+
+A Seção~\ref{sec:refinamento_validacao} reporta um conjunto de resultados obtidos ao longo do
+percurso de investigação, alguns dos quais precederam os instrumentos de avaliação hoje disponíveis.
+Esta seção reexamina um deles --- a alegação de que a ponderação do índice de sentimento pela
+confiança do classificador seria responsável pelo ganho preditivo --- e conclui pela sua revisão. O
+reexame impôs-se por duas razões independentes.
+
+A primeira é de coerência interna. A leitura original sustentava a preferência por
+``um classificador que fornece um escore de confiança calibrado''. A
+Seção~\ref{sec:achados_implementacao}, redigida posteriormente, estabeleceu que o escore publicado
+pelo artefato \emph{não} é uma probabilidade calibrada: a declaração de
+\texttt{problem\_type} como \texttt{multi\_label\_classification} faz com que a
+biblioteca aplique a função sigmoide, e não a \textit{softmax} apropriada à classificação
+exclusiva. As duas passagens eram, portanto, incompatíveis.
+
+A segunda é de método. A medição original antecede os testes de associação com a volatilidade
+introduzidos nas Seções~\ref{sec:relevancia_volatilidade} e~\ref{sec:auditoria_noticia}, e apoiava-se
+exclusivamente na acurácia direcional --- eixo que, como se demonstrou, é insensível a melhorias do
+componente textual.
+
+\subsubsection{Confirmação da escala sigmoide}
+
+Antes do reexame propriamente dito, cabe registrar uma verificação que dispensa qualquer suposição.
+Em uma distribuição \textit{softmax} sobre três classes, a probabilidade da classe vencedora não
+pode, por construção, situar-se abaixo de $1/3$: as três probabilidades somam a unidade, e a maior
+delas é, no mínimo, a média. Observam-se, no corpus, \textbf{397 escores inferiores a $0{,}3333$},
+com mínimo de $0{,}2845$ e máximo de $0{,}8729$. A escala não é, portanto,
+\textit{softmax} --- constatação que corrobora, por via aritmética e independente, o achado da
+Seção~\ref{sec:achados_implementacao}.
+
+\subsubsection{O reexame}
+
+Compararam-se quatro formas de agregar os mesmos rótulos em um índice diário: a ponderada pela
+confiança, adotada na dissertação; a polaridade pura, que atribui $+1$, $0$ e $-1$ sem qualquer
+peso; a restrição às notícias de confiança acima da mediana; e o saldo de votos. A avaliação
+empregou tanto a associação com a volatilidade do pregão seguinte, apurada por \textit{bootstrap}
+pareado, quanto a acurácia direcional sob o protocolo do Capítulo~\ref{chap:metodologia}. A
+Tabela~\ref{tab:revisao_ponderacao} apresenta os resultados sobre o recorte de notícias posteriores
+ao fechamento --- o mesmo empregado na medição original.
+
+\begin{table}[htpb]
+\centering
+\caption{Reexame das construções do índice de sentimento (recorte posterior ao fechamento, 1.906 pregões).}
+\label{tab:revisao_ponderacao}
+\begin{tabular}{l c c c}
+\hline
+\textbf{Construção do índice} & \textbf{$|r|$ volatilidade} & \textbf{Acur.\ validação} & \textbf{Acur.\ teste} \\ \hline
+Ponderada pela confiança & $0{,}0513$ & $56{,}64\%$ & $50{,}31\%$ \\
+\textbf{Polaridade pura} & $0{,}0503$ & $53{,}85\%$ & $\mathbf{53{,}88\%}$ \\
+Apenas alta confiança & $0{,}0436$ & $53{,}50\%$ & $53{,}04\%$ \\
+Saldo de votos & $0{,}0503$ & $53{,}85\%$ & $53{,}88\%$ \\
+\hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor (\texttt{src/sentimento/testar\_ponderacao\_confianca.py}, 2026-08-17).}
+\end{table}
+
+Três observações decorrem da tabela, e as três contrariam a leitura original.
+
+A primeira é que \textbf{a ponderação pela confiança piora a acurácia de teste}, e não a melhora:
+$50{,}31\%$ contra $53{,}88\%$ da polaridade pura, uma diferença de $-3{,}57$ pontos percentuais. O
+mesmo contraste sobre o corpus integral produz $-1{,}41$ ponto percentual, no mesmo sentido.
+
+A segunda é que a variante ponderada exibe a maior acurácia de \emph{validação} ($56{,}64\%$) e a
+menor de \emph{teste} ($50{,}31\%$) --- distância de mais de seis pontos percentuais que constitui a
+assinatura característica da seleção sobre o conjunto de validação. É explicação plausível para a
+cifra de $54{,}93\%$ originalmente reportada.
+
+A terceira é que \textbf{a polaridade pura e o saldo de votos produzem resultados idênticos}, o que
+não é coincidência: a média de $\{+1, 0, -1\}$ sobre as notícias do dia equivale, por identidade
+algébrica, a $(n_{pos} - n_{neg})/n_{total}$. As duas construções são a mesma quantidade. A tabela
+original, ao atribuir-lhes desempenhos distintos --- $54{,}53\%$ e $50{,}30\%$ ---, comparava
+grandezas que não podiam divergir sob a definição declarada, discrepância cuja origem não foi
+possível reconstituir, porquanto o código daquela suíte não foi preservado no repositório.
+
+Sobre a associação com a volatilidade, a ponderação apresenta vantagem de $+0{,}0009$ no recorte
+posterior ao fechamento, sem significância ($p = 0{,}789$), e de $+0{,}0084$ sobre o corpus integral,
+esta significativa ($p = 0{,}021$). Trata-se, portanto, de um efeito real porém de magnitude
+modesta: representa acréscimo de aproximadamente $6\%$ na intensidade da associação, contra os
+$23\%$ obtidos pelo filtro de relevância da Seção~\ref{sec:relevancia_volatilidade}. A razão da
+modéstia é aritmética: as séries ponderada e não ponderada correlacionam-se a $0{,}9903$, de sorte
+que a ponderação redistribui muito pouco.
+
+\subsubsection{Consequências}
+
+A conclusão revista pode ser enunciada em três proposições.
+
+A tese de que ``o sinal preditivo reside na intensidade e no grau de certeza do modelo''
+\textbf{não se sustenta}. A ponderação pela confiança contribui, quando muito, com um acréscimo
+marginal à associação com a volatilidade, e prejudica a acurácia direcional. Mantém-se a construção
+ponderada na dissertação por continuidade com os resultados já reportados, mas sem lhe atribuir o
+mérito que a leitura original lhe conferia.
+
+Segue-se, como corolário favorável, que \textbf{a escala equivocada do escore de confiança tem
+consequência prática desprezível} sobre os resultados agregados. Recalcular o índice com a função
+\textit{softmax} apropriada --- procedimento que exigiria nova inferência sobre as 205.697 notícias,
+com processamento em unidade de processamento gráfico --- alteraria uma ponderação cujo efeito é, ele
+próprio, marginal. O achado da Seção~\ref{sec:achados_implementacao} permanece relevante como
+alerta de implementação para terceiros, mas não compromete as conclusões aqui reportadas.
+
+Reforça-se, por fim, o padrão já identificado na Seção~\ref{sec:relevancia_volatilidade}: entre as
+intervenções testadas, aquelas que operam sobre a \emph{seleção} das notícias produzem ganhos de
+magnitude superior às que operam sobre a \emph{forma de agregá-las} ou sobre a leitura que o modelo
+faz de cada uma. O filtro de relevância acrescenta $23\%$ à associação; a ponderação por confiança,
+$6\%$; as oito intervenções sobre o classificador, nada.

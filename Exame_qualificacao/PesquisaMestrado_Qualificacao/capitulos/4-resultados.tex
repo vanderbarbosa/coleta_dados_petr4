@@ -350,10 +350,10 @@ Média simples & 54,53\% & 0,541 \\
 Saldo de votos & 50,30\% & 0,539 \\ \hline
 \end{tabular}
 \vspace{0.2cm}
-{\small \\ Fonte: Elaborado pelo autor.}
+{\small \\ Fonte: Elaborado pelo autor. Suíte de refinamento de julho de 2026, sobre o recorte de notícias publicadas após o fechamento. Ver, adiante, a revisão desta leitura.}
 \end{table}
 
-O resultado tem leitura teórica clara. A ponderação por confiança produz o melhor desempenho, ao passo que o saldo de votos, que ignora a confiança e apenas conta polaridades, praticamente anula o ganho e retorna ao patamar do acaso. Isso indica que o sinal preditivo reside na intensidade do sentimento, isto é, no grau de certeza do modelo, e não na mera contagem de notícias positivas e negativas. O achado reforça, a posteriori, a opção por um classificador que fornece um escore de confiança calibrado, como o FinBERT-PT-BR, em vez de um rótulo binário simples. A diferença entre as três construções é sutil em termos absolutos, pois as variantes correlacionam-se acima de noventa e nove por cento, o que é esperado, já que todas medem o mesmo fenômeno subjacente. O ponto relevante não é a magnitude da diferença, mas a sua direção e o que ela revela: a informação útil concentra-se nas notícias que o modelo classifica com alta certeza, e diluí-la em uma contagem de votos, que trata uma notícia inequívoca e outra ambígua como equivalentes, destrói justamente a parcela mais informativa do sinal. Essa é uma justificativa empírica, e não apenas teórica, para preferir modelos que quantificam a própria confiança.
+A leitura inicialmente extraída desta tabela foi a de que o sinal preditivo residiria na \emph{intensidade} do sentimento --- no grau de certeza do modelo --- e não na contagem de polaridades, uma vez que o saldo de votos retornava ao patamar do acaso. Essa interpretação não se sustentou sob reexame, e a sua revisão é reportada a seguir, na Seção~\ref{sec:revisao_ponderacao}.
 
 \section{Causalidade de Granger}
 
@@ -687,6 +687,7 @@ verificáveis, o alcance do sinal textual.
 \input{capitulos/4k-relevancia-volatilidade}
 \input{capitulos/4l-auditoria-noticia}
 \input{capitulos/4m-contraste-encoders-ingles}
+\input{capitulos/4n-revisao-ponderacao}
 
 \section{Síntese e Verificação das Hipóteses}
 
