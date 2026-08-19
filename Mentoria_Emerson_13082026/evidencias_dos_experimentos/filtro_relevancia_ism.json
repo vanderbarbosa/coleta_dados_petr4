@@ -1,0 +1,68 @@
+{
+  "data_execucao": "2026-08-10",
+  "n_corpus": 205697,
+  "variantes": {
+    "A_todas": {
+      "rotulo": "TODAS as noticias",
+      "n_noticias": 205697,
+      "pct_corpus": 1.0,
+      "abs_r_vol_prox": 0.1385,
+      "p_vol_prox": 0.0,
+      "abs_r_vol_hoje": 0.1554,
+      "p_vol_hoje": 0.0
+    },
+    "B_cat1_cat2": {
+      "rotulo": "CAT1+CAT2 (empresa + petroleo)",
+      "n_noticias": 120792,
+      "pct_corpus": 0.5872,
+      "abs_r_vol_prox": 0.1704,
+      "p_vol_prox": 0.0,
+      "abs_r_vol_hoje": 0.1877,
+      "p_vol_hoje": 0.0
+    },
+    "C_so_cat1": {
+      "rotulo": "so CAT1_Empresa",
+      "n_noticias": 64882,
+      "pct_corpus": 0.3154,
+      "abs_r_vol_prox": 0.1495,
+      "p_vol_prox": 0.0,
+      "abs_r_vol_hoje": 0.1536,
+      "p_vol_hoje": 0.0
+    }
+  },
+  "comparacoes": [
+    {
+      "contraste": "B_cat1_cat2-A_todas",
+      "descricao": "CAT1+CAT2 melhor que TODAS?",
+      "delta_abs_r": 0.0319,
+      "ic95": [
+        0.0135,
+        0.0504
+      ],
+      "p_valor": 0.001,
+      "significativa": true
+    },
+    {
+      "contraste": "B_cat1_cat2-C_so_cat1",
+      "descricao": "CAT1+CAT2 melhor que so CAT1?",
+      "delta_abs_r": 0.0205,
+      "ic95": [
+        -0.0041,
+        0.0447
+      ],
+      "p_valor": 0.0978,
+      "significativa": false
+    },
+    {
+      "contraste": "C_so_cat1-A_todas",
+      "descricao": "so CAT1 melhor que TODAS?",
+      "delta_abs_r": 0.0114,
+      "ic95": [
+        -0.02,
+        0.0435
+      ],
+      "p_valor": 0.4748,
+      "significativa": false
+    }
+  ]
+}

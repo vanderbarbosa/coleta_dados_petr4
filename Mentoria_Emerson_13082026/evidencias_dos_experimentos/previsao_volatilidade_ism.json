@@ -1,0 +1,129 @@
+{
+  "data_execucao": "2026-08-10",
+  "n_pregoes": 1987,
+  "n_teste": 795,
+  "estimador_volatilidade": "Parkinson (High/Low)",
+  "modelos": {
+    "BASE (so HAR)": {
+      "eqm": 0.164508,
+      "qlike": -7.385154,
+      "r2_fora_amostra": 0.306
+    },
+    "+A (HAR + ISM todas)": {
+      "eqm": 0.165461,
+      "qlike": -7.38972,
+      "r2_fora_amostra": 0.302
+    },
+    "+B (HAR + ISM CAT1+CAT2)": {
+      "eqm": 0.164056,
+      "qlike": -7.389053,
+      "r2_fora_amostra": 0.3079
+    }
+  },
+  "diebold_mariano": [
+    {
+      "contraste": "+B (HAR + ISM CAT1+CAT2) x BASE (so HAR)",
+      "descricao": "ISM filtrado acrescenta algo ao HAR?",
+      "eqm": {
+        "DM": -0.4669,
+        "p_valor": 0.6405,
+        "dif_media_perda": -0.00045277,
+        "significativo": false
+      },
+      "qlike": {
+        "DM": -1.2346,
+        "p_valor": 0.217,
+        "dif_media_perda": -0.00389963,
+        "significativo": false
+      }
+    },
+    {
+      "contraste": "+A (HAR + ISM todas) x BASE (so HAR)",
+      "descricao": "ISM completo acrescenta algo ao HAR?",
+      "eqm": {
+        "DM": 0.9659,
+        "p_valor": 0.3341,
+        "dif_media_perda": 0.00095301,
+        "significativo": false
+      },
+      "qlike": {
+        "DM": -1.317,
+        "p_valor": 0.1878,
+        "dif_media_perda": -0.00456592,
+        "significativo": false
+      }
+    },
+    {
+      "contraste": "+B (HAR + ISM CAT1+CAT2) x +A (HAR + ISM todas)",
+      "descricao": "ISM filtrado supera o ISM completo?",
+      "eqm": {
+        "DM": -2.8686,
+        "p_valor": 0.0041,
+        "dif_media_perda": -0.00140579,
+        "significativo": true
+      },
+      "qlike": {
+        "DM": 0.46,
+        "p_valor": 0.6455,
+        "dif_media_perda": 0.00066629,
+        "significativo": false
+      }
+    }
+  ],
+  "por_quartil": [
+    {
+      "faixa": "Q1 calmo",
+      "n": 199,
+      "eqm_base": 0.259334,
+      "eqm_ism_todas": 0.267778,
+      "eqm_ism_filtrado": 0.260126,
+      "ganho_filtrado_sobre_base": -0.000792
+    },
+    {
+      "faixa": "Q2",
+      "n": 199,
+      "eqm_base": 0.077555,
+      "eqm_ism_todas": 0.077368,
+      "eqm_ism_filtrado": 0.076552,
+      "ganho_filtrado_sobre_base": 0.001003
+    },
+    {
+      "faixa": "Q3",
+      "n": 198,
+      "eqm_base": 0.06556,
+      "eqm_ism_todas": 0.066114,
+      "eqm_ism_filtrado": 0.066887,
+      "ganho_filtrado_sobre_base": -0.001327
+    },
+    {
+      "faixa": "Q4 turbulento",
+      "n": 199,
+      "eqm_base": 0.255087,
+      "eqm_ism_todas": 0.250087,
+      "eqm_ism_filtrado": 0.252169,
+      "ganho_filtrado_sobre_base": 0.002919
+    }
+  ],
+  "dm_quartil_turbulento": {
+    "DM": -1.34,
+    "p_valor": 0.1803,
+    "dif_media_perda": -0.00291851,
+    "significativo": false
+  },
+  "coeficientes": {
+    "ISM todas": {
+      "coeficiente": -0.311029,
+      "erro_padrao": 0.100378,
+      "t": -3.0986,
+      "p_valor": 0.001972,
+      "significativo": true
+    },
+    "ISM CAT1+CAT2": {
+      "coeficiente": -0.292402,
+      "erro_padrao": 0.078722,
+      "t": -3.7144,
+      "p_valor": 0.000209,
+      "significativo": true
+    }
+  }
+}
