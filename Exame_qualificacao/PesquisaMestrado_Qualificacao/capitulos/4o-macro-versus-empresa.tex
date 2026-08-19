@@ -1,0 +1,117 @@
+% Macro x empresa e horizontes de previsão — experimento de 18/08/2026.
+% Fonte: Mestrado_PETR4/macro_vs_empresa.json
+% Script: src/modelagem/10_macro_vs_empresa_horizontes.py
+\subsection{Que notícia informa o risco, e em que prazo?}
+\label{sec:macro_empresa}
+
+A Seção~\ref{sec:relevancia_volatilidade} concluiu que o índice de sentimento, embora
+significativamente associado à volatilidade, não supera o modelo HAR na previsão fora da amostra.
+Duas escolhas de desenho não foram, contudo, examinadas naquela ocasião, e ambas se revelaram
+questionáveis à luz da literatura recente: o \emph{recorte temático} do corpus e o \emph{horizonte}
+de previsão.
+
+\subsubsection{A hipótese}
+
+\citeonline{bodilsen_exploiting_2025}, no \textit{Journal of Applied Econometrics}, conduziram
+exercício de desenho equivalente ao aqui reportado --- acréscimo do sentimento de notícias a modelos
+de volatilidade realizada --- e chegaram a duas conclusões que esta dissertação não havia
+investigado. A primeira é que o sentimento de notícia \textbf{específica da empresa} não acrescenta
+informação ao que a própria volatilidade passada já captura. A segunda é que o sentimento de notícia
+\textbf{macroeconômica} melhora as previsões de forma significativa, com ganho substancialmente
+maior em \textbf{horizontes longos}.
+
+A hipótese descreveria com precisão a situação desta pesquisa. O recorte adotado como padrão na
+Seção~\ref{sec:relevancia_volatilidade} --- empresa somada ao mercado de petróleo --- é o mais
+próximo da categoria ``específica da empresa'', e toda a avaliação foi conduzida a um único dia de
+distância. Caso a hipótese se sustentasse aqui, ter-se-ia examinado a fatia menos informativa do
+corpus, no prazo menos favorável. Cabia verificar.
+
+\subsubsection{Desenho}
+
+Cruzaram-se cinco recortes temáticos do corpus com três horizontes de previsão. Os recortes agrupam
+a taxonomia descrita na Seção~\ref{sec:metodologia_ism}: \textsc{empresa} reúne as categorias de
+Empresa e Governança; \textsc{petróleo} corresponde ao Mercado de Petróleo; \textsc{macro} reúne
+Geopolítica, Sanções e Navegação, e Macro de Energia. Os horizontes são de um pregão, de cinco
+pregões --- aproximadamente uma semana --- e de vinte e dois pregões, aproximadamente um mês, com o
+alvo definido como a média do logaritmo da volatilidade no período.
+
+O procedimento replica o da Seção~\ref{sec:relevancia_volatilidade}: volatilidade estimada por
+\citeonline{parkinson_extreme_1980}, modelo HAR de \citeonline{corsi_simple_2009} como referência,
+coeficientes reestimados a cada pregão sobre janela expansiva, e comparação por
+\citeonline{diebold_comparing_1995} com erro-padrão robusto a autocorrelação. A
+Tabela~\ref{tab:macro_empresa} apresenta o ganho percentual de erro quadrático sobre o HAR isolado.
+
+\begin{table}[htpb]
+\centering
+\caption{Ganho percentual sobre o modelo HAR na previsão da volatilidade da PETR4, por recorte temático e horizonte (795 previsões fora da amostra). Valores positivos indicam que o sentimento reduz o erro.}
+\label{tab:macro_empresa}
+\begin{tabular}{l r c c c c}
+\hline
+\textbf{Recorte} & \textbf{Notícias} & \textbf{1 dia} & \textbf{5 dias} & \textbf{22 dias} & \textbf{Média} \\ \hline
+\textbf{Empresa} & 71.003 & $+1{,}03\%$ & $+0{,}37\%$ & $\mathbf{+1{,}77\%}$ & $\mathbf{+1{,}06\%}$ \\
+Empresa + petróleo & 120.792 & $+0{,}30\%$ & $-0{,}43\%$ & $+0{,}21\%$ & $+0{,}03\%$ \\
+Petróleo & 55.910 & $-0{,}12\%$ & $-0{,}48\%$ & $-1{,}06\%$ & $-0{,}55\%$ \\
+\textbf{Macro} & 76.438 & $-0{,}33\%$ & $\mathbf{-1{,}09\%}$ & $\mathbf{-1{,}79\%}$ & $\mathbf{-1{,}07\%}$ \\
+Todas & 205.697 & $-0{,}30\%$ & $-1{,}93\%$ & $-2{,}45\%$ & $-1{,}56\%$ \\
+\hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor (\texttt{src/modelagem/10\_macro\_vs\_empresa\_horizontes.py}, 2026-08-18). Em negrito, os valores discutidos no texto.}
+\end{table}
+
+\subsubsection{Resultado: a hipótese inverte-se}
+
+O padrão observado é o oposto do reportado por \citeonline{bodilsen_exploiting_2025}, e a inversão é
+estatisticamente detectável.
+
+O recorte macroeconômico \textbf{degrada} a previsão, e o faz de forma significativa nos dois
+horizontes mais longos: $p = 0{,}0146$ em cinco pregões e $p = 0{,}0200$ em vinte e dois, com o
+teste favorecendo o HAR isolado em ambos. Não se trata, portanto, de mera ausência de ganho, e sim
+de prejuízo mensurável --- acrescentar sentimento macroeconômico ao modelo piora as previsões.
+
+O recorte da empresa, inversamente, é o único que apresenta ganho médio positivo em todos os
+horizontes, e alcança $+1{,}77\%$ em vinte e dois pregões, com $p = 0{,}0574$. É o resultado mais
+próximo da superação do HAR obtido nesta pesquisa, ainda que aquém do limiar convencional de cinco
+por cento.
+
+Registre-se que \textbf{a metade da hipótese relativa ao horizonte confirma-se}: o melhor desempenho
+do recorte da empresa manifesta-se no prazo de um mês, e não no de um dia. O que se inverte é
+exclusivamente a proposição sobre o tipo de notícia.
+
+\subsubsection{Interpretação}
+
+Duas circunstâncias explicam a divergência, e ambas dizem respeito à diferença entre o objeto de
+\citeonline{bodilsen_exploiting_2025} e o desta pesquisa.
+
+A primeira é a composição do que se denomina ``macro''. Aqueles autores empregam notícia
+macroeconômica \textbf{doméstica} aplicada a ações \textbf{norte-americanas}, e a macroeconomia dos
+Estados Unidos é determinante direto do preço de um ativo negociado naquele mercado. O recorte macro
+desta pesquisa é composto majoritariamente de \textbf{geopolítica internacional} --- 46.412 das
+76.438 notícias ---, categoria que abrange o conflito na Ucrânia, sanções, decisões da OPEP e
+tensões no Oriente Médio. Para um ativo brasileiro isolado, tal fluxo comporta-se predominantemente
+como ruído, e a sua inclusão no modelo introduz variância sem informação correspondente.
+
+A segunda diz respeito à natureza da PETR4. Trata-se de empresa de controle estatal, cujo risco
+idiossincrático --- política de preços de combustíveis, intervenção do acionista controlador,
+alterações na direção executiva, política de distribuição de dividendos --- responde por parcela da
+variação substancialmente maior do que a observada em uma ação típica do índice S\&P~500. É
+coerente, portanto, que a notícia da própria empresa carregue, neste caso, mais informação sobre o
+risco futuro do que o noticiário macroeconômico.
+
+\subsubsection{Uma tensão entre associação e previsão}
+
+O resultado impõe qualificação ao da Seção~\ref{sec:relevancia_volatilidade}, e a tensão merece
+registro explícito por constituir achado metodológico próprio.
+
+Para a \textbf{associação} com a volatilidade, medida por correlação, o melhor recorte é o de
+empresa somada ao mercado de petróleo, que supera o corpus integral em $23\%$ com $p = 0{,}001$.
+Para a \textbf{previsão} fora da amostra, o melhor recorte é o de empresa e governança, ao passo que
+o acréscimo do mercado de petróleo reduz o ganho médio de $+1{,}06\%$ para $+0{,}03\%$.
+
+\textbf{Os dois critérios não premiam o mesmo corte do corpus.} A explicação provável reside na
+distinção já estabelecida na Seção~\ref{sec:auditoria_noticia}: a correlação é sensível às caudas,
+e a notícia do mercado de petróleo contribui justamente nos episódios extremos --- choques do
+barril ---, ao passo que a previsão fora da amostra é dominada pelo comportamento do pregão típico,
+em que aquele fluxo adiciona ruído. Trata-se de mais uma manifestação do efeito de cauda que
+perpassa os resultados desta dissertação, e de advertência prática: \emph{a escolha do corpus deve
+ser orientada pelo objetivo, e não presumida transferível entre tarefas}.
