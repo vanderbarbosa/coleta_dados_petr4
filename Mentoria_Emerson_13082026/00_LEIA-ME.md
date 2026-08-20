@@ -59,6 +59,7 @@ persegue, e mostra em quais delas esta pesquisa se sai bem e em quais não.
 | **`04_O_QUE_O_CAMPO_BUSCA.docx`** | As 25 pesquisas organizadas pelas **sete perguntas** que a área persegue, e onde esta pesquisa se sai bem ou mal |
 | **`08_AS_SEIS_ESSENCIAIS.docx`** e **`09_AS_SEIS_ESSENCIAIS.xlsx`** | **As três melhores de volatilidade e as três de direção**, com o detalhe de cada uma |
 | **`07_FICHAS_UMA_A_UMA.docx`** | Ficha de leitura das 15 pesquisas, sete perguntas fixas cada |
+| **`10_GLOSSARIO.docx`** | **Glossário de bolso** — HAR, efeito de cauda, valor-p, embedding e os demais termos, com analogia e o nosso número em cada |
 | `pesquisas_pdf/` | **15 PDFs baixados**; o `_MANIFESTO.json` diz onde obter os 11 restantes |
 | `fichas_das_pesquisas/` | 17 fichas detalhadas, separadas em duas subpastas: **A** — encoders e trabalhos em inglês; **B** — trabalhos que citam o FinBERT-PT-BR |
 | `documentos_para_leigos/` | 7 documentos detalhados, um por assunto |
