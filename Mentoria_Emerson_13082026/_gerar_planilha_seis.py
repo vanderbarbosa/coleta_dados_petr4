@@ -67,8 +67,8 @@ L = [
   "manchetes financeiras", "2018–2023",
   "FinBERT + XGBoost sobre preço e volatilidade; SHAP; privacidade diferencial",
   "técnica-apenas e léxica",
-  "Supera as bases em AUC, F1 e lucro simulado. SHAP: sentimento pesa 28,6%; volatilidade 21,4%.",
-  "não recuperado", "não (MDPI)",
+  "Acurácia 0,703 com FinBERT contra 0,624 só-técnicos = GANHO DE 7,9 p.p. AUC 0,740. Lucro simulado 7,63%. VADER rende só +2,0 p.p.",
+  "5 janelas móveis", "SIM",
   "ARQUITETURA QUASE IDÊNTICA À NOSSA: FinBERT + preço + volatilidade em XGBoost, mesmo período. É a prova de que o nosso desenho está correto.",
   "Acrescentar SHAP — é biblioteca pronta, custa horas, e a banca valoriza"),
 
@@ -87,8 +87,8 @@ L = [
   "9.211 notícias; 10,2 mi de cotações", "5 semanas",
   "saco de palavras, sintagmas nominais, entidades + SVM",
   "—",
-  "71,18% de acurácia direcional; retorno simulado de 8,50%. É o MELHOR entre vários esquemas.",
-  "não declarado", "não (Elsevier)",
+  "71,18% é o MELHOR de SEIS esquemas. A faixa vai de 56,92% a 71,18%. Por AÇÃO INDIVIDUAL -- o nosso caso -- dá 56,92%.",
+  "não declarado", "SIM",
   "O maior número LEGÍTIMO de direção do conjunto. Mas mede REAÇÃO em 20 min — é o nosso horizonte P0, não o P1. Nós já medimos o mesmo padrão: P0 ordenado (55,0/53,2/51,6), P1 colapsa.",
   "3º apoio para buscar dados INTRADIÁRIOS da PETR4"),
 
@@ -176,8 +176,15 @@ def main() -> None:
         c.font = Font(bold=(k == 0), size=10)
         ws.merge_cells(start_row=r + k, start_column=1, end_row=r + k, end_column=len(COLS))
 
-    wb.save(SAIDA)
-    print(f"[OK] {SAIDA}  ({n} linhas)")
+    try:
+        wb.save(SAIDA)
+        destino = SAIDA
+    except PermissionError:
+        # arquivo aberto no Excel — grava ao lado, sem perder o trabalho
+        destino = SAIDA.with_name(SAIDA.stem + "_ATUALIZADA.xlsx")
+        wb.save(destino)
+        print("  [aviso] o arquivo original esta aberto no Excel; gravado ao lado.")
+    print(f"[OK] {destino}  ({n} linhas)")
 
 
 if __name__ == "__main__":

@@ -63,13 +63,13 @@ def main() -> None:
              "notícia macro melhora; da empresa não; ganho maior em prazo longo",
              "revista de primeira linha; gerou o meu melhor resultado ao ser testada"],
             ["DIREÇÃO", "Ruan e Jiang (2025)",
-             "supera bases técnicas e lexicais em AUC, F1 e lucro simulado",
+             "0,703 com FinBERT contra 0,624 só-preços: GANHO DE 7,9 p.p.",
              "ARQUITETURA QUASE IDÊNTICA à minha: FinBERT + preço + volatilidade em XGBoost"],
             ["DIREÇÃO", "Nguyen et al. (2015)",
              "ganho de 2,1 a 9,8 pontos percentuais sobre só-preços",
              "É A MINHA RÉGUA: o meu ganho de 4,4 p.p. está dentro dessa faixa"],
             ["DIREÇÃO", "Schumaker e Chen (2009)",
-             "71,18% de acurácia direcional",
+             "71,18% — mas por AÇÃO INDIVIDUAL dá 56,92%",
              "o maior número legítimo de direção — mas em 20 minutos, não no dia seguinte"],
         ], fonte=FONTE)
 
