@@ -68,7 +68,11 @@ cinco minutos, e obtiveram o maior ganho justamente **nos dias de variação ext
 contra 12,74% na média. É a mesma conclusão a que chegamos com um ativo brasileiro e dados
 diários, por caminho inteiramente independente.
 
-### 3. Os números altos da literatura não resistem a exame
+### 3. Parte dos números altos não resiste a exame — mas três trabalhos nos superam de fato
+
+Convém separar as duas coisas com honestidade, porque a distinção será cobrada.
+
+**Três números da tabela comparativa não são comparáveis ao nosso:**
 
 - **Bollen (2011), 86,7%** — são **13 acertos em 15 pregões**, sobre um índice e não uma ação. E o
   resultado **foi refutado**: Lachanski e Pav (2017) não encontraram evidência fora da amostra e
@@ -77,6 +81,29 @@ diários, por caminho inteiramente independente.
   previsão do pregão seguinte, e é o melhor entre vários esquemas.
 - **Barak (2017), 83,6%** — outro mercado e outra tarefa. A técnica central já foi replicada aqui
   (Seção 4.d) e ficou no patamar da classe majoritária.
+
+**Mas três outros trabalhos obtiveram, sim, resultados superiores aos nossos, e isso precisa ser
+declarado sem rodeios:**
+
+| Trabalho | O que obtiveram | O que obtivemos | Comparável? |
+|---|---|---|---|
+| **Halousková e Lyócsa (2025)** | **superam o HAR em 98,76% dos casos**, $-12{,}74\%$ de erro | **não superamos o HAR** ($p = 0{,}64$) | **sim** — mesmo alvo, mesma referência, fora da amostra |
+| **Bodilsen e Lunde (2025)** | melhora significativa sobre a família HAR | não superamos com recorte algum | **sim** — mesmo objetivo |
+| ***Electronics* (2025), art. 4680** | **F1-macro de 0,707** com 1.500 rótulos | **F1-macro de 0,579** | **sim** — mesma tarefa |
+
+Nos dois primeiros casos as diferenças de desenho explicam a distância --- eles empregam 404 ativos
+contra o nosso único, variância realizada de cinco minutos contra Parkinson diário, e métodos de
+encolhimento contra mínimos quadrados simples. **A explicação, contudo, não anula o resultado.**
+No terceiro, a diferença é de volume de supervisão: 1.500 exemplos anotados contra os nossos 352.
+
+**A leitura honesta é esta:** esta pesquisa não apresenta o melhor desempenho do conjunto levantado.
+Apresenta a avaliação mais rigorosa --- Mino e Williamson não avaliam fora da amostra, Bollen não
+sobreviveu à replicação, Barak e Schumaker reportam o máximo entre configurações. Rigor e desempenho
+são méritos distintos, e convém não os confundir na defesa.
+
+**E os três trabalhos que nos superam constituem, precisamente, o roteiro de melhoria:** mais
+ativos, medida intradiária, métodos de combinação e mais rótulos. Todos figuram no plano da aba
+*Como usar*.
 
 ### 4. O melhor resultado da pesquisa apareceu ao testar um artigo de primeira linha
 

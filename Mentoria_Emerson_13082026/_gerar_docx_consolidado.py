@@ -146,7 +146,8 @@ def main() -> None:
         "fenômeno**.")
 
     # ── 5 ────────────────────────────────────────────────────────────────────
-    A.secao(doc, "5", "Descoberta 3 — os números altos da literatura não resistem")
+    A.secao(doc, "5", "Descoberta 3 — três números não resistem, mas três "
+                      "pesquisas me superam")
 
     A.paragrafo(doc,
         "A minha tabela comparativa mostrava outras pesquisas com 86,7%, 83,6% e "
@@ -171,6 +172,47 @@ def main() -> None:
         "**Isso muda a minha defesa.** Se alguém disser “mas o Bollen conseguiu "
         "86,7%”, eu respondo com a referência da refutação.")
 
+    A.secao(doc, "5.1", "Mas três pesquisas foram MELHORES que a minha, de verdade",
+            nivel=2)
+
+    A.paragrafo(doc,
+        "Aqui preciso ser honesto, porque a seção acima pode dar a impressão errada — "
+        "a de que nenhuma pesquisa me superou. **Não é verdade. Três superaram.**")
+
+    A.tabela_abnt(doc, "3", "Onde outros foram genuinamente melhores",
+        ["Pesquisa", "Eles", "Eu", "Vale a comparação?"],
+        [
+            ["Halousková e Lyócsa (2025)", "vencem o modelo padrão em 98,76% dos casos",
+             "NÃO venci", "SIM — mesmo alvo, mesma régua"],
+            ["Bodilsen e Lunde (2025)", "melhora significativa sobre o modelo padrão",
+             "NÃO venci com recorte nenhum", "SIM"],
+            ["Electronics (2025)", "acerto de 0,707 com 1.500 rótulos",
+             "0,579", "SIM — mesma tarefa"],
+        ], fonte=FONTE)
+
+    A.paragrafo(doc,
+        "Nos dois primeiros casos eu **sei por que** eles conseguem e eu não: eles usam "
+        "**404 ações** contra a minha **uma**, medem o sacolejo **de 5 em 5 minutos** "
+        "contra a minha medida **diária**, e combinam os dados com métodos mais "
+        "sofisticados. **Mas explicar a diferença não apaga a diferença.**")
+
+    A.paragrafo(doc,
+        "No terceiro caso a razão é simples: eles rotularam **1.500** manchetes; eu "
+        "usei **352**.")
+
+    A.paragrafo(doc,
+        "**A leitura honesta é esta:** a minha pesquisa **não é a de melhor "
+        "desempenho** do conjunto. Ela é a **mais rigorosamente avaliada** — Mino e "
+        "Williamson não testam fora da amostra, o Bollen não sobreviveu à replicação, "
+        "Barak e Schumaker reportam o melhor entre várias tentativas. **Rigor e "
+        "desempenho são méritos diferentes, e eu não devo confundir os dois na "
+        "defesa.**")
+
+    A.paragrafo(doc,
+        "**E há uma boa notícia nisso:** essas três pesquisas são exatamente o meu "
+        "roteiro de melhoria. Mais ativos, medida intradiária, métodos de combinação "
+        "melhores e mais rótulos. **Sei o que falta e sei onde buscar.**")
+
     # ── 6 ────────────────────────────────────────────────────────────────────
     A.secao(doc, "6", "Descoberta 4 — o melhor resultado que já tive")
 
@@ -193,7 +235,7 @@ def main() -> None:
         "à empresa, e medi tudo a **um dia** de distância. Se eles estivessem certos, "
         "eu teria escolhido a pior fatia do corpus, no pior prazo. **Fui testar.**")
 
-    A.tabela_abnt(doc, "3", "Ganho sobre o modelo padrão (positivo = ajuda)",
+    A.tabela_abnt(doc, "4", "Ganho sobre o modelo padrão (positivo = ajuda)",
         ["Que notícias eu uso", "1 dia", "5 dias", "22 dias", "Média"],
         [
             ["EMPRESA", "+1,03%", "+0,37%", "+1,77%", "+1,06%"],
@@ -306,7 +348,7 @@ def main() -> None:
         "A planilha traz doze ações ordenadas por custo e retorno. As quatro "
         "primeiras:")
 
-    A.tabela_abnt(doc, "4", "As ações mais baratas e de maior retorno",
+    A.tabela_abnt(doc, "5", "As ações mais baratas e de maior retorno",
         ["#", "O que fazer", "Custo"],
         [
             ["1", "Prever a DIREÇÃO da volatilidade (mais ou menos que hoje)", "baixo"],
