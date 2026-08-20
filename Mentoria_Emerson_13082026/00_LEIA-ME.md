@@ -57,6 +57,9 @@ persegue, e mostra em quais delas esta pesquisa se sai bem e em quais não.
 | **`02_EXPLICACAO_PARA_LEIGOS.docx`** | **Documento de abertura.** As cinco descobertas em linguagem comum |
 | **`03_RESUMOS_E_COMO_USAR.md`** | Resumo de cada pesquisa próxima e como aproveitá-la |
 | **`04_O_QUE_O_CAMPO_BUSCA.docx`** | As 25 pesquisas organizadas pelas **sete perguntas** que a área persegue, e onde esta pesquisa se sai bem ou mal |
+| **`08_AS_SEIS_ESSENCIAIS.docx`** e **`09_AS_SEIS_ESSENCIAIS.xlsx`** | **As três melhores de volatilidade e as três de direção**, com o detalhe de cada uma |
+| **`07_FICHAS_UMA_A_UMA.docx`** | Ficha de leitura das 15 pesquisas, sete perguntas fixas cada |
+| `pesquisas_pdf/` | **15 PDFs baixados**; o `_MANIFESTO.json` diz onde obter os 11 restantes |
 | `fichas_das_pesquisas/` | 17 fichas detalhadas, separadas em duas subpastas: **A** — encoders e trabalhos em inglês; **B** — trabalhos que citam o FinBERT-PT-BR |
 | `documentos_para_leigos/` | 7 documentos detalhados, um por assunto |
 | `evidencias_dos_experimentos/` | Os resultados brutos, em JSON, de cada experimento citado |
