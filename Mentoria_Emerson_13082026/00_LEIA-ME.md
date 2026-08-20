@@ -30,6 +30,25 @@ tudo em dez seções, sem jargão, e termina com um roteiro de dois minutos para
 
 ---
 
+## Uma precisão sobre originalidade
+
+Convém enunciar com cuidado o que esta pesquisa tem de original, porque a formulação imprecisa é
+frágil diante de uma banca.
+
+**Prever a direção do preço é o assunto mais concorrido da área**, e prever volatilidade é campo
+consolidado, com trabalhos em periódicos de primeira linha. Afirmar que "ninguém faz o que eu faço"
+seria falso e facilmente refutável.
+
+**O que é raro não é o alvo, e sim a combinação de quatro escolhas:** prever direção *e*
+volatilidade no mesmo trabalho, sobre uma *ação individual*, em *português*, com o conjunto de teste
+consultado *uma única vez* e com relato dos resultados negativos. A originalidade deve ser
+reivindicada nesses termos.
+
+O documento `04_O_QUE_O_CAMPO_BUSCA.docx` organiza as 25 pesquisas pelas sete perguntas que a área
+persegue, e mostra em quais delas esta pesquisa se sai bem e em quais não.
+
+---
+
 ## O que há nesta pasta
 
 | Arquivo ou pasta | Conteúdo |
@@ -37,6 +56,7 @@ tudo em dez seções, sem jargão, e termina com um roteiro de dois minutos para
 | **`01_PLANILHA_COMPARATIVA_PESQUISAS.xlsx`** | **A planilha pedida.** 25 pesquisas em 18 colunas, mais duas abas: os nossos números já corrigidos, e o plano de adaptação |
 | **`02_EXPLICACAO_PARA_LEIGOS.docx`** | **Documento de abertura.** As cinco descobertas em linguagem comum |
 | **`03_RESUMOS_E_COMO_USAR.md`** | Resumo de cada pesquisa próxima e como aproveitá-la |
+| **`04_O_QUE_O_CAMPO_BUSCA.docx`** | As 25 pesquisas organizadas pelas **sete perguntas** que a área persegue, e onde esta pesquisa se sai bem ou mal |
 | `fichas_das_pesquisas/` | 17 fichas detalhadas, separadas em duas subpastas: **A** — encoders e trabalhos em inglês; **B** — trabalhos que citam o FinBERT-PT-BR |
 | `documentos_para_leigos/` | 7 documentos detalhados, um por assunto |
 | `evidencias_dos_experimentos/` | Os resultados brutos, em JSON, de cada experimento citado |
