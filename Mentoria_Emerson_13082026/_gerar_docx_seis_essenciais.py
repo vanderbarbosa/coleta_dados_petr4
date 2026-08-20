@@ -144,14 +144,20 @@ def main() -> None:
             ["TextBlob (dicionário)", "0,5777", "não"],
             ["FinBERT — como CLASSIFICADOR de sentimento", "0,5368", "NÃO — o pior de todos"],
             ["CrudeBERT (o BERT do petróleo)", "0,6105", "não"],
-            ["CONTAGEM de notícias (só contar!)", "0,7054", "SIM"],
-            ["GloVe (embedding)", "0,6661", "sim"],
-            ["FinBERT — como EMBEDDING", "0,6694", "SIM"],
-            ["BERT (embedding)", "0,6743", "sim"],
-            ["Gemini (embedding)", "0,6858", "sim"],
-            ["LLaMA (embedding)", "0,6890", "sim"],
-            ["FastText (embedding)", "0,7136", "SIM — o melhor"],
+            ["CONTAGEM de notícias (só contar!)", "0,7054", "SIM — p = 0,0392"],
+            ["GloVe (embedding)", "0,6661", "acima, mas sem significância"],
+            ["FinBERT — como EMBEDDING", "0,6694", "acima, mas sem significância"],
+            ["BERT (embedding)", "0,6743", "acima, mas sem significância"],
+            ["Gemini (embedding)", "0,6858", "acima, mas sem significância"],
+            ["LLaMA (embedding)", "0,6890", "acima, mas sem significância"],
+            ["FastText (embedding)", "0,7136", "SIM — p = 0,01277"],
         ], fonte=FONTE + ". Tabelas 2 e 3 do artigo original.")
+
+    A.paragrafo(doc,
+        "**Atenção à última coluna.** Apenas **dois** métodos superam a referência com "
+        "significância estatística: a contagem de notícias e o FastText. Os demais "
+        "*embeddings* ficam numericamente acima, mas a diferença cabe no acaso. É "
+        "distinção que convém fazer antes que a banca a faça.")
 
     A.paragrafo(doc, "**Três coisas saltam desta tabela.**")
 
@@ -159,8 +165,10 @@ def main() -> None:
         "**Primeira, e é a mais importante da minha pesquisa inteira:** olhe as duas "
         "linhas do FinBERT. **É o mesmo modelo.** Usado como **classificador de "
         "sentimento** dá **0,5368** — o pior resultado da tabela, pior até que "
-        "dicionários simples. Usado como **embedding** dá **0,6694** — e vence a "
-        "referência.")
+        "dicionários simples. Usado como **embedding** dá **0,6694**, treze pontos "
+        "acima. (Essa versão fica acima da referência, ainda que sem significância "
+        "estatística — o que não diminui o contraste entre as duas formas de usar o "
+        "mesmo modelo.)")
 
     A.paragrafo(doc,
         "**Treze pontos percentuais de diferença, no mesmo modelo, só por não passar "
@@ -174,6 +182,30 @@ def main() -> None:
         "sentimento** e vence o HAR com significância estatística confirmada por teste "
         "de McNemar. Ler o tom da notícia funcionou pior que ignorar o tom e só contar "
         "quantas saíram.")
+
+    A.secao(doc, "3.2", "O que exatamente é esse método de “contagem”", nivel=2)
+
+    A.paragrafo(doc,
+        "Vale precisar, porque o nome engana. **A contagem NÃO separa notícias positivas "
+        "de negativas.** O artigo diz literalmente *“o número de notícias por dia”* e "
+        "*“o volume de cobertura noticiosa sozinho”*. **É um único número: quantas "
+        "notícias saíram naquele dia.** Se saíram 40 hoje e 300 amanhã, o método vê "
+        "apenas 40 e 300 — não lê uma linha do conteúdo.")
+
+    A.paragrafo(doc,
+        "O nome confunde porque eles colocam esse método na tabela dos “modelos "
+        "baseados em sentimento” e o chamam de *Count-based sentiment model*. **Mas de "
+        "sentimento não tem nada.**")
+
+    A.paragrafo(doc,
+        "**A interpretação econômica:** o volume de notícias mede **atenção**. Quando "
+        "muita coisa sai sobre um ativo, é porque algo está acontecendo — e aí o preço "
+        "sacode. **A quantidade importa mais que o tom.**")
+
+    A.paragrafo(doc,
+        "**E para nós isso é um teste barato e imediato.** Nós já testamos volume de "
+        "notícias, mas contra o **nível** da volatilidade, e falhou (p = 0,222). Nunca "
+        "testamos contra a **direção** dela — que é o alvo em que funcionou para eles.")
 
     A.paragrafo(doc,
         "**Terceira: o CrudeBERT — o modelo feito sob medida para petróleo — dá 0,6105 "
@@ -383,8 +415,15 @@ def main() -> None:
         "a 10 pontos percentuais, e o meu é 4,4.”",
     ])
 
-    doc.save(SAIDA)
-    print(f"[OK] {SAIDA}")
+    try:
+        doc.save(SAIDA)
+        destino = SAIDA
+    except PermissionError:
+        # arquivo aberto no Word — grava ao lado, sem perder o trabalho
+        destino = SAIDA.with_name(SAIDA.stem + "_ATUALIZADO.docx")
+        doc.save(destino)
+        print("  [aviso] o original esta aberto no Word; gravado ao lado.")
+    print(f"[OK] {destino}")
 
 
 if __name__ == "__main__":

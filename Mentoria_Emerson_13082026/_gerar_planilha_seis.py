@@ -45,10 +45,10 @@ L = [
   "notícias Eikon; ~592 mil manchetes", "2014–2024",
   "VADER, TextBlob, FinBERT, CrudeBERT; embeddings GloVe, FastText, BERT, Gemini, LLaMA",
   "HAR (0,6494)",
-  "FastText 0,7136 | contagem de notícias 0,7054 | FinBERT-embedding 0,6694 | FinBERT-sentimento 0,5368",
+  "So DOIS batem o HAR com significancia: contagem de noticias 0,7054 (p=0,0392) e FastText 0,7136 (p=0,0128). FinBERT-embedding 0,6694 contra FinBERT-sentimento 0,5368 -- mesmo modelo, 13 pontos.",
   "McNemar", "SIM",
   "A MAIS IMPORTANTE. Petróleo é o nosso ativo; código público. E traz a prova controlada: o MESMO FinBERT dá 0,5368 na cabeça de sentimento e 0,6694 como embedding.",
-  "1) adotar o alvo direção da volatilidade; 2) testar contagem de notícias; 3) extrair embeddings do FinBERT-PT-BR"),
+  "1) adotar o alvo direcao da volatilidade; 2) testar CONTAGEM de noticias (e so o volume diario, sem sentimento) contra esse alvo; 3) extrair embeddings do FinBERT-PT-BR"),
 
  ("V", "Bodilsen e Lunde", "2025", "J. Applied Econometrics 40(1):18-36",
   "volatilidade realizada, vários horizontes", "Ações dos EUA e S&P 500",

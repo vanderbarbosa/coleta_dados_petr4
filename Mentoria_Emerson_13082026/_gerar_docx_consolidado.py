@@ -382,8 +382,15 @@ def main() -> None:
         "sobre petróleo mostrando que funciona.”",
     ])
 
-    doc.save(SAIDA)
-    print(f"[OK] Documento gerado: {SAIDA}")
+    try:
+        doc.save(SAIDA)
+        destino = SAIDA
+    except PermissionError:
+        # arquivo aberto no Word — grava ao lado, sem perder o trabalho
+        destino = SAIDA.with_name(SAIDA.stem + "_ATUALIZADO.docx")
+        doc.save(destino)
+        print("  [aviso] o original esta aberto no Word; gravado ao lado.")
+    print(f"[OK] Documento gerado: {destino}")
 
 
 if __name__ == "__main__":
