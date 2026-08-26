@@ -1,0 +1,61 @@
+{
+  "corpus": 205697,
+  "petrobras_no_titulo": 20270,
+  "com_casa_de_analise": 2213,
+  "veredictos": {
+    "SemVeredicto": 1952,
+    "Positive": 190,
+    "Duvidoso": 35,
+    "Negative": 27,
+    "Neutral": 7,
+    "Ambiguo": 2
+  },
+  "conjunto_limpo": 224,
+  "concordancia_preliminar": 0.2902,
+  "kappa_cohen": 0.0749,
+  "por_classe": [
+    {
+      "classe": "Positive",
+      "n": 190,
+      "concordancia": 0.2421
+    },
+    {
+      "classe": "Neutral",
+      "n": 7,
+      "concordancia": 0.2857
+    },
+    {
+      "classe": "Negative",
+      "n": 27,
+      "concordancia": 0.6296
+    }
+  ],
+  "matriz": {
+    "Negative": {
+      "Negative": 17,
+      "Neutral": 10,
+      "Positive": 0
+    },
+    "Neutral": {
+      "Negative": 2,
+      "Neutral": 2,
+      "Positive": 3
+    },
+    "Positive": {
+      "Negative": 38,
+      "Neutral": 106,
+      "Positive": 46
+    }
+  },
+  "dist_especialista": {
+    "Positive": 0.8482,
+    "Negative": 0.1205,
+    "Neutral": 0.0312
+  },
+  "dist_modelo": {
+    "Neutral": 0.5268,
+    "Negative": 0.2545,
+    "Positive": 0.2188
+  },
+  "AVISO": "Número preliminar. Exige auditoria manual de _v2_para_auditoria.csv antes de ser reportado como resultado."
+}

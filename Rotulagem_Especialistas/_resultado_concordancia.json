@@ -1,0 +1,60 @@
+{
+  "corpus_completo": 205697,
+  "menciona_petrobras": 24961,
+  "conjunto_candidato": 2883,
+  "veredictos": {
+    "SemVeredicto": 2381,
+    "Positive": 386,
+    "Negative": 94,
+    "Ambiguo": 14,
+    "Neutral": 8
+  },
+  "conjunto_validacao": 488,
+  "concordancia_global": 0.2684,
+  "kappa_cohen": 0.1003,
+  "f1_macro": 0.2766,
+  "por_classe": [
+    {
+      "classe": "Positive",
+      "n": 386,
+      "concordancia": 0.1917
+    },
+    {
+      "classe": "Neutral",
+      "n": 8,
+      "concordancia": 0.5
+    },
+    {
+      "classe": "Negative",
+      "n": 94,
+      "concordancia": 0.5638
+    }
+  ],
+  "matriz": {
+    "Negative": {
+      "Negative": 53,
+      "Neutral": 2,
+      "Positive": 70
+    },
+    "Neutral": {
+      "Negative": 38,
+      "Neutral": 4,
+      "Positive": 242
+    },
+    "Positive": {
+      "Negative": 3,
+      "Neutral": 2,
+      "Positive": 74
+    }
+  },
+  "dist_especialista": {
+    "Positive": 0.791,
+    "Negative": 0.1926,
+    "Neutral": 0.0164
+  },
+  "dist_modelo": {
+    "Neutral": 0.582,
+    "Negative": 0.2561,
+    "Positive": 0.1619
+  }
+}
