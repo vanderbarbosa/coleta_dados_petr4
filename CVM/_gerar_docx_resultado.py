@@ -216,11 +216,8 @@ def main() -> None:
     A.secao(doc, "8", "As limitações, ditas antes que perguntem")
 
     A.paragrafo(doc,
-        "**Primeira, e é a mais séria: a base traz a data, mas não a hora.** Não dá "
-        "para saber se o comunicado saiu antes da abertura ou depois do fechamento. "
-        "Mitiguei usando a janela do dia e do seguinte, que é a convenção da área — e a "
-        "própria Resolução CVM nº 44 recomenda a divulgação fora do horário de pregão. "
-        "**A hora exata existe no documento em PDF**, e recuperá-la é trabalho futuro.")
+        "**A primeira limitação que eu havia registrado — a falta da hora — foi "
+        "RESOLVIDA.** É o assunto da Seção 8.A.")
 
     A.paragrafo(doc,
         "**Segunda: eventos vizinhos se contaminam.** Uma empresa que publica três "
@@ -241,6 +238,98 @@ def main() -> None:
         "BRF viraram MBRF3, CCR virou MOTV3. São recuperáveis.")
 
     # ── 9 ────────────────────────────────────────────────────────────────────
+    # ── 8.A ──────────────────────────────────────────────────────────────────
+    A.secao(doc, "8.A", "A hora oficial — a limitação que deixou de existir")
+
+    A.paragrafo(doc,
+        "O conjunto aberto da CVM traz apenas a data. Eu havia registrado isso como a "
+        "limitação mais séria, e sugerido usar o carimbo interno do arquivo PDF como "
+        "aproximação. **Foi apontado, com razão, que hora aproximada num estudo de "
+        "evento é pior que hora nenhuma** — e o que se seguiu confirmou o acerto da "
+        "objeção.")
+
+    A.secao(doc, "8.A.1", "Onde estava o dado real", nivel=2)
+
+    A.paragrafo(doc,
+        "Está no **Protocolo de Entrega**, o recibo que a CVM emite para cada "
+        "documento. Texto literal do recibo de um Fato Relevante da Petrobras:")
+
+    A.paragrafo(doc,
+        "*Protocolo de Entrega — 9512 - PETRÓLEO BRASILEIRO S.A. - PETROBRAS. O "
+        "documento foi entregue para CVM e B3. Tipo de Documento: Fato Relevante. "
+        "**Data da Entrega: 03/01/2018 07:20:19.***", recuo=False)
+
+    A.paragrafo(doc,
+        "**Data, hora, minuto e segundo, com fé pública, e disponível inclusive para "
+        "documentos de 2018.** Colhi o recibo dos **5.628 Fatos Relevantes**, sem uma "
+        "única falha. A data do recibo coincide com a do conjunto aberto em 100% dos "
+        "casos — as duas fontes se validam mutuamente.")
+
+    A.secao(doc, "8.A.2", "Por que a aproximação teria enganado", nivel=2)
+
+    A.tabela_abnt(doc, "7", "O carimbo do PDF contra o recibo oficial",
+        ["Momento da divulgação", "Carimbo do PDF (amostra)", "Recibo OFICIAL"],
+        [
+            ["antes da abertura", "20%", "26,2%"],
+            ["com o pregão aberto", "40%", "5,4%"],
+            ["após o fechamento", "40%", "68,4%"],
+        ], fonte=FONTE)
+
+    A.paragrafo(doc,
+        "**O carimbo do arquivo, numa amostra de 25 documentos, sugeria que 40% das "
+        "divulgações ocorriam com o pregão "
+        "aberto. O dado oficial mostra 5,4%.** Eu teria concluído que a minha janela de "
+        "medição era frágil quando ela é, ao contrário, bem apoiada: **quase 95% das "
+        "divulgações — 94,6% — ocorrem fora do horário de negociação**, como a Resolução CVM nº 44 "
+        "recomenda.")
+
+    A.secao(doc, "8.A.3", "E o carimbo provou ser informativo", nivel=2)
+
+    A.paragrafo(doc,
+        "Registrei a previsão **antes** de rodar: quem divulga de manhã deve mover o "
+        "preço no mesmo pregão; quem divulga à noite, só no seguinte.")
+
+    A.tabela_abnt(doc, "8", "Em que pregão o mercado reage",
+        ["Divulgado", "Casos", "Sacolejo em D0", "Sacolejo em D+1", "Reage em"],
+        [
+            ["até 09h59", "1.145", "1,640", "1,180", "D0"],
+            ["10h–16h59", "239", "2,099", "1,546", "D0"],
+            ["17h em diante", "3.086", "1,092", "1,419", "D+1"],
+        ], fonte=FONTE)
+
+    A.paragrafo(doc,
+        "**O padrão previsto apareceu inteiro.** A diferença entre o grupo da manhã e o "
+        "da noite é de 0,786, com valor-p de 3 × 10⁻²³. **Isso prova que o carimbo é "
+        "real e que o mercado reage ao momento da divulgação, não à data do "
+        "calendário.**")
+
+    A.paragrafo(doc,
+        "E note o grupo do meio: a notícia que sai **com o pregão aberto** produz o "
+        "maior choque de todos, 2,099. São poucos casos — 239 —, mas é o momento em que "
+        "o mercado não tem como digerir a informação aos poucos.")
+
+    A.secao(doc, "8.A.4", "O que a hora comprou, em números", nivel=2)
+
+    A.paragrafo(doc,
+        "Com a hora, a janela de medição deixa de ser fixa e passa a ser **escolhida "
+        "pelo horário da divulgação** — D0 para quem divulgou de manhã, D+1 para quem "
+        "divulgou à noite:")
+
+    A.tabela_abnt(doc, "9", "Ganho de precisão da medição",
+        ["Janela", "Sacolejo medido"],
+        [
+            ["fixa [0,+1] — o que eu usava", "1,325"],
+            ["condicional ao horário oficial", "1,540"],
+            ["ganho", "+16,2%  (p = 1,2 × 10⁻³⁷)"],
+        ], fonte=FONTE)
+
+    A.paragrafo(doc,
+        "**E o achado principal sobrevive à medição melhor — na verdade, fica mais "
+        "nítido.** Com a janela correta, a mediana continua em **0,996** — o Fato "
+        "Relevante típico segue mexendo o preço como um dia comum —, enquanto o "
+        "percentil 99 sobe para **9,301**. **Medir melhor não elevou o caso típico: "
+        "afiou a cauda.** O efeito de cauda não era defeito de medição.")
+
     A.secao(doc, "9", "O que vem agora")
 
     A.paragrafo(doc,
