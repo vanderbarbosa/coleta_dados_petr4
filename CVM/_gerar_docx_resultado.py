@@ -47,9 +47,32 @@ def main() -> None:
     A.paragrafo(doc,
         "**Primeiro: a relevância vem por lei, não por critério meu.** A Resolução CVM "
         "nº 44 obriga a companhia a divulgar todo fato **capaz de influir na cotação**. "
-        "Ou seja, é o próprio regulador declarando que aquilo é relevante. Lembro que "
-        "**o único experimento que deu certo, em nove tentativas, foi o filtro de "
-        "relevância** — e aqui a relevância vem pronta e com força de lei.")
+        "Lembro que **o único experimento que deu certo, em nove tentativas, foi o "
+        "filtro de relevância** — e aqui a relevância vem pronta e com força de lei.")
+
+    A.paragrafo(doc,
+        "**E é preciso ser exato sobre quem classifica, porque a banca vai perguntar. "
+        "Não fui eu.** O campo `Categoria` vem pronto no arquivo da CVM; o meu código "
+        "apenas seleciona duas categorias entre as vinte existentes. **Mas também não é "
+        "o regulador que classifica: é a própria companhia.** Pela Resolução CVM nº 44, "
+        "o Diretor de Relações com Investidores é o responsável pela divulgação, e é ele "
+        "quem enquadra o documento na categoria ao protocolar. A CVM define a regra, "
+        "fiscaliza e pode sancionar — a classificação inicial, porém, é "
+        "**autodeclaração da companhia sob obrigação legal**.")
+
+    A.paragrafo(doc,
+        "**A favor disso:** é muito mais forte que um rótulo meu. Quem classifica é "
+        "quem tem mais informação sobre o fato, e responde legalmente pelo "
+        "enquadramento. **Contra, e convém declarar:** sendo autodeclaração, há risco "
+        "de viés de seleção — uma companhia pode enquadrar como Comunicado ao Mercado "
+        "algo que preferiria não destacar. **A fronteira entre os dois grupos não é "
+        "perfeitamente limpa.**")
+
+    A.paragrafo(doc,
+        "**E esse embaçamento reforça o resultado da Seção 6, em vez de enfraquecê-lo:** "
+        "se, mesmo com grupos imperfeitamente separados pela autodeclaração, o Fato "
+        "Relevante ainda mexe mais que o Comunicado ao Mercado com valor-p de "
+        "4,4 × 10⁻¹⁰, **é razoável supor que a diferença real seja ainda maior.**")
 
     A.paragrafo(doc,
         "**Segundo: resolve o meu problema de poder estatístico.** Halousková e Lyócsa "
