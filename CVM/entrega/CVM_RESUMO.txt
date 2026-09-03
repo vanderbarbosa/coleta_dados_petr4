@@ -1,0 +1,83 @@
+==========================================================================
+COMUNICADOS DA CVM COM DATA E HORA DE PUBLICACAO
+Vanderlei Barbosa da Silva | PUCPR/PPGIa | 03 de setembro de 2026
+==========================================================================
+
+FONTE DA NOTICIA E DA DATA
+  Portal de dados abertos da CVM (dados.cvm.gov.br), conjunto IPE
+  -- Informacoes Periodicas e Eventuais. Dado oficial, sem raspagem.
+
+FONTE DA HORA
+  Protocolo de Entrega da CVM: o recibo que o regulador emite para
+  cada documento, com hora, minuto e segundo. Exemplo literal:
+    "Data da Entrega: 03/01/2018 07:20:19"
+
+  NAO foi usada nenhuma hora estimada. O carimbo interno do arquivo
+  PDF foi descartado de proposito: ele marca quando a empresa fechou
+  o arquivo, nao quando a CVM publicou.
+
+  Conferencia: a data do recibo coincide com a do conjunto aberto em
+  100% dos 5.628 casos.
+
+--------------------------------------------------------------------------
+O QUE HA NOS ARQUIVOS
+--------------------------------------------------------------------------
+  CVM_NOTICIAS_COM_DATA_E_HORA.csv ...  5.628 linhas
+      todas com data E hora oficiais. E o arquivo para usar.
+  CVM_NOTICIAS_COMPLETO.csv .......... 20.421 linhas
+      inclui os que ainda nao tem hora; ver coluna Hora_Oficial.
+
+  Separador: ponto e virgula (;). Codificacao: UTF-8 com BOM.
+  Abre direto no Excel em portugues.
+
+--------------------------------------------------------------------------
+COBERTURA DA HORA, POR CATEGORIA
+--------------------------------------------------------------------------
+  Comunicado ao Mercado         0 de 14.793  ( 0.0%)
+  Fato Relevante            5.628 de  5.628  (100.0%)
+
+  Os Comunicados ao Mercado ainda nao tiveram a hora colhida; sao
+  cerca de 4 horas de coleta no mesmo script (04_coletar_hora_oficial).
+
+--------------------------------------------------------------------------
+PERIODO E ABRANGENCIA (arquivo com hora)
+--------------------------------------------------------------------------
+  de 2018-01-02 a 2026-08-24
+  papeis da B3: 62
+  empresas: 83
+
+  Papeis com mais comunicados:
+    PETR4      537
+    ELET3      254
+    OIBR3      243
+    VALE3      203
+    GOLL4      177
+    CCRO3      175
+    VBBR3      169
+    AZUL4      161
+
+--------------------------------------------------------------------------
+QUANDO AS EMPRESAS PUBLICAM
+--------------------------------------------------------------------------
+  1. antes da abertura        1.476  (26.2%)
+  2. com o pregao aberto        302  ( 5.4%)
+  3. apos o fechamento        3.850  (68.4%)
+
+  Quase 95% das publicacoes ocorrem fora do horario de negociacao,
+  como a Resolucao CVM no 44 recomenda.
+
+--------------------------------------------------------------------------
+COLUNAS
+--------------------------------------------------------------------------
+  Data_Publicacao        data oficial de publicacao (AAAA-MM-DD)
+  Hora_Publicacao        hora oficial, com segundos (HH:MM:SS)
+  DataHora_Publicacao    as duas juntas, pronto para ordenar
+  Momento                antes da abertura / pregao aberto / apos fechamento
+  Ticker                 papel negociado na B3
+  Empresa                razao social na CVM
+  Categoria              Fato Relevante ou Comunicado ao Mercado
+  Noticia                o texto do comunicado (campo Assunto da CVM)
+  Codigo_CVM             codigo da companhia na CVM
+  Protocolo_CVM          numero do protocolo de entrega
+  Hora_Oficial           S = hora vem do recibo; N = ainda sem hora
+  Link_Documento         endereco do documento integral na CVM
