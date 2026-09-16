@@ -101,7 +101,8 @@ def main() -> None:
             i = pregao_que_reage(np.datetime64(r["dh"].normalize()), datas)
             if i is None or i < 130 or i >= len(p) - 1:
                 continue
-            reg = {"Ticker": tk, "Empresa": r["Nome_Companhia"],
+            reg = {"Protocolo_Entrega": r["Protocolo_Entrega"],
+                   "Ticker": tk, "Empresa": r["Nome_Companhia"],
                    "Categoria": r["Categoria"], "Assunto": r["Assunto"],
                    "Entrega": r["dh"], "Pregao_reacao": p["Data"].iloc[i],
                    "Parkinson_d1": park[i], "Volume_d1": vol[i],

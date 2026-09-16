@@ -116,17 +116,17 @@ def main() -> None:
     if chave not in cls.columns:
         sys.exit(f"o arquivo classificado precisa da coluna {chave}")
 
-    base = pd.read_csv(DADOS / "cvm_para_classificar.csv", dtype=str)
-    base = base[["Protocolo_Entrega", "Assunto", "Ticker"]].rename(
-        columns={"Assunto": "Assunto_base"})
-    cls = cls.merge(base, on=chave, how="left", suffixes=("", "_b"))
-
-    d = casos.merge(cls[[chave, "Rotulo", "Indice", "Confianca", "Assunto"]]
-                    .rename(columns={"Assunto": "Assunto_cls"}),
-                    left_on="Assunto", right_on="Assunto_cls", how="left") \
-        if chave not in casos.columns else casos.merge(cls, on=chave, how="left")
+    # junção pelo PROTOCOLO, que é único por documento. Juntar por texto
+    # explodiria: 26% dos assuntos se repetem no corpus da CVM.
+    if chave not in casos.columns:
+        sys.exit("rodada_A_casos.csv precisa do Protocolo_Entrega; "
+                 "rode CVM/07_rodada_A.py de novo")
+    cls = cls.drop_duplicates(subset=chave)
+    d = casos.merge(cls[[chave, "Rotulo", "Indice", "Confianca"]],
+                    on=chave, how="left")
 
     d = d[d["Rotulo"].notna()].copy()
+    d["Rotulo"] = d["Rotulo"].str.capitalize()   # POSITIVE -> Positive
     d["Indice"] = pd.to_numeric(d["Indice"], errors="coerce")
     print(f"\n  eventos com classificação: {len(d):,}")
     print("  distribuição:", d["Rotulo"].value_counts().to_dict())
