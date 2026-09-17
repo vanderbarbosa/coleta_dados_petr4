@@ -1,11 +1,11 @@
 {
   "TODOS (FR + Comunicados)": {
-    "n": 2192,
-    "acuracia": 0.5192,
-    "maj": 0.5109,
-    "ganho_pp": 0.82,
-    "p": 0.07623921331114365,
-    "kappa": 0.0342
+    "n": 2336,
+    "acuracia": 0.5197,
+    "maj": 0.509,
+    "ganho_pp": 1.07,
+    "p": 0.05970383791516554,
+    "kappa": 0.0364
   },
   "so FATO RELEVANTE": {
     "n": 700,
@@ -16,11 +16,11 @@
     "kappa": 0.0783
   },
   "so COMUNICADO AO MERCADO": {
-    "n": 1492,
-    "acuracia": 0.508,
-    "maj": 0.508,
-    "ganho_pp": 0.0,
-    "p": 0.5515587967523129,
-    "kappa": 0.0133
+    "n": 1636,
+    "acuracia": 0.5098,
+    "maj": 0.5055,
+    "ganho_pp": 0.43,
+    "p": 0.4434326630574632,
+    "kappa": 0.018
   }
 }

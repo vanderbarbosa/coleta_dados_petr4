@@ -150,7 +150,7 @@ def main() -> None:
 
     A.paragrafo(doc,
         "**Data, hora, minuto e segundo, com fé pública.** Foram baixados os recibos "
-        "dos 5.628 Fatos Relevantes, um a um, sem uma única falha. A data do recibo "
+        "de TODOS os 20.419 documentos, um a um. Cobertura de 100%. A data do recibo "
         "bate com a do arquivo aberto em 100% dos casos.")
 
     A.paragrafo(doc,
@@ -170,7 +170,7 @@ def main() -> None:
     A.paragrafo(doc,
         "**Quase 95% das publicações acontecem fora do horário de negociação** — que é "
         "exatamente o que a Resolução CVM nº 44 recomenda. **E é da noite que vem o "
-        "material do experimento: 10.218 casos.**")
+        "material do experimento: 11.161 casos.**")
 
     # ── 4 ────────────────────────────────────────────────────────────────────
     A.secao(doc, "4", "As três réguas: o que significa “mexeu”")
@@ -287,9 +287,9 @@ def main() -> None:
     A.tabela_abnt(doc, "5", "O pregão seguinte, comparado a um pregão sem comunicado",
         ["Régua", "Dia sem comunicado", "Dia depois da notícia", "Excesso", "Chance de ser sorte"],
         [
-            ["Sacolejo (volatilidade)", "1,032", "1,132", "+9,8%", "1 em 10⁵³"],
-            ["VOLUME negociado", "1,061", "1,239", "+16,8%", "5 em 10⁶²"],
-            ["Salto da abertura", "0,076%", "0,172%", "+0,10 ponto", "menos de 1 em 1.000"],
+            ["Sacolejo (volatilidade)", "1,031", "1,130", "+9,6%", "7 em 10⁵⁵"],
+            ["VOLUME negociado", "1,060", "1,235", "+16,5%", "4 em 10⁶²"],
+            ["Salto da abertura", "0,077%", "0,161%", "+0,08 ponto", "menos de 1 em 1.000"],
             ["Resto do dia", "−0,065%", "−0,166%", "−0,10 ponto", "1 em 1.000"],
             ["DIREÇÃO no dia todo", "0,011%", "0,006%", "quase zero", "89 em 100"],
         ], fonte=FONTE)
@@ -321,17 +321,17 @@ def main() -> None:
     A.paragrafo(doc,
         "Este é o resultado que eu levaria se só pudesse levar um.")
 
-    A.tabela_abnt(doc, "6", "O que aconteceu em cada um dos 10.218 casos",
+    A.tabela_abnt(doc, "6", "O que aconteceu em cada um dos 11.161 casos",
         ["No dia seguinte à notícia...", "Casos", "Proporção"],
         [
-            ["MEXEU MUITO — o dobro do normal ou mais", "1.512", "14,8%"],
-            ["mexeu — 30% acima do normal ou mais", "2.658", "26,0%"],
-            ["ficou dentro do normal", "4.219", "41,3%"],
-            ["ficou MAIS PARADO que o normal", "1.814", "17,8%"],
+            ["MEXEU MUITO — o dobro do normal ou mais", "1.642", "14,7%"],
+            ["mexeu — 30% acima do normal ou mais", "2.900", "26,0%"],
+            ["ficou dentro do normal", "4.599", "41,2%"],
+            ["ficou MAIS PARADO que o normal", "1.991", "17,8%"],
         ], fonte=FONTE)
 
     A.paragrafo(doc,
-        "**40,8% mexeram. 59,1% não mexeram — ou até ficaram mais parados que um dia "
+        "**40,7% mexeram. 59,3% não mexeram — ou até ficaram mais parados que um dia "
         "comum.**")
 
     A.paragrafo(doc,
@@ -360,7 +360,7 @@ def main() -> None:
     ])
 
     A.paragrafo(doc,
-        "**A planilha traz os 10.218, um por linha** — empresa, data, hora, texto do "
+        "**A planilha traz os 11.161, um por linha** — empresa, data, hora, texto do "
         "comunicado, sacolejo, volume, direção e tamanho do movimento. Qualquer um "
         "desses casos pode ser conferido à mão.")
 
@@ -474,8 +474,8 @@ def main() -> None:
         ["Em que tipo de documento", "Casos", "Acertou", "Palpite fixo", "Ganho", "Vale?"],
         [
             ["Só FATO RELEVANTE", "700", "54,3%", "51,7%", "+2,6 pontos", "SIM"],
-            ["Só Comunicado ao Mercado", "1.492", "50,8%", "50,8%", "0,0 ponto", "não"],
-            ["Os dois juntos", "2.192", "51,9%", "51,1%", "+0,8 ponto", "não"],
+            ["Só Comunicado ao Mercado", "1.636", "51,0%", "50,6%", "+0,4 ponto", "não"],
+            ["Os dois juntos", "2.336", "52,0%", "50,9%", "+1,1 ponto", "não"],
         ], fonte=FONTE)
 
     A.paragrafo(doc,
@@ -558,7 +558,7 @@ def main() -> None:
     A.secao(doc, "12", "Se o tempo apertar, cinco frases")
 
     A.lista(doc, [
-        "“Peguei 10.218 comunicados que as empresas entregaram à CVM depois que o "
+        "“Peguei 11.161 comunicados que as empresas entregaram à CVM depois que o "
         "mercado fechou, com hora oficial, e olhei o que aconteceu no pregão seguinte.”",
         "“Nos Fatos Relevantes o volume negociou 36% acima do normal e o sacolejo 18% "
         "acima — "
