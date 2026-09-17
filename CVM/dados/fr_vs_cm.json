@@ -1,0 +1,22 @@
+{
+  "volatilidade (sacolejo)": {
+    "fr": 1.2188,
+    "cm": 1.0941,
+    "exc_fr_pct": 18.15,
+    "exc_cm_pct": 6.07,
+    "razao": 2.99,
+    "p": 9.799305420834369e-20,
+    "n_fr": 3280,
+    "n_cm": 6923
+  },
+  "volume negociado": {
+    "fr": 1.4461,
+    "cm": 1.1783,
+    "exc_fr_pct": 36.3,
+    "exc_cm_pct": 11.06,
+    "razao": 3.28,
+    "p": 5.832580464821903e-28,
+    "n_fr": 3292,
+    "n_cm": 6923
+  }
+}

@@ -1,189 +1,189 @@
 {
-  "n": 3719,
+  "n": 10218,
   "dist": {
-    "Neutral": 2939,
-    "Negative": 477,
-    "Positive": 303
+    "Neutral": 8026,
+    "Negative": 1310,
+    "Positive": 882
   },
   "testes": {
     "GAP DE ABERTURA — todos os eventos": {
       "rotulo": "GAP DE ABERTURA — todos os eventos",
-      "n": 780,
-      "acertos": 427,
-      "acuracia": 0.5474,
-      "classe_majoritaria": 0.5718,
-      "ganho_sobre_majoritaria": -0.0244,
-      "p_binomial_vs_50": 0.008910922532990667,
-      "precisao_ALTA": 0.6535,
-      "recall_ALTA": 0.4439,
-      "f1_ALTA": 0.5287,
-      "n_ALTA": 446,
-      "precisao_BAIXA": 0.4801,
-      "recall_BAIXA": 0.6856,
-      "f1_BAIXA": 0.5647,
-      "n_BAIXA": 334,
-      "f1_macro": 0.5467,
-      "kappa": 0.123,
-      "mcc": 0.1315,
+      "n": 2192,
+      "acertos": 1165,
+      "acuracia": 0.5315,
+      "classe_majoritaria": 0.5753,
+      "ganho_sobre_majoritaria": -0.0438,
+      "p_binomial_vs_50": 0.0034222970499944703,
+      "precisao_ALTA": 0.6327,
+      "recall_ALTA": 0.4425,
+      "f1_ALTA": 0.5208,
+      "n_ALTA": 1261,
+      "precisao_BAIXA": 0.4634,
+      "recall_BAIXA": 0.652,
+      "f1_BAIXA": 0.5417,
+      "n_BAIXA": 931,
+      "f1_macro": 0.5312,
+      "kappa": 0.0897,
+      "mcc": 0.0952,
       "matriz": [
         [
-          198,
-          248
+          558,
+          703
         ],
         [
-          105,
-          229
+          324,
+          607
         ]
       ]
     },
     "GAP DE ABERTURA — só os atribuíveis a 1 documento": {
       "rotulo": "GAP DE ABERTURA — só os atribuíveis a 1 documento",
-      "n": 636,
-      "acertos": 348,
-      "acuracia": 0.5472,
-      "classe_majoritaria": 0.5739,
-      "ganho_sobre_majoritaria": -0.0267,
-      "p_binomial_vs_50": 0.01923848893366273,
-      "precisao_ALTA": 0.651,
-      "recall_ALTA": 0.4548,
-      "f1_ALTA": 0.5355,
-      "n_ALTA": 365,
-      "precisao_BAIXA": 0.4777,
-      "recall_BAIXA": 0.6716,
-      "f1_BAIXA": 0.5583,
-      "n_BAIXA": 271,
-      "f1_macro": 0.5469,
-      "kappa": 0.1201,
-      "mcc": 0.1275,
+      "n": 1415,
+      "acertos": 776,
+      "acuracia": 0.5484,
+      "classe_majoritaria": 0.5845,
+      "ganho_sobre_majoritaria": -0.036,
+      "p_binomial_vs_50": 0.0002968712610912196,
+      "precisao_ALTA": 0.6382,
+      "recall_ALTA": 0.5248,
+      "f1_ALTA": 0.576,
+      "n_ALTA": 827,
+      "precisao_BAIXA": 0.4653,
+      "recall_BAIXA": 0.5816,
+      "f1_BAIXA": 0.517,
+      "n_BAIXA": 588,
+      "f1_macro": 0.5465,
+      "kappa": 0.1027,
+      "mcc": 0.105,
       "matriz": [
         [
-          166,
-          199
+          434,
+          393
         ],
         [
-          89,
-          182
+          246,
+          342
         ]
       ]
     },
     "PREGÃO INTEIRO — todos os eventos": {
       "rotulo": "PREGÃO INTEIRO — todos os eventos",
-      "n": 780,
-      "acertos": 428,
-      "acuracia": 0.5487,
-      "classe_majoritaria": 0.5167,
-      "ganho_sobre_majoritaria": 0.0321,
-      "p_binomial_vs_50": 0.007204977502265575,
-      "precisao_ALTA": 0.5413,
-      "recall_ALTA": 0.435,
-      "f1_ALTA": 0.4824,
-      "n_ALTA": 377,
-      "precisao_BAIXA": 0.5535,
-      "recall_BAIXA": 0.6551,
-      "f1_BAIXA": 0.6,
-      "n_BAIXA": 403,
-      "f1_macro": 0.5412,
-      "kappa": 0.0907,
-      "mcc": 0.0924,
+      "n": 2192,
+      "acertos": 1138,
+      "acuracia": 0.5192,
+      "classe_majoritaria": 0.5109,
+      "ganho_sobre_majoritaria": 0.0082,
+      "p_binomial_vs_50": 0.07623921331114365,
+      "precisao_ALTA": 0.5102,
+      "recall_ALTA": 0.4198,
+      "f1_ALTA": 0.4606,
+      "n_ALTA": 1072,
+      "precisao_BAIXA": 0.5252,
+      "recall_BAIXA": 0.6143,
+      "f1_BAIXA": 0.5663,
+      "n_BAIXA": 1120,
+      "f1_macro": 0.5134,
+      "kappa": 0.0342,
+      "mcc": 0.0347,
       "matriz": [
         [
-          164,
-          213
+          450,
+          622
         ],
         [
-          139,
-          264
+          432,
+          688
         ]
       ]
     },
     "PREGÃO INTEIRO — só os atribuíveis a 1 documento": {
       "rotulo": "PREGÃO INTEIRO — só os atribuíveis a 1 documento",
-      "n": 636,
-      "acertos": 350,
-      "acuracia": 0.5503,
-      "classe_majoritaria": 0.5016,
-      "ganho_sobre_majoritaria": 0.0487,
-      "p_binomial_vs_50": 0.012425166472702438,
-      "precisao_ALTA": 0.5608,
-      "recall_ALTA": 0.4511,
-      "f1_ALTA": 0.5,
-      "n_ALTA": 317,
-      "precisao_BAIXA": 0.5433,
-      "recall_BAIXA": 0.6489,
-      "f1_BAIXA": 0.5914,
-      "n_BAIXA": 319,
-      "f1_macro": 0.5457,
-      "kappa": 0.1001,
-      "mcc": 0.102,
+      "n": 1415,
+      "acertos": 718,
+      "acuracia": 0.5074,
+      "classe_majoritaria": 0.5067,
+      "ganho_sobre_majoritaria": 0.0007,
+      "p_binomial_vs_50": 0.5949619964326698,
+      "precisao_ALTA": 0.5147,
+      "recall_ALTA": 0.4881,
+      "f1_ALTA": 0.5011,
+      "n_ALTA": 717,
+      "precisao_BAIXA": 0.5007,
+      "recall_BAIXA": 0.5272,
+      "f1_BAIXA": 0.5136,
+      "n_BAIXA": 698,
+      "f1_macro": 0.5073,
+      "kappa": 0.0154,
+      "mcc": 0.0154,
       "matriz": [
         [
-          143,
-          174
+          350,
+          367
         ],
         [
-          112,
-          207
+          330,
+          368
         ]
       ]
     }
   },
   "correlacao": {
     "gap de abertura": {
-      "pearson": 0.0528,
-      "p_pearson": 0.0012768073346382466,
-      "spearman": 0.0553,
-      "p_spearman": 0.0007463906917813752,
-      "n": 3719
+      "pearson": 0.0359,
+      "p_pearson": 0.0002800298338666071,
+      "spearman": 0.0253,
+      "p_spearman": 0.010501369664161974,
+      "n": 10218
     },
     "pregão inteiro": {
-      "pearson": 0.0296,
-      "p_pearson": 0.0708264395620123,
-      "spearman": 0.0401,
-      "p_spearman": 0.014571944367725204,
-      "n": 3719
+      "pearson": 0.0199,
+      "p_pearson": 0.04398567270976991,
+      "spearman": 0.007,
+      "p_spearman": 0.47822590609342663,
+      "n": 10218
     }
   },
   "por_classe": {
     "Positive": {
-      "n": 303,
-      "volatilidade": 1.1526,
-      "volume": 1.2674,
-      "retorno_pct": 0.0136
+      "n": 882,
+      "volatilidade": 1.1232,
+      "volume": 1.2218,
+      "retorno_pct": 0.1775
     },
     "Neutral": {
-      "n": 2939,
-      "volatilidade": 1.2227,
-      "volume": 1.4459,
-      "retorno_pct": 0.0275
+      "n": 8026,
+      "volatilidade": 1.142,
+      "volume": 1.2798,
+      "retorno_pct": 0.0091
     },
     "Negative": {
-      "n": 477,
-      "volatilidade": 1.1783,
-      "volume": 1.3497,
-      "retorno_pct": -0.3533
+      "n": 1310,
+      "volatilidade": 1.0938,
+      "volume": 1.2001,
+      "retorno_pct": -0.1379
     }
   },
   "regressao": {
     "volatilidade": {
-      "r2": 0.00098,
+      "r2": 0.00902,
       "eh_FR": {
-        "coef": 0.065342,
-        "p": 0.05862199891619278
+        "coef": 0.124568,
+        "p": 1.959764527648163e-21
       },
       "Indice": {
-        "coef": 0.006457,
-        "p": 0.8521322086117938
+        "coef": 0.024776,
+        "p": 0.1750459737531258
       }
     },
     "tamanho do gap": {
-      "r2": 0.0093,
+      "r2": 0.00792,
       "eh_FR": {
-        "coef": 0.004368,
-        "p": 2.2739849708626374e-05
+        "coef": 0.003339,
+        "p": 4.493438892332061e-17
       },
       "Indice": {
-        "coef": -0.004252,
-        "p": 3.918046159001964e-05
+        "coef": -0.001842,
+        "p": 0.0008968980475640857
       }
     }
   }

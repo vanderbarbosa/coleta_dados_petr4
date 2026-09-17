@@ -169,8 +169,8 @@ def main() -> None:
 
     A.paragrafo(doc,
         "**Quase 95% das publicações acontecem fora do horário de negociação** — que é "
-        "exatamente o que a Resolução CVM nº 44 recomenda. **E os 68,4% da noite são o "
-        "material do experimento: 3.435 casos.**")
+        "exatamente o que a Resolução CVM nº 44 recomenda. **E é da noite que vem o "
+        "material do experimento: 10.218 casos.**")
 
     # ── 4 ────────────────────────────────────────────────────────────────────
     A.secao(doc, "4", "As três réguas: o que significa “mexeu”")
@@ -278,8 +278,8 @@ def main() -> None:
 
     A.paragrafo(doc,
         "**Consequência prática: o piso não é 1,00, é 1,034.** Sem esse controle eu "
-        "teria anunciado 21,9% de excesso de volatilidade e 44,6% de volume. **Os "
-        "números certos são 16,5% e 31,6%.**")
+        "teria anunciado 9,7% de excesso de volatilidade e 16,7% de volume sem "
+        "desconto do piso. **Os números certos, já descontados, são 9,8% e 16,8%.**")
 
     # ── 6 ────────────────────────────────────────────────────────────────────
     A.secao(doc, "6", "Resultado 1 — sim, a notícia mexe. No risco.")
@@ -287,11 +287,11 @@ def main() -> None:
     A.tabela_abnt(doc, "5", "O pregão seguinte, comparado a um pregão sem comunicado",
         ["Régua", "Dia sem comunicado", "Dia depois da notícia", "Excesso", "Chance de ser sorte"],
         [
-            ["Sacolejo (volatilidade)", "1,034", "1,205", "+16,5%", "3 em 10⁴⁹"],
-            ["VOLUME negociado", "1,065", "1,401", "+31,6%", "2 em 10⁵⁵"],
-            ["Salto da abertura", "0,080%", "0,203%", "+0,12 ponto", "3 em 1.000"],
-            ["Resto do dia", "−0,070%", "−0,185%", "−0,11 ponto", "38 em 1.000"],
-            ["DIREÇÃO no dia todo", "0,010%", "0,017%", "quase zero", "92 em 100"],
+            ["Sacolejo (volatilidade)", "1,032", "1,132", "+9,8%", "1 em 10⁵³"],
+            ["VOLUME negociado", "1,061", "1,239", "+16,8%", "5 em 10⁶²"],
+            ["Salto da abertura", "0,076%", "0,172%", "+0,10 ponto", "menos de 1 em 1.000"],
+            ["Resto do dia", "−0,065%", "−0,166%", "−0,10 ponto", "1 em 1.000"],
+            ["DIREÇÃO no dia todo", "0,011%", "0,006%", "quase zero", "89 em 100"],
         ], fonte=FONTE)
 
     A.paragrafo(doc,
@@ -321,17 +321,17 @@ def main() -> None:
     A.paragrafo(doc,
         "Este é o resultado que eu levaria se só pudesse levar um.")
 
-    A.tabela_abnt(doc, "6", "O que aconteceu em cada um dos 3.435 casos",
+    A.tabela_abnt(doc, "6", "O que aconteceu em cada um dos 10.218 casos",
         ["No dia seguinte à notícia...", "Casos", "Proporção"],
         [
-            ["MEXEU MUITO — o dobro do normal ou mais", "688", "20,0%"],
-            ["mexeu — 30% acima do normal ou mais", "938", "27,3%"],
-            ["ficou dentro do normal", "1.304", "38,0%"],
-            ["ficou MAIS PARADO que o normal", "490", "14,3%"],
+            ["MEXEU MUITO — o dobro do normal ou mais", "1.512", "14,8%"],
+            ["mexeu — 30% acima do normal ou mais", "2.658", "26,0%"],
+            ["ficou dentro do normal", "4.219", "41,3%"],
+            ["ficou MAIS PARADO que o normal", "1.814", "17,8%"],
         ], fonte=FONTE)
 
     A.paragrafo(doc,
-        "**47,3% mexeram. 52,3% não mexeram — ou até ficaram mais parados que um dia "
+        "**40,8% mexeram. 59,1% não mexeram — ou até ficaram mais parados que um dia "
         "comum.**")
 
     A.paragrafo(doc,
@@ -340,7 +340,7 @@ def main() -> None:
         "cotação. **E mais da metade não influiu em nada.**")
 
     A.paragrafo(doc,
-        "**O efeito médio de 16,5% não vem de todos os casos um pouquinho. Vem de uma "
+        "**O efeito médio não vem de todos os casos um pouquinho. Vem de uma "
         "minoria de casos com muita força.** É o que venho chamando de **efeito de "
         "cauda** ao longo de toda a dissertação — e aqui ele aparece de novo, agora com "
         "documentos oficiais e sem depender de nenhum modelo de inteligência "
@@ -360,7 +360,7 @@ def main() -> None:
     ])
 
     A.paragrafo(doc,
-        "**A planilha traz os 3.435, um por linha** — empresa, data, hora, texto do "
+        "**A planilha traz os 10.218, um por linha** — empresa, data, hora, texto do "
         "comunicado, sacolejo, volume, direção e tamanho do movimento. Qualquer um "
         "desses casos pode ser conferido à mão.")
 
@@ -463,6 +463,38 @@ def main() -> None:
         "Na PETR4 isso fica gritante: de 432 comunicados classificados, **100 foram "
         "negativos e apenas 14 positivos.**")
 
+    # ── 8.4 ──────────────────────────────────────────────────────────────────
+    A.secao(doc, "8.4", "E o achado que só apareceu com a base completa", nivel=2)
+
+    A.paragrafo(doc,
+        "**Quando somei os Comunicados ao Mercado aos Fatos Relevantes, o acerto da "
+        "nossa leitura despencou.** Fui investigar, e o motivo é esclarecedor:")
+
+    A.tabela_abnt(doc, "10", "A nossa leitura funciona onde?",
+        ["Em que tipo de documento", "Casos", "Acertou", "Palpite fixo", "Ganho", "Vale?"],
+        [
+            ["Só FATO RELEVANTE", "700", "54,3%", "51,7%", "+2,6 pontos", "SIM"],
+            ["Só Comunicado ao Mercado", "1.492", "50,8%", "50,8%", "0,0 ponto", "não"],
+            ["Os dois juntos", "2.192", "51,9%", "51,1%", "+0,8 ponto", "não"],
+        ], fonte=FONTE)
+
+    A.paragrafo(doc,
+        "**A nossa leitura só acrescenta valor no documento mais forte.** No Fato "
+        "Relevante ela ganha 2,6 pontos de quem não lê nada, e o resultado passa no "
+        "teste estatístico. **No Comunicado ao Mercado ela não ganha absolutamente "
+        "nada — zero.**")
+
+    A.paragrafo(doc,
+        "**Isso é coerente com tudo o mais, e reforça a tese em vez de enfraquecê-la.** "
+        "O Comunicado ao Mercado mexe pouco no preço; onde quase não há movimento, não "
+        "há o que prever. **Ler o texto só compensa quando o evento é grande** — que é "
+        "exatamente o efeito de cauda dito de outra maneira.")
+
+    A.paragrafo(doc,
+        "**E é honesto registrar:** quando juntei tudo, o resultado deixou de ser "
+        "significativo. **O número que se deve reportar é o do Fato Relevante — 2,6 "
+        "pontos —, e sempre dizendo que nos Comunicados não funciona.**")
+
     # ── 9 ────────────────────────────────────────────────────────────────────
     A.secao(doc, "9", "Juntando tudo")
 
@@ -471,9 +503,9 @@ def main() -> None:
         [
             ["Diz que algo aconteceu?", "SIM, e muito bem", "não é o forte dela"],
             ["Diz se foi bom ou ruim?", "NÃO — não tem esse dado", "SIM, mas só o ruim"],
-            ["Acerta o sacolejo?", "+16,5%, certeza quase absoluta", "não distingue"],
-            ["Acerta o volume?", "+31,6%, certeza quase absoluta", "não distingue"],
-            ["Acerta a direção?", "impossível", "+4,9 pontos sobre o preguiçoso"],
+            ["Acerta o sacolejo?", "+18,2% no Fato Relevante", "não distingue"],
+            ["Acerta o volume?", "+36,3% no Fato Relevante", "não distingue"],
+            ["Acerta a direção?", "impossível", "+2,6 pontos, só no Fato Relevante"],
             ["Custo", "zero — já vem pronto", "precisa rodar o programa"],
         ], fonte=FONTE)
 
@@ -526,15 +558,16 @@ def main() -> None:
     A.secao(doc, "12", "Se o tempo apertar, cinco frases")
 
     A.lista(doc, [
-        "“Peguei 3.435 comunicados que as empresas entregaram à CVM depois que o "
+        "“Peguei 10.218 comunicados que as empresas entregaram à CVM depois que o "
         "mercado fechou, com hora oficial, e olhei o que aconteceu no pregão seguinte.”",
-        "“O volume negociou 32% acima do normal e o sacolejo ficou 16% acima — "
+        "“Nos Fatos Relevantes o volume negociou 36% acima do normal e o sacolejo 18% "
+        "acima — "
         "comparando com 110 mil pregões em que não houve comunicado nenhum.”",
-        "“Mas metade dos fatos relevantes não moveu nada. O efeito vem de uma minoria "
+        "“Mas 59% não moveram nada. O efeito vem de uma minoria "
         "de casos — e isso confirma a tese central da minha dissertação.”",
-        "“O rótulo da CVM não consegue prever direção, porque não diz se a notícia é "
-        "boa ou ruim. A minha leitura consegue, e acerta quase 5 pontos acima de quem "
-        "não lê nada.”",
+        "“O rótulo da CVM não prevê direção, porque não diz se a notícia é boa ou "
+        "ruim. A minha leitura prevê — mas SÓ nos Fatos Relevantes, onde ganha 2,6 "
+        "pontos de quem não lê nada. Nos Comunicados ao Mercado ela não ganha nada.”",
         "“E o sinal mora quase todo na notícia ruim: o que o programa chama de ruim é "
         "seguido de queda de 0,35%; o que ele chama de bom não é seguido de nada.”",
     ])

@@ -65,6 +65,11 @@ def linha(ws, r, valores, cor=None, negrito=False, altura=None):
 def main() -> None:
     A = json.loads((DADOS / "rodada_A.json").read_text(encoding="utf-8"))
     Bj = json.loads((DADOS / "rodada_B.json").read_text(encoding="utf-8"))
+    FC = json.loads((DADOS / "fr_vs_cm.json").read_text(encoding="utf-8"))
+    BC = json.loads((DADOS / "rodada_B_por_categoria.json").read_text(encoding="utf-8"))
+    casos_df = pd.read_csv(DADOS / "casos_concretos.csv")
+    ver = casos_df["Veredicto"].value_counts()
+    n_casos = len(casos_df)
     ctl = A["controle"]
     wb = Workbook()
 
@@ -72,7 +77,7 @@ def main() -> None:
     ws = wb.active
     ws.title = "PAINEL"
     titulo(ws, "A NOTÍCIA DA NOITE E O PREGÃO SEGUINTE — RESULTADO", 5,
-           sub="3.435 comunicados entregues à CVM após o fechamento · 57 papéis da B3 · "
+           sub=f"{n_casos:,} comunicados entregues à CVM após o fechamento · 57 papéis da B3 · ".replace(",", ".") + 
                "2018 a 2026 · hora oficial do Protocolo de Entrega")
 
     r = 4
@@ -112,16 +117,20 @@ def main() -> None:
     cabecalho(ws, [("No dia seguinte à notícia...", 30), ("Casos", 16),
                    ("Proporção", 18), ("", 14), ("", 20)], r)
     r += 1
-    for rot, n, pct, cor in [("MEXEU MUITO (2x o normal ou mais)", 688, "20,0%", VERDE),
-                             ("mexeu (1,3x ou mais)", 938, "27,3%", VERDE),
-                             ("ficou dentro do normal", 1304, "38,0%", CINZA),
-                             ("ficou MAIS PARADO que o normal", 490, "14,3%", VERM)]:
-        linha(ws, r, [rot, f"{n:,}".replace(",", "."), pct, "", ""], cor, False, 20)
+    for chave, rot, cor in [("MEXEU MUITO", "MEXEU MUITO (2x o normal ou mais)", VERDE),
+                            ("mexeu", "mexeu (1,3x ou mais)", VERDE),
+                            ("dentro do normal", "ficou dentro do normal", CINZA),
+                            ("dia mais parado que o normal",
+                             "ficou MAIS PARADO que o normal", VERM)]:
+        n = int(ver.get(chave, 0))
+        linha(ws, r, [rot, f"{n:,}".replace(",", "."), f"{n/n_casos:.1%}", "", ""],
+              cor, False, 20)
         r += 1
     r += 1
+    nao = (n_casos - ver.get("MEXEU MUITO", 0) - ver.get("mexeu", 0)) / n_casos
     ws.cell(row=r, column=1,
-            value="RESPOSTA: NÃO. 52,3% não mexeram. O efeito médio vem de uma "
-                  "MINORIA de casos — é o efeito de cauda.").font = \
+            value=f"RESPOSTA: NAO. {nao:.1%} nao mexeram. O efeito medio vem de uma "
+                  "MINORIA de casos -- e o efeito de cauda.").font = \
         Font(bold=True, size=11, color="9C0006")
     r += 2
 
@@ -132,25 +141,44 @@ def main() -> None:
     cabecalho(ws, [("Quem faz a previsão", 30), ("Acertou", 16),
                    ("Quem não lê nada", 18), ("Ganho", 14), ("Chance de ser sorte", 20)], r)
     r += 1
-    t1 = Bj["testes"]["GAP DE ABERTURA — só os atribuíveis a 1 documento"]
-    t2 = Bj["testes"]["PREGÃO INTEIRO — só os atribuíveis a 1 documento"]
-    linha(ws, r, ["O rótulo da CVM (Fato Relevante)", "não se aplica",
-                  "—", "IMPOSSÍVEL", "o rótulo não diz o lado"], CINZA, False, 22)
+    linha(ws, r, ["O rotulo da CVM", "nao se aplica",
+                  "-", "IMPOSSIVEL", "o rotulo nao diz o lado"], CINZA, False, 22)
     r += 1
-    linha(ws, r, ["Nossa leitura — no salto da abertura", f"{t1['acuracia']:.1%}",
-                  f"{t1['classe_majoritaria']:.1%}",
-                  f"{t1['ganho_sobre_majoritaria']*100:+.1f} pts",
-                  "PERDE do palpite fixo"], VERM, False, 22)
+    for k_, rot, cor in [("so FATO RELEVANTE", "Nossa leitura - em FATO RELEVANTE", VERDE),
+                         ("so COMUNICADO AO MERCADO",
+                          "Nossa leitura - em Comunicado ao Mercado", VERM),
+                         ("TODOS (FR + Comunicados)",
+                          "Nossa leitura - os dois juntos", CINZA)]:
+        b_ = BC[k_]
+        obs = f"{b_['p']:.3f}" + ("  *" if b_["p"] < 0.05 else "  (pode ser sorte)")
+        linha(ws, r, [rot, f"{b_['acuracia']:.1%}", f"{b_['maj']:.1%}",
+                      f"{b_['ganho_pp']:+.2f} pts", obs], cor, b_["p"] < 0.05, 22)
+        r += 1
     r += 1
-    linha(ws, r, ["Nossa leitura — no pregão inteiro", f"{t2['acuracia']:.1%}",
-                  f"{t2['classe_majoritaria']:.1%}",
-                  f"{t2['ganho_sobre_majoritaria']*100:+.1f} pts",
-                  f"{t2['p_binomial_vs_50']:.3f}"], VERDE, True, 22)
-    r += 2
     ws.cell(row=r, column=1,
-            value="RESPOSTA: SÓ a nossa leitura pode responder isso — e ganha por "
-                  "4,9 pontos de quem não lê nada.").font = \
-        Font(bold=True, size=11, color="006100")
+            value="RESPOSTA: so a nossa leitura pode responder -- e SO funciona no "
+                  "Fato Relevante, onde ganha 2,6 pontos. No Comunicado, ganha zero."
+            ).font = Font(bold=True, size=11, color="006100")
+    r += 2
+
+    ws.cell(row=r, column=1,
+            value="A LEI ACERTA? Fato Relevante contra Comunicado ao Mercado"
+            ).font = Font(bold=True, size=12, color=AZUL)
+    r += 1
+    cabecalho(ws, [("Regua", 30), ("Fato Relevante", 16), ("Comunicado", 18),
+                   ("Quantas vezes mais", 14), ("Chance de ser sorte", 20)], r)
+    r += 1
+    for k_, rot in [("volatilidade (sacolejo)", "Sacolejo do preco"),
+                    ("volume negociado", "VOLUME negociado")]:
+        f_ = FC[k_]
+        linha(ws, r, [rot, f"+{f_['exc_fr_pct']:.1f}%", f"+{f_['exc_cm_pct']:.1f}%",
+                      f"{f_['razao']:.1f}x", f"{f_['p']:.0e}"], VERDE, True, 22)
+        r += 1
+    r += 1
+    ws.cell(row=r, column=1,
+            value="SIM. O que a lei chama de RELEVANTE mexe 3 VEZES MAIS que o que "
+                  "ela chama de simples comunicado."
+            ).font = Font(bold=True, size=11, color="006100")
     r += 2
 
     ws.cell(row=r, column=1, value="E ONDE ESTÁ O SINAL?").font = \

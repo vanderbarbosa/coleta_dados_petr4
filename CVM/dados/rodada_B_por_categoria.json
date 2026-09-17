@@ -1,0 +1,26 @@
+{
+  "TODOS (FR + Comunicados)": {
+    "n": 2192,
+    "acuracia": 0.5192,
+    "maj": 0.5109,
+    "ganho_pp": 0.82,
+    "p": 0.07623921331114365,
+    "kappa": 0.0342
+  },
+  "so FATO RELEVANTE": {
+    "n": 700,
+    "acuracia": 0.5429,
+    "maj": 0.5171,
+    "ganho_pp": 2.57,
+    "p": 0.025677984622832512,
+    "kappa": 0.0783
+  },
+  "so COMUNICADO AO MERCADO": {
+    "n": 1492,
+    "acuracia": 0.508,
+    "maj": 0.508,
+    "ganho_pp": 0.0,
+    "p": 0.5515587967523129,
+    "kappa": 0.0133
+  }
+}
