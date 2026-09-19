@@ -1,0 +1,165 @@
+{
+  "n_docs_cvm": 20421,
+  "n_com_hora": 20419,
+  "n_eventos": 11161,
+  "n_fr": 3292,
+  "n_cm": 7869,
+  "n_papeis": 56,
+  "periodo": "01/2018 a 08/2026",
+  "n_controle": 105896,
+  "vol": {
+    "sem": 1.031,
+    "com": 1.13038,
+    "exc": 9.6,
+    "p": 7.052688637504847e-55
+  },
+  "qtd": {
+    "sem": 1.06005,
+    "com": 1.23497,
+    "exc": 16.5,
+    "p": 3.6073751303803234e-62
+  },
+  "dir": {
+    "sem": 0.00012,
+    "com": -1e-05,
+    "p": 0.7381173077517797
+  },
+  "gap": {
+    "sem": 0.00077,
+    "com": 0.00161,
+    "p": 0.00018788491265925167
+  },
+  "fr_vs_cm": {
+    "volatilidade (sacolejo)": {
+      "fr": 1.2188,
+      "cm": 1.1018,
+      "exc_fr_pct": 18.22,
+      "exc_cm_pct": 6.87,
+      "razao": 2.65,
+      "p": 7.210471007203892e-18,
+      "n_fr": 3280,
+      "n_cm": 7852
+    },
+    "volume negociado": {
+      "fr": 1.4461,
+      "cm": 1.1889,
+      "exc_fr_pct": 36.42,
+      "exc_cm_pct": 12.16,
+      "razao": 3.0,
+      "p": 4.7219586451157813e-26,
+      "n_fr": 3292,
+      "n_cm": 7862
+    }
+  },
+  "concreto": {
+    "oscilacao_dia": {
+      "sem": 2.03,
+      "com": 2.25,
+      "bruto_pct": 10.9,
+      "unidade": "%",
+      "p": 1.8017114711605866e-32
+    },
+    "variacao_fech": {
+      "sem": 1.78,
+      "com": 2.13,
+      "bruto_pct": 20.0,
+      "unidade": "%",
+      "p": 6.09541306561142e-30
+    },
+    "salto_abertura": {
+      "sem": 0.73,
+      "com": 1.02,
+      "bruto_pct": 41.0,
+      "unidade": "%",
+      "p": 5.457074725191367e-49
+    },
+    "volume": {
+      "sem": 11.16,
+      "com": 19.17,
+      "bruto_pct": 71.8,
+      "unidade": "mi",
+      "p": 1.089414757253304e-173
+    }
+  },
+  "horario": {
+    "n_total": 4470,
+    "grupos": {
+      "antes da abertura (até 09h59)": {
+        "n": 1145,
+        "D0": 1.6397,
+        "D1": 1.1801,
+        "domina": "D0",
+        "p_D0_vs_D1": 2.4088535652011025e-11
+      },
+      "com o pregão aberto (10h–16h59)": {
+        "n": 239,
+        "D0": 2.0991,
+        "D1": 1.546,
+        "domina": "D0",
+        "p_D0_vs_D1": 0.006193695669015188
+      },
+      "após o fechamento (17h em diante)": {
+        "n": 3086,
+        "D0": 1.0921,
+        "D1": 1.4187,
+        "domina": "D+1",
+        "p_D0_vs_D1": 1.9759123158958493e-17
+      }
+    },
+    "teste_decisivo": {
+      "antes_D0_menos_D1": 0.4596,
+      "depois_D0_menos_D1": -0.3266,
+      "dif": 0.7862,
+      "t": 10.064,
+      "p": 2.98410528164297e-23
+    },
+    "janela": {
+      "D0": 1.2862,
+      "D1": 1.3644,
+      "media_0_1": 1.3253
+    }
+  },
+  "veredicto": {
+    "dentro do normal": 4599,
+    "mexeu": 2900,
+    "dia mais parado que o normal": 1991,
+    "MEXEU MUITO": 1642,
+    "sem base de comparação": 29
+  },
+  "nao_moveu": 59.0,
+  "quando": {
+    "antes": 23.9,
+    "pregao": 11.6,
+    "depois": 64.5
+  },
+  "distribuicao": {
+    "mediana": 1.0,
+    "p75": 1.361,
+    "p90": 1.862,
+    "p95": 2.251,
+    "p99": 3.259,
+    "media": 1.136
+  },
+  "dist_por_categoria": {
+    "Fato Relevante": {
+      "n": 3280,
+      "media": 1.219,
+      "mediana": 1.065,
+      "p75": 1.469,
+      "p90": 2.02,
+      "p95": 2.557,
+      "p99": 3.44,
+      "nao_moveu_pct": 51.9
+    },
+    "Comunicado ao Mercado": {
+      "n": 7852,
+      "media": 1.102,
+      "mediana": 0.975,
+      "p75": 1.309,
+      "p90": 1.783,
+      "p95": 2.143,
+      "p99": 3.174,
+      "nao_moveu_pct": 62.0
+    }
+  }
+}
