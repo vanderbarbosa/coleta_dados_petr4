@@ -1,0 +1,29 @@
+{
+  "noite SEM comunicado nenhum": {
+    "n": 796,
+    "acuracia": 0.5289,
+    "maj": 0.5264,
+    "ganho_pp": 0.25,
+    "p": 0.11065844643971137
+  },
+  "noite com Comunicado, sem Fato Relevante": {
+    "n": 770,
+    "acuracia": 0.5338,
+    "maj": 0.5247,
+    "ganho_pp": 0.91,
+    "p": 0.06600556175544277
+  },
+  "noite com FATO RELEVANTE": {
+    "n": 393,
+    "acuracia": 0.5471,
+    "maj": 0.514,
+    "ganho_pp": 3.31,
+    "p": 0.06924066419033227
+  },
+  "teste_filtro": {
+    "fr": 0.5471,
+    "resto": 0.5313,
+    "dif_pp": 1.58,
+    "p": 0.5749155922593163
+  }
+}
