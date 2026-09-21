@@ -1,0 +1,54 @@
+{
+  "top9": {
+    "base": 0.0937,
+    "grupos": {
+      "sem comunicado nenhum": {
+        "n": 888,
+        "extremos": 76,
+        "taxa": 0.0856,
+        "lift": 0.913,
+        "p": 0.2856586341289832
+      },
+      "houve Comunicado ao Mercado": {
+        "n": 779,
+        "extremos": 63,
+        "taxa": 0.0809,
+        "lift": 0.863,
+        "p": 0.11985845492090322
+      },
+      "houve FATO RELEVANTE": {
+        "n": 392,
+        "extremos": 54,
+        "taxa": 0.1378,
+        "lift": 1.47,
+        "p": 0.0014189879115312565
+      }
+    }
+  },
+  "top5": {
+    "base": 0.0437,
+    "grupos": {
+      "sem comunicado nenhum": {
+        "n": 888,
+        "extremos": 35,
+        "taxa": 0.0394,
+        "lift": 0.902,
+        "p": 0.446933163010669
+      },
+      "houve Comunicado ao Mercado": {
+        "n": 779,
+        "extremos": 33,
+        "taxa": 0.0424,
+        "lift": 0.969,
+        "p": 0.9115783001135636
+      },
+      "houve FATO RELEVANTE": {
+        "n": 392,
+        "extremos": 22,
+        "taxa": 0.0561,
+        "lift": 1.284,
+        "p": 0.21524947295781488
+      }
+    }
+  }
+}

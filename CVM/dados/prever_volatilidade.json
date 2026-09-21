@@ -1,0 +1,136 @@
+{
+  "ticker": "PETR4",
+  "n": 2309,
+  "alvo_acima_pct": 44.1,
+  "arms": {
+    "notícia: quantidade de textos": {
+      "rotulo": "notícia: quantidade de textos",
+      "n": 2189,
+      "acuracia": 0.4929,
+      "majoritaria": 0.5564,
+      "ganho_pp": -6.35,
+      "p_vs_acaso": 0.5213974363763973,
+      "kappa": 0.0354,
+      "mcc": 0.0421,
+      "prev_acima_pct": 72.8
+    },
+    "notícia: intensidade do tom": {
+      "rotulo": "notícia: intensidade do tom",
+      "n": 1839,
+      "acuracia": 0.5247,
+      "majoritaria": 0.5546,
+      "ganho_pp": -2.99,
+      "p_vs_acaso": 0.03581423774554191,
+      "kappa": 0.0401,
+      "mcc": 0.0401,
+      "prev_acima_pct": 45.5
+    },
+    "CVM: houve comunicado?": {
+      "rotulo": "CVM: houve comunicado?",
+      "n": 2309,
+      "acuracia": 0.5024,
+      "majoritaria": 0.5587,
+      "ganho_pp": -5.63,
+      "p_vs_acaso": 0.8351505324142168,
+      "kappa": 0.0135,
+      "mcc": 0.0138,
+      "prev_acima_pct": 53.8
+    },
+    "CVM: houve Fato Relevante?": {
+      "rotulo": "CVM: houve Fato Relevante?",
+      "n": 2309,
+      "acuracia": 0.5492,
+      "majoritaria": 0.5587,
+      "ganho_pp": -0.95,
+      "p_vs_acaso": 2.515982227303314e-06,
+      "kappa": 0.0249,
+      "mcc": 0.0302,
+      "prev_acima_pct": 17.9
+    },
+    "CVM: intensidade do tom": {
+      "rotulo": "CVM: intensidade do tom",
+      "n": 857,
+      "acuracia": 0.4947,
+      "majoritaria": 0.5356,
+      "ganho_pp": -4.08,
+      "p_vs_acaso": 0.7846609234457127,
+      "kappa": 0.0041,
+      "mcc": 0.0043,
+      "prev_acima_pct": 60.3
+    },
+    "notícia: texto OU tom": {
+      "rotulo": "notícia: texto OU tom",
+      "n": 2189,
+      "acuracia": 0.4783,
+      "majoritaria": 0.5564,
+      "ganho_pp": -7.81,
+      "p_vs_acaso": 0.04450022062293963,
+      "kappa": 0.0267,
+      "mcc": 0.0374,
+      "prev_acima_pct": 81.9
+    },
+    "notícia (texto OU tom) + CVM": {
+      "rotulo": "notícia (texto OU tom) + CVM",
+      "n": 2189,
+      "acuracia": 0.46,
+      "majoritaria": 0.5564,
+      "ganho_pp": -9.64,
+      "p_vs_acaso": 0.00019857508437428608,
+      "kappa": 0.0088,
+      "mcc": 0.0159,
+      "prev_acima_pct": 89.7
+    },
+    "notícia (texto OU tom) + Fato Relevante": {
+      "rotulo": "notícia (texto OU tom) + Fato Relevante",
+      "n": 2189,
+      "acuracia": 0.4719,
+      "majoritaria": 0.5564,
+      "ganho_pp": -8.45,
+      "p_vs_acaso": 0.009103247766358317,
+      "kappa": 0.0191,
+      "mcc": 0.0282,
+      "prev_acima_pct": 84.0
+    },
+    "FR: quantidade de texto": {
+      "rotulo": "FR: quantidade de texto",
+      "n": 414,
+      "acuracia": 0.5217,
+      "majoritaria": 0.5266,
+      "ganho_pp": -0.48,
+      "p_vs_acaso": 0.4034626624209865,
+      "kappa": 0.0709,
+      "mcc": 0.0879,
+      "prev_acima_pct": 77.8
+    },
+    "FR: intensidade do tom": {
+      "rotulo": "FR: intensidade do tom",
+      "n": 414,
+      "acuracia": 0.5411,
+      "majoritaria": 0.5266,
+      "ganho_pp": 1.45,
+      "p_vs_acaso": 0.10471898356757998,
+      "kappa": 0.0757,
+      "mcc": 0.0759,
+      "prev_acima_pct": 43.5
+    },
+    "FR: texto OU tom": {
+      "rotulo": "FR: texto OU tom",
+      "n": 414,
+      "acuracia": 0.5072,
+      "majoritaria": 0.5266,
+      "ganho_pp": -1.93,
+      "p_vs_acaso": 0.8059222563609455,
+      "kappa": 0.0536,
+      "mcc": 0.0889,
+      "prev_acima_pct": 88.9
+    }
+  },
+  "referencia_direcao": {
+    "n": 402,
+    "acuracia": 0.5522,
+    "maj": 0.5149,
+    "ganho_pp": 3.73,
+    "p": 0.04073208450121386,
+    "kappa": 0.1023
+  }
+}

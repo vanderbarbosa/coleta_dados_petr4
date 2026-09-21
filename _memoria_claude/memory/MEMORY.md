@@ -33,3 +33,4 @@
 - [CVM: estudo de evento](cvm-estudo-de-evento.md) — 16.437 eventos oficiais, 54 papéis; direção nula, magnitude 1,325; efeito de cauda sem usar modelo de sentimento
 - [Organização do projeto](organizacao-do-projeto.md) — pastas de Artigo e Mentoria; como restaurar esta memória noutra máquina
 - [Artigo 1: o relógio da CVM](artigo-1-relogio-da-cvm.md) — escrito; como a hora oficial foi obtida e as três validações
+- [Volatilidade: só a combinação](volatilidade-so-a-combinacao.md) — acima/abaixo nunca funciona; o dia EXCEPCIONAL funciona, e só com CVM + notícia juntas (1,67×)

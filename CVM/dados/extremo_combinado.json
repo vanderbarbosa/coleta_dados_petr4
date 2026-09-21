@@ -1,0 +1,41 @@
+{
+  "base": 0.0937,
+  "n": 2059,
+  "grupos": {
+    "nada -- nem comunicado nem noite agitada": {
+      "n": 292,
+      "extremos": 24,
+      "taxa": 0.0822,
+      "lift": 0.877,
+      "p": 0.5165135761780125
+    },
+    "so noite de muito texto (sem CVM)": {
+      "n": 596,
+      "extremos": 52,
+      "taxa": 0.0872,
+      "lift": 0.931,
+      "p": 0.5599643359030261
+    },
+    "so Fato Relevante (noite calma de noticia)": {
+      "n": 92,
+      "extremos": 7,
+      "taxa": 0.0761,
+      "lift": 0.812,
+      "p": 0.7139888005007884
+    },
+    "FATO RELEVANTE + noite de muito texto": {
+      "n": 300,
+      "extremos": 47,
+      "taxa": 0.1567,
+      "lift": 1.671,
+      "p": 0.0001506218791329414
+    }
+  },
+  "noticia_dentro_do_FR": {
+    "calma": 0.0761,
+    "agitada": 0.1567,
+    "n_calma": 92,
+    "n_agitada": 300,
+    "p": 0.05684251132001854
+  }
+}

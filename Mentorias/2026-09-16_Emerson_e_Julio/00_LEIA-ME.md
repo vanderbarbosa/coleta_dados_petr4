@@ -112,3 +112,66 @@ precisas ~15.200 noites; temos 393. **Fica como hipótese, não como achado.**
 | **`05_Combinar_as_fontes_COMPLETO.docx`** | **a terceira parte, detalhada** |
 | **`06_Combinar_as_fontes_RESUMIDO.docx`** | **a terceira parte, em cinco minutos** |
 | **`07_Combinar_as_fontes.xlsx`** | **planilha da terceira parte, para projetar** |
+| **`08_Prever_volatilidade_COMPLETO.docx`** | **a quarta parte, detalhada** |
+| **`09_Prever_volatilidade_RESUMIDO.docx`** | **a quarta parte, em cinco minutos** |
+| **`10_Prever_volatilidade.xlsx`** | **planilha da quarta parte** |
+
+---
+
+## A quarta parte: e a VOLATILIDADE?
+
+A terceira parte previu **direção**. Faltava o alvo em que esta pesquisa sempre
+mostrou sinal forte: **o tamanho do sacolejo do pregão seguinte**.
+
+### Tentei duas vezes e falhou
+
+A pergunta natural — *amanhã vai sacudir mais que a média da semana?* — perdeu de
+quem não lê nada, em todos os sinais. Refiz corrigindo um erro de calibragem da
+minha própria regra (ela previa "acima" em nove de cada dez noites, quando a
+verdade é quatro em dez). **Continuou perdendo.**
+
+### E o motivo do fracasso é o achado
+
+| | sem Fato Relevante | com Fato Relevante | quanto mudou |
+|---|---|---|---|
+| o dia típico (mediana) | 0,932 | 0,964 | +3,4% — quase nada |
+| os dias agitados (perc. 95) | 1,922 | 2,298 | **+19,6% — muito** |
+
+**O Fato Relevante mexe na ponta da distribuição, não no meio dela.** É como uma
+cidade que ganha alguns prédios muito altos: a altura média sobe, mas a casa
+típica continua igual. Quem pergunta *"a casa da esquina é mais alta que a
+média?"* não nota diferença nenhuma — e era exatamente isso que a minha pergunta
+fazia.
+
+### Então mudei a pergunta
+
+Em vez de *"vai sacudir mais que o normal?"*, passei a perguntar **"vai ser um dia
+excepcional?"** — entre os ~10% mais agitados. **Aí funcionou:** na noite de Fato
+Relevante o dia excepcional fica **1,47 vezes** mais provável (p = 0,0014).
+
+> Registre-se que isto **não foi pescaria**. A tese do efeito de cauda, sustentada
+> nesta pesquisa desde a primeira auditoria, prevê exatamente que o sinal esteja
+> no extremo e não no centro. Ainda assim: três alvos foram testados, e quem lê
+> tem direito de saber disso.
+
+### A resposta à pergunta que motivou tudo
+
+| Como estava a noite | Chance de dia excepcional | Quantas vezes o normal |
+|---|---|---|
+| nada acontecendo | 8,2% | 0,88× |
+| muita notícia, mas sem comunicado | 8,7% | 0,93× |
+| Fato Relevante, mas notícia calma | 7,6% | 0,81× |
+| **FATO RELEVANTE + MUITA NOTÍCIA** | **15,7%** | **1,67×** ✓ p = 0,00015 |
+
+**Nenhum dos dois sinais funciona sozinho. Só funcionam juntos.**
+
+O comunicado à CVM avisa que houve um fato de verdade. O volume de notícias avisa
+que o mercado reparou nele. **Fato que ninguém comentou não move o preço;
+comentário sem fato também não. É o encontro dos dois que antecede o dia
+agitado.**
+
+### O que não posso afirmar
+
+O resultado combinado é sólido. Mas a afirmação mais específica — que a notícia
+acrescenta *dentro* das noites de Fato Relevante — fica em **p = 0,057 e não
+passa**. O grupo de comparação tem só 92 noites.

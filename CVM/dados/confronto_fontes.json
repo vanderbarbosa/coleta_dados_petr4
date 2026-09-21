@@ -1,0 +1,141 @@
+{
+  "ticker": "PETR4",
+  "n_pregoes": 2309,
+  "cobertura": {
+    "noticia": 1989,
+    "cvm": 1242,
+    "ambos": 1179
+  },
+  "direcao": {
+    "todos_prev_news": {
+      "rotulo": "notícia de portal",
+      "n": 1984,
+      "acuracia": 0.4778,
+      "majoritaria": 0.5247,
+      "ganho_pp": -4.69,
+      "p_vs_acaso": 0.050767631482084075,
+      "kappa": 0.0039,
+      "mcc": 0.021
+    },
+    "todos_prev_cvm": {
+      "rotulo": "comunicado da CVM",
+      "n": 492,
+      "acuracia": 0.4756,
+      "majoritaria": 0.5244,
+      "ganho_pp": -4.88,
+      "p_vs_acaso": 0.2997671592468897,
+      "kappa": -0.0248,
+      "mcc": -0.029
+    },
+    "todos_prev_ambos": {
+      "rotulo": "os dois somados",
+      "n": 2010,
+      "acuracia": 0.4776,
+      "majoritaria": 0.5254,
+      "ganho_pp": -4.78,
+      "p_vs_acaso": 0.04710154279483158,
+      "kappa": 0.0041,
+      "mcc": 0.0165
+    },
+    "inter_prev_news": {
+      "rotulo": "notícia de portal",
+      "n": 1175,
+      "acuracia": 0.4826,
+      "majoritaria": 0.5217,
+      "ganho_pp": -3.91,
+      "p_vs_acaso": 0.24323064674309042,
+      "kappa": 0.0071,
+      "mcc": 0.033
+    },
+    "inter_prev_cvm": {
+      "rotulo": "comunicado da CVM",
+      "n": 467,
+      "acuracia": 0.4775,
+      "majoritaria": 0.5182,
+      "ganho_pp": -4.07,
+      "p_vs_acaso": 0.3547238469446154,
+      "kappa": -0.0259,
+      "mcc": -0.0307
+    },
+    "inter_prev_ambos": {
+      "rotulo": "os dois somados",
+      "n": 1176,
+      "acuracia": 0.483,
+      "majoritaria": 0.5204,
+      "ganho_pp": -3.74,
+      "p_vs_acaso": 0.2554184697628453,
+      "kappa": 0.0055,
+      "mcc": 0.0246
+    },
+    "fatorel_prev_news": {
+      "rotulo": "notícia de portal",
+      "n": 397,
+      "acuracia": 0.4912,
+      "majoritaria": 0.5139,
+      "ganho_pp": -2.27,
+      "p_vs_acaso": 0.763358325620058,
+      "kappa": 0.009,
+      "mcc": 0.0379
+    },
+    "fatorel_prev_cvm": {
+      "rotulo": "comunicado da CVM",
+      "n": 174,
+      "acuracia": 0.4885,
+      "majoritaria": 0.5402,
+      "ganho_pp": -5.17,
+      "p_vs_acaso": 0.8201708574029795,
+      "kappa": 0.0257,
+      "mcc": 0.0345
+    },
+    "fatorel_prev_ambos": {
+      "rotulo": "os dois somados",
+      "n": 398,
+      "acuracia": 0.4925,
+      "majoritaria": 0.5126,
+      "ganho_pp": -2.01,
+      "p_vs_acaso": 0.8021404050075754,
+      "kappa": 0.0091,
+      "mcc": 0.0381
+    }
+  },
+  "volume": {
+    "volprev_news": {
+      "rotulo": "volume de notícias",
+      "n": 2309,
+      "acuracia": 0.4907,
+      "majoritaria": 0.5626,
+      "ganho_pp": -7.19,
+      "p_vs_acaso": 0.38209394278403147,
+      "kappa": -0.0373,
+      "mcc": -0.0374
+    },
+    "volprev_cvm": {
+      "rotulo": "houve comunicado da CVM",
+      "n": 2309,
+      "acuracia": 0.4942,
+      "majoritaria": 0.5626,
+      "ganho_pp": -6.84,
+      "p_vs_acaso": 0.5884620559904622,
+      "kappa": -0.0022,
+      "mcc": -0.0022
+    },
+    "volprev_ambos": {
+      "rotulo": "os dois somados",
+      "n": 2309,
+      "acuracia": 0.4556,
+      "majoritaria": 0.5626,
+      "ganho_pp": -10.7,
+      "p_vs_acaso": 2.1567619567399096e-05,
+      "kappa": -0.0351,
+      "mcc": -0.0409
+    }
+  },
+  "mcnemar": {
+    "volume": {
+      "so_combinado": 282,
+      "so_noticia": 363,
+      "p": 0.0016124332596607973,
+      "n": 2309
+    }
+  }
+}
