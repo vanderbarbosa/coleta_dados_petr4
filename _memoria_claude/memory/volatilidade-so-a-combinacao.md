@@ -39,3 +39,23 @@ EVENTO EXTREMO, nunca como acima/abaixo da média — num fenômeno de cauda a e
 do alvo importa mais que a escolha do modelo. Documentado em
 `Mentorias/2026-09-16_Emerson_e_Julio/08..10`; código em `CVM/14_prever_volatilidade.py`.
 Relacionado: [[cvm-estudo-de-evento]], [[banca-julho2026-refino]].
+
+## A mesma coisa em PORCENTAGEM (é assim que ele quer ouvir)
+
+Ele corrigiu o enquadramento em 21/09/2026: "chance de dia excepcional" não é o
+foco da pesquisa — **a pesquisa pergunta se a notícia influencia preço e
+volatilidade, e em QUANTO POR CENTO.** Medido em `CVM/15_quanto_a_noticia_move.py`,
+PETR4, 2.309 pregões, contra piso de 618 noites sem nada:
+
+| noite | volatilidade | tamanho da variação | volume |
+|---|---|---|---|
+| muita notícia, sem CVM | −3,5% | −0,6% | −5,0% * |
+| Comunicado ao Mercado | −0,5% | −1,3% | −1,1% * |
+| Fato Relevante | +6,4% | **+18,9%** * | +11,9% |
+| **FR + muita notícia** | **+13,2%** * | **+38,2%** * | +19,4% |
+
+Direção nula: tom muito negativo −0,170%, muito positivo +0,164%, p=0,291.
+Concreto: oscila 1,31% após noite vazia, 1,70% após FR+notícia; giro 46,3 → 62,5 mi.
+
+**Não confundir com o Artigo 1 (+9,6%):** lá são 54 papéis contra 105.896 pregões
+sem evento; aqui só PETR4 contra controle que já exclui noites de notícia.
