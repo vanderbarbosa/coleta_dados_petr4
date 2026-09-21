@@ -49,7 +49,66 @@ volume. Os números corretos são **+9,6%** e **+16,5%**.
 | Dá para saber o lado? | Só com a nossa leitura, e só no Fato Relevante |
 | A lei acerta? | **Sim. Fato Relevante mexe 2,6× mais que Comunicado** |
 
+## A terceira parte: combinar as duas fontes
+
+Esta parte ficou por último porque o desenho teve de ser refeito.
+
+**A primeira regra falhou.** Somar o sentimento da noite — mais positivas que
+negativas, aposta em alta — **previu BAIXA em 99% das noites.** O programa que lê
+os textos enxerga quase tudo como negativo, então o saldo nunca vira positivo.
+Uma regra que diz a mesma coisa 99% das vezes não é previsão, é constante.
+
+**A correção** foi mudar a pergunta: em vez de *"teve notícia boa?"*, perguntar
+*"esta noite foi pior que o habitual desta ação?"*, comparando com a média dos 60
+pregões anteriores. Isso sozinho valeu seis pontos percentuais.
+
+**O resultado**, nos 1.163 dias em que as duas fontes existem:
+
+| Fonte | Acertou | Quem não lê nada | Vale? |
+|---|---|---|---|
+| só o jornal | 53,8% | 52,1% | **sim** |
+| só o comunicado da CVM | 50,8% | 51,7% | não |
+| os dois juntos | 53,7% | 52,1% | **sim** |
+
+**O jornal prevê melhor que o comunicado oficial.** O motivo é de linguagem: o
+comunicado descreve o fato em termos administrativos; o jornal já traz a
+interpretação.
+
+**E nas 402 noites de Fato Relevante:**
+
+| Fonte | Acertou | Quem não lê nada | Ganho |
+|---|---|---|---|
+| só o jornal | 54,7% | 51,4% | +3,31 pts (não passa) |
+| **os dois juntos** | **55,2%** | 51,5% | **+3,73 pts** ✓ |
+
+**É o melhor resultado de direção de toda a pesquisa.** E o jornal sozinho não
+passa no teste — só a combinação passa.
+
+### A hipótese que isso levanta, e que NÃO está provada
+
+Se o comunicado não prevê nada sozinho mas a combinação só funciona nas noites em
+que ele existe, então ele **não serve como texto — serve como aviso de qual noite
+importa**.
+
+| Tipo de noite | Vantagem do jornal |
+|---|---|
+| sem comunicado | +0,25 pontos |
+| com Comunicado ao Mercado | +0,91 pontos |
+| com Fato Relevante | **+3,31 pontos** |
+
+A vantagem triplica. **Mas a diferença não passa no teste** (p = 0,57). Seriam
+precisas ~15.200 noites; temos 393. **Fica como hipótese, não como achado.**
+
+---
+
 ## O que está nesta pasta
 
-O plano do experimento, os resultados das duas rodadas, a explicação completa em
-linguagem comum e a planilha de apoio.
+| Arquivo | O que é |
+|---|---|
+| `01_Plano.docx` | o plano, escrito antes de rodar, com as previsões registradas |
+| `02_Resultados.docx` | as duas primeiras partes: impacto e classificação |
+| `03_Explicacao_completa.docx` | tudo em linguagem comum, do zero |
+| `04_Painel_resultados.xlsx` | planilha das duas primeiras partes |
+| **`05_Combinar_as_fontes_COMPLETO.docx`** | **a terceira parte, detalhada** |
+| **`06_Combinar_as_fontes_RESUMIDO.docx`** | **a terceira parte, em cinco minutos** |
+| **`07_Combinar_as_fontes.xlsx`** | **planilha da terceira parte, para projetar** |
