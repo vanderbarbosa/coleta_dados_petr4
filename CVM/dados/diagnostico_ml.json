@@ -1,0 +1,78 @@
+{
+  "só mercado (sem texto)": {
+    "auc": 0.7943,
+    "ic95": [
+      0.7452,
+      0.8398
+    ],
+    "acima_de_0.5": true,
+    "lift_top10": {
+      "noites_apontadas": 156,
+      "taxa_no_topo": 0.2885,
+      "taxa_base": 0.0632,
+      "lift": 4.563
+    },
+    "n": 1566
+  },
+  "só texto (notícia + CVM + embedding)": {
+    "auc": 0.6242,
+    "ic95": [
+      0.5695,
+      0.6803
+    ],
+    "acima_de_0.5": true,
+    "lift_top10": {
+      "noites_apontadas": 156,
+      "taxa_no_topo": 0.1474,
+      "taxa_base": 0.0632,
+      "lift": 2.332
+    },
+    "n": 1566
+  },
+  "mercado + texto + embedding": {
+    "auc": 0.7862,
+    "ic95": [
+      0.7348,
+      0.8312
+    ],
+    "acima_de_0.5": true,
+    "lift_top10": {
+      "noites_apontadas": 156,
+      "taxa_no_topo": 0.2821,
+      "taxa_base": 0.0632,
+      "lift": 4.462
+    },
+    "n": 1566,
+    "importancias": {
+      "mercado": 0.802,
+      "notícia": 0.1443,
+      "CVM (rótulos)": 0.0201,
+      "embedding": 0.0336
+    },
+    "top_colunas": {
+      "m_vol_med5": 0.12614,
+      "m_Volume_1": 0.11421,
+      "m_Parkinson_1": 0.09312,
+      "m_ret_med5": 0.09049,
+      "m_absret_med5": 0.07556,
+      "m_dp_ret5": 0.07267,
+      "m_vol_med22": 0.06617,
+      "m_absret_1": 0.04597,
+      "m_Gap_1": 0.03908,
+      "m_Retorno_1": 0.02645,
+      "m_Intradia_1": 0.02212,
+      "nt_idx_min": 0.01408,
+      "nt_cat_CAT2_Mercado_Petroleo": 0.01327,
+      "nt_conf_max": 0.01199,
+      "m_giro_rel": 0.01112
+    }
+  },
+  "texto_acrescenta_ao_mercado": {
+    "diferenca_auc": -0.0081,
+    "ic95": [
+      -0.0318,
+      0.0154
+    ],
+    "acrescenta": false
+  }
+}

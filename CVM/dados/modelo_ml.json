@@ -1,0 +1,856 @@
+{
+  "ticker": "PETR4",
+  "n": 2316,
+  "periodo": [
+    "2017-06-01",
+    "2026-09-15"
+  ],
+  "alvos": {
+    "alvo_dir": {
+      "só mercado (sem texto)": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.5088,
+          "majoritaria": 0.5319,
+          "ganho_pp": -2.31,
+          "f1_macro": 0.4916,
+          "mcc": -0.0019,
+          "auc": 0.4955,
+          "p_vs_acaso": 0.4669593357983192,
+          "prev_classe1_pct": 65.2
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.5055,
+          "majoritaria": 0.5319,
+          "ganho_pp": -2.64,
+          "f1_macro": 0.4901,
+          "mcc": -0.0075,
+          "auc": 0.4973,
+          "p_vs_acaso": 0.6557123323461842,
+          "prev_classe1_pct": 64.2
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.4923,
+          "majoritaria": 0.5319,
+          "ganho_pp": -3.96,
+          "f1_macro": 0.4889,
+          "mcc": -0.0219,
+          "auc": 0.4936,
+          "p_vs_acaso": 0.5263621586060944,
+          "prev_classe1_pct": 55.0
+        }
+      },
+      "só notícia": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.4978,
+          "majoritaria": 0.5319,
+          "ganho_pp": -3.41,
+          "f1_macro": 0.4875,
+          "mcc": -0.019,
+          "auc": 0.4921,
+          "p_vs_acaso": 0.8695297765080024,
+          "prev_classe1_pct": 61.0
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.4961,
+          "majoritaria": 0.5319,
+          "ganho_pp": -3.58,
+          "f1_macro": 0.4866,
+          "mcc": -0.0215,
+          "auc": 0.4914,
+          "p_vs_acaso": 0.7603300453385812,
+          "prev_classe1_pct": 60.4
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.4994,
+          "majoritaria": 0.5319,
+          "ganho_pp": -3.25,
+          "f1_macro": 0.4931,
+          "mcc": -0.0115,
+          "auc": 0.4867,
+          "p_vs_acaso": 0.9812792884296165,
+          "prev_classe1_pct": 58.0
+        }
+      },
+      "só CVM (rótulos)": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.5226,
+          "majoritaria": 0.5319,
+          "ganho_pp": -0.94,
+          "f1_macro": 0.4344,
+          "mcc": -0.0018,
+          "auc": 0.4925,
+          "p_vs_acaso": 0.057303689272704135,
+          "prev_classe1_pct": 86.3
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.5061,
+          "majoritaria": 0.5319,
+          "ganho_pp": -2.59,
+          "f1_macro": 0.4458,
+          "mcc": -0.0324,
+          "auc": 0.4815,
+          "p_vs_acaso": 0.622173501276402,
+          "prev_classe1_pct": 79.8
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.5022,
+          "majoritaria": 0.5319,
+          "ganho_pp": -2.97,
+          "f1_macro": 0.4452,
+          "mcc": -0.0398,
+          "auc": 0.4806,
+          "p_vs_acaso": 0.8695297765080024,
+          "prev_classe1_pct": 78.9
+        }
+      },
+      "só CVM (rótulos + embedding)": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.5193,
+          "majoritaria": 0.5319,
+          "ganho_pp": -1.27,
+          "f1_macro": 0.4362,
+          "mcc": -0.009,
+          "auc": 0.4906,
+          "p_vs_acaso": 0.10538579768379386,
+          "prev_classe1_pct": 85.2
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.4989,
+          "majoritaria": 0.5319,
+          "ganho_pp": -3.3,
+          "f1_macro": 0.4268,
+          "mcc": -0.057,
+          "auc": 0.4726,
+          "p_vs_acaso": 0.9438790549732708,
+          "prev_classe1_pct": 82.3
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.5044,
+          "majoritaria": 0.5319,
+          "ganho_pp": -2.75,
+          "f1_macro": 0.4414,
+          "mcc": -0.0379,
+          "auc": 0.4748,
+          "p_vs_acaso": 0.7248545538977578,
+          "prev_classe1_pct": 80.4
+        }
+      },
+      "notícia + CVM": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.5022,
+          "majoritaria": 0.5319,
+          "ganho_pp": -2.97,
+          "f1_macro": 0.4909,
+          "mcc": -0.0108,
+          "auc": 0.4927,
+          "p_vs_acaso": 0.8695297765080024,
+          "prev_classe1_pct": 61.7
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.4994,
+          "majoritaria": 0.5319,
+          "ganho_pp": -3.25,
+          "f1_macro": 0.4912,
+          "mcc": -0.0135,
+          "auc": 0.4882,
+          "p_vs_acaso": 0.9812792884296165,
+          "prev_classe1_pct": 59.5
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.5044,
+          "majoritaria": 0.5319,
+          "ganho_pp": -2.75,
+          "f1_macro": 0.5011,
+          "mcc": 0.0025,
+          "auc": 0.4818,
+          "p_vs_acaso": 0.7248545538977578,
+          "prev_classe1_pct": 55.0
+        }
+      },
+      "notícia + CVM + embedding": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.5072,
+          "majoritaria": 0.5319,
+          "ganho_pp": -2.48,
+          "f1_macro": 0.4989,
+          "mcc": 0.002,
+          "auc": 0.4927,
+          "p_vs_acaso": 0.5574479367020745,
+          "prev_classe1_pct": 59.6
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.5132,
+          "majoritaria": 0.5319,
+          "ganho_pp": -1.87,
+          "f1_macro": 0.5044,
+          "mcc": 0.0138,
+          "auc": 0.4889,
+          "p_vs_acaso": 0.27006166144916727,
+          "prev_classe1_pct": 60.1
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.4796,
+          "majoritaria": 0.5319,
+          "ganho_pp": -5.23,
+          "f1_macro": 0.4736,
+          "mcc": -0.0511,
+          "auc": 0.4678,
+          "p_vs_acaso": 0.0866790645584328,
+          "prev_classe1_pct": 57.5
+        }
+      },
+      "mercado + notícia + CVM": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.4912,
+          "majoritaria": 0.5319,
+          "ganho_pp": -4.07,
+          "f1_macro": 0.4881,
+          "mcc": -0.0235,
+          "auc": 0.4919,
+          "p_vs_acaso": 0.4669593357983192,
+          "prev_classe1_pct": 54.5
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.5083,
+          "majoritaria": 0.5319,
+          "ganho_pp": -2.37,
+          "f1_macro": 0.4984,
+          "mcc": 0.0027,
+          "auc": 0.5021,
+          "p_vs_acaso": 0.4961867015606476,
+          "prev_classe1_pct": 60.8
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.4818,
+          "majoritaria": 0.5319,
+          "ganho_pp": -5.01,
+          "f1_macro": 0.4801,
+          "mcc": -0.0398,
+          "auc": 0.4867,
+          "p_vs_acaso": 0.12716099765022756,
+          "prev_classe1_pct": 52.6
+        }
+      },
+      "TUDO (mercado + texto + embedding)": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.5022,
+          "majoritaria": 0.5319,
+          "ganho_pp": -2.97,
+          "f1_macro": 0.4996,
+          "mcc": -0.0008,
+          "auc": 0.4915,
+          "p_vs_acaso": 0.8695297765080024,
+          "prev_classe1_pct": 54.1
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.4972,
+          "majoritaria": 0.5319,
+          "ganho_pp": -3.47,
+          "f1_macro": 0.486,
+          "mcc": -0.021,
+          "auc": 0.4915,
+          "p_vs_acaso": 0.8327419805144923,
+          "prev_classe1_pct": 61.6
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.4862,
+          "majoritaria": 0.5319,
+          "ganho_pp": -4.57,
+          "f1_macro": 0.4828,
+          "mcc": -0.0342,
+          "auc": 0.486,
+          "p_vs_acaso": 0.2502019753057436,
+          "prev_classe1_pct": 55.0
+        }
+      }
+    },
+    "alvo_vol": {
+      "só mercado (sem texto)": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.5837,
+          "majoritaria": 0.5765,
+          "ganho_pp": 0.72,
+          "f1_macro": 0.5524,
+          "mcc": 0.12,
+          "auc": 0.6021,
+          "p_vs_acaso": 1.028928904682701e-12,
+          "prev_classe1_pct": 31.2
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.6046,
+          "majoritaria": 0.5765,
+          "ganho_pp": 2.81,
+          "f1_macro": 0.5904,
+          "mcc": 0.1822,
+          "auc": 0.6157,
+          "p_vs_acaso": 4.414535098460063e-19,
+          "prev_classe1_pct": 39.0
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.576,
+          "majoritaria": 0.5765,
+          "ganho_pp": -0.06,
+          "f1_macro": 0.5678,
+          "mcc": 0.1359,
+          "auc": 0.5881,
+          "p_vs_acaso": 1.0107721241534115e-10,
+          "prev_classe1_pct": 43.9
+        }
+      },
+      "só notícia": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.5286,
+          "majoritaria": 0.5765,
+          "ganho_pp": -4.79,
+          "f1_macro": 0.4507,
+          "mcc": -0.0438,
+          "auc": 0.4779,
+          "p_vs_acaso": 0.01562528518168901,
+          "prev_classe1_pct": 20.0
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.5474,
+          "majoritaria": 0.5765,
+          "ganho_pp": -2.92,
+          "f1_macro": 0.4657,
+          "mcc": -0.002,
+          "auc": 0.4913,
+          "p_vs_acaso": 5.931899972727732e-05,
+          "prev_classe1_pct": 18.6
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.533,
+          "majoritaria": 0.5765,
+          "ganho_pp": -4.35,
+          "f1_macro": 0.5039,
+          "mcc": 0.0164,
+          "auc": 0.5108,
+          "p_vs_acaso": 0.0052165897694257035,
+          "prev_classe1_pct": 33.4
+        }
+      },
+      "só CVM (rótulos)": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.5677,
+          "majoritaria": 0.5765,
+          "ganho_pp": -0.88,
+          "f1_macro": 0.4127,
+          "mcc": 0.0033,
+          "auc": 0.4844,
+          "p_vs_acaso": 8.525643817354701e-09,
+          "prev_classe1_pct": 6.3
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.5523,
+          "majoritaria": 0.5765,
+          "ganho_pp": -2.42,
+          "f1_macro": 0.4455,
+          "mcc": -0.0093,
+          "auc": 0.4995,
+          "p_vs_acaso": 9.04116438312851e-06,
+          "prev_classe1_pct": 13.8
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.5474,
+          "majoritaria": 0.5765,
+          "ganho_pp": -2.92,
+          "f1_macro": 0.4635,
+          "mcc": -0.0038,
+          "auc": 0.4783,
+          "p_vs_acaso": 5.931899972727732e-05,
+          "prev_classe1_pct": 18.1
+        }
+      },
+      "só CVM (rótulos + embedding)": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.5518,
+          "majoritaria": 0.5765,
+          "ganho_pp": -2.48,
+          "f1_macro": 0.4529,
+          "mcc": -0.0045,
+          "auc": 0.4727,
+          "p_vs_acaso": 1.1238364582362931e-05,
+          "prev_classe1_pct": 15.1
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.5534,
+          "majoritaria": 0.5765,
+          "ganho_pp": -2.31,
+          "f1_macro": 0.4359,
+          "mcc": -0.0148,
+          "auc": 0.4997,
+          "p_vs_acaso": 5.814050318673618e-06,
+          "prev_classe1_pct": 12.0
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.543,
+          "majoritaria": 0.5765,
+          "ganho_pp": -3.36,
+          "f1_macro": 0.4621,
+          "mcc": -0.0121,
+          "auc": 0.4795,
+          "p_vs_acaso": 0.00027337824349457694,
+          "prev_classe1_pct": 18.9
+        }
+      },
+      "notícia + CVM": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.5319,
+          "majoritaria": 0.5765,
+          "ganho_pp": -4.46,
+          "f1_macro": 0.4561,
+          "mcc": -0.0339,
+          "auc": 0.459,
+          "p_vs_acaso": 0.006946717777296259,
+          "prev_classe1_pct": 20.3
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.5523,
+          "majoritaria": 0.5765,
+          "ganho_pp": -2.42,
+          "f1_macro": 0.4635,
+          "mcc": 0.0047,
+          "auc": 0.4985,
+          "p_vs_acaso": 9.04116438312851e-06,
+          "prev_classe1_pct": 17.0
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.5369,
+          "majoritaria": 0.5765,
+          "ganho_pp": -3.96,
+          "f1_macro": 0.5093,
+          "mcc": 0.0262,
+          "auc": 0.4977,
+          "p_vs_acaso": 0.0017947211406655408,
+          "prev_classe1_pct": 33.9
+        }
+      },
+      "notícia + CVM + embedding": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.5231,
+          "majoritaria": 0.5765,
+          "ganho_pp": -5.34,
+          "f1_macro": 0.4651,
+          "mcc": -0.0365,
+          "auc": 0.4538,
+          "p_vs_acaso": 0.05142198496349891,
+          "prev_classe1_pct": 24.7
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.5518,
+          "majoritaria": 0.5765,
+          "ganho_pp": -2.48,
+          "f1_macro": 0.4654,
+          "mcc": 0.0052,
+          "auc": 0.5022,
+          "p_vs_acaso": 1.1238364582362931e-05,
+          "prev_classe1_pct": 17.5
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.5363,
+          "majoritaria": 0.5765,
+          "ganho_pp": -4.02,
+          "f1_macro": 0.5037,
+          "mcc": 0.019,
+          "auc": 0.5075,
+          "p_vs_acaso": 0.0021031806195559166,
+          "prev_classe1_pct": 32.0
+        }
+      },
+      "mercado + notícia + CVM": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.5529,
+          "majoritaria": 0.5765,
+          "ganho_pp": -2.37,
+          "f1_macro": 0.537,
+          "mcc": 0.0752,
+          "auc": 0.568,
+          "p_vs_acaso": 7.257992935295668e-06,
+          "prev_classe1_pct": 39.2
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.5892,
+          "majoritaria": 0.5765,
+          "ganho_pp": 1.27,
+          "f1_macro": 0.5764,
+          "mcc": 0.1533,
+          "auc": 0.608,
+          "p_vs_acaso": 2.9743325321194823e-14,
+          "prev_classe1_pct": 40.3
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.5743,
+          "majoritaria": 0.5765,
+          "ganho_pp": -0.22,
+          "f1_macro": 0.5662,
+          "mcc": 0.1327,
+          "auc": 0.5897,
+          "p_vs_acaso": 2.5530668003757066e-10,
+          "prev_classe1_pct": 43.9
+        }
+      },
+      "TUDO (mercado + texto + embedding)": {
+        "Regressão logística": {
+          "n": 1816,
+          "acuracia": 0.5584,
+          "majoritaria": 0.5765,
+          "ganho_pp": -1.82,
+          "f1_macro": 0.5449,
+          "mcc": 0.0903,
+          "auc": 0.5579,
+          "p_vs_acaso": 7.168962672819509e-07,
+          "prev_classe1_pct": 40.5
+        },
+        "Floresta aleatória": {
+          "n": 1816,
+          "acuracia": 0.5887,
+          "majoritaria": 0.5765,
+          "ganho_pp": 1.21,
+          "f1_macro": 0.5759,
+          "mcc": 0.1523,
+          "auc": 0.6052,
+          "p_vs_acaso": 4.282101251463533e-14,
+          "prev_classe1_pct": 40.3
+        },
+        "Gradient boosting": {
+          "n": 1816,
+          "acuracia": 0.576,
+          "majoritaria": 0.5765,
+          "ganho_pp": -0.06,
+          "f1_macro": 0.5687,
+          "mcc": 0.138,
+          "auc": 0.5766,
+          "p_vs_acaso": 1.0107721241534115e-10,
+          "prev_classe1_pct": 44.7
+        }
+      }
+    },
+    "alvo_ext": {
+      "só mercado (sem texto)": {
+        "Regressão logística": {
+          "n": 1566,
+          "acuracia": 0.9368,
+          "majoritaria": 0.9368,
+          "ganho_pp": 0.0,
+          "f1_macro": 0.5676,
+          "mcc": 0.2041,
+          "auc": 0.7864,
+          "p_vs_acaso": 7.21593228887e-313,
+          "prev_classe1_pct": 1.3
+        },
+        "Floresta aleatória": {
+          "n": 1566,
+          "acuracia": 0.9361,
+          "majoritaria": 0.9368,
+          "ganho_pp": -0.06,
+          "f1_macro": 0.5289,
+          "mcc": 0.1352,
+          "auc": 0.7943,
+          "p_vs_acaso": 1.0594030509217e-311,
+          "prev_classe1_pct": 0.7
+        },
+        "Gradient boosting": {
+          "n": 1566,
+          "acuracia": 0.9317,
+          "majoritaria": 0.9368,
+          "ganho_pp": -0.51,
+          "f1_macro": 0.6027,
+          "mcc": 0.233,
+          "auc": 0.7711,
+          "p_vs_acaso": 1.1627561811486524e-303,
+          "prev_classe1_pct": 2.7
+        }
+      },
+      "só notícia": {
+        "Regressão logística": {
+          "n": 1566,
+          "acuracia": 0.9336,
+          "majoritaria": 0.9368,
+          "ganho_pp": -0.32,
+          "f1_macro": 0.5101,
+          "mcc": 0.0724,
+          "auc": 0.5776,
+          "p_vs_acaso": 4.429839716511061e-307,
+          "prev_classe1_pct": 0.7
+        },
+        "Floresta aleatória": {
+          "n": 1566,
+          "acuracia": 0.9368,
+          "majoritaria": 0.9368,
+          "ganho_pp": 0.0,
+          "f1_macro": 0.4837,
+          "mcc": 0.0,
+          "auc": 0.6091,
+          "p_vs_acaso": 7.21593228887e-313,
+          "prev_classe1_pct": 0.0
+        },
+        "Gradient boosting": {
+          "n": 1566,
+          "acuracia": 0.9151,
+          "majoritaria": 0.9368,
+          "ganho_pp": -2.17,
+          "f1_macro": 0.5061,
+          "mcc": 0.0218,
+          "auc": 0.5236,
+          "p_vs_acaso": 1.4424731107007463e-275,
+          "prev_classe1_pct": 2.7
+        }
+      },
+      "só CVM (rótulos)": {
+        "Regressão logística": {
+          "n": 1566,
+          "acuracia": 0.9368,
+          "majoritaria": 0.9368,
+          "ganho_pp": 0.0,
+          "f1_macro": 0.4837,
+          "mcc": 0.0,
+          "auc": 0.551,
+          "p_vs_acaso": 7.21593228887e-313,
+          "prev_classe1_pct": 0.0
+        },
+        "Floresta aleatória": {
+          "n": 1566,
+          "acuracia": 0.9368,
+          "majoritaria": 0.9368,
+          "ganho_pp": 0.0,
+          "f1_macro": 0.4837,
+          "mcc": 0.0,
+          "auc": 0.5728,
+          "p_vs_acaso": 7.21593228887e-313,
+          "prev_classe1_pct": 0.0
+        },
+        "Gradient boosting": {
+          "n": 1566,
+          "acuracia": 0.9253,
+          "majoritaria": 0.9368,
+          "ganho_pp": -1.15,
+          "f1_macro": 0.4971,
+          "mcc": 0.0136,
+          "auc": 0.5383,
+          "p_vs_acaso": 1.534573396649929e-292,
+          "prev_classe1_pct": 1.4
+        }
+      },
+      "só CVM (rótulos + embedding)": {
+        "Regressão logística": {
+          "n": 1566,
+          "acuracia": 0.9342,
+          "majoritaria": 0.9368,
+          "ganho_pp": -0.26,
+          "f1_macro": 0.483,
+          "mcc": -0.0131,
+          "auc": 0.5826,
+          "p_vs_acaso": 3.146555906888817e-308,
+          "prev_classe1_pct": 0.3
+        },
+        "Floresta aleatória": {
+          "n": 1566,
+          "acuracia": 0.9368,
+          "majoritaria": 0.9368,
+          "ganho_pp": 0.0,
+          "f1_macro": 0.4837,
+          "mcc": 0.0,
+          "auc": 0.5875,
+          "p_vs_acaso": 7.21593228887e-313,
+          "prev_classe1_pct": 0.0
+        },
+        "Gradient boosting": {
+          "n": 1566,
+          "acuracia": 0.9176,
+          "majoritaria": 0.9368,
+          "ganho_pp": -1.92,
+          "f1_macro": 0.5077,
+          "mcc": 0.0272,
+          "auc": 0.5522,
+          "p_vs_acaso": 1.0122428704989088e-279,
+          "prev_classe1_pct": 2.4
+        }
+      },
+      "notícia + CVM": {
+        "Regressão logística": {
+          "n": 1566,
+          "acuracia": 0.9317,
+          "majoritaria": 0.9368,
+          "ganho_pp": -0.51,
+          "f1_macro": 0.5088,
+          "mcc": 0.059,
+          "auc": 0.5769,
+          "p_vs_acaso": 1.1627561811486524e-303,
+          "prev_classe1_pct": 0.9
+        },
+        "Floresta aleatória": {
+          "n": 1566,
+          "acuracia": 0.9368,
+          "majoritaria": 0.9368,
+          "ganho_pp": 0.0,
+          "f1_macro": 0.4837,
+          "mcc": 0.0,
+          "auc": 0.6238,
+          "p_vs_acaso": 7.21593228887e-313,
+          "prev_classe1_pct": 0.0
+        },
+        "Gradient boosting": {
+          "n": 1566,
+          "acuracia": 0.9144,
+          "majoritaria": 0.9368,
+          "ganho_pp": -2.23,
+          "f1_macro": 0.499,
+          "mcc": 0.0067,
+          "auc": 0.5542,
+          "p_vs_acaso": 1.5438812105117096e-274,
+          "prev_classe1_pct": 2.6
+        }
+      },
+      "notícia + CVM + embedding": {
+        "Regressão logística": {
+          "n": 1566,
+          "acuracia": 0.9291,
+          "majoritaria": 0.9368,
+          "ganho_pp": -0.77,
+          "f1_macro": 0.5152,
+          "mcc": 0.0639,
+          "auc": 0.59,
+          "p_vs_acaso": 3.6621749169121367e-299,
+          "prev_classe1_pct": 1.3
+        },
+        "Floresta aleatória": {
+          "n": 1566,
+          "acuracia": 0.9368,
+          "majoritaria": 0.9368,
+          "ganho_pp": 0.0,
+          "f1_macro": 0.4837,
+          "mcc": 0.0,
+          "auc": 0.6244,
+          "p_vs_acaso": 7.21593228887e-313,
+          "prev_classe1_pct": 0.0
+        },
+        "Gradient boosting": {
+          "n": 1566,
+          "acuracia": 0.9125,
+          "majoritaria": 0.9368,
+          "ganho_pp": -2.43,
+          "f1_macro": 0.5047,
+          "mcc": 0.017,
+          "auc": 0.5409,
+          "p_vs_acaso": 1.8031776676342875e-271,
+          "prev_classe1_pct": 2.9
+        }
+      },
+      "mercado + notícia + CVM": {
+        "Regressão logística": {
+          "n": 1566,
+          "acuracia": 0.9355,
+          "majoritaria": 0.9368,
+          "ganho_pp": -0.13,
+          "f1_macro": 0.5589,
+          "mcc": 0.1808,
+          "auc": 0.7465,
+          "p_vs_acaso": 1.53890991429664e-310,
+          "prev_classe1_pct": 1.3
+        },
+        "Floresta aleatória": {
+          "n": 1566,
+          "acuracia": 0.9374,
+          "majoritaria": 0.9368,
+          "ganho_pp": 0.06,
+          "f1_macro": 0.5301,
+          "mcc": 0.1538,
+          "auc": 0.7835,
+          "p_vs_acaso": 4.862545245e-314,
+          "prev_classe1_pct": 0.6
+        },
+        "Gradient boosting": {
+          "n": 1566,
+          "acuracia": 0.9349,
+          "majoritaria": 0.9368,
+          "ganho_pp": -0.19,
+          "f1_macro": 0.608,
+          "mcc": 0.2533,
+          "auc": 0.7816,
+          "p_vs_acaso": 2.212028714453856e-309,
+          "prev_classe1_pct": 2.4
+        }
+      },
+      "TUDO (mercado + texto + embedding)": {
+        "Regressão logística": {
+          "n": 1566,
+          "acuracia": 0.9342,
+          "majoritaria": 0.9368,
+          "ganho_pp": -0.26,
+          "f1_macro": 0.5573,
+          "mcc": 0.1697,
+          "auc": 0.7358,
+          "p_vs_acaso": 3.146555906888817e-308,
+          "prev_classe1_pct": 1.4
+        },
+        "Floresta aleatória": {
+          "n": 1566,
+          "acuracia": 0.9361,
+          "majoritaria": 0.9368,
+          "ganho_pp": -0.06,
+          "f1_macro": 0.5118,
+          "mcc": 0.1006,
+          "auc": 0.7862,
+          "p_vs_acaso": 1.0594030509217e-311,
+          "prev_classe1_pct": 0.4
+        },
+        "Gradient boosting": {
+          "n": 1566,
+          "acuracia": 0.9342,
+          "majoritaria": 0.9368,
+          "ganho_pp": -0.26,
+          "f1_macro": 0.6013,
+          "mcc": 0.2403,
+          "auc": 0.7636,
+          "p_vs_acaso": 3.146555906888817e-308,
+          "prev_classe1_pct": 2.3
+        }
+      }
+    }
+  }
+}

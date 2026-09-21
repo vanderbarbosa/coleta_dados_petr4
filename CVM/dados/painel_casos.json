@@ -1,0 +1,1426 @@
+{
+ "casos": [
+  {
+   "grupo": "choque grande",
+   "ticker": "CVCB3",
+   "empresa": "Cvc Brasil Operadora E Agência De Viagens Sa",
+   "categoria": "Fato Relevante",
+   "assunto": "Plano de sucessão da Companhia",
+   "entrega": "15/01/2026 20:51",
+   "entrega_hora": "20:51",
+   "reacao": "16/01/2026",
+   "razao_vol": 5.43,
+   "razao_qtd": 4.97,
+   "gap_pct": -0.74,
+   "intra_pct": -10.62,
+   "ret_pct": -11.36,
+   "direcao": "CAIU",
+   "modelo": "Neutral",
+   "modelo_previu": null,
+   "modelo_acertou": null,
+   "semana": [
+    {
+     "data": "08/01",
+     "vol": 2.08,
+     "qtd": 9.87
+    },
+    {
+     "data": "09/01",
+     "vol": 4.708,
+     "qtd": 21.61
+    },
+    {
+     "data": "12/01",
+     "vol": 4.241,
+     "qtd": 16.93
+    },
+    {
+     "data": "13/01",
+     "vol": 3.814,
+     "qtd": 16.13
+    },
+    {
+     "data": "14/01",
+     "vol": 2.751,
+     "qtd": 16.03
+    }
+   ],
+   "dia": {
+    "data": "16/01",
+    "vol": 19.098,
+    "qtd": 80.09
+   },
+   "media_vol": 3.519,
+   "media_qtd": 16.11,
+   "abertura": 2.68,
+   "fechamento": 2.41,
+   "fech_anterior": 2.7,
+   "maxima": 2.79,
+   "minima": 2.03
+  },
+  {
+   "grupo": "choque grande",
+   "ticker": "OIBR3",
+   "empresa": "Oi S.A. - Em Recuperação Judicial",
+   "categoria": "Fato Relevante",
+   "assunto": "Manifestação sobre a Continuidade do Grupo Oi",
+   "entrega": "07/11/2025 19:31",
+   "entrega_hora": "19:31",
+   "reacao": "10/11/2025",
+   "razao_vol": 4.93,
+   "razao_qtd": 5.7,
+   "gap_pct": -11.33,
+   "intra_pct": -32.85,
+   "ret_pct": -44.18,
+   "direcao": "CAIU",
+   "modelo": "Neutral",
+   "modelo_previu": null,
+   "modelo_acertou": null,
+   "semana": [
+    {
+     "data": "31/10",
+     "vol": 6.113,
+     "qtd": 5.53
+    },
+    {
+     "data": "03/11",
+     "vol": 4.143,
+     "qtd": 1.56
+    },
+    {
+     "data": "04/11",
+     "vol": 2.036,
+     "qtd": 1.25
+    },
+    {
+     "data": "05/11",
+     "vol": 4.005,
+     "qtd": 2.85
+    },
+    {
+     "data": "06/11",
+     "vol": 6.113,
+     "qtd": 3.53
+    }
+   ],
+   "dia": {
+    "data": "10/11",
+    "vol": 22.084,
+    "qtd": 16.79
+   },
+   "media_vol": 4.482,
+   "media_qtd": 2.95,
+   "abertura": 0.25,
+   "fechamento": 0.18,
+   "fech_anterior": 0.28,
+   "maxima": 0.26,
+   "minima": 0.18
+  },
+  {
+   "grupo": "choque grande",
+   "ticker": "SLCE3",
+   "empresa": "Slc Agricola Sa",
+   "categoria": "Fato Relevante",
+   "assunto": "Avaliação de Terras 2024",
+   "entrega": "28/06/2024 18:07",
+   "entrega_hora": "18:07",
+   "reacao": "01/07/2024",
+   "razao_vol": 4.87,
+   "razao_qtd": 2.92,
+   "gap_pct": 1.2,
+   "intra_pct": 5.78,
+   "ret_pct": 6.97,
+   "direcao": "SUBIU",
+   "modelo": "Neutral",
+   "modelo_previu": null,
+   "modelo_acertou": null,
+   "semana": [
+    {
+     "data": "21/06",
+     "vol": 0.994,
+     "qtd": 5.46
+    },
+    {
+     "data": "24/06",
+     "vol": 0.654,
+     "qtd": 2.42
+    },
+    {
+     "data": "25/06",
+     "vol": 0.621,
+     "qtd": 1.89
+    },
+    {
+     "data": "26/06",
+     "vol": 1.101,
+     "qtd": 2.03
+    },
+    {
+     "data": "27/06",
+     "vol": 1.198,
+     "qtd": 1.84
+    }
+   ],
+   "dia": {
+    "data": "01/07",
+    "vol": 4.446,
+    "qtd": 7.97
+   },
+   "media_vol": 0.914,
+   "media_qtd": 2.73,
+   "abertura": 14.47,
+   "fechamento": 15.33,
+   "fech_anterior": 14.3,
+   "maxima": 15.51,
+   "minima": 14.4
+  },
+  {
+   "grupo": "choque grande",
+   "ticker": "NTCO3",
+   "empresa": "Natura Cosmeticos Sa",
+   "categoria": "Fato Relevante",
+   "assunto": "Modificação de Projeções Divulgadas",
+   "entrega": "14/03/2018 19:08",
+   "entrega_hora": "19:08",
+   "reacao": "15/03/2018",
+   "razao_vol": 4.28,
+   "razao_qtd": 3.54,
+   "gap_pct": 1.7,
+   "intra_pct": -1.86,
+   "ret_pct": -0.15,
+   "direcao": "CAIU",
+   "modelo": "Neutral",
+   "modelo_previu": null,
+   "modelo_acertou": null,
+   "semana": [
+    {
+     "data": "07/03",
+     "vol": 1.117,
+     "qtd": 2.09
+    },
+    {
+     "data": "08/03",
+     "vol": 1.293,
+     "qtd": 0.55
+    },
+    {
+     "data": "09/03",
+     "vol": 1.096,
+     "qtd": 0.94
+    },
+    {
+     "data": "12/03",
+     "vol": 0.61,
+     "qtd": 0.57
+    },
+    {
+     "data": "13/03",
+     "vol": 0.757,
+     "qtd": 0.79
+    }
+   ],
+   "dia": {
+    "data": "15/03",
+    "vol": 4.174,
+    "qtd": 3.5
+   },
+   "media_vol": 0.975,
+   "media_qtd": 0.99,
+   "abertura": 32.75,
+   "fechamento": 32.15,
+   "fech_anterior": 32.2,
+   "maxima": 33.67,
+   "minima": 31.41
+  },
+  {
+   "grupo": "choque grande",
+   "ticker": "LREN3",
+   "empresa": "Lojas Renner Sa",
+   "categoria": "Fato Relevante",
+   "assunto": "Projeções",
+   "entrega": "06/08/2026 18:32",
+   "entrega_hora": "18:32",
+   "reacao": "07/08/2026",
+   "razao_vol": 4.12,
+   "razao_qtd": 10.41,
+   "gap_pct": -8.35,
+   "intra_pct": -0.08,
+   "ret_pct": -8.43,
+   "direcao": "CAIU",
+   "modelo": "Neutral",
+   "modelo_previu": null,
+   "modelo_acertou": null,
+   "semana": [
+    {
+     "data": "30/07",
+     "vol": 0.98,
+     "qtd": 8.22
+    },
+    {
+     "data": "31/07",
+     "vol": 1.151,
+     "qtd": 14.13
+    },
+    {
+     "data": "03/08",
+     "vol": 1.567,
+     "qtd": 11.15
+    },
+    {
+     "data": "04/08",
+     "vol": 2.598,
+     "qtd": 10.05
+    },
+    {
+     "data": "05/08",
+     "vol": 1.272,
+     "qtd": 7.74
+    }
+   ],
+   "dia": {
+    "data": "07/08",
+    "vol": 6.233,
+    "qtd": 106.81
+   },
+   "media_vol": 1.514,
+   "media_qtd": 10.26,
+   "abertura": 12.4,
+   "fechamento": 12.39,
+   "fech_anterior": 13.48,
+   "maxima": 12.68,
+   "minima": 11.43
+  },
+  {
+   "grupo": "choque grande",
+   "ticker": "OIBR3",
+   "empresa": "Oi S.A. - Em Recuperação Judicial",
+   "categoria": "Fato Relevante",
+   "assunto": "Conclusão das Negociações para alienação da UPI Ativos TV por Assinatura",
+   "entrega": "09/01/2025 18:24",
+   "entrega_hora": "18:24",
+   "reacao": "10/01/2025",
+   "razao_vol": 4.1,
+   "razao_qtd": 7.94,
+   "gap_pct": 4.26,
+   "intra_pct": 2.06,
+   "ret_pct": 6.32,
+   "direcao": "SUBIU",
+   "modelo": "Neutral",
+   "modelo_previu": null,
+   "modelo_acertou": null,
+   "semana": [
+    {
+     "data": "02/01",
+     "vol": 2.67,
+     "qtd": 0.86
+    },
+    {
+     "data": "03/01",
+     "vol": 1.793,
+     "qtd": 0.64
+    },
+    {
+     "data": "06/01",
+     "vol": 2.65,
+     "qtd": 1.91
+    },
+    {
+     "data": "07/01",
+     "vol": 1.32,
+     "qtd": 0.76
+    },
+    {
+     "data": "08/01",
+     "vol": 2.631,
+     "qtd": 1.34
+    }
+   ],
+   "dia": {
+    "data": "10/01",
+    "vol": 9.075,
+    "qtd": 8.74
+   },
+   "media_vol": 2.213,
+   "media_qtd": 1.1,
+   "abertura": 1.44,
+   "fechamento": 1.47,
+   "fech_anterior": 1.38,
+   "maxima": 1.64,
+   "minima": 1.41
+  },
+  {
+   "grupo": "PETR4",
+   "ticker": "PETR4",
+   "empresa": "Petróleo Brasileiro S.A. - Petrobras",
+   "categoria": "Comunicado ao Mercado",
+   "assunto": "Petrobras esclarece notícia divulgada na mídia",
+   "entrega": "08/03/2024 20:16",
+   "entrega_hora": "20:16",
+   "reacao": "11/03/2024",
+   "razao_vol": 3.76,
+   "razao_qtd": 3.56,
+   "gap_pct": -2.85,
+   "intra_pct": -0.06,
+   "ret_pct": -2.9,
+   "direcao": "CAIU",
+   "modelo": "Neutral",
+   "modelo_previu": null,
+   "modelo_acertou": null,
+   "semana": [
+    {
+     "data": "01/03",
+     "vol": 1.053,
+     "qtd": 31.25
+    },
+    {
+     "data": "04/03",
+     "vol": 1.086,
+     "qtd": 21.99
+    },
+    {
+     "data": "05/03",
+     "vol": 1.141,
+     "qtd": 30.29
+    },
+    {
+     "data": "06/03",
+     "vol": 1.083,
+     "qtd": 45.48
+    },
+    {
+     "data": "07/03",
+     "vol": 0.976,
+     "qtd": 50.2
+    }
+   ],
+   "dia": {
+    "data": "11/03",
+    "vol": 4.014,
+    "qtd": 127.53
+   },
+   "media_vol": 1.068,
+   "media_qtd": 35.84,
+   "abertura": 24.58,
+   "fechamento": 24.56,
+   "fech_anterior": 25.29,
+   "maxima": 26.0,
+   "minima": 24.32
+  },
+  {
+   "grupo": "PETR4",
+   "ticker": "PETR4",
+   "empresa": "Petróleo Brasileiro S.A. - Petrobras",
+   "categoria": "Fato Relevante",
+   "assunto": "Petrobras sobre renúncia de Conselheiro de Administração",
+   "entrega": "16/04/2021 18:28",
+   "entrega_hora": "18:28",
+   "reacao": "19/04/2021",
+   "razao_vol": 3.75,
+   "razao_qtd": 3.2,
+   "gap_pct": 0.0,
+   "intra_pct": 5.63,
+   "ret_pct": 5.63,
+   "direcao": "SUBIU",
+   "modelo": "Negative",
+   "modelo_previu": "BAIXA",
+   "modelo_acertou": false,
+   "semana": [
+    {
+     "data": "09/04",
+     "vol": 1.044,
+     "qtd": 47.49
+    },
+    {
+     "data": "12/04",
+     "vol": 1.472,
+     "qtd": 50.59
+    },
+    {
+     "data": "13/04",
+     "vol": 1.055,
+     "qtd": 53.61
+    },
+    {
+     "data": "14/04",
+     "vol": 1.484,
+     "qtd": 90.84
+    },
+    {
+     "data": "15/04",
+     "vol": 2.077,
+     "qtd": 64.19
+    }
+   ],
+   "dia": {
+    "data": "19/04",
+    "vol": 5.346,
+    "qtd": 196.52
+   },
+   "media_vol": 1.427,
+   "media_qtd": 61.35,
+   "abertura": 6.41,
+   "fechamento": 6.78,
+   "fech_anterior": 6.41,
+   "maxima": 6.95,
+   "minima": 6.36
+  },
+  {
+   "grupo": "PETR4",
+   "ticker": "PETR4",
+   "empresa": "Petróleo Brasileiro S.A. - Petrobras",
+   "categoria": "Comunicado ao Mercado",
+   "assunto": "Petrobras inicia fase vinculante de ativos de E&P",
+   "entrega": "06/03/2020 18:35",
+   "entrega_hora": "18:35",
+   "reacao": "09/03/2020",
+   "razao_vol": 3.32,
+   "razao_qtd": 3.54,
+   "gap_pct": -24.83,
+   "intra_pct": -10.41,
+   "ret_pct": -35.24,
+   "direcao": "CAIU",
+   "modelo": "Neutral",
+   "modelo_previu": null,
+   "modelo_acertou": null,
+   "semana": [
+    {
+     "data": "28/02",
+     "vol": 2.25,
+     "qtd": 89.1
+    },
+    {
+     "data": "02/03",
+     "vol": 2.921,
+     "qtd": 71.6
+    },
+    {
+     "data": "03/03",
+     "vol": 3.882,
+     "qtd": 86.86
+    },
+    {
+     "data": "04/03",
+     "vol": 1.581,
+     "qtd": 42.32
+    },
+    {
+     "data": "05/03",
+     "vol": 4.584,
+     "qtd": 69.72
+    }
+   ],
+   "dia": {
+    "data": "09/03",
+    "vol": 10.093,
+    "qtd": 254.81
+   },
+   "media_vol": 3.044,
+   "media_qtd": 71.92,
+   "abertura": 4.81,
+   "fechamento": 4.33,
+   "fech_anterior": 6.16,
+   "maxima": 4.92,
+   "minima": 4.16
+  },
+  {
+   "grupo": "PETR4",
+   "ticker": "PETR4",
+   "empresa": "Petróleo Brasileiro S.A. - Petrobras",
+   "categoria": "Fato Relevante",
+   "assunto": "Petrobras aprova pagamento de remuneração aos acionistas",
+   "entrega": "07/05/2019 18:55",
+   "entrega_hora": "18:55",
+   "reacao": "08/05/2019",
+   "razao_vol": 3.14,
+   "razao_qtd": 2.11,
+   "gap_pct": -0.15,
+   "intra_pct": 3.95,
+   "ret_pct": 3.8,
+   "direcao": "SUBIU",
+   "modelo": "Neutral",
+   "modelo_previu": null,
+   "modelo_acertou": null,
+   "semana": [
+    {
+     "data": "29/04",
+     "vol": 0.612,
+     "qtd": 27.69
+    },
+    {
+     "data": "30/04",
+     "vol": 1.495,
+     "qtd": 39.57
+    },
+    {
+     "data": "02/05",
+     "vol": 0.676,
+     "qtd": 37.82
+    },
+    {
+     "data": "03/05",
+     "vol": 0.49,
+     "qtd": 33.33
+    },
+    {
+     "data": "06/05",
+     "vol": 0.927,
+     "qtd": 31.72
+    }
+   ],
+   "dia": {
+    "data": "08/05",
+    "vol": 2.637,
+    "qtd": 71.78
+   },
+   "media_vol": 0.84,
+   "media_qtd": 34.03,
+   "abertura": 6.88,
+   "fechamento": 7.16,
+   "fech_anterior": 6.89,
+   "maxima": 7.18,
+   "minima": 6.88
+  },
+  {
+   "grupo": "não aconteceu nada",
+   "ticker": "ITSA4",
+   "empresa": "Itausa S.A.",
+   "categoria": "Fato Relevante",
+   "assunto": "7ª Emissão de Debêntures para Resgate Antecipado das Debêntures da 3ª Emissão da Itaúsa",
+   "entrega": "23/07/2024 18:08",
+   "entrega_hora": "18:08",
+   "reacao": "24/07/2024",
+   "razao_vol": 0.65,
+   "razao_qtd": 0.72,
+   "gap_pct": -0.1,
+   "intra_pct": -0.1,
+   "ret_pct": -0.19,
+   "direcao": "CAIU",
+   "modelo": "Neutral",
+   "modelo_previu": null,
+   "modelo_acertou": null,
+   "semana": [
+    {
+     "data": "16/07",
+     "vol": 0.47,
+     "qtd": 23.63
+    },
+    {
+     "data": "17/07",
+     "vol": 1.111,
+     "qtd": 23.92
+    },
+    {
+     "data": "18/07",
+     "vol": 1.109,
+     "qtd": 19.54
+    },
+    {
+     "data": "19/07",
+     "vol": 0.755,
+     "qtd": 14.77
+    },
+    {
+     "data": "22/07",
+     "vol": 0.579,
+     "qtd": 17.85
+    }
+   ],
+   "dia": {
+    "data": "24/07",
+    "vol": 0.527,
+    "qtd": 14.27
+   },
+   "media_vol": 0.805,
+   "media_qtd": 19.94,
+   "abertura": 7.79,
+   "fechamento": 7.78,
+   "fech_anterior": 7.79,
+   "maxima": 7.82,
+   "minima": 7.75
+  },
+  {
+   "grupo": "não aconteceu nada",
+   "ticker": "VALE3",
+   "empresa": "Vale S.A.",
+   "categoria": "Fato Relevante",
+   "assunto": "Vale estende período de care and maintenance em Voisey's Bay",
+   "entrega": "08/04/2020 17:30",
+   "entrega_hora": "17:30",
+   "reacao": "09/04/2020",
+   "razao_vol": 0.66,
+   "razao_qtd": 0.88,
+   "gap_pct": 1.01,
+   "intra_pct": -1.54,
+   "ret_pct": -0.53,
+   "direcao": "CAIU",
+   "modelo": "Negative",
+   "modelo_previu": "BAIXA",
+   "modelo_acertou": true,
+   "semana": [
+    {
+     "data": "01/04",
+     "vol": 4.112,
+     "qtd": 37.09
+    },
+    {
+     "data": "02/04",
+     "vol": 3.681,
+     "qtd": 34.37
+    },
+    {
+     "data": "03/04",
+     "vol": 4.523,
+     "qtd": 31.65
+    },
+    {
+     "data": "06/04",
+     "vol": 1.998,
+     "qtd": 32.02
+    },
+    {
+     "data": "07/04",
+     "vol": 2.617,
+     "qtd": 34.19
+    }
+   ],
+   "dia": {
+    "data": "09/04",
+    "vol": 2.243,
+    "qtd": 29.83
+   },
+   "media_vol": 3.386,
+   "media_qtd": 33.87,
+   "abertura": 23.72,
+   "fechamento": 23.35,
+   "fech_anterior": 23.48,
+   "maxima": 24.0,
+   "minima": 23.12
+  },
+  {
+   "grupo": "não aconteceu nada",
+   "ticker": "PRIO3",
+   "empresa": "Prio S.A.",
+   "categoria": "Fato Relevante",
+   "assunto": "Procedimentos Pagamento",
+   "entrega": "06/01/2023 18:54",
+   "entrega_hora": "18:54",
+   "reacao": "09/01/2023",
+   "razao_vol": 0.67,
+   "razao_qtd": 0.9,
+   "gap_pct": 1.86,
+   "intra_pct": 0.47,
+   "ret_pct": 2.33,
+   "direcao": "SUBIU",
+   "modelo": "Neutral",
+   "modelo_previu": null,
+   "modelo_acertou": null,
+   "semana": [
+    {
+     "data": "29/12",
+     "vol": 1.394,
+     "qtd": 7.89
+    },
+    {
+     "data": "02/01",
+     "vol": 1.961,
+     "qtd": 6.58
+    },
+    {
+     "data": "03/01",
+     "vol": 4.329,
+     "qtd": 12.92
+    },
+    {
+     "data": "04/01",
+     "vol": 2.922,
+     "qtd": 10.89
+    },
+    {
+     "data": "05/01",
+     "vol": 2.007,
+     "qtd": 8.85
+    }
+   ],
+   "dia": {
+    "data": "09/01",
+    "vol": 1.695,
+    "qtd": 8.45
+   },
+   "media_vol": 2.523,
+   "media_qtd": 9.42,
+   "abertura": 35.78,
+   "fechamento": 35.95,
+   "fech_anterior": 35.12,
+   "maxima": 36.59,
+   "minima": 35.57
+  },
+  {
+   "grupo": "não aconteceu nada",
+   "ticker": "MULT3",
+   "empresa": "Multiplan - Empreend Imobiliarios S.A.",
+   "categoria": "Fato Relevante",
+   "assunto": "Distribuição de Juros sobre o Capital Próprio",
+   "entrega": "22/09/2023 17:30",
+   "entrega_hora": "17:30",
+   "reacao": "25/09/2023",
+   "razao_vol": 0.75,
+   "razao_qtd": 0.56,
+   "gap_pct": -0.28,
+   "intra_pct": -0.85,
+   "ret_pct": -1.13,
+   "direcao": "CAIU",
+   "modelo": "Neutral",
+   "modelo_previu": null,
+   "modelo_acertou": null,
+   "semana": [
+    {
+     "data": "15/09",
+     "vol": 2.8,
+     "qtd": 8.91
+    },
+    {
+     "data": "18/09",
+     "vol": 2.465,
+     "qtd": 3.9
+    },
+    {
+     "data": "19/09",
+     "vol": 1.027,
+     "qtd": 4.79
+    },
+    {
+     "data": "20/09",
+     "vol": 1.44,
+     "qtd": 7.18
+    },
+    {
+     "data": "21/09",
+     "vol": 1.206,
+     "qtd": 5.47
+    }
+   ],
+   "dia": {
+    "data": "25/09",
+    "vol": 1.338,
+    "qtd": 3.4
+   },
+   "media_vol": 1.788,
+   "media_qtd": 6.05,
+   "abertura": 21.84,
+   "fechamento": 21.66,
+   "fech_anterior": 21.9,
+   "maxima": 21.95,
+   "minima": 21.46
+  },
+  {
+   "grupo": "não aconteceu nada",
+   "ticker": "VBBR3",
+   "empresa": "Vibra Energia S/A",
+   "categoria": "Fato Relevante",
+   "assunto": "Superintendência Geral do CADE recomenda condenação em Processo Administrativo",
+   "entrega": "11/09/2020 23:44",
+   "entrega_hora": "23:44",
+   "reacao": "14/09/2020",
+   "razao_vol": 0.62,
+   "razao_qtd": 0.48,
+   "gap_pct": 0.14,
+   "intra_pct": 0.5,
+   "ret_pct": 0.63,
+   "direcao": "SUBIU",
+   "modelo": "Negative",
+   "modelo_previu": "BAIXA",
+   "modelo_acertou": false,
+   "semana": [
+    {
+     "data": "03/09",
+     "vol": 1.953,
+     "qtd": 8.4
+    },
+    {
+     "data": "04/09",
+     "vol": 2.463,
+     "qtd": 29.29
+    },
+    {
+     "data": "08/09",
+     "vol": 3.08,
+     "qtd": 10.81
+    },
+    {
+     "data": "09/09",
+     "vol": 2.128,
+     "qtd": 8.53
+    },
+    {
+     "data": "10/09",
+     "vol": 2.319,
+     "qtd": 7.04
+    }
+   ],
+   "dia": {
+    "data": "14/09",
+    "vol": 1.478,
+    "qtd": 6.2
+   },
+   "media_vol": 2.389,
+   "media_qtd": 12.82,
+   "abertura": 14.24,
+   "fechamento": 14.31,
+   "fech_anterior": 14.22,
+   "maxima": 14.55,
+   "minima": 14.19
+  },
+  {
+   "grupo": "o modelo acertou",
+   "ticker": "VBBR3",
+   "empresa": "Vibra Energia S/A",
+   "categoria": "Fato Relevante",
+   "assunto": "Desinvestimento da Stratura Asfaltos S.A.",
+   "entrega": "15/08/2019 23:05",
+   "entrega_hora": "23:05",
+   "reacao": "16/08/2019",
+   "razao_vol": 2.84,
+   "razao_qtd": 2.15,
+   "gap_pct": 0.34,
+   "intra_pct": 3.74,
+   "ret_pct": 4.08,
+   "direcao": "SUBIU",
+   "modelo": "Positive",
+   "modelo_previu": "ALTA",
+   "modelo_acertou": true,
+   "semana": [
+    {
+     "data": "08/08",
+     "vol": 1.248,
+     "qtd": 6.42
+    },
+    {
+     "data": "09/08",
+     "vol": 1.333,
+     "qtd": 5.01
+    },
+    {
+     "data": "12/08",
+     "vol": 1.528,
+     "qtd": 7.44
+    },
+    {
+     "data": "13/08",
+     "vol": 1.393,
+     "qtd": 5.26
+    },
+    {
+     "data": "14/08",
+     "vol": 1.224,
+     "qtd": 11.19
+    }
+   ],
+   "dia": {
+    "data": "16/08",
+    "vol": 3.815,
+    "qtd": 15.15
+   },
+   "media_vol": 1.345,
+   "media_qtd": 7.06,
+   "abertura": 16.53,
+   "fechamento": 17.16,
+   "fech_anterior": 16.48,
+   "maxima": 17.16,
+   "minima": 16.1
+  },
+  {
+   "grupo": "o modelo acertou",
+   "ticker": "CVCB3",
+   "empresa": "Cvc Brasil Operadora E Agência De Viagens Sa",
+   "categoria": "Fato Relevante",
+   "assunto": "Fato Relevante - Reperfilamento 2024",
+   "entrega": "11/09/2024 18:43",
+   "entrega_hora": "18:43",
+   "reacao": "12/09/2024",
+   "razao_vol": 2.64,
+   "razao_qtd": 2.42,
+   "gap_pct": 4.7,
+   "intra_pct": -7.41,
+   "ret_pct": -2.71,
+   "direcao": "CAIU",
+   "modelo": "Negative",
+   "modelo_previu": "BAIXA",
+   "modelo_acertou": true,
+   "semana": [
+    {
+     "data": "04/09",
+     "vol": 1.544,
+     "qtd": 13.33
+    },
+    {
+     "data": "05/09",
+     "vol": 2.196,
+     "qtd": 12.63
+    },
+    {
+     "data": "06/09",
+     "vol": 3.08,
+     "qtd": 15.45
+    },
+    {
+     "data": "09/09",
+     "vol": 3.23,
+     "qtd": 14.27
+    },
+    {
+     "data": "10/09",
+     "vol": 2.355,
+     "qtd": 17.57
+    }
+   ],
+   "dia": {
+    "data": "12/09",
+    "vol": 6.558,
+    "qtd": 35.44
+   },
+   "media_vol": 2.481,
+   "media_qtd": 14.65,
+   "abertura": 1.96,
+   "fechamento": 1.82,
+   "fech_anterior": 1.87,
+   "maxima": 2.03,
+   "minima": 1.82
+  },
+  {
+   "grupo": "o modelo acertou",
+   "ticker": "HAPV3",
+   "empresa": "Hapvida Participações E Investimentos S.A.",
+   "categoria": "Fato Relevante",
+   "assunto": "Aquisição de empresas que compõem o Grupo América",
+   "entrega": "09/06/2019 17:40",
+   "entrega_hora": "17:40",
+   "reacao": "10/06/2019",
+   "razao_vol": 2.42,
+   "razao_qtd": 1.9,
+   "gap_pct": 1.14,
+   "intra_pct": 2.22,
+   "ret_pct": 3.37,
+   "direcao": "SUBIU",
+   "modelo": "Positive",
+   "modelo_previu": "ALTA",
+   "modelo_acertou": true,
+   "semana": [
+    {
+     "data": "31/05",
+     "vol": 1.98,
+     "qtd": 0.5
+    },
+    {
+     "data": "03/06",
+     "vol": 1.167,
+     "qtd": 0.29
+    },
+    {
+     "data": "04/06",
+     "vol": 2.102,
+     "qtd": 0.28
+    },
+    {
+     "data": "05/06",
+     "vol": 1.907,
+     "qtd": 0.23
+    },
+    {
+     "data": "06/06",
+     "vol": 0.898,
+     "qtd": 0.23
+    }
+   ],
+   "dia": {
+    "data": "10/06",
+    "vol": 3.906,
+    "qtd": 0.59
+   },
+   "media_vol": 1.611,
+   "media_qtd": 0.31,
+   "abertura": 111.88,
+   "fechamento": 114.39,
+   "fech_anterior": 110.61,
+   "maxima": 119.4,
+   "minima": 111.88
+  },
+  {
+   "grupo": "o modelo acertou",
+   "ticker": "UGPA3",
+   "empresa": "Ultrapar Participações Sa",
+   "categoria": "Fato Relevante",
+   "assunto": "Celebração, Alteração ou Rescisão de Acordo de Acionistas||Mudança no Conselho de Administração",
+   "entrega": "02/05/2018 18:17",
+   "entrega_hora": "18:17",
+   "reacao": "03/05/2018",
+   "razao_vol": 2.4,
+   "razao_qtd": 4.95,
+   "gap_pct": -7.12,
+   "intra_pct": -3.6,
+   "ret_pct": -10.72,
+   "direcao": "CAIU",
+   "modelo": "Negative",
+   "modelo_previu": "BAIXA",
+   "modelo_acertou": true,
+   "semana": [
+    {
+     "data": "24/04",
+     "vol": 2.682,
+     "qtd": 6.1
+    },
+    {
+     "data": "25/04",
+     "vol": 1.872,
+     "qtd": 5.16
+    },
+    {
+     "data": "26/04",
+     "vol": 0.537,
+     "qtd": 4.95
+    },
+    {
+     "data": "27/04",
+     "vol": 0.706,
+     "qtd": 3.83
+    },
+    {
+     "data": "30/04",
+     "vol": 2.061,
+     "qtd": 5.61
+    }
+   ],
+   "dia": {
+    "data": "03/05",
+    "vol": 3.77,
+    "qtd": 25.39
+   },
+   "media_vol": 1.572,
+   "media_qtd": 5.13,
+   "abertura": 9.59,
+   "fechamento": 9.25,
+   "fech_anterior": 10.3,
+   "maxima": 9.71,
+   "minima": 9.12
+  },
+  {
+   "grupo": "o modelo errou",
+   "ticker": "GOAU4",
+   "empresa": "Metalurgica Gerdau Sa",
+   "categoria": "Fato Relevante",
+   "assunto": "Cancelamento de ações em tesouraria",
+   "entrega": "05/11/2024 19:01",
+   "entrega_hora": "19:01",
+   "reacao": "06/11/2024",
+   "razao_vol": 3.88,
+   "razao_qtd": 3.84,
+   "gap_pct": 3.32,
+   "intra_pct": 5.44,
+   "ret_pct": 8.76,
+   "direcao": "SUBIU",
+   "modelo": "Negative",
+   "modelo_previu": "BAIXA",
+   "modelo_acertou": false,
+   "semana": [
+    {
+     "data": "29/10",
+     "vol": 0.995,
+     "qtd": 6.92
+    },
+    {
+     "data": "30/10",
+     "vol": 0.876,
+     "qtd": 8.21
+    },
+    {
+     "data": "31/10",
+     "vol": 0.934,
+     "qtd": 10.44
+    },
+    {
+     "data": "01/11",
+     "vol": 1.121,
+     "qtd": 9.87
+    },
+    {
+     "data": "04/11",
+     "vol": 0.645,
+     "qtd": 5.93
+    }
+   ],
+   "dia": {
+    "data": "06/11",
+    "vol": 3.545,
+    "qtd": 31.8
+   },
+   "media_vol": 0.914,
+   "media_qtd": 8.27,
+   "abertura": 7.45,
+   "fechamento": 7.87,
+   "fech_anterior": 7.21,
+   "maxima": 7.87,
+   "minima": 7.42
+  },
+  {
+   "grupo": "o modelo errou",
+   "ticker": "BRKM5",
+   "empresa": "Braskem S.A.",
+   "categoria": "Fato Relevante",
+   "assunto": "Celebração, Alteração ou Rescisão de Acordo de Acionistas",
+   "entrega": "24/09/2018 19:40",
+   "entrega_hora": "19:40",
+   "reacao": "25/09/2018",
+   "razao_vol": 3.62,
+   "razao_qtd": 1.24,
+   "gap_pct": -1.37,
+   "intra_pct": 5.35,
+   "ret_pct": 3.98,
+   "direcao": "SUBIU",
+   "modelo": "Negative",
+   "modelo_previu": "BAIXA",
+   "modelo_acertou": false,
+   "semana": [
+    {
+     "data": "17/09",
+     "vol": 0.889,
+     "qtd": 1.25
+    },
+    {
+     "data": "18/09",
+     "vol": 0.947,
+     "qtd": 1.14
+    },
+    {
+     "data": "19/09",
+     "vol": 1.865,
+     "qtd": 1.01
+    },
+    {
+     "data": "20/09",
+     "vol": 1.008,
+     "qtd": 0.87
+    },
+    {
+     "data": "21/09",
+     "vol": 0.968,
+     "qtd": 1.49
+    }
+   ],
+   "dia": {
+    "data": "25/09",
+    "vol": 4.111,
+    "qtd": 1.44
+   },
+   "media_vol": 1.136,
+   "media_qtd": 1.15,
+   "abertura": 47.85,
+   "fechamento": 50.48,
+   "fech_anterior": 48.51,
+   "maxima": 50.78,
+   "minima": 47.42
+  },
+  {
+   "grupo": "o modelo errou",
+   "ticker": "B3SA3",
+   "empresa": "B3 S.A. - Brasil, Bolsa, Balcão",
+   "categoria": "Fato Relevante",
+   "assunto": "Aquisição da Neurotech",
+   "entrega": "09/11/2022 23:53",
+   "entrega_hora": "23:53",
+   "reacao": "10/11/2022",
+   "razao_vol": 3.55,
+   "razao_qtd": 2.7,
+   "gap_pct": -2.26,
+   "intra_pct": -11.28,
+   "ret_pct": -13.54,
+   "direcao": "CAIU",
+   "modelo": "Positive",
+   "modelo_previu": "ALTA",
+   "modelo_acertou": false,
+   "semana": [
+    {
+     "data": "01/11",
+     "vol": 2.95,
+     "qtd": 43.96
+    },
+    {
+     "data": "03/11",
+     "vol": 2.654,
+     "qtd": 38.76
+    },
+    {
+     "data": "04/11",
+     "vol": 2.103,
+     "qtd": 35.02
+    },
+    {
+     "data": "07/11",
+     "vol": 1.56,
+     "qtd": 63.76
+    },
+    {
+     "data": "08/11",
+     "vol": 1.909,
+     "qtd": 62.33
+    }
+   ],
+   "dia": {
+    "data": "10/11",
+    "vol": 7.933,
+    "qtd": 131.43
+   },
+   "media_vol": 2.235,
+   "media_qtd": 48.76,
+   "abertura": 13.02,
+   "fechamento": 11.63,
+   "fech_anterior": 13.31,
+   "maxima": 13.06,
+   "minima": 11.44
+  },
+  {
+   "grupo": "o modelo errou",
+   "ticker": "BEEF3",
+   "empresa": "Minerva S/A",
+   "categoria": "Fato Relevante",
+   "assunto": "Aumento de Capital",
+   "entrega": "11/09/2018 18:33",
+   "entrega_hora": "18:33",
+   "reacao": "12/09/2018",
+   "razao_vol": 3.29,
+   "razao_qtd": 4.27,
+   "gap_pct": 2.57,
+   "intra_pct": -10.69,
+   "ret_pct": -8.12,
+   "direcao": "CAIU",
+   "modelo": "Positive",
+   "modelo_previu": "ALTA",
+   "modelo_acertou": false,
+   "semana": [
+    {
+     "data": "03/09",
+     "vol": 2.207,
+     "qtd": 1.52
+    },
+    {
+     "data": "04/09",
+     "vol": 1.168,
+     "qtd": 1.78
+    },
+    {
+     "data": "05/09",
+     "vol": 2.029,
+     "qtd": 1.35
+    },
+    {
+     "data": "06/09",
+     "vol": 2.583,
+     "qtd": 2.09
+    },
+    {
+     "data": "10/09",
+     "vol": 2.761,
+     "qtd": 2.17
+    }
+   ],
+   "dia": {
+    "data": "12/09",
+    "vol": 7.074,
+    "qtd": 7.61
+   },
+   "media_vol": 2.15,
+   "media_qtd": 1.78,
+   "abertura": 4.57,
+   "fechamento": 4.11,
+   "fech_anterior": 4.45,
+   "maxima": 4.59,
+   "minima": 4.08
+  }
+ ],
+ "resumo": {
+  "n_eventos": 11161,
+  "n_fr": 3292,
+  "n_cm": 7869,
+  "n_papeis": 56,
+  "veredicto": {
+   "dentro do normal": 4599,
+   "mexeu": 2900,
+   "dia mais parado que o normal": 1991,
+   "MEXEU MUITO": 1642,
+   "sem base de comparação": 29
+  },
+  "controle": {
+   "volatilidade (Parkinson)": {
+    "sem": 1.031,
+    "com": 1.13038,
+    "p": 7.052688637504847e-55
+   },
+   "volume negociado": {
+    "sem": 1.06005,
+    "com": 1.23497,
+    "p": 3.6073751303803234e-62
+   },
+   "gap de abertura (%)": {
+    "sem": 0.00077,
+    "com": 0.00161,
+    "p": 0.00018788491265925167
+   },
+   "intradiário (%)": {
+    "sem": -0.00065,
+    "com": -0.00162,
+    "p": 0.0015615455637224783
+   },
+   "pregão inteiro (%)": {
+    "sem": 0.00012,
+    "com": -1e-05,
+    "p": 0.7381173077517797
+   }
+  },
+  "fr_vs_cm": {
+   "volatilidade (sacolejo)": {
+    "fr": 1.2188,
+    "cm": 1.1018,
+    "exc_fr_pct": 18.22,
+    "exc_cm_pct": 6.87,
+    "razao": 2.65,
+    "p": 7.210471007203892e-18,
+    "n_fr": 3280,
+    "n_cm": 7852
+   },
+   "volume negociado": {
+    "fr": 1.4461,
+    "cm": 1.1889,
+    "exc_fr_pct": 36.42,
+    "exc_cm_pct": 12.16,
+    "razao": 3.0,
+    "p": 4.7219586451157813e-26,
+    "n_fr": 3292,
+    "n_cm": 7862
+   }
+  },
+  "rodada_B": {
+   "TODOS (FR + Comunicados)": {
+    "n": 2336,
+    "acuracia": 0.5197,
+    "maj": 0.509,
+    "ganho_pp": 1.07,
+    "p": 0.05970383791516554,
+    "kappa": 0.0364
+   },
+   "so FATO RELEVANTE": {
+    "n": 700,
+    "acuracia": 0.5429,
+    "maj": 0.5171,
+    "ganho_pp": 2.57,
+    "p": 0.025677984622832512,
+    "kappa": 0.0783
+   },
+   "so COMUNICADO AO MERCADO": {
+    "n": 1636,
+    "acuracia": 0.5098,
+    "maj": 0.5055,
+    "ganho_pp": 0.43,
+    "p": 0.4434326630574632,
+    "kappa": 0.018
+   }
+  }
+ }
+}

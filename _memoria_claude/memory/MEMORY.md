@@ -34,3 +34,5 @@
 - [Organização do projeto](organizacao-do-projeto.md) — pastas de Artigo e Mentoria; como restaurar esta memória noutra máquina
 - [Artigo 1: o relógio da CVM](artigo-1-relogio-da-cvm.md) — escrito; como a hora oficial foi obtida e as três validações
 - [Volatilidade: só a combinação](volatilidade-so-a-combinacao.md) — acima/abaixo nunca funciona; o dia EXCEPCIONAL funciona, e só com CVM + notícia juntas (1,67×)
+- [Escopo: ML de verdade, não contagem](escopo-e-ml-de-verdade.md) — o método é o Cap.3 (FinBERT+GARCH+fusão+SVM/XGBoost); a CVM não passa no McNemar
+- [Como ler os números](como-ler-os-numeros.md) — acurácia × AUC, as metas realistas por alvo, e por que acurácia perto de 1 é bug

@@ -1,0 +1,173 @@
+{
+  "direcao": {
+    "apenas preços  [linha de base da pesquisa]": {
+      "SVM-RBF": {
+        "n_teste": 653,
+        "acuracia": 0.5207,
+        "precisao": 0.5272,
+        "f1": 0.6777,
+        "auc": 0.478,
+        "p_binomial": 0.30893325253313786
+      },
+      "XGBoost": {
+        "n_teste": 653,
+        "acuracia": 0.4931,
+        "precisao": 0.5207,
+        "f1": 0.5484,
+        "auc": 0.4933,
+        "p_binomial": 0.7542593382642042
+      }
+    },
+    "Data Fusion: preços + notícia  [O QUE TÍNHAMOS ANTES]": {
+      "SVM-RBF": {
+        "n_teste": 653,
+        "acuracia": 0.5253,
+        "precisao": 0.5305,
+        "f1": 0.6751,
+        "auc": 0.5028,
+        "p_binomial": 0.21044332599480142
+      },
+      "XGBoost": {
+        "n_teste": 653,
+        "acuracia": 0.5283,
+        "precisao": 0.5512,
+        "f1": 0.5769,
+        "auc": 0.5246,
+        "p_binomial": 0.1588452918966333
+      }
+    },
+    "Data Fusion + CVM  [NOVO]": {
+      "SVM-RBF": {
+        "n_teste": 653,
+        "acuracia": 0.5436,
+        "precisao": 0.5404,
+        "f1": 0.6876,
+        "auc": 0.489,
+        "p_binomial": 0.028342326019162156
+      },
+      "XGBoost": {
+        "n_teste": 653,
+        "acuracia": 0.5084,
+        "precisao": 0.5328,
+        "f1": 0.568,
+        "auc": 0.4954,
+        "p_binomial": 0.6955844884539418
+      }
+    },
+    "Data Fusion + CVM + embedding  [NOVO]": {
+      "SVM-RBF": {
+        "n_teste": 653,
+        "acuracia": 0.5008,
+        "precisao": 0.5179,
+        "f1": 0.6502,
+        "auc": 0.4939,
+        "p_binomial": 1.0
+      },
+      "XGBoost": {
+        "n_teste": 653,
+        "acuracia": 0.5161,
+        "precisao": 0.5365,
+        "f1": 0.5907,
+        "auc": 0.5028,
+        "p_binomial": 0.43384937512837696
+      }
+    },
+    "preços + CVM, sem notícia  [controle]": {
+      "SVM-RBF": {
+        "n_teste": 653,
+        "acuracia": 0.5253,
+        "precisao": 0.5296,
+        "f1": 0.6811,
+        "auc": 0.5074,
+        "p_binomial": 0.21044332599480142
+      },
+      "XGBoost": {
+        "n_teste": 653,
+        "acuracia": 0.4992,
+        "precisao": 0.5265,
+        "f1": 0.549,
+        "auc": 0.4751,
+        "p_binomial": 1.0
+      }
+    }
+  },
+  "volatilidade": {
+    "HAR (referência da pesquisa)": {
+      "nome": "HAR (referência da pesquisa)",
+      "n_teste": 647,
+      "mae_linear": 0.0726,
+      "rmse_linear": 0.1137,
+      "mae_quantilico": 0.052,
+      "rmse_quantilico": 0.1097,
+      "r2os_linear_vs_HAR": 0.0,
+      "r2os_quantilico_vs_HAR": 6.9
+    },
+    "HAR + sentimento  [O QUE TÍNHAMOS ANTES]": {
+      "nome": "HAR + sentimento  [O QUE TÍNHAMOS ANTES]",
+      "n_teste": 647,
+      "mae_linear": 0.0811,
+      "rmse_linear": 0.1189,
+      "mae_quantilico": 0.0526,
+      "rmse_quantilico": 0.1093,
+      "r2os_linear_vs_HAR": -9.41,
+      "r2os_quantilico_vs_HAR": 7.53
+    },
+    "HAR + sentimento + CVM  [NOVO]": {
+      "nome": "HAR + sentimento + CVM  [NOVO]",
+      "n_teste": 647,
+      "mae_linear": 0.0815,
+      "rmse_linear": 0.1191,
+      "mae_quantilico": 0.0529,
+      "rmse_quantilico": 0.1093,
+      "r2os_linear_vs_HAR": -9.76,
+      "r2os_quantilico_vs_HAR": 7.47
+    },
+    "HAR + CVM, sem notícia  [controle]": {
+      "nome": "HAR + CVM, sem notícia  [controle]",
+      "n_teste": 647,
+      "mae_linear": 0.0733,
+      "rmse_linear": 0.114,
+      "mae_quantilico": 0.0526,
+      "rmse_quantilico": 0.1097,
+      "r2os_linear_vs_HAR": -0.68,
+      "r2os_quantilico_vs_HAR": 6.91
+    }
+  },
+  "mcnemar": {
+    "SVM-RBF — a notícia acrescenta sobre o preço?": {
+      "acertos_so_do_novo": 16,
+      "acertos_so_do_antigo": 13,
+      "p": 0.711071103811264
+    },
+    "SVM-RBF — a CVM acrescenta sobre a notícia?": {
+      "acertos_so_do_novo": 37,
+      "acertos_so_do_antigo": 25,
+      "p": 0.16188140552559763
+    },
+    "SVM-RBF — o embedding acrescenta sobre os rótulos?": {
+      "acertos_so_do_novo": 27,
+      "acertos_so_do_antigo": 55,
+      "p": 0.0026424928957725444
+    },
+    "XGBoost — a notícia acrescenta sobre o preço?": {
+      "acertos_so_do_novo": 88,
+      "acertos_so_do_antigo": 65,
+      "p": 0.07496157752821143
+    },
+    "XGBoost — a CVM acrescenta sobre a notícia?": {
+      "acertos_so_do_novo": 64,
+      "acertos_so_do_antigo": 77,
+      "p": 0.3122129316569953
+    },
+    "XGBoost — o embedding acrescenta sobre os rótulos?": {
+      "acertos_so_do_novo": 49,
+      "acertos_so_do_antigo": 44,
+      "p": 0.6785320136533252
+    }
+  },
+  "majoritaria_teste": 0.5314,
+  "n": {
+    "total": 2610,
+    "teste": 653
+  }
+}

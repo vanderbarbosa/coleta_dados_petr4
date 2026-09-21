@@ -210,3 +210,86 @@ agitado.**
 O resultado combinado é sólido. Mas a afirmação mais específica — que a notícia
 acrescenta *dentro* das noites de Fato Relevante — fica em **p = 0,057 e não
 passa**. O grupo de comparação tem só 92 noites.
+
+---
+
+## A quinta parte: o MÉTODO da dissertação, com a CVM
+
+**Correção de rumo, apontada pelo autor.** Tudo o que está acima usou **regras
+escritas à mão** — contar positivas e negativas, subtrair, comparar com um
+limiar. Isso serve para *medir*, mas **não é o método da dissertação**, e
+contar notícias nunca esteve no escopo.
+
+O Capítulo 3 especifica outra coisa: o encoder FinBERT classifica, o GARCH mede
+o risco, tudo vira fusão precoce em t−1, e **SVM e XGBoost aprendem sozinhos**.
+Foi isso que os documentos 11 a 13 fazem — mais um bloco novo: a CVM.
+
+### Primeiro, o código foi checado contra a dissertação
+
+| Preditor | Está escrito na dissertação | Deu agora |
+|---|---|---|
+| Classe majoritária | 53,14% | 53,14% |
+| XGBoost só com preços | 49,77% | 49,31% |
+| XGBoost com notícia | 52,22% | 52,83% |
+
+**Reproduz** — e é isso que dá valor ao que vem depois.
+
+### E a CVM não acrescenta
+
+| Braço | SVM | XGBoost |
+|---|---|---|
+| preços + notícia *(antes)* | 52,53% | 52,83% |
+| preços + notícia + CVM *(novo)* | **54,36%** | 50,84% |
+| + embedding da CVM | 50,08% | 51,61% |
+
+> **Aquele 54,36% é uma armadilha.** Está 1,2 ponto acima do palpite fixo, e a
+> margem de erro com 653 pregões é de quase 2 pontos. Pior: a **AUC dele é
+> 0,489 — abaixo de 0,500**, ou seja, ordena os pregões pior que uma moeda.
+
+**Teste de McNemar**, que é o que decide:
+
+| Pergunta | Ganhou × Perdeu | p | Resposta |
+|---|---|---|---|
+| a notícia acrescenta sobre o preço? (XGB) | 88 × 65 | 0,0750 | quase |
+| a CVM acrescenta sobre a notícia? (SVM) | 37 × 25 | 0,1619 | **não** |
+| a CVM acrescenta sobre a notícia? (XGB) | 64 × 77 | 0,3122 | **não** |
+| o embedding acrescenta? (SVM) | 27 × 55 | 0,0026 | **PIORA** |
+
+**Volatilidade**, pelo HAR de Corsi e a combinação quantílica: a notícia leva de
++6,90% para +7,53%; a CVM traz de volta para **+7,47%**. Não ajuda.
+
+### O que isso significa, sem suavizar
+
+**Dentro do protocolo da pesquisa, a CVM não melhora nem direção nem
+volatilidade.** Isso **não derruba** os +38% de aumento no tamanho da variação
+medidos na parte anterior — diz algo mais específico: **o efeito existe, mas não
+é regular o bastante para virar previsão melhor que a memória do próprio preço.**
+
+### O experimento que falta
+
+As duas fontes **não entraram em pé de igualdade**: a CVM entrou com o embedding
+de 768 dimensões, e as 54.259 notícias entraram com **um número por pregão**. No
+diagnóstico, o embedding da CVM pesou 3,4% da decisão contra 2,0% dos rótulos da
+CVM — mais, mesmo existindo em muito menos noites. **Extrair os embeddings das
+notícias é o próximo passo**, e é trabalho de GPU em Colab.
+
+---
+
+## E um guia, porque os números confundem
+
+O documento **14** existe porque acurácia e AUC não são a mesma coisa, e
+confundi-las leva a elogiar modelos ruins. Tem cinco ilustrações e explica,
+com os nossos próprios números, **contra quem cada resultado deve ser comparado
+e que meta perseguir em cada alvo.**
+
+| Arquivo | O que é |
+|---|---|
+| **`11_Modelo_ML_COMPLETO.docx`** | **a quinta parte, detalhada** |
+| **`12_Modelo_ML_RESUMIDO.docx`** | **a quinta parte, em cinco minutos** |
+| **`13_Modelo_ML.xlsx`** | **planilha com o quadro antes/depois e o McNemar** |
+| **`14_GUIA_Como_ler_os_numeros.docx`** | **acurácia, AUC, linha de base e valor-p, com ilustrações** |
+| `figuras/` | as cinco ilustrações do guia |
+
+**O painel também foi atualizado** com uma demonstração interativa: um controle
+que move o corte de decisão e mostra a acurácia mudando enquanto a AUC fica
+parada.
