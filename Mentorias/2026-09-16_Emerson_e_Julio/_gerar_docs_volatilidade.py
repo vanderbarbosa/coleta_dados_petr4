@@ -23,6 +23,26 @@ CAL = json.loads((D / "volatilidade_calibrada.json").read_text(encoding="utf-8")
 POR = json.loads((D / "porque_volatilidade_falha.json").read_text(encoding="utf-8"))
 EXT = json.loads((D / "prever_extremo.json").read_text(encoding="utf-8"))
 COM = json.loads((D / "extremo_combinado.json").read_text(encoding="utf-8"))
+MOV = json.loads((D / "quanto_a_noticia_move.json").read_text(encoding="utf-8"))
+
+GRUPOS_MOV = {
+    "noite de MUITA notícia (sem CVM)": "muita notícia, sem CVM",
+    "houve Comunicado ao Mercado": "Comunicado ao Mercado",
+    "houve FATO RELEVANTE": "Fato Relevante",
+    "FATO RELEVANTE + muita notícia": "FATO RELEVANTE + muita notícia",
+}
+
+
+def linhas_mov():
+    """Cada linha: quanto aquele tipo de noite moveu, em porcentagem."""
+    out = []
+    for k, rot in GRUPOS_MOV.items():
+        g = MOV["grupos"][k]
+        out.append([rot, f"{g['vol']['n']:,}".replace(",", ".")]
+                   + [f"{g[m]['excesso_media_pct']:+.1f}%".replace(".", ",")
+                      + ("" if g[m]["p"] >= 0.05 else " *")
+                      for m in ["vol", "mov", "giro"]])
+    return out
 
 ROT = {
     "nada -- nem comunicado nem noite agitada": "nada acontecendo (sem CVM, notícia calma)",
@@ -56,14 +76,80 @@ def completo():
         autor="Vanderlei Barbosa da Silva",
         orientador="Orientador: Prof. Dr. Julio Cesar Nievola",
         instituicao="PUCPR — Programa de Pós-Graduação em Informática (PPGIa)",
-        descricao="Quarta parte do pedido de 16 de setembro de 2026. As três "
+        descricao="Abre pela pergunta central — quanto a notícia move o preço, em "
+                  "porcentagem — e só depois passa à previsão. Quarta parte do "
+                  "pedido de 16 de setembro de 2026. As três "
                   "anteriores estão nos documentos 01 a 07 desta pasta. Este "
                   "documento registra duas tentativas fracassadas antes do resultado, "
                   "porque o motivo do fracasso é o achado mais importante. Elaborado "
                   "em 20 de setembro de 2026.",
     )
 
-    A.secao(doc, "1", "Por que esta parte existe")
+    A.secao(doc, "1", "A pergunta central, respondida em porcentagem")
+
+    A.paragrafo(doc,
+        "Antes de qualquer previsão, cabe a medição — que é, afinal, a pergunta "
+        "desta pesquisa: **a notícia move o preço e a volatilidade, e em quanto por "
+        "cento?**")
+
+    A.paragrafo(doc,
+        f"A tabela abaixo mede o excesso sobre **{MOV['n_piso']} noites de controle "
+        "em que não houve nada**: nem notícia acima do normal, nem comunicado à CVM. "
+        "A régua é a mesma do estudo de evento — o pregão dividido pela média dos "
+        "cinco pregões anteriores do próprio papel. **O asterisco marca o que passa "
+        "no teste estatístico.**")
+
+    A.tabela_abnt(doc, "1", "Quanto cada tipo de noite move o pregão seguinte",
+        ["O que aconteceu na noite", "Noites", "Volatilidade",
+         "Tamanho da variação", "Volume"],
+        linhas_mov(), fonte=FONTE)
+
+    A.paragrafo(doc,
+        "**Dois asteriscos estão em números negativos, e isso é proposital.** Nas "
+        "noites de muita notícia sem comunicado, e nas de Comunicado ao Mercado, "
+        "o volume do pregão seguinte é **mais baixo** que o da noite vazia, com "
+        "certeza estatística. Não é ruído: são noites em que se escreveu muito "
+        "sobre nada de novo, e o mercado reagiu negociando menos.")
+
+    A.paragrafo(doc,
+        "**A notícia da imprensa, sozinha, não move nada** — o excesso é negativo e "
+        "não passa no teste. **O comunicado à CVM, sozinho, também não.** Só a "
+        f"coincidência dos dois move, e move bastante: "
+        f"**{MOV['grupos']['FATO RELEVANTE + muita notícia']['mov']['excesso_media_pct']:+.1f}% "
+        "no tamanho da variação do preço**, com valor-p de "
+        f"{MOV['grupos']['FATO RELEVANTE + muita notícia']['mov']['p']:.5f}.")
+
+    A.paragrafo(doc, "Em números do dia a dia:")
+
+    A.tabela_abnt(doc, "2", "O mesmo resultado em unidades concretas",
+        ["Tipo de noite", "Quanto a ação oscila no dia seguinte", "Quanto gira"],
+        [[k, f"{v['oscilacao_pct']:.2f}%".replace(".", ","),
+          f"{v['giro_milhoes']:.1f} milhões de ações".replace(".", ",")]
+         for k, v in MOV["concreto"].items()], fonte=FONTE)
+
+    A.paragrafo(doc,
+        "**E a direção continua nula.** A noite de tom muito negativo é seguida de "
+        f"{MOV['direcao']['noite de tom MUITO NEGATIVO']['retorno_medio_pct']:+.3f}% "
+        "de retorno; a de tom muito positivo, de "
+        f"{MOV['direcao']['noite de tom MUITO POSITIVO']['retorno_medio_pct']:+.3f}%. "
+        f"A diferença tem valor-p de {MOV['direcao']['p_neg_vs_pos']:.3f} e **não "
+        "passa no teste.**")
+
+    A.paragrafo(doc,
+        "**Uma ressalva de escopo, para não haver contradição aparente.** O Artigo 1 "
+        "relata +9,6% de volatilidade; a tabela acima relata números diferentes. "
+        "**Não há conflito:** o artigo mede 54 papéis contra um controle de 105.896 "
+        "pregões sem evento algum; esta tabela mede só a PETR4, contra um controle "
+        "que já exclui as noites de notícia — um adversário mais duro. Escopos "
+        "diferentes, perguntas diferentes, ambos corretos.")
+
+    A.paragrafo(doc,
+        "**O restante deste documento pergunta outra coisa:** não *quanto* o mercado "
+        "se moveu, mas se dá para **antecipar** o movimento antes que ele aconteça. "
+        "Foi o que os orientadores pediram em 16 de setembro. As duas perguntas são "
+        "distintas, e convém não confundi-las.")
+
+    A.secao(doc, "2", "Por que esta parte existe")
 
     A.paragrafo(doc,
         "Os documentos anteriores desta pasta mediram o impacto das publicações e "
@@ -75,7 +161,7 @@ def completo():
         "volatilidade tem valor-p da ordem de 10⁻⁵⁵; o efeito sobre a direção mal se "
         "distingue do acaso. **Se há sinal em algum lugar, é ali.**")
 
-    A.secao(doc, "2", "O desenho muda, e a razão é conceitual")
+    A.secao(doc, "3", "O desenho muda, e a razão é conceitual")
 
     A.paragrafo(doc,
         "Para prever direção, importa o **lado** do sentimento: notícia ruim aposta "
@@ -95,13 +181,13 @@ def completo():
         "Todos os limiares vêm de mediana expansiva, calculada apenas sobre pregões "
         "anteriores. **Nenhuma noite enxerga o próprio desfecho.**")
 
-    A.secao(doc, "3", "A primeira tentativa falhou")
+    A.secao(doc, "4", "A primeira tentativa falhou")
 
     A.paragrafo(doc,
         "A pergunta inicial foi a natural: *o pregão de amanhã vai sacudir mais que a "
         "média recente?* Todos os sinais ficaram **abaixo** de quem não lê nada.")
 
-    A.tabela_abnt(doc, "1", "Previsão de “acima ou abaixo do normal”, já calibrada",
+    A.tabela_abnt(doc, "3", "Previsão de “acima ou abaixo do normal”, já calibrada",
         ["Sinal usado", "Noites", "Acertou", "Palpite fixo", "Ganho"],
         [[k, f"{v['n']:,}".replace(",", "."), f"{v['acuracia']:.1%}",
           f"{v['maj']:.1%}", f"{v['ganho_pp']:+.2f} p.p."]
@@ -113,14 +199,14 @@ def completo():
         "quando a verdade é quatro em dez. **Corrigido isso**, com escore padronizado "
         "e corte na mediana expansiva, **o resultado continuou negativo.**")
 
-    A.secao(doc, "4", "E o motivo do fracasso é o achado")
+    A.secao(doc, "5", "E o motivo do fracasso é o achado")
 
     A.paragrafo(doc,
         "A contradição aparente merecia explicação. Se o Fato Relevante eleva a "
         "volatilidade com certeza estatística, por que não se consegue prever se o dia "
         "vai ficar acima ou abaixo do normal?")
 
-    A.tabela_abnt(doc, "2", "O que o Fato Relevante faz com a distribuição",
+    A.tabela_abnt(doc, "4", "O que o Fato Relevante faz com a distribuição",
         ["", "Sem Fato Relevante", "Com Fato Relevante", "Diferença"],
         [
             ["média", f"{POR['media_sem']:.3f}", f"{POR['media_com']:.3f}",
@@ -153,7 +239,7 @@ def completo():
         "método: é consequência da forma da distribuição, que esta pesquisa vem "
         "documentando desde o início.")
 
-    A.secao(doc, "5", "Então a pergunta estava errada")
+    A.secao(doc, "6", "Então a pergunta estava errada")
 
     A.paragrafo(doc,
         "Se o efeito vive na cauda, a pergunta certa não é *“vai sacudir mais que o "
@@ -164,7 +250,7 @@ def completo():
         "efeito de cauda, sustentada desde a primeira auditoria, **prevê exatamente "
         "isso**. Testá-la é obrigação, não conveniência.")
 
-    A.tabela_abnt(doc, "3", "Probabilidade de o pregão seguinte ficar no topo 10% da volatilidade",
+    A.tabela_abnt(doc, "5", "Probabilidade de o pregão seguinte ficar no topo 10% da volatilidade",
         ["Tipo de noite", "Noites", "Dias excepcionais", "Taxa", "Quantas vezes mais", "valor-p"],
         [[k, f"{v['n']:,}".replace(",", "."), str(v["extremos"]),
           f"{v['taxa']:.1%}", f"{v['lift']:.2f}×", f"{v['p']:.1e}"]
@@ -178,9 +264,9 @@ def completo():
         "— inclusive nas que têm Comunicado ao Mercado — o dia excepcional é **menos** "
         "provável que a média.")
 
-    A.secao(doc, "6", "E agora a pergunta que motivou tudo: juntar as fontes ajuda?")
+    A.secao(doc, "7", "E agora a pergunta que motivou tudo: juntar as fontes ajuda?")
 
-    A.tabela_abnt(doc, "4", "As duas fontes, isoladas e combinadas",
+    A.tabela_abnt(doc, "6", "As duas fontes, isoladas e combinadas",
         ["Tipo de noite", "Noites", "Taxa de dia excepcional", "Quantas vezes mais", "valor-p"],
         [[ROT[k], f"{v['n']:,}".replace(",", "."), f"{v['taxa']:.1%}",
           f"{v['lift']:.2f}×", f"{v['p']:.1e}"]
@@ -210,7 +296,7 @@ def completo():
         "sólido; a afirmação específica de que a notícia acrescenta *dentro* das "
         "noites de Fato Relevante é sugestiva e não está provada.")
 
-    A.secao(doc, "7", "O que se conclui")
+    A.secao(doc, "8", "O que se conclui")
 
     A.paragrafo(doc,
         "**Prever se o pregão vai sacudir mais ou menos que o normal não funciona**, "
@@ -229,7 +315,7 @@ def completo():
         "O mesmo dado, os mesmos sinais e o mesmo período produziram fracasso com um "
         "alvo e resultado sólido com outro.")
 
-    A.secao(doc, "8", "Limitações")
+    A.secao(doc, "9", "Limitações")
 
     A.lista(doc, [
         "**Um único ativo.** Todos os números são da PETR4.",
@@ -255,10 +341,56 @@ def resumido():
         orientador="Orientador: Prof. Dr. Julio Cesar Nievola",
         instituicao="PUCPR — Programa de Pós-Graduação em Informática (PPGIa)",
         descricao="Versão resumida do documento 08, para leitura em cinco minutos. "
+                  "Começa pela resposta em porcentagem. "
                   "Elaborado em 20 de setembro de 2026.",
     )
 
-    A.secao(doc, "1", "A pergunta")
+    A.secao(doc, "1", "Primeiro, a resposta em porcentagem")
+
+    A.paragrafo(doc,
+        "A pergunta da pesquisa é simples: **a notícia mexe no preço e na "
+        "volatilidade? Em quanto por cento?**")
+
+    A.paragrafo(doc,
+        f"Comparei com **{MOV['n_piso']} noites em que não houve nada** — nem notícia "
+        "acima do normal, nem comunicado à CVM. O asterisco marca o que passa no "
+        "teste.")
+
+    A.tabela_abnt(doc, "1", "Quanto cada tipo de noite move o dia seguinte",
+        ["O que aconteceu na noite", "Noites", "Volatilidade",
+         "Tamanho da variação", "Volume"],
+        linhas_mov(), fonte=FONTE)
+
+    A.paragrafo(doc,
+        "**Dois asteriscos estão em números negativos, e isso é proposital.** Nas "
+        "noites de muita notícia sem comunicado, e nas de Comunicado ao Mercado, "
+        "o volume do pregão seguinte é **mais baixo** que o da noite vazia, com "
+        "certeza estatística. Não é ruído: são noites em que se escreveu muito "
+        "sobre nada de novo, e o mercado reagiu negociando menos.")
+
+    A.paragrafo(doc,
+        "**Lendo em voz alta:** a notícia do jornal sozinha não move nada. O "
+        "comunicado da CVM sozinho também não. **Os dois juntos movem o tamanho da "
+        "variação do preço em +38%.**")
+
+    A.tabela_abnt(doc, "2", "O mesmo, em números do dia a dia",
+        ["Tipo de noite", "Quanto a ação oscila", "Quanto gira"],
+        [[k, f"{v['oscilacao_pct']:.2f}%".replace(".", ","),
+             f"{v['giro_milhoes']:.1f} milhões".replace(".", ",")]
+         for k, v in MOV["concreto"].items()], fonte=FONTE)
+
+    A.paragrafo(doc,
+        "**Para que lado o preço vai, continua imprevisível.** Tom muito negativo é "
+        "seguido de queda média de 0,170%; tom muito positivo, de alta de 0,164%. "
+        f"Parece certo, mas o valor-p é {MOV['direcao']['p_neg_vs_pos']:.3f} — **pode "
+        "ser sorte.**")
+
+    A.paragrafo(doc,
+        "**O resto deste documento é outra pergunta:** não *quanto* o mercado se "
+        "moveu, e sim se dá para **adivinhar antes**. Foi o que os professores "
+        "pediram em 16 de setembro.")
+
+    A.secao(doc, "2", "A pergunta")
 
     A.paragrafo(doc,
         "Já sabíamos prever, com alguma vantagem, **se a ação sobe ou desce**. Faltava "
@@ -269,7 +401,7 @@ def resumido():
         "Ela importa mais do que parece. Quem administra risco não precisa saber o "
         "lado — precisa saber se o dia vai ser agitado.")
 
-    A.secao(doc, "2", "Tentei duas vezes e não deu certo")
+    A.secao(doc, "3", "Tentei duas vezes e não deu certo")
 
     A.paragrafo(doc,
         "A pergunta natural era: *amanhã vai sacudir mais que a média da semana?* "
@@ -279,13 +411,13 @@ def resumido():
         "Refiz a conta corrigindo um erro de calibragem da minha regra. **Continuou "
         "perdendo.**")
 
-    A.secao(doc, "3", "E aí o motivo do fracasso explicou tudo")
+    A.secao(doc, "4", "E aí o motivo do fracasso explicou tudo")
 
     A.paragrafo(doc,
         "Fui ver por que, se o efeito é tão forte, a previsão não funciona. A resposta "
         "está na forma da distribuição:")
 
-    A.tabela_abnt(doc, "1", "O que o Fato Relevante faz com o sacolejo",
+    A.tabela_abnt(doc, "3", "O que o Fato Relevante faz com o sacolejo",
         ["", "Sem Fato Relevante", "Com Fato Relevante", "Quanto mudou"],
         [
             ["o dia típico (mediana)", f"{POR['mediana_sem']:.3f}",
@@ -306,13 +438,13 @@ def resumido():
         "Era exatamente o que a minha pergunta estava fazendo. Ela olhava o meio, e o "
         "efeito estava na ponta.")
 
-    A.secao(doc, "4", "Então mudei a pergunta")
+    A.secao(doc, "5", "Então mudei a pergunta")
 
     A.paragrafo(doc,
         "Em vez de *“vai sacudir mais que o normal?”*, passei a perguntar: **“vai ser "
         "um dia excepcional?”** — daqueles que ficam entre os 10% mais agitados.")
 
-    A.tabela_abnt(doc, "2", "Chance de o dia seguinte ser excepcional",
+    A.tabela_abnt(doc, "4", "Chance de o dia seguinte ser excepcional",
         ["Como estava a noite", "Chance", "Quantas vezes o normal"],
         [
             [k, f"{v['taxa']:.1%}", f"{v['lift']:.2f}×"]
@@ -322,9 +454,9 @@ def resumido():
     A.paragrafo(doc, "**Funcionou.** E o valor-p é de "
         f"{EXT['top9']['grupos']['houve FATO RELEVANTE']['p']:.4f}.")
 
-    A.secao(doc, "5", "E juntar as duas fontes?")
+    A.secao(doc, "6", "E juntar as duas fontes?")
 
-    A.tabela_abnt(doc, "3", "A resposta à pergunta que motivou tudo",
+    A.tabela_abnt(doc, "5", "A resposta à pergunta que motivou tudo",
         ["Como estava a noite", "Chance de dia excepcional", "Quantas vezes o normal"],
         [
             [ROT[k], f"{v['taxa']:.1%}", f"{v['lift']:.2f}×"]
@@ -340,7 +472,7 @@ def resumido():
         "**Fato que ninguém comentou não move o preço. Comentário sem fato também "
         "não. É o encontro dos dois que antecede o dia agitado.**")
 
-    A.secao(doc, "6", "O que não posso afirmar")
+    A.secao(doc, "7", "O que não posso afirmar")
 
     A.paragrafo(doc,
         f"O resultado combinado é sólido — valor-p de {COM['grupos'][FR]['p']:.5f}. "
@@ -355,9 +487,12 @@ def resumido():
         "O terceiro foi previsto pela teoria antes de ser testado — mas quem lê tem o "
         "direito de saber que houve mais de uma tentativa.")
 
-    A.secao(doc, "7", "Em quatro frases")
+    A.secao(doc, "8", "Em quatro frases")
 
     A.lista(doc, [
+        "“A notícia do jornal sozinha não move o preço, e o comunicado da CVM "
+        "sozinho também não. Os dois juntos movem o tamanho da variação em 38%, "
+        "e a direção continua imprevisível.”",
         "“Tentei prever se o dia seguinte ia sacudir mais que o normal. Falhou duas "
         "vezes, mesmo depois de eu corrigir um erro da minha regra.”",
         "“Fui ver por quê, e descobri que o fato relevante mexe na ponta da "
@@ -411,7 +546,68 @@ def planilha():
 
     # aba 1 — a resposta
     ws = wb.active
-    ws.title = "A resposta"
+    ws.title = "Em porcentagem"
+    tit(ws, "A NOTÍCIA MOVE O PREÇO? EM QUANTO POR CENTO?", 5,
+        sub=f"PETR4 · excesso sobre {MOV['n_piso']} noites em que não houve nada "
+            "(nem notícia acima do normal, nem comunicado à CVM) · "
+            "* = passa no teste estatístico")
+    r = 4
+    cab(ws, [("O que aconteceu na noite", 34), ("Noites", 9), ("Volatilidade", 14),
+             ("Tamanho da variação", 18), ("Volume", 12)], r)
+    r += 1
+    for linha in linhas_mov():
+        forte = "*" in linha[3]
+        lin(ws, r, linha, VERDE if forte else CINZA, forte)
+        r += 1
+    r += 1
+    c = ws.cell(row=r, column=1,
+                value="A NOTÍCIA SOZINHA NÃO MOVE. O COMUNICADO SOZINHO NÃO MOVE. "
+                      "OS DOIS JUNTOS MOVEM +38%.")
+    c.font = Font(bold=True, size=12, color="006100")
+    r += 2
+
+    c = ws.cell(row=r, column=1, value="O MESMO, EM NÚMEROS DO DIA A DIA")
+    c.font = Font(bold=True, size=11, color=AZUL)
+    r += 2
+    cab(ws, [("Tipo de noite", 34), ("Quanto a ação oscila", 18),
+             ("Quanto gira", 20)], r)
+    r += 1
+    for k, v in MOV["concreto"].items():
+        lin(ws, r, [k, f"{v['oscilacao_pct']:.2f}%",
+                    f"{v['giro_milhoes']:.1f} milhões de ações"])
+        r += 1
+    r += 2
+
+    c = ws.cell(row=r, column=1, value="E A DIREÇÃO? CONTINUA IMPREVISÍVEL")
+    c.font = Font(bold=True, size=11, color=AZUL)
+    r += 2
+    cab(ws, [("Tom da noite", 34), ("Noites", 9), ("Retorno médio no dia seguinte", 26),
+             ("% de alta", 12)], r)
+    r += 1
+    for k, v in MOV["direcao"].items():
+        if not isinstance(v, dict):
+            continue
+        lin(ws, r, [k, f"{v['n']:,}".replace(",", "."),
+                    f"{v['retorno_medio_pct']:+.3f}%", f"{v['pct_alta']:.1f}%"], CINZA)
+        r += 1
+    r += 1
+    ws.cell(row=r, column=1,
+            value=f"diferença entre o tom muito negativo e o muito positivo: "
+                  f"p = {MOV['direcao']['p_neg_vs_pos']:.3f} — NÃO PASSA. "
+                  "Parece certo, mas pode ser sorte.").font = Font(size=10, bold=True)
+    r += 3
+    for t in ["CUIDADO AO APRESENTAR — por que estes números diferem do Artigo 1",
+              "",
+              "O Artigo 1 relata +9,6% de volatilidade. Não há contradição:",
+              "  · o artigo mede 54 papéis contra 105.896 pregões sem evento algum;",
+              "  · esta aba mede só a PETR4, contra um controle que JÁ EXCLUI as",
+              "    noites de notícia — um adversário mais duro.",
+              "Escopos diferentes, perguntas diferentes, ambos corretos."]:
+        ws.cell(row=r, column=1, value=t).font = Font(
+            size=10, bold=t.startswith("CUIDADO"))
+        r += 1
+
+    ws = wb.create_sheet("A resposta")
     tit(ws, "JUNTAR AS FONTES AJUDA A PREVER O DIA AGITADO?", 5,
         sub=f"PETR4 · {COM['n']:,} pregões · alvo: ficar entre os 10% mais agitados "
             f"(acontece em {COM['base']:.1%} dos dias)".replace(",", "."))

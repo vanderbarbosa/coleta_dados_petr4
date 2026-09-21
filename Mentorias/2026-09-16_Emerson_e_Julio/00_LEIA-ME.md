@@ -118,6 +118,41 @@ precisas ~15.200 noites; temos 393. **Fica como hipótese, não como achado.**
 
 ---
 
+## Antes de tudo: a resposta em porcentagem
+
+A pergunta da pesquisa não é *"dá para adivinhar o amanhã?"* — é **"a notícia mexe
+no preço e na volatilidade, e em quanto por cento?"**. Essa é a primeira tabela dos
+documentos 08 e 09, e a primeira aba da planilha 10.
+
+Comparação com **618 noites em que não houve nada** — nem notícia acima do normal,
+nem comunicado à CVM. O asterisco marca o que passa no teste.
+
+| O que aconteceu na noite | Noites | Volatilidade | Tamanho da variação | Volume |
+|---|---|---|---|---|
+| muita notícia, sem CVM | 449 | −3,5% | −0,6% | −5,0% * |
+| Comunicado ao Mercado | 828 | −0,5% | −1,3% | −1,1% * |
+| Fato Relevante | 414 | +6,4% | **+18,9% *** | +11,9% |
+| **FATO RELEVANTE + muita notícia** | 225 | **+13,2% *** | **+38,2% *** | +19,4% |
+
+**A notícia do jornal sozinha não move nada. O comunicado da CVM sozinho também
+não. Os dois juntos movem o tamanho da variação do preço em +38%.**
+
+Em números do dia a dia: a PETR4 oscila **1,31%** depois de uma noite vazia e
+**1,70%** depois de Fato Relevante com muita notícia; o giro vai de **46,3** para
+**62,5 milhões** de ações.
+
+**A direção continua nula:** tom muito negativo é seguido de −0,170%, tom muito
+positivo de +0,164%, e a diferença tem p = 0,291 — pode ser sorte.
+
+> **Cuidado ao apresentar.** O Artigo 1 relata +9,6% de volatilidade, e não há
+> contradição: o artigo mede 54 papéis contra 105.896 pregões sem evento algum;
+> esta tabela mede só a PETR4, contra um controle que **já exclui** as noites de
+> notícia — um adversário mais duro. Escopos diferentes, ambos corretos.
+
+Código: `CVM/15_quanto_a_noticia_move.py`.
+
+---
+
 ## A quarta parte: e a VOLATILIDADE?
 
 A terceira parte previu **direção**. Faltava o alvo em que esta pesquisa sempre

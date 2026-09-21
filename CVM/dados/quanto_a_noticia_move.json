@@ -1,0 +1,165 @@
+{
+  "ticker": "PETR4",
+  "n": 2309,
+  "corte_texto": 50.0,
+  "n_piso": 618,
+  "piso": {
+    "vol": {
+      "n": 618,
+      "media": 1.0418,
+      "mediana": 0.9347
+    },
+    "giro": {
+      "n": 618,
+      "media": 1.0412,
+      "mediana": 0.9714
+    },
+    "mov": {
+      "n": 618,
+      "media": 1.1745,
+      "mediana": 0.7909
+    }
+  },
+  "grupos": {
+    "noite de MUITA notícia (sem CVM)": {
+      "vol": {
+        "n": 449,
+        "media": 1.0056,
+        "mediana": 0.8681,
+        "excesso_media_pct": -3.5,
+        "excesso_mediana_pct": -7.1,
+        "p": 0.10945101079279526
+      },
+      "giro": {
+        "n": 449,
+        "media": 0.9894,
+        "mediana": 0.9134,
+        "excesso_media_pct": -5.0,
+        "excesso_mediana_pct": -6.0,
+        "p": 0.004011525989536371
+      },
+      "mov": {
+        "n": 449,
+        "media": 1.167,
+        "mediana": 0.7858,
+        "excesso_media_pct": -0.6,
+        "excesso_mediana_pct": -0.6,
+        "p": 0.9500192200982632
+      }
+    },
+    "houve Comunicado ao Mercado": {
+      "vol": {
+        "n": 828,
+        "media": 1.0367,
+        "mediana": 0.9458,
+        "excesso_media_pct": -0.5,
+        "excesso_mediana_pct": 1.2,
+        "p": 0.9708036904105174
+      },
+      "giro": {
+        "n": 828,
+        "media": 1.0299,
+        "mediana": 0.9247,
+        "excesso_media_pct": -1.1,
+        "excesso_mediana_pct": -4.8,
+        "p": 0.042013507106904144
+      },
+      "mov": {
+        "n": 828,
+        "media": 1.1593,
+        "mediana": 0.8028,
+        "excesso_media_pct": -1.3,
+        "excesso_mediana_pct": 1.5,
+        "p": 0.7909215620418267
+      }
+    },
+    "houve FATO RELEVANTE": {
+      "vol": {
+        "n": 414,
+        "media": 1.1082,
+        "mediana": 0.9637,
+        "excesso_media_pct": 6.4,
+        "excesso_mediana_pct": 3.1,
+        "p": 0.23675515032816885
+      },
+      "giro": {
+        "n": 414,
+        "media": 1.1647,
+        "mediana": 0.9593,
+        "excesso_media_pct": 11.9,
+        "excesso_mediana_pct": -1.2,
+        "p": 0.8074949697007575
+      },
+      "mov": {
+        "n": 414,
+        "media": 1.3967,
+        "mediana": 0.9014,
+        "excesso_media_pct": 18.9,
+        "excesso_mediana_pct": 14.0,
+        "p": 0.040160991413236626
+      }
+    },
+    "FATO RELEVANTE + muita notícia": {
+      "vol": {
+        "n": 225,
+        "media": 1.1793,
+        "mediana": 1.0176,
+        "excesso_media_pct": 13.2,
+        "excesso_mediana_pct": 8.9,
+        "p": 0.04323739019915041
+      },
+      "giro": {
+        "n": 225,
+        "media": 1.2433,
+        "mediana": 1.0092,
+        "excesso_media_pct": 19.4,
+        "excesso_mediana_pct": 3.9,
+        "p": 0.1382653531571503
+      },
+      "mov": {
+        "n": 225,
+        "media": 1.623,
+        "mediana": 1.0736,
+        "excesso_media_pct": 38.2,
+        "excesso_mediana_pct": 35.7,
+        "p": 0.00019043260651633955
+      }
+    }
+  },
+  "direcao": {
+    "noite de tom MUITO NEGATIVO": {
+      "n": 386,
+      "retorno_medio_pct": -0.17,
+      "pct_alta": 46.9
+    },
+    "noite de tom comum": {
+      "n": 1157,
+      "retorno_medio_pct": 0.149,
+      "pct_alta": 53.8
+    },
+    "noite de tom MUITO POSITIVO": {
+      "n": 386,
+      "retorno_medio_pct": 0.164,
+      "pct_alta": 53.1
+    },
+    "p_neg_vs_pos": 0.2908981076368974
+  },
+  "concreto": {
+    "noite em que não houve nada": {
+      "oscilacao_pct": 1.31,
+      "giro_milhoes": 46.3
+    },
+    "noite de muita notícia (sem CVM)": {
+      "oscilacao_pct": 1.3,
+      "giro_milhoes": 44.2
+    },
+    "noite de FATO RELEVANTE": {
+      "oscilacao_pct": 1.65,
+      "giro_milhoes": 60.4
+    },
+    "FATO RELEVANTE + muita notícia": {
+      "oscilacao_pct": 1.7,
+      "giro_milhoes": 62.5
+    }
+  }
+}
