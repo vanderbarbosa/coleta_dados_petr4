@@ -1,0 +1,48 @@
+{
+  "pasta": "D:\\Mestrado\\scripts\\claude\\base_textual\\coleta_dados_petr4\\Mentoria_Emerson_13082026\\AS_SEIS_PESQUISAS_PDF",
+  "pesquisas": [
+    {
+      "arquivo": "VOL_1_HALOUSKOVA_LYOCSA_2025.pdf",
+      "alvo": "VOLATILIDADE",
+      "autor": "Halousková e Lyócsa (2025) — 404 ações do S&P 500, vence o HAR",
+      "obtido": true,
+      "situacao": "copiado (2849 KB)"
+    },
+    {
+      "arquivo": "VOL_2_HASHAMI_MALDONADO_2025.pdf",
+      "alvo": "DIREÇÃO DA VOLATILIDADE",
+      "autor": "Hashami e Maldonado (2025) — petróleo Brent, embedding vence sentimento",
+      "obtido": true,
+      "situacao": "copiado (752 KB)"
+    },
+    {
+      "arquivo": null,
+      "alvo": "VOLATILIDADE",
+      "autor": "Bodilsen e Lunde (2025) — J. Applied Econometrics, macro contra empresa",
+      "obtido": false,
+      "situacao": "HTTPError",
+      "como_obter": "Journal of Applied Econometrics 40(1):18-36 (Wiley). Obter pelo Portal de Periódicos CAPES com o login da PUCPR. Versão de trabalho no SSRN, abstract_id=4401032."
+    },
+    {
+      "arquivo": "DIR_1_RUAN_JIANG_2025.pdf",
+      "alvo": "DIREÇÃO",
+      "autor": "Ruan e Jiang (2025) — Mathematics, arquitetura quase idêntica à nossa",
+      "obtido": true,
+      "situacao": "822 KB de mdpi-res.com"
+    },
+    {
+      "arquivo": null,
+      "alvo": "DIREÇÃO",
+      "autor": "Nguyen, Shirai e Velcin (2015) — ganho de 2 a 10 p.p., a nossa régua",
+      "obtido": false,
+      "situacao": "resposta não era PDF"
+    },
+    {
+      "arquivo": "DIR_3_SCHUMAKER_CHEN_2009.pdf",
+      "alvo": "DIREÇÃO (20 min)",
+      "autor": "Schumaker e Chen (2009) — AZFinText, 71,18%",
+      "obtido": true,
+      "situacao": "187 KB de www.robschumaker.com"
+    }
+  ]
+}

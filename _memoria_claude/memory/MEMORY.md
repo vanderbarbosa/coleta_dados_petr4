@@ -1,0 +1,35 @@
+# Memory Index
+
+- [Projeto PETR4 (dissertação)](projeto-petr4-dissertacao.md) — pipeline de 4 scripts: sentimento de notícias → previsão de direção/volatilidade do PETR4
+- [Idioma português](preferencia-idioma-portugues.md) — gerar todos os artefatos e respostas em PT-BR, tom acadêmico
+- [Explicar para leigo](preferencia-explicacao-leigo.md) — ELE É LEIGO EM ML: nenhum termo técnico sem analogia; explicar o porquê de cada etapa
+- [Gaps da qualificação (banca)](qualificacao-gaps-banca.md) — 24 ponderações (nota C) a corrigir até a defesa final (mar/2027); visão do site/app e doutorado
+- [Padrão de documentação](padrao-documentacao-dissertacao.md) — regras p/ todo doc da dissertação: completude total (todos os termos), ABNT, tom sem marketing, nível doutorado
+- [Site da pesquisa](site-pesquisa-petr4.md) — app FastAPI + React em site/; envs base (backend) e web (Node); previsão/demo pendentes dos modelos
+- [Enriquecimento via Silva 2018](dissertacao-enriquecimento-silva2018.md) — expandir a dissertação capítulo a capítulo usando a tese da Silva (2018); Cap.1 e 2 feitos; Cap.4 terá regressão quantílica + GARCH-X
+- [Seminário julho/2026](seminario-julho2026.md) — apresentação ajustada (Emerson) p/ 02/07; corpus cresceu p/ ~205k; BERTimbau+FinBERT lado a lado; pendências c/ Júlio
+- [Banca julho/2026 — refino](banca-julho2026-refino.md) — ponderações da banca; pasta datasets/ (após-17h, enriquecido, RSL, volatilidade); Bloomberg=Arc; direção≈acaso, volatilidade é o ganho
+- [Encoders sentimento PT-BR](encoders-sentimento-ptbr.md) — o que já foi testado e por que falhou; recomendação atual é MLM de domínio, não trocar de encoder
+- [Mentoria Emerson ago/2026](mentoria-emerson-agosto2026.md) — rotulagem manual SUSPENSA; 7 tarefas entregues em 10/08; lacuna de literatura na volatilidade
+- [Gaps de pesquisa PETR4](gaps-pesquisa-petr4.md) — os 13 gaps e a ordem de ataque; 12 deles não dependem de rotulagem
+- [Resumos das pesquisas + códigos](resumos-pesquisas-finbert.md) — 7 fichas completas e 6 scripts prontos; o código do FinBERT-PT-BR nunca foi publicado
+- [Conjunto-ouro: 4 rótulos](conjunto-ouro-quatro-rotulos.md) — a objeção do especialista atinge só 1 das 4 colunas; direção humana acertou 46,7%; o gabarito calibra o ISM, não treina modelo
+- [Calibração do ISM (ACC)](calibracao-ism-acc.md) — ISM tem viés de 87%: o corpus é neutro, não negativo; mas calibrar não melhora previsão; código do FinBERT não existe
+- [Diagnóstico do erro: o neutro](diagnostico-erro-neutro.md) — 90% dos erros envolvem a classe Neutral; prior shift; Pos×Neg dá 0,783; pós-processamento não resolve
+- [Bug caixa alta + dataset do Santos](bug-caixa-alta-e-dataset-santos.md) — os 503 textos ESTÃO públicos; e-mail é gmail; 21.619 manchetes em CAIXA ALTA quebram o modelo cased
+- [Revalidação: 3 hipóteses rejeitadas](revalidacao-tres-hipoteses-rejeitadas.md) — caixa alta rende +0,005 no ISM; granularidade e comitê PIORAM; classificador perto do teto
+- [Bug: problem_type / sigmoide](bug-problem-type-sigmoide.md) — config do FinBERT quebra o treino e faz a pipeline usar sigmoide; rótulos OK, mas Score_Confianca está em escala errada
+- [G3: adaptação × esquecimento](g3-adaptacao-esquecimento.md) — perplexidade −49% mas F1 cai 0,056 (p=0,022); esquecimento catastrófico na classe Positiva; linha do classificador ENCERRADA
+- [Filtro de relevância: 1º ganho](filtro-relevancia-primeiro-ganho.md) — único ganho em 9 tentativas (p=0,001); mexer no corpus funciona, mexer no modelo não; mas não bate o HAR
+- [Efeito de cauda (auditoria)](efeito-de-cauda-auditoria-noticia.md) — a tese central: o sentimento não move o pregão comum, importa nos extremos; zero dias de maioria positiva
+- [Encoders em inglês (Emerson 13/08)](encoders-ingles-levantamento.md) — o nosso 0,58 é NORMAL: o FinBERT inglês dá 0,555 na mesma situação; 2 trabalhos com nosso desenho
+- [Revisão da ponderação por confiança](revisao-ponderacao-confianca.md) — CORREÇÃO: ponderar piora a direção; ideia nova = usar embeddings, não a cabeça de sentimento
+- [LaTeX / Overleaf da dissertação](dissertacao-latex-overleaf.md) — onde vive o texto, como empacotar, e a armadilha do .gitignore que engole capítulos novos
+- [Ambiente: PyTorch quebrado](ambiente-torch-quebrado.md) — `import torch` falha (c10.dll); rodar experimentos no Colab, não localmente
+- [Números altos da literatura](numeros-altos-da-literatura.md) — Bollen 86,7% = 13/15 e foi refutado; Schumaker mede reação em 20 min; Barak já testado e falhou
+- [Pesquisas semelhantes + macro×empresa](pesquisas-semelhantes-e-macro-vs-empresa.md) — 6 trabalhos com nosso desenho; na PETR4 notícia da EMPRESA ajuda (+1,77% em 22d) e MACRO atrapalha
+- [Onde a literatura nos supera](onde-a-literatura-nos-supera.md) — 3 trabalhos superam a pesquisa legitimamente; não repetir a ênfase de que "nenhum número resiste"
+- [Rotulagem por especialistas públicos](rotulagem-especialistas-publicos.md) — pedido de ago/2026; o especialista vira RÉGUA; validar rótulo pelo preço é armadilha
+- [CVM: estudo de evento](cvm-estudo-de-evento.md) — 16.437 eventos oficiais, 54 papéis; direção nula, magnitude 1,325; efeito de cauda sem usar modelo de sentimento
+- [Organização do projeto](organizacao-do-projeto.md) — pastas de Artigo e Mentoria; como restaurar esta memória noutra máquina
+- [Artigo 1: o relógio da CVM](artigo-1-relogio-da-cvm.md) — escrito; como a hora oficial foi obtida e as três validações

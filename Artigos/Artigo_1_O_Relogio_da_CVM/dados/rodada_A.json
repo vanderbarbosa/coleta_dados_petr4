@@ -1,0 +1,166 @@
+{
+  "n": 11161,
+  "n_fr": 3292,
+  "n_cm": 7869,
+  "hora_corte": 17,
+  "volatilidade": {
+    "1 semana (-6 a -2)": {
+      "Fato Relevante": {
+        "n": 3280,
+        "razao": 1.2188,
+        "mediana": 1.0647,
+        "p": 1.7504326206375023e-74
+      },
+      "Comunicado ao Mercado": {
+        "n": 7852,
+        "razao": 1.1018,
+        "mediana": 0.9748,
+        "p": 3.572811801497081e-49
+      }
+    },
+    "2 semanas (-11 a -2)": {
+      "Fato Relevante": {
+        "n": 3280,
+        "razao": 1.2085,
+        "mediana": 1.0567,
+        "p": 4.263005547638793e-70
+      },
+      "Comunicado ao Mercado": {
+        "n": 7859,
+        "razao": 1.0949,
+        "mediana": 0.9716,
+        "p": 1.9846654742937002e-44
+      }
+    },
+    "1 mês (-23 a -2)": {
+      "Fato Relevante": {
+        "n": 3280,
+        "razao": 1.201,
+        "mediana": 1.0455,
+        "p": 2.912311785319236e-64
+      },
+      "Comunicado ao Mercado": {
+        "n": 7861,
+        "razao": 1.0944,
+        "mediana": 0.9661,
+        "p": 1.1777264672147562e-41
+      }
+    },
+    "distante (-120 a -21)": {
+      "Fato Relevante": {
+        "n": 3290,
+        "razao": 1.2272,
+        "mediana": 1.0332,
+        "p": 8.048555726623155e-53
+      },
+      "Comunicado ao Mercado": {
+        "n": 7869,
+        "razao": 1.1175,
+        "mediana": 0.9616,
+        "p": 1.4117606496764156e-43
+      }
+    }
+  },
+  "volume": {
+    "1 semana (-6 a -2)": {
+      "Fato Relevante": {
+        "n": 3292,
+        "razao": 1.4461,
+        "mediana": 1.1066,
+        "p": 4.317638157074119e-88
+      },
+      "Comunicado ao Mercado": {
+        "n": 7862,
+        "razao": 1.1889,
+        "mediana": 0.9795,
+        "p": 7.078771224889702e-69
+      }
+    },
+    "2 semanas (-11 a -2)": {
+      "Fato Relevante": {
+        "n": 3292,
+        "razao": 1.4261,
+        "mediana": 1.1065,
+        "p": 6.191567823820221e-83
+      },
+      "Comunicado ao Mercado": {
+        "n": 7869,
+        "razao": 1.1745,
+        "mediana": 0.9684,
+        "p": 1.3853460563362102e-61
+      }
+    },
+    "1 mês (-23 a -2)": {
+      "Fato Relevante": {
+        "n": 3292,
+        "razao": 1.4211,
+        "mediana": 1.0853,
+        "p": 9.603832276533428e-78
+      },
+      "Comunicado ao Mercado": {
+        "n": 7869,
+        "razao": 1.1695,
+        "mediana": 0.9601,
+        "p": 1.2968319882388805e-54
+      }
+    },
+    "distante (-120 a -21)": {
+      "Fato Relevante": {
+        "n": 3292,
+        "razao": 1.4912,
+        "mediana": 1.0999,
+        "p": 3.541296790677364e-50
+      },
+      "Comunicado ao Mercado": {
+        "n": 7869,
+        "razao": 1.2202,
+        "mediana": 0.9659,
+        "p": 1.355682877437861e-60
+      }
+    }
+  },
+  "direcao": {
+    "gap de abertura": {
+      "media_pct": 0.1845,
+      "p": 2.072799413644681e-05,
+      "prop_alta": 0.5878
+    },
+    "intradiário": {
+      "media_pct": -0.1858,
+      "p": 0.0007317110120680644,
+      "prop_alta": 0.4438
+    },
+    "pregão inteiro": {
+      "media_pct": -0.0013,
+      "p": 0.9856958380672043,
+      "prop_alta": 0.4982
+    }
+  },
+  "controle": {
+    "volatilidade (Parkinson)": {
+      "sem": 1.031,
+      "com": 1.13038,
+      "p": 7.052688637504847e-55
+    },
+    "volume negociado": {
+      "sem": 1.06005,
+      "com": 1.23497,
+      "p": 3.6073751303803234e-62
+    },
+    "gap de abertura (%)": {
+      "sem": 0.00077,
+      "com": 0.00161,
+      "p": 0.00018788491265925167
+    },
+    "intradiário (%)": {
+      "sem": -0.00065,
+      "com": -0.00162,
+      "p": 0.0015615455637224783
+    },
+    "pregão inteiro (%)": {
+      "sem": 0.00012,
+      "com": -1e-05,
+      "p": 0.7381173077517797
+    }
+  }
+}

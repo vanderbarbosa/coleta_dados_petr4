@@ -1,0 +1,157 @@
+{
+  "data_execucao": "2026-08-19",
+  "n_pregoes": 1987,
+  "hipotese": "Bodilsen e Lunde (2025): macro acrescenta ao HAR, empresa nao; ganho maior em horizonte longo",
+  "resultados": [
+    {
+      "horizonte": 1,
+      "recorte": "EMPRESA",
+      "eqm": 0.16282156,
+      "eqm_har": 0.16450833,
+      "ganho_pct": 1.0253,
+      "DM": -1.5195,
+      "p_valor": 0.128647,
+      "significativo": false
+    },
+    {
+      "horizonte": 1,
+      "recorte": "PETROLEO",
+      "eqm": 0.16470114,
+      "eqm_har": 0.16450833,
+      "ganho_pct": -0.1172,
+      "DM": 0.6962,
+      "p_valor": 0.486293,
+      "significativo": false
+    },
+    {
+      "horizonte": 1,
+      "recorte": "MACRO",
+      "eqm": 0.16504623,
+      "eqm_har": 0.16450833,
+      "ganho_pct": -0.327,
+      "DM": 1.6211,
+      "p_valor": 0.105006,
+      "significativo": false
+    },
+    {
+      "horizonte": 1,
+      "recorte": "EMP+PETR",
+      "eqm": 0.16402236,
+      "eqm_har": 0.16450833,
+      "ganho_pct": 0.2954,
+      "DM": -0.4823,
+      "p_valor": 0.629586,
+      "significativo": false
+    },
+    {
+      "horizonte": 1,
+      "recorte": "TODAS",
+      "eqm": 0.16500209,
+      "eqm_har": 0.16450833,
+      "ganho_pct": -0.3001,
+      "DM": 0.4837,
+      "p_valor": 0.62859,
+      "significativo": false
+    },
+    {
+      "horizonte": 5,
+      "recorte": "EMPRESA",
+      "eqm": 0.06890715,
+      "eqm_har": 0.0691645,
+      "ganho_pct": 0.3721,
+      "DM": -0.4031,
+      "p_valor": 0.686854,
+      "significativo": false
+    },
+    {
+      "horizonte": 5,
+      "recorte": "PETROLEO",
+      "eqm": 0.0694972,
+      "eqm_har": 0.0691645,
+      "ganho_pct": -0.481,
+      "DM": 0.7838,
+      "p_valor": 0.433177,
+      "significativo": false
+    },
+    {
+      "horizonte": 5,
+      "recorte": "MACRO",
+      "eqm": 0.06991609,
+      "eqm_har": 0.0691645,
+      "ganho_pct": -1.0867,
+      "DM": 2.4425,
+      "p_valor": 0.014585,
+      "significativo": false
+    },
+    {
+      "horizonte": 5,
+      "recorte": "EMP+PETR",
+      "eqm": 0.06945943,
+      "eqm_har": 0.0691645,
+      "ganho_pct": -0.4264,
+      "DM": 0.3518,
+      "p_valor": 0.724982,
+      "significativo": false
+    },
+    {
+      "horizonte": 5,
+      "recorte": "TODAS",
+      "eqm": 0.07049638,
+      "eqm_har": 0.0691645,
+      "ganho_pct": -1.9257,
+      "DM": 1.4626,
+      "p_valor": 0.143574,
+      "significativo": false
+    },
+    {
+      "horizonte": 22,
+      "recorte": "EMPRESA",
+      "eqm": 0.04990833,
+      "eqm_har": 0.05080708,
+      "ganho_pct": 1.7689,
+      "DM": -1.9003,
+      "p_valor": 0.057398,
+      "significativo": false
+    },
+    {
+      "horizonte": 22,
+      "recorte": "PETROLEO",
+      "eqm": 0.05134391,
+      "eqm_har": 0.05080708,
+      "ganho_pct": -1.0566,
+      "DM": 1.3794,
+      "p_valor": 0.167777,
+      "significativo": false
+    },
+    {
+      "horizonte": 22,
+      "recorte": "MACRO",
+      "eqm": 0.05171899,
+      "eqm_har": 0.05080708,
+      "ganho_pct": -1.7948,
+      "DM": 2.327,
+      "p_valor": 0.019968,
+      "significativo": false
+    },
+    {
+      "horizonte": 22,
+      "recorte": "EMP+PETR",
+      "eqm": 0.0506985,
+      "eqm_har": 0.05080708,
+      "ganho_pct": 0.2137,
+      "DM": -0.1544,
+      "p_valor": 0.877328,
+      "significativo": false
+    },
+    {
+      "horizonte": 22,
+      "recorte": "TODAS",
+      "eqm": 0.05205385,
+      "eqm_har": 0.05080708,
+      "ganho_pct": -2.4539,
+      "DM": 1.6615,
+      "p_valor": 0.09661,
+      "significativo": false
+    }
+  ]
+}

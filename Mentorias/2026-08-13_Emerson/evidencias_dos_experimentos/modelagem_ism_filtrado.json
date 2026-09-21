@@ -1,0 +1,154 @@
+{
+  "data_execucao": "2026-08-10",
+  "semente": 42,
+  "filtro": [
+    "CAT1_Empresa",
+    "CAT2_Mercado_Petroleo"
+  ],
+  "A_todas": {
+    "rotulo": "A — ISM com TODAS as noticias",
+    "n": 1988,
+    "modelos": [
+      {
+        "modelo": "SVM (apenas precos)",
+        "hiperparametros": {
+          "C": 10.0
+        },
+        "acuracia_validacao": 0.5585,
+        "acuracia_teste": 0.5151,
+        "f1_teste": 0.6756,
+        "auc_teste": 0.5423
+      },
+      {
+        "modelo": "SVM (fusao)",
+        "hiperparametros": {
+          "C": 0.5
+        },
+        "acuracia_validacao": 0.5652,
+        "acuracia_teste": 0.507,
+        "f1_teste": 0.6703,
+        "auc_teste": 0.4917
+      },
+      {
+        "modelo": "XGBoost (apenas precos)",
+        "hiperparametros": {
+          "max_depth": 3,
+          "learning_rate": 0.05
+        },
+        "acuracia_validacao": 0.5351,
+        "acuracia_teste": 0.5231,
+        "f1_teste": 0.5699,
+        "auc_teste": 0.5139
+      },
+      {
+        "modelo": "XGBoost (fusao)",
+        "hiperparametros": {
+          "max_depth": 3,
+          "learning_rate": 0.05
+        },
+        "acuracia_validacao": 0.5518,
+        "acuracia_teste": 0.5231,
+        "f1_teste": 0.5651,
+        "auc_teste": 0.5189
+      }
+    ],
+    "volatilidade": {
+      "r_ism_vol": -0.1385,
+      "p": 0.0,
+      "r_abs_ism_vol": 0.1387,
+      "p_abs": 0.0
+    }
+  },
+  "B_filtrado": {
+    "rotulo": "B — ISM com CAT1 + CAT2 (empresa + petroleo)",
+    "n": 1988,
+    "modelos": [
+      {
+        "modelo": "SVM (apenas precos)",
+        "hiperparametros": {
+          "C": 10.0
+        },
+        "acuracia_validacao": 0.5585,
+        "acuracia_teste": 0.5151,
+        "f1_teste": 0.6756,
+        "auc_teste": 0.5423
+      },
+      {
+        "modelo": "SVM (fusao)",
+        "hiperparametros": {
+          "C": 1.0
+        },
+        "acuracia_validacao": 0.5485,
+        "acuracia_teste": 0.503,
+        "f1_teste": 0.6649,
+        "auc_teste": 0.4812
+      },
+      {
+        "modelo": "XGBoost (apenas precos)",
+        "hiperparametros": {
+          "max_depth": 3,
+          "learning_rate": 0.05
+        },
+        "acuracia_validacao": 0.5351,
+        "acuracia_teste": 0.5231,
+        "f1_teste": 0.5699,
+        "auc_teste": 0.5139
+      },
+      {
+        "modelo": "XGBoost (fusao)",
+        "hiperparametros": {
+          "max_depth": 3,
+          "learning_rate": 0.1
+        },
+        "acuracia_validacao": 0.5217,
+        "acuracia_teste": 0.5231,
+        "f1_teste": 0.5344,
+        "auc_teste": 0.5113
+      }
+    ],
+    "volatilidade": {
+      "r_ism_vol": -0.1704,
+      "p": 0.0,
+      "r_abs_ism_vol": 0.1723,
+      "p_abs": 0.0
+    }
+  },
+  "comparacoes": [
+    {
+      "modelo": "SVM (apenas precos)",
+      "A": 0.5151,
+      "B": 0.5151,
+      "delta": 0.0
+    },
+    {
+      "modelo": "SVM (fusao)",
+      "A": 0.507,
+      "B": 0.503,
+      "delta": -0.004
+    },
+    {
+      "modelo": "XGBoost (apenas precos)",
+      "A": 0.5231,
+      "B": 0.5231,
+      "delta": 0.0
+    },
+    {
+      "modelo": "XGBoost (fusao)",
+      "A": 0.5231,
+      "B": 0.5231,
+      "delta": 0.0
+    },
+    {
+      "teste_mcnemar": "XGBoost (fusao)",
+      "A_acerta_B_erra": 52,
+      "B_acerta_A_erra": 52,
+      "p_valor": 1.0
+    },
+    {
+      "teste_mcnemar": "SVM (fusao)",
+      "A_acerta_B_erra": 6,
+      "B_acerta_A_erra": 4,
+      "p_valor": 0.7539
+    }
+  ]
+}

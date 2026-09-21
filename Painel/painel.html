@@ -1,0 +1,664 @@
+<title>Anatomia de um Fato Relevante</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --papel:#FBFAF7; --sup:#FFFFFF; --tinta:#16202B; --noite:#202E3D;
+  --alta:#1B7A5A; --baixa:#B3382C; --lampada:#C8853A; --cinza:#6B7784;
+  --borda:#DFDCD4; --trilho:#EDEAE3; --lampada-fraca:#F3E6D2;
+  --disp:"Zilla Slab",Georgia,serif;
+  --corpo:"Source Sans 3",system-ui,sans-serif;
+  --dado:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --papel:#141C25; --sup:#1B252F; --tinta:#EDEAE3; --noite:#0D141B;
+    --alta:#4FBE93; --baixa:#E4796B; --lampada:#E0A860; --cinza:#93A0AD;
+    --borda:#2C3946; --trilho:#232F3B; --lampada-fraca:#33281A;
+  }
+}
+:root[data-theme="dark"]{
+  --papel:#141C25; --sup:#1B252F; --tinta:#EDEAE3; --noite:#0D141B;
+  --alta:#4FBE93; --baixa:#E4796B; --lampada:#E0A860; --cinza:#93A0AD;
+  --borda:#2C3946; --trilho:#232F3B; --lampada-fraca:#33281A;
+}
+*{box-sizing:border-box}
+body{background:var(--papel);color:var(--tinta);font-family:var(--corpo);
+  font-size:16px;line-height:1.6;margin:0;padding:0 20px 80px}
+.env{max-width:1060px;margin:0 auto}
+
+/* ── topo ───────────────────────────────────────────────── */
+header{padding:44px 0 26px;border-bottom:2px solid var(--tinta)}
+.olho{font-family:var(--dado);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--lampada);font-weight:600;margin:0 0 10px}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,5.2vw,46px);
+  line-height:1.08;margin:0 0 12px;text-wrap:balance;letter-spacing:-.015em}
+.linha-fina{font-size:17px;color:var(--cinza);max-width:62ch;margin:0}
+
+h2{font-family:var(--disp);font-size:24px;font-weight:600;margin:52px 0 6px;
+  text-wrap:balance}
+h3{font-family:var(--disp);font-size:17px;font-weight:600;margin:0 0 4px}
+.sub{color:var(--cinza);font-size:15px;margin:0 0 20px;max-width:64ch}
+
+/* ── seletor de casos ───────────────────────────────────── */
+.grupos{display:flex;flex-direction:column;gap:14px;margin:22px 0 34px}
+.grupo{display:grid;grid-template-columns:168px 1fr;gap:14px;align-items:start}
+@media(max-width:700px){.grupo{grid-template-columns:1fr;gap:6px}}
+.grupo-nome{font-family:var(--dado);font-size:11px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--cinza);padding-top:9px;font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-family:var(--dado);font-size:12px;font-weight:500;padding:7px 11px;
+  border:1px solid var(--borda);background:var(--sup);color:var(--tinta);
+  border-radius:3px;cursor:pointer;transition:.13s;line-height:1.2}
+.chip:hover{border-color:var(--lampada)}
+.chip[aria-pressed="true"]{background:var(--tinta);color:var(--papel);
+  border-color:var(--tinta)}
+.chip:focus-visible{outline:2px solid var(--lampada);outline-offset:2px}
+
+/* ── cartão do caso ─────────────────────────────────────── */
+.caso{background:var(--sup);border:1px solid var(--borda);border-top:3px solid var(--lampada);
+  padding:24px 26px;margin-bottom:26px}
+.caso-topo{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;
+  margin-bottom:12px}
+.tick{font-family:var(--dado);font-weight:600;font-size:19px;color:var(--lampada)}
+.emp{font-size:14px;color:var(--cinza)}
+.gaveta{font-family:var(--dado);font-size:10.5px;letter-spacing:.07em;
+  text-transform:uppercase;padding:3px 8px;border:1px solid var(--borda);
+  border-radius:2px;color:var(--cinza);margin-left:auto}
+.texto-com{font-family:var(--disp);font-size:20px;font-weight:600;line-height:1.35;
+  margin:0 0 14px;text-wrap:balance}
+.protocolo{font-family:var(--dado);font-size:12px;color:var(--cinza)}
+
+/* ── linha do tempo ─────────────────────────────────────── */
+.tempo{display:grid;grid-template-columns:1fr 1.25fr 1fr;margin:0 0 4px;
+  border:1px solid var(--borda);overflow:hidden}
+@media(max-width:720px){.tempo{grid-template-columns:1fr}}
+.fase{padding:15px 17px;min-height:104px}
+.fase+.fase{border-left:1px solid var(--borda)}
+@media(max-width:720px){.fase+.fase{border-left:0;border-top:1px solid var(--borda)}}
+.fase-rot{font-family:var(--dado);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;margin:0 0 7px;font-weight:600}
+.fase-txt{font-size:13.5px;line-height:1.5;margin:0}
+.f-antes{background:var(--trilho)}
+.f-antes .fase-rot{color:var(--cinza)}
+.f-noite{background:var(--noite);color:#EDEAE3}
+.f-noite .fase-rot{color:var(--lampada)}
+.f-noite .fase-txt{color:#C3CDD7}
+.f-depois{background:var(--lampada-fraca)}
+.f-depois .fase-rot{color:var(--lampada)}
+.legenda{font-size:13px;color:var(--cinza);margin:0 0 34px;font-style:italic}
+
+/* ── réguas ─────────────────────────────────────────────── */
+.reguas{display:grid;grid-template-columns:repeat(auto-fit,minmax(296px,1fr));gap:18px}
+.regua{background:var(--sup);border:1px solid var(--borda);padding:19px 20px 16px}
+.regua-num{font-family:var(--dado);font-size:10.5px;letter-spacing:.1em;
+  color:var(--lampada);font-weight:600;margin:0 0 3px}
+.regua-perg{font-size:13px;color:var(--cinza);margin:0 0 14px;line-height:1.45}
+.veredicto{font-family:var(--dado);font-size:26px;font-weight:600;
+  margin:12px 0 2px;font-variant-numeric:tabular-nums}
+.veredicto-txt{font-size:13.5px;line-height:1.45;margin:0}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.eixo{font-family:var(--dado);font-size:9px;fill:var(--cinza)}
+.eixo-forte{font-family:var(--dado);font-size:9.5px;fill:var(--tinta);font-weight:600}
+.eixo-val{font-family:var(--dado);font-size:8.5px;fill:var(--cinza)}
+.eixo-val-forte{font-family:var(--dado);font-size:9.5px;fill:var(--lampada);font-weight:600}
+.eixo-med{font-family:var(--dado);font-size:9px;fill:var(--lampada);font-weight:600}
+.eixo-peq{font-family:var(--dado);font-size:7.5px;fill:var(--cinza);
+  letter-spacing:.06em;text-transform:uppercase}
+
+/* ── modelo ─────────────────────────────────────────────── */
+.modelo{background:var(--sup);border:1px solid var(--borda);padding:22px 24px;
+  margin-top:18px;display:grid;grid-template-columns:auto 1fr;gap:20px;
+  align-items:center}
+@media(max-width:620px){.modelo{grid-template-columns:1fr}}
+.selo{font-family:var(--dado);font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:12px 16px;border:2px solid;text-align:center;
+  white-space:nowrap}
+.modelo-txt{font-size:14.5px;line-height:1.55;margin:0}
+
+/* ── panorama ───────────────────────────────────────────── */
+.barra-emp{display:flex;height:40px;border:1px solid var(--borda);overflow:hidden;
+  margin:6px 0 10px}
+.seg{display:flex;align-items:center;justify-content:center;font-family:var(--dado);
+  font-size:11.5px;font-weight:600;color:#fff;overflow:hidden;white-space:nowrap}
+.tabela{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0 6px}
+.tabela th{font-family:var(--dado);font-size:10.5px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--cinza);text-align:right;padding:8px 10px;
+  border-bottom:1px solid var(--borda);font-weight:600}
+.tabela th:first-child{text-align:left}
+.tabela td{padding:9px 10px;border-bottom:1px solid var(--trilho);text-align:right;
+  font-family:var(--dado);font-variant-numeric:tabular-nums;font-size:13.5px}
+.tabela td:first-child{text-align:left;font-family:var(--corpo);font-size:14.5px}
+.rolar{overflow-x:auto}
+.nota{background:var(--trilho);border-left:3px solid var(--lampada);padding:15px 18px;
+  font-size:14px;line-height:1.55;margin:20px 0}
+.nota strong{font-weight:600}
+footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--borda);
+  font-size:13px;color:var(--cinza)}
+.sobe{color:var(--alta)} .desce{color:var(--baixa)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="env">
+<header>
+  <p class="olho">Dissertação PETR4 · PUCPR/PPGIa</p>
+  <h1>Anatomia de um Fato Relevante</h1>
+  <p class="linha-fina">Uma empresa publica um comunicado à noite, com a bolsa
+  fechada. No dia seguinte o mercado abre. Escolha um caso real abaixo e veja,
+  passo a passo, o que aconteceu com o preço.</p>
+</header>
+
+<h2>Escolha um caso</h2>
+<p class="sub">São 23 casos reais, dos 11.161 que estudamos. Estão agrupados
+pelo que cada um demonstra — inclusive os casos em que nada aconteceu e os
+casos em que o nosso programa errou.</p>
+<div class="grupos" id="grupos"></div>
+
+<div id="palco"></div>
+
+<h2>O panorama</h2>
+<p class="sub">Um caso isolado não prova nada. Estes são os números do conjunto
+inteiro.</p>
+<div id="panorama"></div>
+
+<h2>Qual fonte de texto prevê melhor?</h2>
+<p class="sub">Temos duas fontes de texto sobre a Petrobras: as notícias dos
+portais e os comunicados da CVM. Qual delas antecipa melhor o pregão seguinte —
+e juntar as duas acrescenta alguma coisa?</p>
+
+<div class="nota" style="border-left-color:var(--baixa)">
+  <strong>Uma correção que precisou ser feita antes.</strong> A primeira versão
+  da regra somava o sentimento da noite: mais positivas que negativas, aposta em
+  alta. <strong>Ela previa BAIXA em 99% das noites</strong> — porque o
+  classificador rotula quase tudo como negativo, o saldo quase nunca é positivo.
+  Uma regra que diz a mesma coisa 99% das vezes não é previsão, é constante.
+  <br><br>
+  A correção: comparar a noite com <strong>o normal da própria série</strong> —
+  os 60 pregões anteriores — em vez de comparar com zero. A pergunta deixa de
+  ser “houve mais positivas que negativas?” e passa a ser <strong>“esta noite
+  foi mais negativa que o habitual?”</strong>
+</div>
+
+<div class="rolar"><table class="tabela">
+  <thead><tr><th>Fonte de texto</th><th>Noites</th><th>Acertou</th>
+  <th>Quem não lê nada</th><th>Ganho</th></tr></thead>
+  <tbody>
+    ${[["inter_dev_news","Só notícia de portal"],
+       ["inter_dev_cvm","Só comunicado da CVM"],
+       ["inter_dev_ambos","As duas juntas"]].map(([k,r])=>{
+      const o=cf[k], bom=o.p<0.05;
+      return `<tr><td>${r}</td><td>${mil(o.n)}</td>
+        <td style="font-weight:600">${fmt(o.acuracia*100,1)}%</td>
+        <td>${fmt(o.maj*100,1)}%</td>
+        <td style="color:${bom?"var(--alta)":"var(--baixa)"};font-weight:600">
+        ${sinal(o.ganho_pp)} pts${bom?"":" (não conta)"}</td></tr>`;
+    }).join("")}
+  </tbody>
+</table></div>
+<p class="legenda">Comparação feita só nos dias em que as duas fontes existem,
+para que seja justa.</p>
+
+<h3 style="margin-top:34px">E nas noites de Fato Relevante?</h3>
+<p class="sub">O Fato Relevante é o documento mais forte. Nessas noites, ler o
+texto compensa mais?</p>
+<div class="rolar"><table class="tabela">
+  <thead><tr><th>Fonte de texto</th><th>Noites</th><th>Acertou</th>
+  <th>Quem não lê nada</th><th>Ganho</th></tr></thead>
+  <tbody>
+    ${[["fatorel_dev_news","Só notícia de portal"],
+       ["fatorel_dev_cvm","Só comunicado da CVM"],
+       ["fatorel_dev_ambos","As duas juntas"]].map(([k,r])=>{
+      const o=cf[k], bom=o.p<0.05;
+      return `<tr><td>${r}</td><td>${mil(o.n)}</td>
+        <td style="font-weight:600">${fmt(o.acuracia*100,1)}%</td>
+        <td>${fmt(o.maj*100,1)}%</td>
+        <td style="color:${bom?"var(--alta)":"var(--cinza)"};font-weight:600">
+        ${sinal(o.ganho_pp)} pts${bom?"":" (não conta)"}</td></tr>`;
+    }).join("")}
+  </tbody>
+</table></div>
+
+<div class="nota">
+  <strong>O melhor resultado do estudo inteiro está nessa última linha:</strong>
+  nas noites de Fato Relevante, juntar as duas fontes acerta
+  ${fmt(cf.fatorel_dev_ambos.acuracia*100,1)}% contra
+  ${fmt(cf.fatorel_dev_ambos.maj*100,1)}% de quem não lê nada —
+  <strong>${sinal(cf.fatorel_dev_ambos.ganho_pp)} pontos.</strong>
+  <br><br>
+  Repare que <strong>o comunicado da CVM sozinho não prevê direção</strong>
+  (${sinal(cf.inter_dev_cvm.ganho_pp)} pontos). O que ele acrescenta não é o
+  texto — é dizer <em>em qual noite vale a pena ler o jornal.</em>
+</div>
+
+<h3 style="margin-top:34px">A CVM como filtro — uma hipótese, ainda não provada</h3>
+<p class="sub">Mesma regra, lendo só as notícias dos portais. Muda apenas o tipo
+de noite.</p>
+<div class="rolar"><table class="tabela">
+  <thead><tr><th>Tipo de noite</th><th>Noites</th><th>Acertou</th><th>Ganho</th></tr></thead>
+  <tbody>
+    ${[["noite SEM comunicado nenhum","Sem comunicado nenhum"],
+       ["noite com Comunicado, sem Fato Relevante","Com Comunicado ao Mercado"],
+       ["noite com FATO RELEVANTE","Com FATO RELEVANTE"]].map(([k,r],i)=>{
+      const o=fl[k];
+      return `<tr><td>${r}</td><td>${mil(o.n)}</td>
+        <td>${fmt(o.acuracia*100,1)}%</td>
+        <td style="font-weight:600;color:${i===2?"var(--lampada)":"var(--cinza)"}">
+        ${sinal(o.ganho_pp)} pts</td></tr>`;
+    }).join("")}
+  </tbody>
+</table></div>
+<div class="nota" style="border-left-color:var(--cinza)">
+  O ganho sobe de ${sinal(fl["noite SEM comunicado nenhum"].ganho_pp)} para
+  ${sinal(fl["noite com FATO RELEVANTE"].ganho_pp)} pontos conforme a noite fica
+  mais importante. A ordem é a que a teoria prevê.
+  <br><br>
+  <strong>Mas é preciso ser honesto: a diferença não passa no teste
+  estatístico</strong> (valor-p de ${fmt(fl.teste_filtro.p,2)}). Com 393 noites
+  de Fato Relevante, não há casos suficientes para separar isto do acaso.
+  <strong>É uma hipótese promissora, não um resultado.</strong>
+</div>
+
+<footer>
+  Fonte: comunicados obtidos em <span style="font-family:var(--dado)">dados.cvm.gov.br</span>,
+  com data e hora do Protocolo de Entrega da CVM. Cotações da B3.
+  Elaborado por Vanderlei Barbosa da Silva.
+</footer>
+</div>
+
+<script>
+const D = {"casos":[{"grupo":"choque grande","ticker":"CVCB3","empresa":"Cvc Brasil Operadora E Agência De Viagens Sa","categoria":"Fato Relevante","assunto":"Plano de sucessão da Companhia","entrega":"15/01/2026 20:51","entrega_hora":"20:51","reacao":"16/01/2026","razao_vol":5.43,"razao_qtd":4.97,"gap_pct":-0.74,"intra_pct":-10.62,"ret_pct":-11.36,"direcao":"CAIU","modelo":"Neutral","modelo_previu":null,"modelo_acertou":null,"semana":[{"data":"08/01","vol":2.08,"qtd":9.87},{"data":"09/01","vol":4.708,"qtd":21.61},{"data":"12/01","vol":4.241,"qtd":16.93},{"data":"13/01","vol":3.814,"qtd":16.13},{"data":"14/01","vol":2.751,"qtd":16.03}],"dia":{"data":"16/01","vol":19.098,"qtd":80.09},"media_vol":3.519,"media_qtd":16.11,"abertura":2.68,"fechamento":2.41,"fech_anterior":2.7,"maxima":2.79,"minima":2.03},{"grupo":"choque grande","ticker":"OIBR3","empresa":"Oi S.A. - Em Recuperação Judicial","categoria":"Fato Relevante","assunto":"Manifestação sobre a Continuidade do Grupo Oi","entrega":"07/11/2025 19:31","entrega_hora":"19:31","reacao":"10/11/2025","razao_vol":4.93,"razao_qtd":5.7,"gap_pct":-11.33,"intra_pct":-32.85,"ret_pct":-44.18,"direcao":"CAIU","modelo":"Neutral","modelo_previu":null,"modelo_acertou":null,"semana":[{"data":"31/10","vol":6.113,"qtd":5.53},{"data":"03/11","vol":4.143,"qtd":1.56},{"data":"04/11","vol":2.036,"qtd":1.25},{"data":"05/11","vol":4.005,"qtd":2.85},{"data":"06/11","vol":6.113,"qtd":3.53}],"dia":{"data":"10/11","vol":22.084,"qtd":16.79},"media_vol":4.482,"media_qtd":2.95,"abertura":0.25,"fechamento":0.18,"fech_anterior":0.28,"maxima":0.26,"minima":0.18},{"grupo":"choque grande","ticker":"SLCE3","empresa":"Slc Agricola Sa","categoria":"Fato Relevante","assunto":"Avaliação de Terras 2024","entrega":"28/06/2024 18:07","entrega_hora":"18:07","reacao":"01/07/2024","razao_vol":4.87,"razao_qtd":2.92,"gap_pct":1.2,"intra_pct":5.78,"ret_pct":6.97,"direcao":"SUBIU","modelo":"Neutral","modelo_previu":null,"modelo_acertou":null,"semana":[{"data":"21/06","vol":0.994,"qtd":5.46},{"data":"24/06","vol":0.654,"qtd":2.42},{"data":"25/06","vol":0.621,"qtd":1.89},{"data":"26/06","vol":1.101,"qtd":2.03},{"data":"27/06","vol":1.198,"qtd":1.84}],"dia":{"data":"01/07","vol":4.446,"qtd":7.97},"media_vol":0.914,"media_qtd":2.73,"abertura":14.47,"fechamento":15.33,"fech_anterior":14.3,"maxima":15.51,"minima":14.4},{"grupo":"choque grande","ticker":"NTCO3","empresa":"Natura Cosmeticos Sa","categoria":"Fato Relevante","assunto":"Modificação de Projeções Divulgadas","entrega":"14/03/2018 19:08","entrega_hora":"19:08","reacao":"15/03/2018","razao_vol":4.28,"razao_qtd":3.54,"gap_pct":1.7,"intra_pct":-1.86,"ret_pct":-0.15,"direcao":"CAIU","modelo":"Neutral","modelo_previu":null,"modelo_acertou":null,"semana":[{"data":"07/03","vol":1.117,"qtd":2.09},{"data":"08/03","vol":1.293,"qtd":0.55},{"data":"09/03","vol":1.096,"qtd":0.94},{"data":"12/03","vol":0.61,"qtd":0.57},{"data":"13/03","vol":0.757,"qtd":0.79}],"dia":{"data":"15/03","vol":4.174,"qtd":3.5},"media_vol":0.975,"media_qtd":0.99,"abertura":32.75,"fechamento":32.15,"fech_anterior":32.2,"maxima":33.67,"minima":31.41},{"grupo":"choque grande","ticker":"LREN3","empresa":"Lojas Renner Sa","categoria":"Fato Relevante","assunto":"Projeções","entrega":"06/08/2026 18:32","entrega_hora":"18:32","reacao":"07/08/2026","razao_vol":4.12,"razao_qtd":10.41,"gap_pct":-8.35,"intra_pct":-0.08,"ret_pct":-8.43,"direcao":"CAIU","modelo":"Neutral","modelo_previu":null,"modelo_acertou":null,"semana":[{"data":"30/07","vol":0.98,"qtd":8.22},{"data":"31/07","vol":1.151,"qtd":14.13},{"data":"03/08","vol":1.567,"qtd":11.15},{"data":"04/08","vol":2.598,"qtd":10.05},{"data":"05/08","vol":1.272,"qtd":7.74}],"dia":{"data":"07/08","vol":6.233,"qtd":106.81},"media_vol":1.514,"media_qtd":10.26,"abertura":12.4,"fechamento":12.39,"fech_anterior":13.48,"maxima":12.68,"minima":11.43},{"grupo":"choque grande","ticker":"OIBR3","empresa":"Oi S.A. - Em Recuperação Judicial","categoria":"Fato Relevante","assunto":"Conclusão das Negociações para alienação da UPI Ativos TV por Assinatura","entrega":"09/01/2025 18:24","entrega_hora":"18:24","reacao":"10/01/2025","razao_vol":4.1,"razao_qtd":7.94,"gap_pct":4.26,"intra_pct":2.06,"ret_pct":6.32,"direcao":"SUBIU","modelo":"Neutral","modelo_previu":null,"modelo_acertou":null,"semana":[{"data":"02/01","vol":2.67,"qtd":0.86},{"data":"03/01","vol":1.793,"qtd":0.64},{"data":"06/01","vol":2.65,"qtd":1.91},{"data":"07/01","vol":1.32,"qtd":0.76},{"data":"08/01","vol":2.631,"qtd":1.34}],"dia":{"data":"10/01","vol":9.075,"qtd":8.74},"media_vol":2.213,"media_qtd":1.1,"abertura":1.44,"fechamento":1.47,"fech_anterior":1.38,"maxima":1.64,"minima":1.41},{"grupo":"PETR4","ticker":"PETR4","empresa":"Petróleo Brasileiro S.A. - Petrobras","categoria":"Comunicado ao Mercado","assunto":"Petrobras esclarece notícia divulgada na mídia","entrega":"08/03/2024 20:16","entrega_hora":"20:16","reacao":"11/03/2024","razao_vol":3.76,"razao_qtd":3.56,"gap_pct":-2.85,"intra_pct":-0.06,"ret_pct":-2.9,"direcao":"CAIU","modelo":"Neutral","modelo_previu":null,"modelo_acertou":null,"semana":[{"data":"01/03","vol":1.053,"qtd":31.25},{"data":"04/03","vol":1.086,"qtd":21.99},{"data":"05/03","vol":1.141,"qtd":30.29},{"data":"06/03","vol":1.083,"qtd":45.48},{"data":"07/03","vol":0.976,"qtd":50.2}],"dia":{"data":"11/03","vol":4.014,"qtd":127.53},"media_vol":1.068,"media_qtd":35.84,"abertura":24.58,"fechamento":24.56,"fech_anterior":25.29,"maxima":26.0,"minima":24.32},{"grupo":"PETR4","ticker":"PETR4","empresa":"Petróleo Brasileiro S.A. - Petrobras","categoria":"Fato Relevante","assunto":"Petrobras sobre renúncia de Conselheiro de Administração","entrega":"16/04/2021 18:28","entrega_hora":"18:28","reacao":"19/04/2021","razao_vol":3.75,"razao_qtd":3.2,"gap_pct":0.0,"intra_pct":5.63,"ret_pct":5.63,"direcao":"SUBIU","modelo":"Negative","modelo_previu":"BAIXA","modelo_acertou":false,"semana":[{"data":"09/04","vol":1.044,"qtd":47.49},{"data":"12/04","vol":1.472,"qtd":50.59},{"data":"13/04","vol":1.055,"qtd":53.61},{"data":"14/04","vol":1.484,"qtd":90.84},{"data":"15/04","vol":2.077,"qtd":64.19}],"dia":{"data":"19/04","vol":5.346,"qtd":196.52},"media_vol":1.427,"media_qtd":61.35,"abertura":6.41,"fechamento":6.78,"fech_anterior":6.41,"maxima":6.95,"minima":6.36},{"grupo":"PETR4","ticker":"PETR4","empresa":"Petróleo Brasileiro S.A. - Petrobras","categoria":"Comunicado ao Mercado","assunto":"Petrobras inicia fase vinculante de ativos de E&P","entrega":"06/03/2020 18:35","entrega_hora":"18:35","reacao":"09/03/2020","razao_vol":3.32,"razao_qtd":3.54,"gap_pct":-24.83,"intra_pct":-10.41,"ret_pct":-35.24,"direcao":"CAIU","modelo":"Neutral","modelo_previu":null,"modelo_acertou":null,"semana":[{"data":"28/02","vol":2.25,"qtd":89.1},{"data":"02/03","vol":2.921,"qtd":71.6},{"data":"03/03","vol":3.882,"qtd":86.86},{"data":"04/03","vol":1.581,"qtd":42.32},{"data":"05/03","vol":4.584,"qtd":69.72}],"dia":{"data":"09/03","vol":10.093,"qtd":254.81},"media_vol":3.044,"media_qtd":71.92,"abertura":4.81,"fechamento":4.33,"fech_anterior":6.16,"maxima":4.92,"minima":4.16},{"grupo":"PETR4","ticker":"PETR4","empresa":"Petróleo Brasileiro S.A. - Petrobras","categoria":"Fato Relevante","assunto":"Petrobras aprova pagamento de remuneração aos acionistas","entrega":"07/05/2019 18:55","entrega_hora":"18:55","reacao":"08/05/2019","razao_vol":3.14,"razao_qtd":2.11,"gap_pct":-0.15,"intra_pct":3.95,"ret_pct":3.8,"direcao":"SUBIU","modelo":"Neutral","modelo_previu":null,"modelo_acertou":null,"semana":[{"data":"29/04","vol":0.612,"qtd":27.69},{"data":"30/04","vol":1.495,"qtd":39.57},{"data":"02/05","vol":0.676,"qtd":37.82},{"data":"03/05","vol":0.49,"qtd":33.33},{"data":"06/05","vol":0.927,"qtd":31.72}],"dia":{"data":"08/05","vol":2.637,"qtd":71.78},"media_vol":0.84,"media_qtd":34.03,"abertura":6.88,"fechamento":7.16,"fech_anterior":6.89,"maxima":7.18,"minima":6.88},{"grupo":"não aconteceu nada","ticker":"ITSA4","empresa":"Itausa S.A.","categoria":"Fato Relevante","assunto":"7ª Emissão de Debêntures para Resgate Antecipado das Debêntures da 3ª Emissão da Itaúsa","entrega":"23/07/2024 18:08","entrega_hora":"18:08","reacao":"24/07/2024","razao_vol":0.65,"razao_qtd":0.72,"gap_pct":-0.1,"intra_pct":-0.1,"ret_pct":-0.19,"direcao":"CAIU","modelo":"Neutral","modelo_previu":null,"modelo_acertou":null,"semana":[{"data":"16/07","vol":0.47,"qtd":23.63},{"data":"17/07","vol":1.111,"qtd":23.92},{"data":"18/07","vol":1.109,"qtd":19.54},{"data":"19/07","vol":0.755,"qtd":14.77},{"data":"22/07","vol":0.579,"qtd":17.85}],"dia":{"data":"24/07","vol":0.527,"qtd":14.27},"media_vol":0.805,"media_qtd":19.94,"abertura":7.79,"fechamento":7.78,"fech_anterior":7.79,"maxima":7.82,"minima":7.75},{"grupo":"não aconteceu nada","ticker":"VALE3","empresa":"Vale S.A.","categoria":"Fato Relevante","assunto":"Vale estende período de care and maintenance em Voisey's Bay","entrega":"08/04/2020 17:30","entrega_hora":"17:30","reacao":"09/04/2020","razao_vol":0.66,"razao_qtd":0.88,"gap_pct":1.01,"intra_pct":-1.54,"ret_pct":-0.53,"direcao":"CAIU","modelo":"Negative","modelo_previu":"BAIXA","modelo_acertou":true,"semana":[{"data":"01/04","vol":4.112,"qtd":37.09},{"data":"02/04","vol":3.681,"qtd":34.37},{"data":"03/04","vol":4.523,"qtd":31.65},{"data":"06/04","vol":1.998,"qtd":32.02},{"data":"07/04","vol":2.617,"qtd":34.19}],"dia":{"data":"09/04","vol":2.243,"qtd":29.83},"media_vol":3.386,"media_qtd":33.87,"abertura":23.72,"fechamento":23.35,"fech_anterior":23.48,"maxima":24.0,"minima":23.12},{"grupo":"não aconteceu nada","ticker":"PRIO3","empresa":"Prio S.A.","categoria":"Fato Relevante","assunto":"Procedimentos Pagamento","entrega":"06/01/2023 18:54","entrega_hora":"18:54","reacao":"09/01/2023","razao_vol":0.67,"razao_qtd":0.9,"gap_pct":1.86,"intra_pct":0.47,"ret_pct":2.33,"direcao":"SUBIU","modelo":"Neutral","modelo_previu":null,"modelo_acertou":null,"semana":[{"data":"29/12","vol":1.394,"qtd":7.89},{"data":"02/01","vol":1.961,"qtd":6.58},{"data":"03/01","vol":4.329,"qtd":12.92},{"data":"04/01","vol":2.922,"qtd":10.89},{"data":"05/01","vol":2.007,"qtd":8.85}],"dia":{"data":"09/01","vol":1.695,"qtd":8.45},"media_vol":2.523,"media_qtd":9.42,"abertura":35.78,"fechamento":35.95,"fech_anterior":35.12,"maxima":36.59,"minima":35.57},{"grupo":"não aconteceu nada","ticker":"MULT3","empresa":"Multiplan - Empreend Imobiliarios S.A.","categoria":"Fato Relevante","assunto":"Distribuição de Juros sobre o Capital Próprio","entrega":"22/09/2023 17:30","entrega_hora":"17:30","reacao":"25/09/2023","razao_vol":0.75,"razao_qtd":0.56,"gap_pct":-0.28,"intra_pct":-0.85,"ret_pct":-1.13,"direcao":"CAIU","modelo":"Neutral","modelo_previu":null,"modelo_acertou":null,"semana":[{"data":"15/09","vol":2.8,"qtd":8.91},{"data":"18/09","vol":2.465,"qtd":3.9},{"data":"19/09","vol":1.027,"qtd":4.79},{"data":"20/09","vol":1.44,"qtd":7.18},{"data":"21/09","vol":1.206,"qtd":5.47}],"dia":{"data":"25/09","vol":1.338,"qtd":3.4},"media_vol":1.788,"media_qtd":6.05,"abertura":21.84,"fechamento":21.66,"fech_anterior":21.9,"maxima":21.95,"minima":21.46},{"grupo":"não aconteceu nada","ticker":"VBBR3","empresa":"Vibra Energia S/A","categoria":"Fato Relevante","assunto":"Superintendência Geral do CADE recomenda condenação em Processo Administrativo","entrega":"11/09/2020 23:44","entrega_hora":"23:44","reacao":"14/09/2020","razao_vol":0.62,"razao_qtd":0.48,"gap_pct":0.14,"intra_pct":0.5,"ret_pct":0.63,"direcao":"SUBIU","modelo":"Negative","modelo_previu":"BAIXA","modelo_acertou":false,"semana":[{"data":"03/09","vol":1.953,"qtd":8.4},{"data":"04/09","vol":2.463,"qtd":29.29},{"data":"08/09","vol":3.08,"qtd":10.81},{"data":"09/09","vol":2.128,"qtd":8.53},{"data":"10/09","vol":2.319,"qtd":7.04}],"dia":{"data":"14/09","vol":1.478,"qtd":6.2},"media_vol":2.389,"media_qtd":12.82,"abertura":14.24,"fechamento":14.31,"fech_anterior":14.22,"maxima":14.55,"minima":14.19},{"grupo":"o modelo acertou","ticker":"VBBR3","empresa":"Vibra Energia S/A","categoria":"Fato Relevante","assunto":"Desinvestimento da Stratura Asfaltos S.A.","entrega":"15/08/2019 23:05","entrega_hora":"23:05","reacao":"16/08/2019","razao_vol":2.84,"razao_qtd":2.15,"gap_pct":0.34,"intra_pct":3.74,"ret_pct":4.08,"direcao":"SUBIU","modelo":"Positive","modelo_previu":"ALTA","modelo_acertou":true,"semana":[{"data":"08/08","vol":1.248,"qtd":6.42},{"data":"09/08","vol":1.333,"qtd":5.01},{"data":"12/08","vol":1.528,"qtd":7.44},{"data":"13/08","vol":1.393,"qtd":5.26},{"data":"14/08","vol":1.224,"qtd":11.19}],"dia":{"data":"16/08","vol":3.815,"qtd":15.15},"media_vol":1.345,"media_qtd":7.06,"abertura":16.53,"fechamento":17.16,"fech_anterior":16.48,"maxima":17.16,"minima":16.1},{"grupo":"o modelo acertou","ticker":"CVCB3","empresa":"Cvc Brasil Operadora E Agência De Viagens Sa","categoria":"Fato Relevante","assunto":"Fato Relevante - Reperfilamento 2024","entrega":"11/09/2024 18:43","entrega_hora":"18:43","reacao":"12/09/2024","razao_vol":2.64,"razao_qtd":2.42,"gap_pct":4.7,"intra_pct":-7.41,"ret_pct":-2.71,"direcao":"CAIU","modelo":"Negative","modelo_previu":"BAIXA","modelo_acertou":true,"semana":[{"data":"04/09","vol":1.544,"qtd":13.33},{"data":"05/09","vol":2.196,"qtd":12.63},{"data":"06/09","vol":3.08,"qtd":15.45},{"data":"09/09","vol":3.23,"qtd":14.27},{"data":"10/09","vol":2.355,"qtd":17.57}],"dia":{"data":"12/09","vol":6.558,"qtd":35.44},"media_vol":2.481,"media_qtd":14.65,"abertura":1.96,"fechamento":1.82,"fech_anterior":1.87,"maxima":2.03,"minima":1.82},{"grupo":"o modelo acertou","ticker":"HAPV3","empresa":"Hapvida Participações E Investimentos S.A.","categoria":"Fato Relevante","assunto":"Aquisição de empresas que compõem o Grupo América","entrega":"09/06/2019 17:40","entrega_hora":"17:40","reacao":"10/06/2019","razao_vol":2.42,"razao_qtd":1.9,"gap_pct":1.14,"intra_pct":2.22,"ret_pct":3.37,"direcao":"SUBIU","modelo":"Positive","modelo_previu":"ALTA","modelo_acertou":true,"semana":[{"data":"31/05","vol":1.98,"qtd":0.5},{"data":"03/06","vol":1.167,"qtd":0.29},{"data":"04/06","vol":2.102,"qtd":0.28},{"data":"05/06","vol":1.907,"qtd":0.23},{"data":"06/06","vol":0.898,"qtd":0.23}],"dia":{"data":"10/06","vol":3.906,"qtd":0.59},"media_vol":1.611,"media_qtd":0.31,"abertura":111.88,"fechamento":114.39,"fech_anterior":110.61,"maxima":119.4,"minima":111.88},{"grupo":"o modelo acertou","ticker":"UGPA3","empresa":"Ultrapar Participações Sa","categoria":"Fato Relevante","assunto":"Celebração, Alteração ou Rescisão de Acordo de Acionistas||Mudança no Conselho de Administração","entrega":"02/05/2018 18:17","entrega_hora":"18:17","reacao":"03/05/2018","razao_vol":2.4,"razao_qtd":4.95,"gap_pct":-7.12,"intra_pct":-3.6,"ret_pct":-10.72,"direcao":"CAIU","modelo":"Negative","modelo_previu":"BAIXA","modelo_acertou":true,"semana":[{"data":"24/04","vol":2.682,"qtd":6.1},{"data":"25/04","vol":1.872,"qtd":5.16},{"data":"26/04","vol":0.537,"qtd":4.95},{"data":"27/04","vol":0.706,"qtd":3.83},{"data":"30/04","vol":2.061,"qtd":5.61}],"dia":{"data":"03/05","vol":3.77,"qtd":25.39},"media_vol":1.572,"media_qtd":5.13,"abertura":9.59,"fechamento":9.25,"fech_anterior":10.3,"maxima":9.71,"minima":9.12},{"grupo":"o modelo errou","ticker":"GOAU4","empresa":"Metalurgica Gerdau Sa","categoria":"Fato Relevante","assunto":"Cancelamento de ações em tesouraria","entrega":"05/11/2024 19:01","entrega_hora":"19:01","reacao":"06/11/2024","razao_vol":3.88,"razao_qtd":3.84,"gap_pct":3.32,"intra_pct":5.44,"ret_pct":8.76,"direcao":"SUBIU","modelo":"Negative","modelo_previu":"BAIXA","modelo_acertou":false,"semana":[{"data":"29/10","vol":0.995,"qtd":6.92},{"data":"30/10","vol":0.876,"qtd":8.21},{"data":"31/10","vol":0.934,"qtd":10.44},{"data":"01/11","vol":1.121,"qtd":9.87},{"data":"04/11","vol":0.645,"qtd":5.93}],"dia":{"data":"06/11","vol":3.545,"qtd":31.8},"media_vol":0.914,"media_qtd":8.27,"abertura":7.45,"fechamento":7.87,"fech_anterior":7.21,"maxima":7.87,"minima":7.42},{"grupo":"o modelo errou","ticker":"BRKM5","empresa":"Braskem S.A.","categoria":"Fato Relevante","assunto":"Celebração, Alteração ou Rescisão de Acordo de Acionistas","entrega":"24/09/2018 19:40","entrega_hora":"19:40","reacao":"25/09/2018","razao_vol":3.62,"razao_qtd":1.24,"gap_pct":-1.37,"intra_pct":5.35,"ret_pct":3.98,"direcao":"SUBIU","modelo":"Negative","modelo_previu":"BAIXA","modelo_acertou":false,"semana":[{"data":"17/09","vol":0.889,"qtd":1.25},{"data":"18/09","vol":0.947,"qtd":1.14},{"data":"19/09","vol":1.865,"qtd":1.01},{"data":"20/09","vol":1.008,"qtd":0.87},{"data":"21/09","vol":0.968,"qtd":1.49}],"dia":{"data":"25/09","vol":4.111,"qtd":1.44},"media_vol":1.136,"media_qtd":1.15,"abertura":47.85,"fechamento":50.48,"fech_anterior":48.51,"maxima":50.78,"minima":47.42},{"grupo":"o modelo errou","ticker":"B3SA3","empresa":"B3 S.A. - Brasil, Bolsa, Balcão","categoria":"Fato Relevante","assunto":"Aquisição da Neurotech","entrega":"09/11/2022 23:53","entrega_hora":"23:53","reacao":"10/11/2022","razao_vol":3.55,"razao_qtd":2.7,"gap_pct":-2.26,"intra_pct":-11.28,"ret_pct":-13.54,"direcao":"CAIU","modelo":"Positive","modelo_previu":"ALTA","modelo_acertou":false,"semana":[{"data":"01/11","vol":2.95,"qtd":43.96},{"data":"03/11","vol":2.654,"qtd":38.76},{"data":"04/11","vol":2.103,"qtd":35.02},{"data":"07/11","vol":1.56,"qtd":63.76},{"data":"08/11","vol":1.909,"qtd":62.33}],"dia":{"data":"10/11","vol":7.933,"qtd":131.43},"media_vol":2.235,"media_qtd":48.76,"abertura":13.02,"fechamento":11.63,"fech_anterior":13.31,"maxima":13.06,"minima":11.44},{"grupo":"o modelo errou","ticker":"BEEF3","empresa":"Minerva S/A","categoria":"Fato Relevante","assunto":"Aumento de Capital","entrega":"11/09/2018 18:33","entrega_hora":"18:33","reacao":"12/09/2018","razao_vol":3.29,"razao_qtd":4.27,"gap_pct":2.57,"intra_pct":-10.69,"ret_pct":-8.12,"direcao":"CAIU","modelo":"Positive","modelo_previu":"ALTA","modelo_acertou":false,"semana":[{"data":"03/09","vol":2.207,"qtd":1.52},{"data":"04/09","vol":1.168,"qtd":1.78},{"data":"05/09","vol":2.029,"qtd":1.35},{"data":"06/09","vol":2.583,"qtd":2.09},{"data":"10/09","vol":2.761,"qtd":2.17}],"dia":{"data":"12/09","vol":7.074,"qtd":7.61},"media_vol":2.15,"media_qtd":1.78,"abertura":4.57,"fechamento":4.11,"fech_anterior":4.45,"maxima":4.59,"minima":4.08}],"resumo":{"n_eventos":11161,"n_fr":3292,"n_cm":7869,"n_papeis":56,"veredicto":{"dentro do normal":4599,"mexeu":2900,"dia mais parado que o normal":1991,"MEXEU MUITO":1642,"sem base de comparação":29},"controle":{"volatilidade (Parkinson)":{"sem":1.031,"com":1.13038,"p":7.052688637504847e-55},"volume negociado":{"sem":1.06005,"com":1.23497,"p":3.6073751303803234e-62},"gap de abertura (%)":{"sem":0.00077,"com":0.00161,"p":0.00018788491265925167},"intradiário (%)":{"sem":-0.00065,"com":-0.00162,"p":0.0015615455637224783},"pregão inteiro (%)":{"sem":0.00012,"com":-1e-05,"p":0.7381173077517797}},"fr_vs_cm":{"volatilidade (sacolejo)":{"fr":1.2188,"cm":1.1018,"exc_fr_pct":18.22,"exc_cm_pct":6.87,"razao":2.65,"p":7.210471007203892e-18,"n_fr":3280,"n_cm":7852},"volume negociado":{"fr":1.4461,"cm":1.1889,"exc_fr_pct":36.42,"exc_cm_pct":12.16,"razao":3.0,"p":4.7219586451157813e-26,"n_fr":3292,"n_cm":7862}},"rodada_B":{"TODOS (FR + Comunicados)":{"n":2336,"acuracia":0.5197,"maj":0.509,"ganho_pp":1.07,"p":0.05970383791516554,"kappa":0.0364},"so FATO RELEVANTE":{"n":700,"acuracia":0.5429,"maj":0.5171,"ganho_pp":2.57,"p":0.025677984622832512,"kappa":0.0783},"so COMUNICADO AO MERCADO":{"n":1636,"acuracia":0.5098,"maj":0.5055,"ganho_pp":0.43,"p":0.4434326630574632,"kappa":0.018}}},"concreto":{"n_sem":105896,"n_com":9225,"medidas":{"oscilacao_dia":{"sem":2.03,"com":2.25,"bruto_pct":10.9,"unidade":"%","p":1.8017114711605866e-32},"variacao_fech":{"sem":1.78,"com":2.13,"bruto_pct":20.0,"unidade":"%","p":6.09541306561142e-30},"salto_abertura":{"sem":0.73,"com":1.02,"bruto_pct":41.0,"unidade":"%","p":5.457074725191367e-49},"volume":{"sem":11.16,"com":19.17,"bruto_pct":71.8,"unidade":"mi","p":1.089414757253304e-173}},"controlado":{"oscilacao_pct":9.6,"volume_pct":16.5},"vespera":{"oscilacao_pct":1.7,"volume_pct":53.1}},"confronto":{"todos_dev_news":{"n":1959,"acuracia":0.5345,"maj":0.5232,"ganho_pp":1.12,"p":0.0024570819932875918,"kappa":0.0693},"todos_dev_cvm":{"n":976,"acuracia":0.5092,"maj":0.5164,"ganho_pp":-0.72,"p":0.586356169334012,"kappa":0.0099},"todos_dev_ambos":{"n":1985,"acuracia":0.534,"maj":0.5224,"ganho_pp":1.16,"p":0.0026241253654883134,"kappa":0.0679},"inter_dev_news":{"n":1163,"acuracia":0.5383,"maj":0.5211,"ganho_pp":1.72,"p":0.009837692756536207,"kappa":0.0766},"inter_dev_cvm":{"n":957,"acuracia":0.5078,"maj":0.5172,"ganho_pp":-0.94,"p":0.6508912963692105,"kappa":0.0068},"inter_dev_ambos":{"n":1163,"acuracia":0.5374,"maj":0.5211,"ganho_pp":1.63,"p":0.011643838694715851,"kappa":0.0744},"fatorel_dev_news":{"n":393,"acuracia":0.5471,"maj":0.514,"ganho_pp":3.31,"p":0.06924066419033227,"kappa":0.0929},"fatorel_dev_cvm":{"n":357,"acuracia":0.4762,"maj":0.521,"ganho_pp":-4.48,"p":0.3971327573019479,"kappa":-0.0572},"fatorel_dev_ambos":{"n":402,"acuracia":0.5522,"maj":0.5149,"ganho_pp":3.73,"p":0.04073208450121386,"kappa":0.1023}},"filtro":{"noite SEM comunicado nenhum":{"n":796,"acuracia":0.5289,"maj":0.5264,"ganho_pp":0.25,"p":0.11065844643971137},"noite com Comunicado, sem Fato Relevante":{"n":770,"acuracia":0.5338,"maj":0.5247,"ganho_pp":0.91,"p":0.06600556175544277},"noite com FATO RELEVANTE":{"n":393,"acuracia":0.5471,"maj":0.514,"ganho_pp":3.31,"p":0.06924066419033227},"teste_filtro":{"fr":0.5471,"resto":0.5313,"dif_pp":1.58,"p":0.5749155922593163}}};
+
+/* ─────────── utilidades ─────────── */
+const fmt = (v, n = 2) => v.toLocaleString("pt-BR",
+  {minimumFractionDigits: n, maximumFractionDigits: n});
+const sinal = v => (v > 0 ? "+" : "") + fmt(v, 2);
+const mil = v => v.toLocaleString("pt-BR");
+const cor = v => (v > 0 ? "var(--alta)" : "var(--baixa)");
+
+/* ─────────── gráfico de barras: semana + dia ─────────── */
+function barras(semana, dia, media, unid) {
+  const dec = unid === "%" ? 2 : 1;
+  const rot = v => fmt(v, dec) + (unid === "%" ? "%" : "");
+  const vals = [...semana.map(d => d.v), dia.v, media];
+  const max = Math.max(...vals) * 1.30;          // folga para o rótulo em cima
+  const L = 46, R = 8, T = 16, Bt = 22, W = 320, H = 132;
+  const n = semana.length + 1;
+  const lg = (W - L - R) / n, bw = lg * 0.66;
+  const y = v => T + (H - T - Bt) * (1 - v / max);
+
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img"
+    aria-label="valores da semana anterior e do dia da reação">`;
+
+  // a média da semana, com unidade
+  s += `<line x1="${L}" y1="${y(media)}" x2="${W - R}" y2="${y(media)}"
+        stroke="var(--lampada)" stroke-width="1" stroke-dasharray="3 2"/>`;
+  s += `<text x="${L - 5}" y="${y(media) - 1}" text-anchor="end"
+        class="eixo-med">${rot(media)}</text>`;
+  s += `<text x="${L - 5}" y="${y(media) + 9}" text-anchor="end"
+        class="eixo-peq">média</text>`;
+
+  const barra = (x, v, cls, forte) => {
+    let g = `<rect x="${x}" y="${y(v)}" width="${bw}"
+             height="${Math.max(1, y(0) - y(v))}" fill="${forte ? "var(--lampada)" : "var(--cinza)"}"
+             ${forte ? "" : 'opacity=".34"'}/>`;
+    g += `<text x="${x + bw / 2}" y="${y(v) - 4}" text-anchor="middle"
+          class="${forte ? "eixo-val-forte" : "eixo-val"}">${rot(v)}</text>`;
+    return g;
+  };
+
+  semana.forEach((d, i) => {
+    const x = L + i * lg + (lg - bw) / 2;
+    s += barra(x, d.v, "", false);
+    s += `<text x="${x + bw / 2}" y="${H - 8}" text-anchor="middle"
+          class="eixo">${d.r}</text>`;
+  });
+  const xd = L + semana.length * lg + (lg - bw) / 2;
+  s += barra(xd, dia.v, "", true);
+  s += `<text x="${xd + bw / 2}" y="${H - 8}" text-anchor="middle"
+        class="eixo-forte">${dia.r}</text>`;
+  s += `</svg>`;
+  return s;
+}
+
+/* ─────────── gráfico do caminho do preço ─────────── */
+function caminho(c) {
+  const p = [
+    {r: "fechou véspera", v: c.fech_anterior},
+    {r: "abriu", v: c.abertura},
+    {r: "fechou", v: c.fechamento},
+  ];
+  const vs = [...p.map(o => o.v), c.maxima, c.minima];
+  const lo = Math.min(...vs), hi = Math.max(...vs), amp = (hi - lo) || 1;
+  const L = 6, R = 6, T = 14, Bt = 22, W = 300, H = 118;
+  const x = i => L + (W - L - R) * (i / (p.length - 1));
+  const y = v => T + (H - T - Bt) * (1 - (v - lo + amp * .12) / (amp * 1.24));
+
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="caminho do preço">`;
+  // faixa entre máxima e mínima do dia
+  s += `<rect x="${x(1) - 12}" y="${y(c.maxima)}" width="${x(2) - x(1) + 24}"
+        height="${Math.max(1, y(c.minima) - y(c.maxima))}" fill="var(--cinza)" opacity=".13"/>`;
+  s += `<path d="M${x(0)} ${y(p[0].v)} L${x(1)} ${y(p[1].v)} L${x(2)} ${y(p[2].v)}"
+        fill="none" stroke="${c.ret_pct > 0 ? "var(--alta)" : "var(--baixa)"}" stroke-width="2"/>`;
+  p.forEach((o, i) => {
+    s += `<circle cx="${x(i)}" cy="${y(o.v)}" r="3.4"
+          fill="${i === 1 ? "var(--lampada)" : "var(--tinta)"}"/>`;
+    const anc = i === 0 ? "start" : i === 2 ? "end" : "middle";
+    s += `<text x="${x(i)}" y="${y(o.v) - 8}" text-anchor="${anc}"
+          class="eixo-forte">R$ ${fmt(o.v)}</text>`;
+    s += `<text x="${x(i)}" y="${H - 8}" text-anchor="${anc}" class="eixo">${o.r}</text>`;
+  });
+  s += `</svg>`;
+  return s;
+}
+
+/* ─────────── o palco: um caso por vez ─────────── */
+function desenha(c) {
+  const semV = c.semana.map(d => ({r: d.data, v: d.vol}));
+  const semQ = c.semana.map(d => ({r: d.data, v: d.qtd}));
+
+  const lidoVol = c.razao_vol >= 2 ? "sacudiu muito mais que o normal"
+    : c.razao_vol >= 1.3 ? "sacudiu mais que o normal"
+    : c.razao_vol <= 0.85 ? "ficou MAIS PARADO que uma semana comum"
+    : "ficou dentro do normal";
+  const lidoQtd = c.razao_qtd >= 2 ? "muito mais gente negociou"
+    : c.razao_qtd >= 1.3 ? "mais gente negociou"
+    : c.razao_qtd <= 0.85 ? "MENOS gente negociou que o normal"
+    : "o movimento foi o de sempre";
+
+  let selo, seloCor, txtModelo;
+  if (c.modelo === "Neutral") {
+    selo = "não opinou"; seloCor = "var(--cinza)";
+    txtModelo = `O programa leu <em>“${c.assunto}”</em> e classificou como
+      <strong>neutro</strong> — ou seja, não arriscou palpite de direção.
+      Isso acontece em 79% dos comunicados da CVM, porque os textos são curtos e
+      burocráticos, mais parecidos com etiquetas de arquivo do que com notícia.`;
+  } else if (c.modelo_acertou) {
+    selo = "acertou"; seloCor = "var(--alta)";
+    txtModelo = `O programa classificou o texto como
+      <strong>${c.modelo === "Negative" ? "negativo" : "positivo"}</strong>,
+      o que equivale a apostar que o preço ${c.modelo_previu === "ALTA" ? "subiria" : "cairia"}.
+      <strong>O preço ${c.direcao.toLowerCase()} ${fmt(Math.abs(c.ret_pct), 1)}%.</strong>
+      Neste caso ele acertou.`;
+  } else {
+    selo = "errou"; seloCor = "var(--baixa)";
+    txtModelo = `O programa classificou o texto como
+      <strong>${c.modelo === "Negative" ? "negativo" : "positivo"}</strong>,
+      apostando que o preço ${c.modelo_previu === "ALTA" ? "subiria" : "cairia"}.
+      <strong>O preço fez o contrário: ${c.direcao.toLowerCase()}
+      ${fmt(Math.abs(c.ret_pct), 1)}%.</strong> Este é um erro — e casos assim
+      existem em quantidade parecida com os acertos.`;
+  }
+
+  return `
+  <div class="caso">
+    <div class="caso-topo">
+      <span class="tick">${c.ticker}</span>
+      <span class="emp">${c.empresa}</span>
+      <span class="gaveta">${c.categoria}</span>
+    </div>
+    <p class="texto-com">“${c.assunto}”</p>
+    <p class="protocolo">entregue à CVM em ${c.entrega} · o mercado reagiu no
+    pregão de ${c.reacao}</p>
+  </div>
+
+  <h3>A linha do tempo</h3>
+  <div class="tempo">
+    <div class="fase f-antes">
+      <p class="fase-rot">antes · até 17h</p>
+      <p class="fase-txt">O pregão corre normalmente e fecha a
+      <strong>R$ ${fmt(c.fech_anterior)}</strong>. Ninguém sabe do comunicado.</p>
+    </div>
+    <div class="fase f-noite">
+      <p class="fase-rot">bolsa fechada · ${c.entrega_hora}</p>
+      <p class="fase-txt">A empresa entrega o comunicado à CVM. A informação é
+      pública, mas <strong>não há como negociar</strong> — a bolsa está fechada.</p>
+    </div>
+    <div class="fase f-depois">
+      <p class="fase-rot">pregão seguinte · abre 10h</p>
+      <p class="fase-txt">A bolsa abre a <strong>R$ ${fmt(c.abertura)}</strong>
+      e fecha a <strong>R$ ${fmt(c.fechamento)}</strong>.</p>
+    </div>
+  </div>
+  <p class="legenda">É por isso que só usamos comunicados da noite: a ordem dos
+  fatos fica inequívoca — a notícia veio antes, a reação depois.</p>
+
+  <h3>As três réguas</h3>
+  <p class="sub">Comparamos o pregão seguinte com os cinco pregões da semana
+  anterior. A linha pontilhada é a média dessa semana; a barra clara é o dia da
+  reação. Cada barra traz o seu valor; a barra clara é o dia em que o mercado
+  reagiu.</p>
+  <div class="reguas">
+
+    <div class="regua">
+      <p class="regua-num">régua 1</p>
+      <h3>O preço sacudiu?</h3>
+      <p class="regua-perg">Quanto o preço balançou no dia, medido pela distância
+      entre a máxima e a mínima. Não importa para que lado.</p>
+      ${barras(semV, {r: c.dia.data, v: c.dia.vol}, c.media_vol, "%")}
+      <p class="veredicto" style="color:${c.razao_vol >= 1.3 ? "var(--lampada)" : "var(--cinza)"}">${fmt(c.dia.vol)}%</p>
+      <p class="veredicto-txt">Foi esse o vaivém do dia, contra
+      <strong>${fmt(c.media_vol)}%</strong> de média na semana anterior —
+      ou seja, <strong>${fmt(c.razao_vol)}× mais</strong>.
+      <br>O dia ${lidoVol}.</p>
+    </div>
+
+    <div class="regua">
+      <p class="regua-num">régua 2</p>
+      <h3>Quanta gente negociou?</h3>
+      <p class="regua-perg">Quantas ações trocaram de mão, em <strong>milhões de
+      ações</strong>. É o termômetro de atenção do mercado.</p>
+      ${barras(semQ, {r: c.dia.data, v: c.dia.qtd}, c.media_qtd, "mi")}
+      <p class="veredicto" style="color:${c.razao_qtd >= 1.3 ? "var(--lampada)" : "var(--cinza)"}">${fmt(c.dia.qtd, 1)} mi</p>
+      <p class="veredicto-txt">Ações negociadas, contra
+      <strong>${fmt(c.media_qtd, 1)} mi</strong> de média na semana —
+      ou seja, <strong>${fmt(c.razao_qtd)}× mais</strong>.
+      <br>No dia seguinte, ${lidoQtd}.</p>
+    </div>
+
+    <div class="regua">
+      <p class="regua-num">régua 3</p>
+      <h3>Para que lado foi?</h3>
+      <p class="regua-perg">O caminho do preço em <strong>reais</strong>: onde fechou
+      na véspera, onde abriu e onde fechou. A faixa cinza é o vaivém do dia.</p>
+      ${caminho(c)}
+      <p class="veredicto" style="color:${cor(c.ret_pct)}">${sinal(c.ret_pct)}%</p>
+      <p class="veredicto-txt">Na abertura já veio
+      <strong style="color:${cor(c.gap_pct)}">${sinal(c.gap_pct)}%</strong>;
+      no resto do dia,
+      <strong style="color:${cor(c.intra_pct)}">${sinal(c.intra_pct)}%</strong>.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:34px">E o que o nosso programa disse?</h3>
+  <div class="modelo">
+    <span class="selo" style="color:${seloCor};border-color:${seloCor}">${selo}</span>
+    <p class="modelo-txt">${txtModelo}</p>
+  </div>`;
+}
+
+/* ─────────── seletor ─────────── */
+const ORDEM = ["choque grande", "PETR4", "não aconteceu nada",
+               "o modelo acertou", "o modelo errou"];
+const ROTULO = {
+  "choque grande": "Choques grandes",
+  "PETR4": "Petrobras",
+  "não aconteceu nada": "Nada aconteceu",
+  "o modelo acertou": "O programa acertou",
+  "o modelo errou": "O programa errou",
+};
+
+const palco = document.getElementById("palco");
+let atual = 0;
+
+function pinta() {
+  palco.innerHTML = desenha(D.casos[atual]);
+  document.querySelectorAll(".chip").forEach(b =>
+    b.setAttribute("aria-pressed", String(+b.dataset.i === atual)));
+}
+
+const cont = document.getElementById("grupos");
+ORDEM.forEach(g => {
+  const itens = D.casos.map((c, i) => ({c, i})).filter(o => o.c.grupo === g);
+  if (!itens.length) return;
+  const div = document.createElement("div");
+  div.className = "grupo";
+  div.innerHTML = `<span class="grupo-nome">${ROTULO[g]}</span>
+    <div class="chips">${itens.map(o =>
+      `<button class="chip" data-i="${o.i}" aria-pressed="false">${o.c.ticker}
+       <span style="opacity:.6">${o.c.entrega.slice(0, 10)}</span></button>`
+    ).join("")}</div>`;
+  cont.appendChild(div);
+});
+cont.addEventListener("click", e => {
+  const b = e.target.closest(".chip");
+  if (!b) return;
+  atual = +b.dataset.i;
+  pinta();
+});
+pinta();
+
+/* ─────────── panorama ─────────── */
+const R = D.resumo, v = R.veredicto;
+const tot = R.n_eventos;
+const segs = [
+  {r: "sacudiu muito", n: v["MEXEU MUITO"], c: "var(--baixa)"},
+  {r: "sacudiu", n: v["mexeu"], c: "var(--lampada)"},
+  {r: "normal", n: v["dentro do normal"], c: "var(--cinza)"},
+  {r: "mais parado", n: v["dia mais parado que o normal"], c: "var(--trilho)"},
+];
+const naoMexeu = v["dentro do normal"] + v["dia mais parado que o normal"];
+
+const fc = R.fr_vs_cm, bc = R.rodada_B;
+const cc = D.concreto, md = cc.medidas;
+const cf = D.confronto, fl = D.filtro;
+const cv = R.controle["volatilidade (Parkinson)"], cq = R.controle["volume negociado"];
+const exc = o => ((o.com / o.sem - 1) * 100);
+
+document.getElementById("panorama").innerHTML = `
+  <h3>De cada 100 comunicados, quantos realmente mexeram no preço?</h3>
+  <div class="barra-emp">${segs.map(s =>
+    `<div class="seg" style="width:${s.n / tot * 100}%;background:${s.c};
+      color:${s.c === "var(--trilho)" || s.c === "var(--cinza)" ? "var(--tinta)" : "#fff"}"
+      title="${s.r}: ${mil(s.n)}">${s.n / tot > .1 ? Math.round(s.n / tot * 100) + "%" : ""}</div>`
+  ).join("")}</div>
+  <p class="legenda">${segs.map(s => `${s.r} ${Math.round(s.n / tot * 100)}%`).join(" · ")}</p>
+
+  <div class="nota">
+    <strong>${Math.round(naoMexeu / tot * 100)}% não mexeram nada</strong> — ou
+    ficaram até mais parados que uma semana comum. E são documentos que a própria
+    empresa declarou, por obrigação legal, serem capazes de influir na cotação.
+    <br><br>
+    O efeito médio não vem de todos os casos um pouco. <strong>Vem de uma minoria
+    de casos com muita força.</strong> É o achado central desta dissertação.
+  </div>
+
+  <h3 style="margin-top:34px">Em números concretos: quanto a ação se move?</h3>
+  <p class="sub">Comparamos os ${mil(cc.n_com)} dias de comunicado com
+  ${mil(cc.n_sem)} pregões em que não houve comunicado nenhum.</p>
+  <div class="rolar"><table class="tabela">
+    <thead><tr><th>O que se mede</th><th>Num pregão comum</th>
+    <th>No dia após o comunicado</th></tr></thead>
+    <tbody>
+      <tr><td>O vaivém do dia</td>
+      <td>${fmt(md.oscilacao_dia.sem)}%</td>
+      <td style="font-weight:600">${fmt(md.oscilacao_dia.com)}%</td></tr>
+      <tr><td>A variação de um fechamento ao outro</td>
+      <td>${fmt(md.variacao_fech.sem)}%</td>
+      <td style="font-weight:600">${fmt(md.variacao_fech.com)}%</td></tr>
+      <tr><td>O salto na abertura</td>
+      <td>${fmt(md.salto_abertura.sem)}%</td>
+      <td style="font-weight:600">${fmt(md.salto_abertura.com)}%</td></tr>
+      <tr><td>Ações negociadas</td>
+      <td>${fmt(md.volume.sem, 1)} milhões</td>
+      <td style="font-weight:600">${fmt(md.volume.com, 1)} milhões</td></tr>
+    </tbody>
+  </table></div>
+  <p class="legenda">Todos são percentuais de preço, menos a última linha.
+  “O vaivém do dia” é a distância entre a máxima e a mínima; “a variação de um
+  fechamento ao outro” é quanto o preço mudou de véspera para o dia, sem olhar
+  se subiu ou desceu.</p>
+
+  <h3 style="margin-top:34px">Mas quanto disso é a notícia?</h3>
+  <p class="sub">Esta é a pergunta difícil, e a resposta não é a diferença
+  simples entre as duas colunas acima.</p>
+  <div class="nota" style="border-left-color:var(--baixa)">
+    <strong>A armadilha.</strong> As empresas que publicam comunicado
+    <em>já são</em> as mais negociadas da bolsa. A Petrobras sozinha responde
+    por 1.338 eventos e gira 50,8 milhões de ações por dia, contra 11 milhões da
+    média. <strong>Na semana ANTERIOR aos comunicados, o volume já era
+    ${fmt(cc.vespera.volume_pct, 0)}% maior que o normal</strong> — antes de
+    qualquer notícia.
+    <br><br>
+    Por isso comparamos cada dia com a <strong>própria semana anterior daquela
+    mesma ação</strong>, e não com a média de todo mundo. Assim a comparação não
+    depende de quais empresas caíram na amostra.
+  </div>
+  <div class="rolar"><table class="tabela">
+    <thead><tr><th>Régua</th><th>Diferença bruta das médias</th>
+    <th>Efeito da notícia, isolado</th><th>Quanto era composição</th></tr></thead>
+    <tbody>
+      <tr><td>O vaivém do dia</td>
+      <td style="color:var(--cinza)">+${fmt(md.oscilacao_dia.bruto_pct, 1)}%</td>
+      <td style="color:var(--alta);font-weight:600">+${fmt(cc.controlado.oscilacao_pct, 1)}%</td>
+      <td style="color:var(--cinza)">pouco</td></tr>
+      <tr><td>Ações negociadas</td>
+      <td style="color:var(--cinza)">+${fmt(md.volume.bruto_pct, 1)}%</td>
+      <td style="color:var(--alta);font-weight:600">+${fmt(cc.controlado.volume_pct, 1)}%</td>
+      <td style="color:var(--baixa);font-weight:600">quase tudo</td></tr>
+    </tbody>
+  </table></div>
+  <p class="legenda">No vaivém as duas contas quase coincidem — o efeito é real.
+  No volume, não: dos ${fmt(md.volume.bruto_pct, 0)}% brutos, só
+  ${fmt(cc.controlado.volume_pct, 0)}% são da notícia. O resto é o fato de essas
+  ações já serem as mais movimentadas da bolsa.</p>
+
+  <h3 style="margin-top:34px">A lei acerta?</h3>
+  <p class="sub">A CVM separa os documentos em duas gavetas. “Fato Relevante” é
+  a mais forte. Isso tem correspondência no preço? Os valores abaixo são o
+  quanto cada gaveta acrescenta <em>acima</em> do que um dia sem comunicado já
+  daria.</p>
+  <div class="rolar"><table class="tabela">
+    <thead><tr><th>Régua</th><th>Fato Relevante</th><th>Comunicado ao Mercado</th>
+    <th>Quantas vezes mais</th></tr></thead>
+    <tbody>
+      <tr><td>Sacudiu</td>
+      <td>+${fmt(fc["volatilidade (sacolejo)"].exc_fr_pct, 1)}%</td>
+      <td>+${fmt(fc["volatilidade (sacolejo)"].exc_cm_pct, 1)}%</td>
+      <td style="color:var(--lampada)">${fmt(fc["volatilidade (sacolejo)"].razao, 1)}×</td></tr>
+      <tr><td>Volume negociado</td>
+      <td>+${fmt(fc["volume negociado"].exc_fr_pct, 1)}%</td>
+      <td>+${fmt(fc["volume negociado"].exc_cm_pct, 1)}%</td>
+      <td style="color:var(--lampada)">${fmt(fc["volume negociado"].razao, 1)}×</td></tr>
+    </tbody>
+  </table></div>
+  <p class="legenda">Sim. O que a lei chama de relevante mexe cerca de três vezes
+  mais que o que ela chama de simples comunicado.</p>
+
+  <h3 style="margin-top:34px">E o nosso programa acerta a direção?</h3>
+  <p class="sub">“Quem não lê nada” é alguém que sempre chuta o mesmo lado. Se ele
+  acerta 51,7%, um programa que acerte menos do que isso não está servindo para nada.</p>
+  <div class="rolar"><table class="tabela">
+    <thead><tr><th>Em que tipo de documento</th><th>Casos</th><th>O programa acertou</th>
+    <th>Quem não lê nada</th><th>Ganho</th></tr></thead>
+    <tbody>
+      ${[["so FATO RELEVANTE", "Só Fato Relevante"],
+         ["so COMUNICADO AO MERCADO", "Só Comunicado ao Mercado"],
+         ["TODOS (FR + Comunicados)", "Os dois juntos"]].map(([k, r]) => {
+        const b = bc[k], bom = b.p < 0.05;
+        return `<tr><td>${r}</td><td>${mil(b.n)}</td>
+          <td>${fmt(b.acuracia * 100, 1)}%</td><td>${fmt(b.maj * 100, 1)}%</td>
+          <td style="color:${bom ? "var(--alta)" : "var(--cinza)"};font-weight:600">
+          ${sinal(b.ganho_pp)} pts${bom ? "" : " (pode ser sorte)"}</td></tr>`;
+      }).join("")}
+    </tbody>
+  </table></div>
+
+  <div class="nota">
+    <strong>O programa só ajuda no documento mais forte.</strong> No Fato
+    Relevante ele ganha 2,6 pontos de quem não lê nada. No Comunicado ao
+    Mercado não ganha nada — e isso faz sentido: ali quase não há movimento
+    para prever.
+    <br><br>
+    <strong>Ler o texto só compensa quando o evento é grande.</strong> É o
+    efeito de cauda dito de outra maneira.
+  </div>`;
+</script>

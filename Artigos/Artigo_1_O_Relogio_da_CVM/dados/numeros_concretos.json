@@ -1,0 +1,42 @@
+{
+  "n_sem": 105896,
+  "n_com": 9225,
+  "medidas": {
+    "oscilacao_dia": {
+      "sem": 2.03,
+      "com": 2.25,
+      "bruto_pct": 10.9,
+      "unidade": "%",
+      "p": 1.8017114711605866e-32
+    },
+    "variacao_fech": {
+      "sem": 1.78,
+      "com": 2.13,
+      "bruto_pct": 20.0,
+      "unidade": "%",
+      "p": 6.09541306561142e-30
+    },
+    "salto_abertura": {
+      "sem": 0.73,
+      "com": 1.02,
+      "bruto_pct": 41.0,
+      "unidade": "%",
+      "p": 5.457074725191367e-49
+    },
+    "volume": {
+      "sem": 11.16,
+      "com": 19.17,
+      "bruto_pct": 71.8,
+      "unidade": "mi",
+      "p": 1.089414757253304e-173
+    }
+  },
+  "controlado": {
+    "oscilacao_pct": 9.6,
+    "volume_pct": 16.5
+  },
+  "vespera": {
+    "oscilacao_pct": 1.7,
+    "volume_pct": 53.1
+  }
+}

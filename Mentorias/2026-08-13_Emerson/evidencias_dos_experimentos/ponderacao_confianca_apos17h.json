@@ -1,0 +1,84 @@
+{
+  "data_execucao": "2026-08-17",
+  "n_pregoes": 1907,
+  "escala_confianca": {
+    "minimo": 0.2845,
+    "maximo": 0.8669,
+    "abaixo_do_piso_softmax": 104,
+    "e_softmax": false
+  },
+  "variantes": {
+    "A_ponderada_confianca": {
+      "abs_r_vol": 0.0513,
+      "p_vol": 0.02517033
+    },
+    "B_polaridade_pura": {
+      "abs_r_vol": 0.0503,
+      "p_vol": 0.02799502
+    },
+    "C_so_alta_confianca": {
+      "abs_r_vol": 0.0436,
+      "p_vol": 0.05699071
+    },
+    "D_saldo_de_votos": {
+      "abs_r_vol": 0.0503,
+      "p_vol": 0.02799502
+    }
+  },
+  "comparacoes": [
+    {
+      "contraste": "ponderada x polaridade pura",
+      "delta_abs_r": 0.0009,
+      "ic95": [
+        -0.0059,
+        0.0072
+      ],
+      "p_valor": 0.7894,
+      "significativa": false
+    },
+    {
+      "contraste": "so alta confianca x polaridade pura",
+      "delta_abs_r": -0.007,
+      "ic95": [
+        -0.0373,
+        0.0224
+      ],
+      "p_valor": 0.6508,
+      "significativa": false
+    },
+    {
+      "contraste": "ponderada x saldo de votos",
+      "delta_abs_r": 0.0009,
+      "ic95": [
+        -0.0059,
+        0.0072
+      ],
+      "p_valor": 0.7894,
+      "significativa": false
+    }
+  ],
+  "correlacao_A_B": 0.9881,
+  "direcao": {
+    "A_ponderada_confianca": {
+      "acuracia_validacao": 0.5664,
+      "acuracia_teste": 0.5031,
+      "auc_teste": 0.5015
+    },
+    "B_polaridade_pura": {
+      "acuracia_validacao": 0.5385,
+      "acuracia_teste": 0.5388,
+      "auc_teste": 0.5242
+    },
+    "C_so_alta_confianca": {
+      "acuracia_validacao": 0.535,
+      "acuracia_teste": 0.5304,
+      "auc_teste": 0.5151
+    },
+    "D_saldo_de_votos": {
+      "acuracia_validacao": 0.5385,
+      "acuracia_teste": 0.5388,
+      "auc_teste": 0.5242
+    },
+    "delta_A_menos_B_pp": -3.57
+  }
+}
