@@ -1,0 +1,101 @@
+{
+  "n": {
+    "total": 2314,
+    "teste": 579
+  },
+  "majoritaria_teste": 0.532,
+  "direcao": {
+    "2. apenas preço histórico": {
+      "SVM-RBF": {
+        "n_teste": 579,
+        "acuracia": 0.5181,
+        "precisao": 0.5262,
+        "f1": 0.676,
+        "auc": 0.504,
+        "ganho_pp_vs_majoritaria": -1.38,
+        "p_binomial_vs_majoritaria": 0.5055827433175946
+      },
+      "XGBoost": {
+        "n_teste": 579,
+        "acuracia": 0.5181,
+        "precisao": 0.5479,
+        "f1": 0.5434,
+        "auc": 0.5157,
+        "ganho_pp_vs_majoritaria": -1.38,
+        "p_binomial_vs_majoritaria": 0.5055827433175946
+      }
+    },
+    "4. preço + CVM (TODOS os comunicados)": {
+      "SVM-RBF": {
+        "n_teste": 579,
+        "acuracia": 0.5233,
+        "precisao": 0.5287,
+        "f1": 0.6813,
+        "auc": 0.5186,
+        "ganho_pp_vs_majoritaria": -0.86,
+        "p_binomial_vs_majoritaria": 0.6773588572124107
+      },
+      "XGBoost": {
+        "n_teste": 579,
+        "acuracia": 0.5009,
+        "precisao": 0.5262,
+        "f1": 0.5693,
+        "auc": 0.4862,
+        "ganho_pp_vs_majoritaria": -3.11,
+        "p_binomial_vs_majoritaria": 0.13408421142349664
+      }
+    },
+    "5. preço + CVM (SÓ Fato Relevante)": {
+      "SVM-RBF": {
+        "n_teste": 579,
+        "acuracia": 0.5233,
+        "precisao": 0.5293,
+        "f1": 0.6768,
+        "auc": 0.473,
+        "ganho_pp_vs_majoritaria": -0.86,
+        "p_binomial_vs_majoritaria": 0.6773588572124107
+      },
+      "XGBoost": {
+        "n_teste": 579,
+        "acuracia": 0.5147,
+        "precisao": 0.5335,
+        "f1": 0.6048,
+        "auc": 0.5057,
+        "ganho_pp_vs_majoritaria": -1.73,
+        "p_binomial_vs_majoritaria": 0.40530340032277057
+      }
+    }
+  },
+  "mcnemar": {
+    "SVM-RBF — 5 vs 2 — o Fato Relevante acrescenta sobre só preço?": {
+      "acertos_so_do_novo": 29,
+      "acertos_so_do_antigo": 26,
+      "p": 0.7877061896700431
+    },
+    "XGBoost — 5 vs 2 — o Fato Relevante acrescenta sobre só preço?": {
+      "acertos_so_do_novo": 74,
+      "acertos_so_do_antigo": 76,
+      "p": 0.9349614855143201
+    },
+    "SVM-RBF — 4 vs 2 — TODOS os comunicados acrescentam sobre só preço?": {
+      "acertos_so_do_novo": 20,
+      "acertos_so_do_antigo": 17,
+      "p": 0.7428293587290682
+    },
+    "XGBoost — 4 vs 2 — TODOS os comunicados acrescentam sobre só preço?": {
+      "acertos_so_do_novo": 72,
+      "acertos_so_do_antigo": 82,
+      "p": 0.4684207778527702
+    },
+    "SVM-RBF — 6 — SÓ Fato Relevante é melhor/pior que TODOS os comunicados?": {
+      "acertos_so_do_novo": 23,
+      "acertos_so_do_antigo": 23,
+      "p": 1.0
+    },
+    "XGBoost — 6 — SÓ Fato Relevante é melhor/pior que TODOS os comunicados?": {
+      "acertos_so_do_novo": 50,
+      "acertos_so_do_antigo": 42,
+      "p": 0.46570744577306195
+    }
+  }
+}

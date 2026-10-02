@@ -1,0 +1,1187 @@
+{
+  "gerado_em": "2026-10-02",
+  "protocolo": "Cap. 3 — GARCH+SVM/XGBoost, 60/15/25, McNemar",
+  "fonte_ibovespa": "B3, carteira teórica, consultada em 02/10/2026",
+  "papeis": {
+    "VALE3": {
+      "ticker": "VALE3",
+      "empresa": "VALE",
+      "peso_ibovespa_pct": 9.883,
+      "preco_atual": 74.6,
+      "data_preco": "2026-09-15",
+      "garch": {
+        "omega": 0.14783,
+        "alpha": 0.0748,
+        "beta": 0.8936
+      },
+      "n": {
+        "total": 2314,
+        "teste": 579
+      },
+      "majoritaria_teste": 0.506,
+      "n_eventos_cvm": {
+        "fato_relevante": 128,
+        "todos": 567
+      },
+      "investidores": {
+        "data_referencia": "2026-12-31",
+        "total": 777804,
+        "pessoa_fisica": 762043,
+        "pessoa_juridica": 14214,
+        "institucionais": 1547,
+        "acoes_em_circulacao": 4262140830,
+        "acoes_por_investidor": 5479.7
+      },
+      "direcao": {
+        "apenas preço": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.5078,
+            "precisao": 0.5088,
+            "f1": 0.6195,
+            "auc": 0.5037,
+            "p_binomial_vs_majoritaria": 0.9668529437503984
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.4646,
+            "precisao": 0.4704,
+            "f1": 0.4655,
+            "auc": 0.4766,
+            "p_binomial_vs_majoritaria": 0.05067882185427569
+          }
+        },
+        "preço + CVM (todos)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.4974,
+            "precisao": 0.5022,
+            "f1": 0.6104,
+            "auc": 0.4968,
+            "p_binomial_vs_majoritaria": 0.6779835460916122
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.4888,
+            "precisao": 0.4953,
+            "f1": 0.5163,
+            "auc": 0.4861,
+            "p_binomial_vs_majoritaria": 0.40626098143585565
+          }
+        },
+        "preço + CVM (só FR)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.494,
+            "precisao": 0.5,
+            "f1": 0.644,
+            "auc": 0.5022,
+            "p_binomial_vs_majoritaria": 0.5610274807207822
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.4991,
+            "precisao": 0.5046,
+            "f1": 0.5307,
+            "auc": 0.4926,
+            "p_binomial_vs_majoritaria": 0.7397607125045038
+          }
+        }
+      },
+      "mcnemar": {
+        "SVM-RBF — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 53,
+          "acertos_so_do_antigo": 61,
+          "p": 0.5122548722298452
+        },
+        "XGBoost — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 77,
+          "acertos_so_do_antigo": 57,
+          "p": 0.10036570149746177
+        },
+        "SVM-RBF — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 82,
+          "acertos_so_do_antigo": 88,
+          "p": 0.7014821003407139
+        },
+        "XGBoost — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 88,
+          "acertos_so_do_antigo": 74,
+          "p": 0.30706733334446423
+        },
+        "SVM-RBF — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 49,
+          "acertos_so_do_antigo": 51,
+          "p": 0.9204107626128211
+        },
+        "XGBoost — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 43,
+          "acertos_so_do_antigo": 37,
+          "p": 0.5764306261883931
+        }
+      }
+    },
+    "ITUB4": {
+      "ticker": "ITUB4",
+      "empresa": "ITAUUNIBANCO",
+      "peso_ibovespa_pct": 8.985,
+      "preco_atual": 42.67,
+      "data_preco": "2026-09-15",
+      "garch": {
+        "omega": 0.04055,
+        "alpha": 0.0464,
+        "beta": 0.9402
+      },
+      "n": {
+        "total": 2314,
+        "teste": 579
+      },
+      "majoritaria_teste": 0.5337,
+      "n_eventos_cvm": {
+        "fato_relevante": 73,
+        "todos": 426
+      },
+      "investidores": {
+        "data_referencia": "2026-12-31",
+        "total": 667798,
+        "pessoa_fisica": 653637,
+        "pessoa_juridica": 12764,
+        "institucionais": 1397,
+        "acoes_em_circulacao": 5794029158,
+        "acoes_por_investidor": 8676.3
+      },
+      "direcao": {
+        "apenas preço": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.4819,
+            "precisao": 0.5149,
+            "f1": 0.5098,
+            "auc": 0.4992,
+            "p_binomial_vs_majoritaria": 0.013919682780056989
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.487,
+            "precisao": 0.5203,
+            "f1": 0.5091,
+            "auc": 0.4679,
+            "p_binomial_vs_majoritaria": 0.027184397547030923
+          }
+        },
+        "preço + CVM (todos)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.4957,
+            "precisao": 0.5323,
+            "f1": 0.4895,
+            "auc": 0.485,
+            "p_binomial_vs_majoritaria": 0.07318683386233205
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.5112,
+            "precisao": 0.5485,
+            "f1": 0.5095,
+            "auc": 0.4944,
+            "p_binomial_vs_majoritaria": 0.2791860812542541
+          }
+        },
+        "preço + CVM (só FR)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.5147,
+            "precisao": 0.5435,
+            "f1": 0.5547,
+            "auc": 0.4916,
+            "p_binomial_vs_majoritaria": 0.359859726036995
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.4905,
+            "precisao": 0.5269,
+            "f1": 0.4815,
+            "auc": 0.4953,
+            "p_binomial_vs_majoritaria": 0.04115692595092725
+          }
+        }
+      },
+      "mcnemar": {
+        "SVM-RBF — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 83,
+          "acertos_so_do_antigo": 64,
+          "p": 0.13737776624912412
+        },
+        "XGBoost — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 52,
+          "acertos_so_do_antigo": 50,
+          "p": 0.9211910492538722
+        },
+        "SVM-RBF — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 41,
+          "acertos_so_do_antigo": 33,
+          "p": 0.4159851975073046
+        },
+        "XGBoost — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 65,
+          "acertos_so_do_antigo": 51,
+          "p": 0.22727494633160844
+        },
+        "SVM-RBF — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 61,
+          "acertos_so_do_antigo": 50,
+          "p": 0.34258058257189866
+        },
+        "XGBoost — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 19,
+          "acertos_so_do_antigo": 31,
+          "p": 0.11892045255943628
+        }
+      }
+    },
+    "PETR4": {
+      "ticker": "PETR4",
+      "empresa": "PETROBRAS",
+      "peso_ibovespa_pct": 8.37,
+      "preco_atual": 50.43,
+      "data_preco": "2026-09-15",
+      "garch": {
+        "omega": 0.14493,
+        "alpha": 0.0783,
+        "beta": 0.8991
+      },
+      "n": {
+        "total": 2314,
+        "teste": 579
+      },
+      "majoritaria_teste": 0.532,
+      "n_eventos_cvm": {
+        "fato_relevante": 377,
+        "todos": 1344
+      },
+      "investidores": {
+        "data_referencia": "2026-12-31",
+        "total": 1183775,
+        "pessoa_fisica": 1175160,
+        "pessoa_juridica": 5987,
+        "institucionais": 2628,
+        "acoes_em_circulacao": 7889437525,
+        "acoes_por_investidor": 6664.6
+      },
+      "direcao": {
+        "apenas preço": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.5181,
+            "precisao": 0.5262,
+            "f1": 0.676,
+            "auc": 0.504,
+            "p_binomial_vs_majoritaria": 0.5055827433175946
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.5181,
+            "precisao": 0.5479,
+            "f1": 0.5434,
+            "auc": 0.5157,
+            "p_binomial_vs_majoritaria": 0.5055827433175946
+          }
+        },
+        "preço + CVM (todos)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.5233,
+            "precisao": 0.5287,
+            "f1": 0.6813,
+            "auc": 0.5186,
+            "p_binomial_vs_majoritaria": 0.6773588572124107
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.5009,
+            "precisao": 0.5262,
+            "f1": 0.5693,
+            "auc": 0.4862,
+            "p_binomial_vs_majoritaria": 0.13408421142349664
+          }
+        },
+        "preço + CVM (só FR)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.5233,
+            "precisao": 0.5293,
+            "f1": 0.6768,
+            "auc": 0.473,
+            "p_binomial_vs_majoritaria": 0.6773588572124107
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.5147,
+            "precisao": 0.5335,
+            "f1": 0.6048,
+            "auc": 0.5057,
+            "p_binomial_vs_majoritaria": 0.40530340032277057
+          }
+        }
+      },
+      "mcnemar": {
+        "SVM-RBF — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 29,
+          "acertos_so_do_antigo": 26,
+          "p": 0.7877061896700431
+        },
+        "XGBoost — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 74,
+          "acertos_so_do_antigo": 76,
+          "p": 0.9349614855143201
+        },
+        "SVM-RBF — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 20,
+          "acertos_so_do_antigo": 17,
+          "p": 0.7428293587290682
+        },
+        "XGBoost — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 72,
+          "acertos_so_do_antigo": 82,
+          "p": 0.4684207778527702
+        },
+        "SVM-RBF — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 23,
+          "acertos_so_do_antigo": 23,
+          "p": 1.0
+        },
+        "XGBoost — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 50,
+          "acertos_so_do_antigo": 42,
+          "p": 0.46570744577306195
+        }
+      }
+    },
+    "SBSP3": {
+      "ticker": "SBSP3",
+      "empresa": "SABESP",
+      "peso_ibovespa_pct": 3.695,
+      "preco_atual": 26.93,
+      "data_preco": "2026-09-15",
+      "garch": {
+        "omega": 0.1317,
+        "alpha": 0.0475,
+        "beta": 0.9214
+      },
+      "n": {
+        "total": 2314,
+        "teste": 579
+      },
+      "majoritaria_teste": 0.5078,
+      "n_eventos_cvm": {
+        "fato_relevante": 104,
+        "todos": 397
+      },
+      "investidores": {
+        "data_referencia": "2026-12-31",
+        "total": 60606,
+        "pessoa_fisica": 57945,
+        "pessoa_juridica": 572,
+        "institucionais": 2089,
+        "acoes_em_circulacao": 3524534026,
+        "acoes_por_investidor": 58154.9
+      },
+      "direcao": {
+        "apenas preço": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.4957,
+            "precisao": 0.5025,
+            "f1": 0.5829,
+            "auc": 0.4967,
+            "p_binomial_vs_majoritaria": 0.5610067406020335
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.456,
+            "precisao": 0.4697,
+            "f1": 0.5086,
+            "auc": 0.4635,
+            "p_binomial_vs_majoritaria": 0.01412657992025184
+          }
+        },
+        "preço + CVM (todos)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.5112,
+            "precisao": 0.5121,
+            "f1": 0.6212,
+            "auc": 0.4998,
+            "p_binomial_vs_majoritaria": 0.9007823622544855
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.4646,
+            "precisao": 0.4777,
+            "f1": 0.5245,
+            "auc": 0.4661,
+            "p_binomial_vs_majoritaria": 0.041595798699306075
+          }
+        },
+        "preço + CVM (só FR)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.494,
+            "precisao": 0.501,
+            "f1": 0.6219,
+            "auc": 0.5095,
+            "p_binomial_vs_majoritaria": 0.506430733931851
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.4577,
+            "precisao": 0.4708,
+            "f1": 0.5063,
+            "auc": 0.4494,
+            "p_binomial_vs_majoritaria": 0.01775426410595901
+          }
+        }
+      },
+      "mcnemar": {
+        "SVM-RBF — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 56,
+          "acertos_so_do_antigo": 57,
+          "p": 1.0
+        },
+        "XGBoost — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 40,
+          "acertos_so_do_antigo": 39,
+          "p": 1.0
+        },
+        "SVM-RBF — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 55,
+          "acertos_so_do_antigo": 46,
+          "p": 0.4261600154669939
+        },
+        "XGBoost — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 47,
+          "acertos_so_do_antigo": 42,
+          "p": 0.6718086491746103
+        },
+        "SVM-RBF — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 32,
+          "acertos_so_do_antigo": 42,
+          "p": 0.29541328065567
+        },
+        "XGBoost — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 32,
+          "acertos_so_do_antigo": 36,
+          "p": 0.716300760154337
+        }
+      }
+    },
+    "BBDC4": {
+      "ticker": "BBDC4",
+      "empresa": "BRADESCO",
+      "peso_ibovespa_pct": 3.608,
+      "preco_atual": 18.2,
+      "data_preco": "2026-09-15",
+      "garch": {
+        "omega": 0.09615,
+        "alpha": 0.0464,
+        "beta": 0.9285
+      },
+      "n": {
+        "total": 2314,
+        "teste": 579
+      },
+      "majoritaria_teste": 0.5216,
+      "n_eventos_cvm": {
+        "fato_relevante": 45,
+        "todos": 166
+      },
+      "investidores": {
+        "data_referencia": "2026-12-31",
+        "total": 882476,
+        "pessoa_fisica": 847717,
+        "pessoa_juridica": 33578,
+        "institucionais": 1181,
+        "acoes_em_circulacao": 6565342087,
+        "acoes_por_investidor": 7439.7
+      },
+      "direcao": {
+        "apenas preço": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.4974,
+            "precisao": 0.5333,
+            "f1": 0.3769,
+            "auc": 0.5055,
+            "p_binomial_vs_majoritaria": 0.24449384253008777
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.5095,
+            "precisao": 0.5324,
+            "f1": 0.5103,
+            "auc": 0.4963,
+            "p_binomial_vs_majoritaria": 0.5606724186244296
+          }
+        },
+        "preço + CVM (todos)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.4767,
+            "precisao": 0.4762,
+            "f1": 0.0619,
+            "auc": 0.5017,
+            "p_binomial_vs_majoritaria": 0.03379235901365428
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.506,
+            "precisao": 0.529,
+            "f1": 0.5052,
+            "auc": 0.501,
+            "p_binomial_vs_majoritaria": 0.4543975924053593
+          }
+        },
+        "preço + CVM (só FR)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.487,
+            "precisao": 0.6923,
+            "f1": 0.0571,
+            "auc": 0.4851,
+            "p_binomial_vs_majoritaria": 0.09633421760392062
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.4974,
+            "precisao": 0.5203,
+            "f1": 0.4921,
+            "auc": 0.4928,
+            "p_binomial_vs_majoritaria": 0.24449384253008777
+          }
+        }
+      },
+      "mcnemar": {
+        "SVM-RBF — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 75,
+          "acertos_so_do_antigo": 81,
+          "p": 0.6890542729314683
+        },
+        "XGBoost — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 39,
+          "acertos_so_do_antigo": 46,
+          "p": 0.5154257318839017
+        },
+        "SVM-RBF — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 75,
+          "acertos_so_do_antigo": 87,
+          "p": 0.38751908484905306
+        },
+        "XGBoost — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 43,
+          "acertos_so_do_antigo": 45,
+          "p": 0.9151865048428764
+        },
+        "SVM-RBF — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 11,
+          "acertos_so_do_antigo": 5,
+          "p": 0.210113525390625
+        },
+        "XGBoost — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 20,
+          "acertos_so_do_antigo": 25,
+          "p": 0.5514843298025198
+        }
+      }
+    },
+    "B3SA3": {
+      "ticker": "B3SA3",
+      "empresa": "B3",
+      "peso_ibovespa_pct": 3.519,
+      "preco_atual": 17.42,
+      "data_preco": "2026-09-15",
+      "garch": {
+        "omega": 0.08871,
+        "alpha": 0.0417,
+        "beta": 0.9422
+      },
+      "n": {
+        "total": 2314,
+        "teste": 579
+      },
+      "majoritaria_teste": 0.506,
+      "n_eventos_cvm": {
+        "fato_relevante": 55,
+        "todos": 288
+      },
+      "investidores": {
+        "data_referencia": "2026-12-31",
+        "total": 294151,
+        "pessoa_fisica": 290198,
+        "pessoa_juridica": 2306,
+        "institucionais": 1647,
+        "acoes_em_circulacao": 4985893391,
+        "acoes_por_investidor": 16950.1
+      },
+      "direcao": {
+        "apenas preço": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.4922,
+            "precisao": 0.4953,
+            "f1": 0.265,
+            "auc": 0.4622,
+            "p_binomial_vs_majoritaria": 0.5064531578744189
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.5233,
+            "precisao": 0.5347,
+            "f1": 0.487,
+            "auc": 0.5277,
+            "p_binomial_vs_majoritaria": 0.42974521835737367
+          }
+        },
+        "preço + CVM (todos)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.5112,
+            "precisao": 0.5221,
+            "f1": 0.4547,
+            "auc": 0.4913,
+            "p_binomial_vs_majoritaria": 0.8354012204631522
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.5285,
+            "precisao": 0.5427,
+            "f1": 0.482,
+            "auc": 0.5354,
+            "p_binomial_vs_majoritaria": 0.2987805019659786
+          }
+        },
+        "preço + CVM (só FR)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.5112,
+            "precisao": 0.5463,
+            "f1": 0.2943,
+            "auc": 0.4797,
+            "p_binomial_vs_majoritaria": 0.8354012204631522
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.5199,
+            "precisao": 0.5316,
+            "f1": 0.4755,
+            "auc": 0.5237,
+            "p_binomial_vs_majoritaria": 0.5330419301931054
+          }
+        }
+      },
+      "mcnemar": {
+        "SVM-RBF — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 33,
+          "acertos_so_do_antigo": 22,
+          "p": 0.1770013647703581
+        },
+        "XGBoost — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 32,
+          "acertos_so_do_antigo": 34,
+          "p": 0.9021585000966994
+        },
+        "SVM-RBF — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 88,
+          "acertos_so_do_antigo": 77,
+          "p": 0.4363682280537134
+        },
+        "XGBoost — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 42,
+          "acertos_so_do_antigo": 39,
+          "p": 0.8243132151052083
+        },
+        "SVM-RBF — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 73,
+          "acertos_so_do_antigo": 73,
+          "p": 1.0
+        },
+        "XGBoost — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 31,
+          "acertos_so_do_antigo": 36,
+          "p": 0.6254068289416483
+        }
+      }
+    },
+    "ITSA4": {
+      "ticker": "ITSA4",
+      "empresa": "ITAUSA",
+      "peso_ibovespa_pct": 3.279,
+      "preco_atual": 14.16,
+      "data_preco": "2026-09-15",
+      "garch": {
+        "omega": 0.04123,
+        "alpha": 0.0504,
+        "beta": 0.9344
+      },
+      "n": {
+        "total": 2314,
+        "teste": 579
+      },
+      "majoritaria_teste": 0.5181,
+      "n_eventos_cvm": {
+        "fato_relevante": 78,
+        "todos": 176
+      },
+      "investidores": {
+        "data_referencia": "2026-12-31",
+        "total": 965450,
+        "pessoa_fisica": 961131,
+        "pessoa_juridica": 2566,
+        "institucionais": 1753,
+        "acoes_em_circulacao": 7370345156,
+        "acoes_por_investidor": 7634.1
+      },
+      "direcao": {
+        "apenas preço": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.5164,
+            "precisao": 0.551,
+            "f1": 0.4355,
+            "auc": 0.5215,
+            "p_binomial_vs_majoritaria": 0.9337773208860425
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.5043,
+            "precisao": 0.523,
+            "f1": 0.5077,
+            "auc": 0.5009,
+            "p_binomial_vs_majoritaria": 0.506189630018188
+          }
+        },
+        "preço + CVM (todos)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.4922,
+            "precisao": 0.56,
+            "f1": 0.16,
+            "auc": 0.5336,
+            "p_binomial_vs_majoritaria": 0.21253013128889728
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.5095,
+            "precisao": 0.5312,
+            "f1": 0.4892,
+            "auc": 0.52,
+            "p_binomial_vs_majoritaria": 0.6777940535482943
+          }
+        },
+        "preço + CVM (só FR)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.4853,
+            "precisao": 0.5312,
+            "f1": 0.1024,
+            "auc": 0.5257,
+            "p_binomial_vs_majoritaria": 0.11427682966072958
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.4974,
+            "precisao": 0.5174,
+            "f1": 0.4794,
+            "auc": 0.4996,
+            "p_binomial_vs_majoritaria": 0.31864715892699036
+          }
+        }
+      },
+      "mcnemar": {
+        "SVM-RBF — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 83,
+          "acertos_so_do_antigo": 101,
+          "p": 0.20999553888817285
+        },
+        "XGBoost — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 45,
+          "acertos_so_do_antigo": 49,
+          "p": 0.7571890741424067
+        },
+        "SVM-RBF — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 91,
+          "acertos_so_do_antigo": 105,
+          "p": 0.35314085510666443
+        },
+        "XGBoost — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 53,
+          "acertos_so_do_antigo": 50,
+          "p": 0.8438976552528614
+        },
+        "SVM-RBF — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 8,
+          "acertos_so_do_antigo": 12,
+          "p": 0.5034446716308594
+        },
+        "XGBoost — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 17,
+          "acertos_so_do_antigo": 24,
+          "p": 0.34888887944907765
+        }
+      }
+    },
+    "BPAC11": {
+      "ticker": "BPAC11",
+      "empresa": "BTGP BANCO",
+      "peso_ibovespa_pct": 2.902,
+      "preco_atual": 60.2,
+      "data_preco": "2026-09-15",
+      "garch": {
+        "omega": 0.16428,
+        "alpha": 0.0755,
+        "beta": 0.8976
+      },
+      "n": {
+        "total": 2314,
+        "teste": 579
+      },
+      "majoritaria_teste": 0.5268,
+      "n_eventos_cvm": {
+        "fato_relevante": 19,
+        "todos": 128
+      },
+      "investidores": {
+        "data_referencia": "2026-12-31",
+        "total": 124802,
+        "pessoa_fisica": 121069,
+        "pessoa_juridica": 2434,
+        "institucionais": 1299,
+        "acoes_em_circulacao": 3584166460,
+        "acoes_por_investidor": 28718.8
+      },
+      "direcao": {
+        "apenas preço": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.487,
+            "precisao": 0.587,
+            "f1": 0.1538,
+            "auc": 0.4637,
+            "p_binomial_vs_majoritaria": 0.06099880556872925
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.5216,
+            "precisao": 0.5614,
+            "f1": 0.4803,
+            "auc": 0.5158,
+            "p_binomial_vs_majoritaria": 0.8029876230617932
+          }
+        },
+        "preço + CVM (todos)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.4905,
+            "precisao": 0.5625,
+            "f1": 0.2338,
+            "auc": 0.469,
+            "p_binomial_vs_majoritaria": 0.08785488368402919
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.5009,
+            "precisao": 0.5328,
+            "f1": 0.4736,
+            "auc": 0.5155,
+            "p_binomial_vs_majoritaria": 0.21216829674771903
+          }
+        },
+        "preço + CVM (só FR)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.4732,
+            "precisao": 0.5,
+            "f1": 0.1003,
+            "auc": 0.4853,
+            "p_binomial_vs_majoritaria": 0.011062688598880294
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.487,
+            "precisao": 0.518,
+            "f1": 0.4364,
+            "auc": 0.5098,
+            "p_binomial_vs_majoritaria": 0.06099880556872925
+          }
+        }
+      },
+      "mcnemar": {
+        "SVM-RBF — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 8,
+          "acertos_so_do_antigo": 16,
+          "p": 0.15158963203430176
+        },
+        "XGBoost — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 58,
+          "acertos_so_do_antigo": 78,
+          "p": 0.10291318499743221
+        },
+        "SVM-RBF — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 37,
+          "acertos_so_do_antigo": 35,
+          "p": 0.906294324703081
+        },
+        "XGBoost — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 60,
+          "acertos_so_do_antigo": 72,
+          "p": 0.3383802389398247
+        },
+        "SVM-RBF — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 23,
+          "acertos_so_do_antigo": 33,
+          "p": 0.2288055412343561
+        },
+        "XGBoost — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 38,
+          "acertos_so_do_antigo": 46,
+          "p": 0.4452046690465761
+        }
+      }
+    },
+    "BBAS3": {
+      "ticker": "BBAS3",
+      "empresa": "BRASIL",
+      "peso_ibovespa_pct": 2.495,
+      "preco_atual": 22.04,
+      "data_preco": "2026-09-15",
+      "garch": {
+        "omega": 0.09,
+        "alpha": 0.078,
+        "beta": 0.9035
+      },
+      "n": {
+        "total": 2314,
+        "teste": 579
+      },
+      "majoritaria_teste": 0.5026,
+      "n_eventos_cvm": {
+        "fato_relevante": 114,
+        "todos": 440
+      },
+      "investidores": {
+        "data_referencia": "2026-12-31",
+        "total": 1551254,
+        "pessoa_fisica": 1537290,
+        "pessoa_juridica": 13124,
+        "institucionais": 840,
+        "acoes_em_circulacao": 2842760965,
+        "acoes_por_investidor": 1832.6
+      },
+      "direcao": {
+        "apenas preço": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.506,
+            "precisao": 0.5055,
+            "f1": 0.6156,
+            "auc": 0.5056,
+            "p_binomial_vs_majoritaria": 0.9007929566866
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.4767,
+            "precisao": 0.4824,
+            "f1": 0.5198,
+            "auc": 0.4631,
+            "p_binomial_vs_majoritaria": 0.21283681709381183
+          }
+        },
+        "preço + CVM (todos)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.5078,
+            "precisao": 0.5056,
+            "f1": 0.657,
+            "auc": 0.5057,
+            "p_binomial_vs_majoritaria": 0.8354108953230099
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.4836,
+            "precisao": 0.4878,
+            "f1": 0.517,
+            "auc": 0.4641,
+            "p_binomial_vs_majoritaria": 0.36098153023715895
+          }
+        },
+        "preço + CVM (só FR)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.506,
+            "precisao": 0.5044,
+            "f1": 0.6674,
+            "auc": 0.4878,
+            "p_binomial_vs_majoritaria": 0.9007929566866
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.4922,
+            "precisao": 0.4956,
+            "f1": 0.5363,
+            "auc": 0.4788,
+            "p_binomial_vs_majoritaria": 0.6183221898633584
+          }
+        }
+      },
+      "mcnemar": {
+        "SVM-RBF — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 66,
+          "acertos_so_do_antigo": 66,
+          "p": 1.0
+        },
+        "XGBoost — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 53,
+          "acertos_so_do_antigo": 44,
+          "p": 0.4167748410890988
+        },
+        "SVM-RBF — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 74,
+          "acertos_so_do_antigo": 73,
+          "p": 1.0
+        },
+        "XGBoost — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 59,
+          "acertos_so_do_antigo": 55,
+          "p": 0.7788760920027011
+        },
+        "SVM-RBF — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 16,
+          "acertos_so_do_antigo": 17,
+          "p": 1.0
+        },
+        "XGBoost — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 28,
+          "acertos_so_do_antigo": 23,
+          "p": 0.5758493477318467
+        }
+      }
+    },
+    "ABEV3": {
+      "ticker": "ABEV3",
+      "empresa": "AMBEV S/A",
+      "peso_ibovespa_pct": 2.377,
+      "preco_atual": 15.73,
+      "data_preco": "2026-09-15",
+      "garch": {
+        "omega": 0.01675,
+        "alpha": 0.0312,
+        "beta": 0.9639
+      },
+      "n": {
+        "total": 2314,
+        "teste": 579
+      },
+      "majoritaria_teste": 0.5009,
+      "n_eventos_cvm": {
+        "fato_relevante": 11,
+        "todos": 44
+      },
+      "investidores": {
+        "data_referencia": "2026-12-31",
+        "total": 213087,
+        "pessoa_fisica": 210589,
+        "pessoa_juridica": 1959,
+        "institucionais": 539,
+        "acoes_em_circulacao": 4043349180,
+        "acoes_por_investidor": 18975.1
+      },
+      "direcao": {
+        "apenas preço": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.5078,
+            "precisao": 0.6,
+            "f1": 0.0777,
+            "auc": 0.4525,
+            "p_binomial_vs_majoritaria": 0.7711491589535415
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.532,
+            "precisao": 0.5433,
+            "f1": 0.4547,
+            "auc": 0.5462,
+            "p_binomial_vs_majoritaria": 0.1457285169171878
+          }
+        },
+        "preço + CVM (todos)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.5009,
+            "precisao": 0.5,
+            "f1": 0.0399,
+            "auc": 0.4782,
+            "p_binomial_vs_majoritaria": 1.0
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.5354,
+            "precisao": 0.5505,
+            "f1": 0.4476,
+            "auc": 0.5325,
+            "p_binomial_vs_majoritaria": 0.10498186893109823
+          }
+        },
+        "preço + CVM (só FR)": {
+          "SVM-RBF": {
+            "n_teste": 579,
+            "acuracia": 0.494,
+            "precisao": 0.3,
+            "f1": 0.0201,
+            "auc": 0.4946,
+            "p_binomial_vs_majoritaria": 0.7397829524586024
+          },
+          "XGBoost": {
+            "n_teste": 579,
+            "acuracia": 0.5544,
+            "precisao": 0.5756,
+            "f1": 0.4777,
+            "auc": 0.5424,
+            "p_binomial_vs_majoritaria": 0.009980250428820777
+          }
+        }
+      },
+      "mcnemar": {
+        "SVM-RBF — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 4,
+          "acertos_so_do_antigo": 12,
+          "p": 0.076812744140625
+        },
+        "XGBoost — FR acrescenta sobre só preço?": {
+          "acertos_so_do_novo": 45,
+          "acertos_so_do_antigo": 32,
+          "p": 0.17106097355391153
+        },
+        "SVM-RBF — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 5,
+          "acertos_so_do_antigo": 9,
+          "p": 0.4239501953125
+        },
+        "XGBoost — TODOS acrescentam sobre só preço?": {
+          "acertos_so_do_novo": 42,
+          "acertos_so_do_antigo": 40,
+          "p": 0.9121566075526022
+        },
+        "SVM-RBF — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 0,
+          "acertos_so_do_antigo": 4,
+          "p": 0.125
+        },
+        "XGBoost — SÓ FR x TODOS os comunicados": {
+          "acertos_so_do_novo": 25,
+          "acertos_so_do_antigo": 14,
+          "p": 0.10812902140605732
+        }
+      }
+    }
+  }
+}

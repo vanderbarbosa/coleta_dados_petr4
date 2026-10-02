@@ -293,3 +293,54 @@ e que meta perseguir em cada alvo.**
 **O painel também foi atualizado** com uma demonstração interativa: um controle
 que move o corte de decisão e mostra a acurácia mudando enquanto a AUC fica
 parada.
+
+---
+
+## A sexta parte: o pedido de 30/09 — investidores, e as 10 principais ações
+
+O Prof. Julio pediu sete coisas na mentoria de 30/09/2026: quantidade de ações
+por investidor; comparar a projeção só com preço; combinar preço+notícia;
+combinar preço+CVM; projetar só com Fato Relevante; comparar FR × todos os
+comunicados; combinar notícia+FR. E depois pediu para refazer tudo,
+**papel por papel, para as 10 principais ações da bolsa**.
+
+### Investidores por ação (item 1) — fonte nova
+
+Não existia essa informação no projeto. Achei no Formulário de Referência da
+própria CVM (`dados.cvm.gov.br`, mesmo portal do IPE) — ver
+[[distribuicao-capital-cvm-fre]]. A PETR4 tem hoje 1.183.775 acionistas e
+6.665 ações por acionista em média (era 20.951 em 2018 — mais gente dividindo
+o mesmo tanto de ações).
+
+### Preço, preço+CVM, FR × todos (itens 2, 4, 5, 6) — PETR4
+
+Nenhum braço bate o palpite fixo. Usar só Fato Relevante ou usar todos os
+comunicados dá empate técnico. Detalhes e o McNemar completo: planilha
+`17_Comparativo_Direcao.xlsx`.
+
+### Preço+notícia e notícia+FR (itens 3 e 7) — bloqueados nesta máquina
+
+Dependem do corpus de notícias classificado (`indice_sentimento_petr4.csv`),
+que não está aqui. O item 3 tem um número de execução anterior (outra janela
+de teste); o item 7 nunca foi calculado.
+
+### As 10 principais ações — o nulo se confirma, mais forte ainda
+
+Os 10 de maior peso no Ibovespa **que já estão na pesquisa** (CVM +
+preço coletados): VALE3, ITUB4, PETR4, SBSP3, BBDC4, B3SA3, ITSA4, BPAC11,
+BBAS3, ABEV3. Ver [[comparativo-top10-ibovespa]] para o critério e os números.
+
+**60 testes (10 papéis × 3 braços × 2 modelos). 9 deram p<0,05 sem correção —
+perto do esperado só por acaso. ZERO sobrevive a Bonferroni.** Nenhum papel,
+nenhuma combinação, bate o palpite fixo de forma confiável.
+
+| Arquivo | O que é |
+|---|---|
+| **`16_Distribuicao_de_Capital.xlsx`** | **item 1 — 62 papéis, série histórica da PETR4** |
+| **`17_Comparativo_Direcao.xlsx`** | **itens 2 a 7 — só PETR4, com o McNemar completo** |
+| **`18_Comparativo_Top10_Acoes.xlsx`** | **os 10 papéis, uma aba por ação, com investidores, preço atual e a mesma comparação** |
+
+Código: `CVM/19_fr_vs_todos_comunicados.py` (itens 3/5/6/7, aguarda o corpus),
+`CVM/20_preco_e_cvm_sem_noticia.py` (itens 2/4/5/6, PETR4),
+`CVM/21_coletar_distribuicao_capital.py` (item 1),
+`CVM/22_comparativo_top10_acoes.py` (os 10 papéis).

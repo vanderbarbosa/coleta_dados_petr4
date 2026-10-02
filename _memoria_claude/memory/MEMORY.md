@@ -1,5 +1,7 @@
 # Memory Index
 
+- [Distribuição de capital (CVM/FRE)](distribuicao-capital-cvm-fre.md) — fonte nova: acionistas (PF/PJ/institucional) e ações em circulação por empresa, 2018-2026, 62 papéis
+- [Comparativo top 10 Ibovespa](comparativo-top10-ibovespa.md) — o nulo de direção da PETR4 generalizado: 60 testes, 9 com p<0,05 bruto, ZERO sobrevive a Bonferroni
 - [Projeto PETR4 (dissertação)](projeto-petr4-dissertacao.md) — pipeline de 4 scripts: sentimento de notícias → previsão de direção/volatilidade do PETR4
 - [Idioma português](preferencia-idioma-portugues.md) — gerar todos os artefatos e respostas em PT-BR, tom acadêmico
 - [Explicar para leigo](preferencia-explicacao-leigo.md) — ELE É LEIGO EM ML: nenhum termo técnico sem analogia; explicar o porquê de cada etapa
