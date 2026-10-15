@@ -1,5 +1,6 @@
 # Memory Index
 
+- [Piso estatístico × custo computacional](piso-estatistico-custo-computacional.md) — ~4 pp é o piso estatístico (nosso n de teste); ~2-5 pp / R²-OS+5% é o piso de relevância já usado na pesquisa; TimesFM/Prophet pendente de confirmação
 - [Distribuição de capital (CVM/FRE)](distribuicao-capital-cvm-fre.md) — fonte nova: acionistas (PF/PJ/institucional) e ações em circulação por empresa, 2018-2026, 62 papéis
 - [Comparativo top 10 Ibovespa](comparativo-top10-ibovespa.md) — o nulo de direção da PETR4 generalizado: 60 testes, 9 com p<0,05 bruto, ZERO sobrevive a Bonferroni
 - [Projeto PETR4 (dissertação)](projeto-petr4-dissertacao.md) — pipeline de 4 scripts: sentimento de notícias → previsão de direção/volatilidade do PETR4
