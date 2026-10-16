@@ -24,7 +24,7 @@
         "todos": 567
       },
       "investidores": {
-        "data_referencia": "2026-12-31",
+        "data_assembleia": "2026-04-30",
         "total": 777804,
         "pessoa_fisica": 762043,
         "pessoa_juridica": 14214,
@@ -142,7 +142,7 @@
         "todos": 426
       },
       "investidores": {
-        "data_referencia": "2026-12-31",
+        "data_assembleia": "2026-05-19",
         "total": 667798,
         "pessoa_fisica": 653637,
         "pessoa_juridica": 12764,
@@ -260,7 +260,7 @@
         "todos": 1344
       },
       "investidores": {
-        "data_referencia": "2026-12-31",
+        "data_assembleia": "2026-04-16",
         "total": 1183775,
         "pessoa_fisica": 1175160,
         "pessoa_juridica": 5987,
@@ -378,7 +378,7 @@
         "todos": 397
       },
       "investidores": {
-        "data_referencia": "2026-12-31",
+        "data_assembleia": "2026-04-28",
         "total": 60606,
         "pessoa_fisica": 57945,
         "pessoa_juridica": 572,
@@ -496,7 +496,7 @@
         "todos": 166
       },
       "investidores": {
-        "data_referencia": "2026-12-31",
+        "data_assembleia": "2026-05-08",
         "total": 882476,
         "pessoa_fisica": 847717,
         "pessoa_juridica": 33578,
@@ -614,13 +614,13 @@
         "todos": 288
       },
       "investidores": {
-        "data_referencia": "2026-12-31",
+        "data_assembleia": "2026-04-30",
         "total": 294151,
         "pessoa_fisica": 290198,
         "pessoa_juridica": 2306,
         "institucionais": 1647,
-        "acoes_em_circulacao": 4985893391,
-        "acoes_por_investidor": 16950.1
+        "acoes_em_circulacao": 4972065060,
+        "acoes_por_investidor": 16903.1
       },
       "direcao": {
         "apenas preço": {
@@ -732,7 +732,7 @@
         "todos": 176
       },
       "investidores": {
-        "data_referencia": "2026-12-31",
+        "data_assembleia": "2026-04-30",
         "total": 965450,
         "pessoa_fisica": 961131,
         "pessoa_juridica": 2566,
@@ -850,7 +850,7 @@
         "todos": 128
       },
       "investidores": {
-        "data_referencia": "2026-12-31",
+        "data_assembleia": "2026-04-30",
         "total": 124802,
         "pessoa_fisica": 121069,
         "pessoa_juridica": 2434,
@@ -968,7 +968,7 @@
         "todos": 440
       },
       "investidores": {
-        "data_referencia": "2026-12-31",
+        "data_assembleia": "2026-04-29",
         "total": 1551254,
         "pessoa_fisica": 1537290,
         "pessoa_juridica": 13124,
@@ -1086,7 +1086,7 @@
         "todos": 44
       },
       "investidores": {
-        "data_referencia": "2026-12-31",
+        "data_assembleia": "2026-08-13",
         "total": 213087,
         "pessoa_fisica": 210589,
         "pessoa_juridica": 1959,

@@ -198,7 +198,7 @@ def processa_papel(ticker: str) -> dict:
         "majoritaria_teste": round(float(maj), 4),
         "n_eventos_cvm": {"fato_relevante": n_fr, "todos": n_tot},
         "investidores": {
-            "data_referencia": inv_row["Data_Referencia"],
+            "data_assembleia": inv_row["Data_Ultima_Assembleia"],
             "total": int(inv_row["Qtd_Acionistas_Total"]),
             "pessoa_fisica": int(inv_row["Quantidade_Acionistas_PF"]),
             "pessoa_juridica": int(inv_row["Quantidade_Acionistas_PJ"]),

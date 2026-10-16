@@ -83,8 +83,14 @@ def main() -> None:
     d["Media_Acoes_Por_Acionista"] = (d["Quantidade_Total_Acoes_Circulacao"]
                                       / d["Qtd_Acionistas_Total"].replace(0, pd.NA))
 
-    cols = ["Ticker", "Nome_Companhia", "Data_Referencia", "Qtd_Acionistas_Total",
-            "Quantidade_Acionistas_PF", "Quantidade_Acionistas_PJ",
+    # Data_Referencia NÃO é a data em que os acionistas foram contados — é só
+    # o rótulo do exercício fiscal do formulário (ex.: "2026-12-31" para um
+    # envio de setembro/2026, porque o formulário cobre o ano inteiro).
+    # Data_Ultima_Assembleia é a data real da contagem. Confirmado em
+    # 15/10/2026 comparando com o cabeçalho bruto do FRE (DT_RECEB), a pedido
+    # do Vanderlei, que notou a data "no futuro" na planilha anterior.
+    cols = ["Ticker", "Nome_Companhia", "Data_Ultima_Assembleia", "Data_Referencia",
+            "Qtd_Acionistas_Total", "Quantidade_Acionistas_PF", "Quantidade_Acionistas_PJ",
             "Quantidade_Acionistas_Investidores_Institucionais",
             "Quantidade_Acoes_Ordinarias_Circulacao",
             "Quantidade_Acoes_Preferenciais_Circulacao",
@@ -93,13 +99,16 @@ def main() -> None:
     d = d[cols].sort_values(["Ticker", "Data_Referencia"])
     d.to_csv(DADOS / "distribuicao_capital_papeis.csv", index=False, encoding="utf-8-sig")
 
-    # resumo: a leitura mais recente de cada papel
+    # resumo: a leitura mais recente de cada papel (mais recente = ano do
+    # formulário mais novo; dentro do mesmo ano já é a última versão, por
+    # causa do drop_duplicates(keep="last") feito acima por Versao)
     recente = d.sort_values("Data_Referencia").drop_duplicates("Ticker", keep="last")
-    print(f"\n  {'Ticker':<8} {'data-base':<11} {'acionistas':>11} {'ações (mi)':>12} "
+    print(f"\n  {'Ticker':<8} {'assembleia':<11} {'acionistas':>11} {'ações (mi)':>12} "
           f"{'ações/acionista':>16}")
     print("  " + "-" * 64)
     for _, r in recente.sort_values("Qtd_Acionistas_Total", ascending=False).head(15).iterrows():
-        print(f"  {r['Ticker']:<8} {r['Data_Referencia']:<11} {r['Qtd_Acionistas_Total']:>11,.0f} "
+        print(f"  {r['Ticker']:<8} {str(r['Data_Ultima_Assembleia']):<11} "
+              f"{r['Qtd_Acionistas_Total']:>11,.0f} "
               f"{r['Quantidade_Total_Acoes_Circulacao']/1e6:>12,.1f} "
               f"{r['Media_Acoes_Por_Acionista']:>16,.0f}")
 

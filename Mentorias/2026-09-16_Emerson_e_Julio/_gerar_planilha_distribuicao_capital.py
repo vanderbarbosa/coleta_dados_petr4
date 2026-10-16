@@ -33,7 +33,7 @@ BORDA = Border(bottom=Side(style="thin", color="BFBFBF"))
 COLS = [
     ("Ticker", "Ticker", 10, "@"),
     ("Nome_Companhia", "Empresa", 34, "@"),
-    ("Data_Referencia", "Data-base", 12, "@"),
+    ("Data_Ultima_Assembleia", "Data da\nassembleia", 12, "@"),
     ("Quantidade_Acionistas_PF", "Acionistas\npessoa física", 14, "#,##0"),
     ("Quantidade_Acionistas_PJ", "Acionistas\npessoa jurídica", 14, "#,##0"),
     ("Quantidade_Acionistas_Investidores_Institucionais", "Acionistas\ninstitucionais", 14, "#,##0"),
@@ -98,6 +98,19 @@ def nota_fonte(ws: Worksheet, linha: int) -> None:
          "classe (ON × PN), mas não separa a CONTAGEM DE ACIONISTAS por classe — "
          "o total de acionistas é da empresa inteira, não só de quem tem PETR4."),
         ("Periodicidade: por assembleia (normalmente 1x por ano), não por pregão."),
+        ("Correção de 15/10/2026: a versão anterior desta planilha mostrava "
+         "'Data_Referencia' (31/12 de cada ano) como se fosse a data da contagem — "
+         "não é; é só o rótulo do exercício fiscal do formulário, mesmo enviado meses "
+         "antes. A coluna abaixo já usa a data real da assembleia (Data_Ultima_Assembleia)."),
+        ("Duas anomalias no PRÓPRIO dado da CVM, só na aba 'Todos os papéis' (histórico "
+         "completo) — não corrigidas por nós, não inventamos valor: (1) ASAI3 (Assaí), "
+         "SÓ no envio do exercício 2024 (assembleia de 25/04/2025), traz "
+         "Quantidade_Acionistas_PJ = 6.265.129 — maior que o total de ações da empresa, "
+         "logo impossível; já corrigido pela própria empresa no envio seguinte. (2) CYRE3 "
+         "(Cyrela), uma linha de exercício antigo com 'Data da assembleia' = 2026-12-31, "
+         "no futuro — erro de digitação da própria companhia. Em AMBOS os casos, a "
+         "LEITURA MAIS RECENTE de cada papel (a usada na aba Resumo e em toda a planilha "
+         "18) está correta — as anomalias são só de anos passados, na lista completa."),
     ]
     for i, t in enumerate(textos):
         cel = ws.cell(row=linha + i, column=1, value=t)

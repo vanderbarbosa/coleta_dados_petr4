@@ -6,6 +6,7 @@
   "papeis": {
     "GOLL4": {
       "Nome_Companhia": "GOL LINHAS AEREAS INTELIGENTES S.A.",
+      "Data_Ultima_Assembleia": "2026-02-23",
       "Data_Referencia": "2025-12-31",
       "Qtd_Acionistas_Total": 89966,
       "Quantidade_Acionistas_PF": 89690,
@@ -19,6 +20,7 @@
     },
     "SMTO3": {
       "Nome_Companhia": "SAO MARTINHO S.A.",
+      "Data_Ultima_Assembleia": "2025-07-25",
       "Data_Referencia": "2026-03-31",
       "Qtd_Acionistas_Total": 30099,
       "Quantidade_Acionistas_PF": 29322,
@@ -32,6 +34,7 @@
     },
     "CSAN3": {
       "Nome_Companhia": "COSAN S.A.",
+      "Data_Ultima_Assembleia": "2026-04-30",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 145099,
       "Quantidade_Acionistas_PF": 143726,
@@ -45,19 +48,21 @@
     },
     "CSNA3": {
       "Nome_Companhia": "CIA SIDERURGICA NACIONAL",
+      "Data_Ultima_Assembleia": "2026-04-24",
       "Data_Referencia": "2026-12-31",
-      "Qtd_Acionistas_Total": 89261,
-      "Quantidade_Acionistas_PF": 87323,
-      "Quantidade_Acionistas_PJ": 893,
-      "Quantidade_Acionistas_Investidores_Institucionais": 1045,
-      "Quantidade_Acoes_Ordinarias_Circulacao": 727462410,
+      "Qtd_Acionistas_Total": 84063,
+      "Quantidade_Acionistas_PF": 82177,
+      "Quantidade_Acionistas_PJ": 922,
+      "Quantidade_Acionistas_Investidores_Institucionais": 964,
+      "Quantidade_Acoes_Ordinarias_Circulacao": 727421210,
       "Quantidade_Acoes_Preferenciais_Circulacao": 0,
-      "Quantidade_Total_Acoes_Circulacao": 727462410,
-      "Percentual_Total_Acoes_Circulacao": 54.858,
-      "Media_Acoes_Por_Acionista": 8149.834866290989
+      "Quantidade_Total_Acoes_Circulacao": 727421210,
+      "Percentual_Total_Acoes_Circulacao": 54.854,
+      "Media_Acoes_Por_Acionista": 8653.286344765236
     },
     "ALOS3": {
       "Nome_Companhia": "ALLOS S.A.",
+      "Data_Ultima_Assembleia": "2026-05-14",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 119890,
       "Quantidade_Acionistas_PF": 117421,
@@ -71,6 +76,7 @@
     },
     "ASAI3": {
       "Nome_Companhia": "SENDAS DISTRIBUIDORA S.A.",
+      "Data_Ultima_Assembleia": "2026-04-29",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 40026,
       "Quantidade_Acionistas_PF": 38873,
@@ -84,6 +90,7 @@
     },
     "ABEV3": {
       "Nome_Companhia": "AMBEV S.A.",
+      "Data_Ultima_Assembleia": "2026-08-13",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 213087,
       "Quantidade_Acionistas_PF": 210589,
@@ -97,6 +104,7 @@
     },
     "BBSE3": {
       "Nome_Companhia": "BB SEGURIDADE PARTICIPAÇÕES S.A.",
+      "Data_Ultima_Assembleia": "2026-04-30",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 610297,
       "Quantidade_Acionistas_PF": 606047,
@@ -110,6 +118,7 @@
     },
     "CPFE3": {
       "Nome_Companhia": "CPFL ENERGIA S.A.",
+      "Data_Ultima_Assembleia": "2026-04-29",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 106796,
       "Quantidade_Acionistas_PF": 100554,
@@ -123,6 +132,7 @@
     },
     "VBBR3": {
       "Nome_Companhia": "VIBRA ENERGIA S/A",
+      "Data_Ultima_Assembleia": "2026-04-15",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 54041,
       "Quantidade_Acionistas_PF": 53436,
@@ -136,6 +146,7 @@
     },
     "BEEF3": {
       "Nome_Companhia": "MINERVA S.A.",
+      "Data_Ultima_Assembleia": "2026-04-28",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 64240,
       "Quantidade_Acionistas_PF": 63721,
@@ -149,6 +160,7 @@
     },
     "BPAC11": {
       "Nome_Companhia": "BCO BTG PACTUAL S.A.",
+      "Data_Ultima_Assembleia": "2026-04-30",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 124802,
       "Quantidade_Acionistas_PF": 121069,
@@ -162,6 +174,7 @@
     },
     "BBDC4": {
       "Nome_Companhia": "BCO BRADESCO S.A.",
+      "Data_Ultima_Assembleia": "2026-05-08",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 882476,
       "Quantidade_Acionistas_PF": 847717,
@@ -175,6 +188,7 @@
     },
     "BRAV3": {
       "Nome_Companhia": "BRAVA ENERGIA S.A.",
+      "Data_Ultima_Assembleia": "2026-04-20",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 71939,
       "Quantidade_Acionistas_PF": 70580,
@@ -188,6 +202,7 @@
     },
     "BBAS3": {
       "Nome_Companhia": "BCO BRASIL S.A.",
+      "Data_Ultima_Assembleia": "2026-04-29",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 1551254,
       "Quantidade_Acionistas_PF": 1537290,
@@ -201,6 +216,7 @@
     },
     "VIVT3": {
       "Nome_Companhia": "TELEFÔNICA BRASIL S.A",
+      "Data_Ultima_Assembleia": "2026-04-16",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 273626,
       "Quantidade_Acionistas_PF": 233281,
@@ -214,6 +230,7 @@
     },
     "VALE3": {
       "Nome_Companhia": "VALE S.A.",
+      "Data_Ultima_Assembleia": "2026-04-30",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 777804,
       "Quantidade_Acionistas_PF": 762043,
@@ -227,19 +244,21 @@
     },
     "B3SA3": {
       "Nome_Companhia": "B3 S.A. - BRASIL, BOLSA, BALCÃO",
+      "Data_Ultima_Assembleia": "2026-04-30",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 294151,
       "Quantidade_Acionistas_PF": 290198,
       "Quantidade_Acionistas_PJ": 2306,
       "Quantidade_Acionistas_Investidores_Institucionais": 1647,
-      "Quantidade_Acoes_Ordinarias_Circulacao": 4985893391,
+      "Quantidade_Acoes_Ordinarias_Circulacao": 4972065060,
       "Quantidade_Acoes_Preferenciais_Circulacao": 0,
-      "Quantidade_Total_Acoes_Circulacao": 4985893391,
-      "Percentual_Total_Acoes_Circulacao": 98.799,
-      "Media_Acoes_Por_Acionista": 16950.115386315192
+      "Quantidade_Total_Acoes_Circulacao": 4972065060,
+      "Percentual_Total_Acoes_Circulacao": 98.525,
+      "Media_Acoes_Por_Acionista": 16903.10439196195
     },
     "BRKM5": {
       "Nome_Companhia": "BRASKEM S.A.",
+      "Data_Ultima_Assembleia": "2026-06-08",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 52331,
       "Quantidade_Acionistas_PF": 48663,
@@ -253,6 +272,7 @@
     },
     "CCRO3": {
       "Nome_Companhia": "MOTIVA INFRAESTRUTURA DE MOBILIDADE S.A.",
+      "Data_Ultima_Assembleia": "2026-04-15",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 28962,
       "Quantidade_Acionistas_PF": 27603,
@@ -266,6 +286,7 @@
     },
     "COGN3": {
       "Nome_Companhia": "COGNA EDUCAÇÃO S.A.",
+      "Data_Ultima_Assembleia": "2026-05-08",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 138518,
       "Quantidade_Acionistas_PF": 137285,
@@ -279,6 +300,7 @@
     },
     "AZUL4": {
       "Nome_Companhia": "AZUL S.A.",
+      "Data_Ultima_Assembleia": "2026-04-30",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 7991,
       "Quantidade_Acionistas_PF": 7851,
@@ -292,6 +314,7 @@
     },
     "USIM5": {
       "Nome_Companhia": "USINAS SID DE MINAS GERAIS S.A.-USIMINAS",
+      "Data_Ultima_Assembleia": "2026-04-23",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 115411,
       "Quantidade_Acionistas_PF": 114137,
@@ -305,6 +328,7 @@
     },
     "BRFS3": {
       "Nome_Companhia": "BRF S.A.",
+      "Data_Ultima_Assembleia": "2025-09-26",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 1,
       "Quantidade_Acionistas_PF": 0,
@@ -318,6 +342,7 @@
     },
     "UGPA3": {
       "Nome_Companhia": "ULTRAPAR PARTICIPACOES S.A.",
+      "Data_Ultima_Assembleia": "2026-04-15",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 30608,
       "Quantidade_Acionistas_PF": 29246,
@@ -331,6 +356,7 @@
     },
     "CYRE3": {
       "Nome_Companhia": "CYRELA BRAZIL REALTY S.A.EMPREEND E PART",
+      "Data_Ultima_Assembleia": "2026-04-30",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 75496,
       "Quantidade_Acionistas_PF": 73710,
@@ -344,6 +370,7 @@
     },
     "ITUB4": {
       "Nome_Companhia": "ITAU UNIBANCO HOLDING S.A.",
+      "Data_Ultima_Assembleia": "2026-05-19",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 667798,
       "Quantidade_Acionistas_PF": 653637,
@@ -357,6 +384,7 @@
     },
     "KLBN11": {
       "Nome_Companhia": "KLABIN S.A.",
+      "Data_Ultima_Assembleia": "2026-04-07",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 663810,
       "Quantidade_Acionistas_PF": 661270,
@@ -370,6 +398,7 @@
     },
     "SBSP3": {
       "Nome_Companhia": "CIA SANEAMENTO BASICO EST SAO PAULO",
+      "Data_Ultima_Assembleia": "2026-04-28",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 60606,
       "Quantidade_Acionistas_PF": 57945,
@@ -383,6 +412,7 @@
     },
     "LIGT3": {
       "Nome_Companhia": "LIGHT S.A. - EM RECUPERAÇÃO JUDICIAL",
+      "Data_Ultima_Assembleia": "2026-08-20",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 27934,
       "Quantidade_Acionistas_PF": 27060,
@@ -396,6 +426,7 @@
     },
     "LREN3": {
       "Nome_Companhia": "LOJAS RENNER S.A.",
+      "Data_Ultima_Assembleia": "2026-04-29",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 104687,
       "Quantidade_Acionistas_PF": 102907,
@@ -409,6 +440,7 @@
     },
     "LWSA3": {
       "Nome_Companhia": "LWSA S/A",
+      "Data_Ultima_Assembleia": "2026-04-30",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 37418,
       "Quantidade_Acionistas_PF": 36802,
@@ -422,6 +454,7 @@
     },
     "MGLU3": {
       "Nome_Companhia": "MAGAZINE LUIZA S.A.",
+      "Data_Ultima_Assembleia": "2026-04-30",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 319826,
       "Quantidade_Acionistas_PF": 318038,
@@ -435,6 +468,7 @@
     },
     "SANB11": {
       "Nome_Companhia": "BCO SANTANDER (BRASIL) S.A.",
+      "Data_Ultima_Assembleia": "2026-01-15",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 337376,
       "Quantidade_Acionistas_PF": 320070,
@@ -448,6 +482,7 @@
     },
     "MRFG3": {
       "Nome_Companhia": "MARFRIG GLOBAL FOODS S.A.",
+      "Data_Ultima_Assembleia": "2026-04-24",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 104168,
       "Quantidade_Acionistas_PF": 101273,
@@ -461,6 +496,7 @@
     },
     "MULT3": {
       "Nome_Companhia": "MULTIPLAN - EMPREEND IMOBILIARIOS S.A.",
+      "Data_Ultima_Assembleia": "2026-03-27",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 26713,
       "Quantidade_Acionistas_PF": 25446,
@@ -474,6 +510,7 @@
     },
     "NTCO3": {
       "Nome_Companhia": "NATURA COSMÉTICOS S.A.",
+      "Data_Ultima_Assembleia": "2026-04-29",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 48012,
       "Quantidade_Acionistas_PF": 46701,
@@ -487,6 +524,7 @@
     },
     "RENT3": {
       "Nome_Companhia": "LOCALIZA FLEET S.A.",
+      "Data_Ultima_Assembleia": "2026-03-17",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 1,
       "Quantidade_Acionistas_PF": 0,
@@ -500,6 +538,7 @@
     },
     "OIBR3": {
       "Nome_Companhia": "CONCESSIONÁRIA PONTE RIO-NITERÓI S.A. - ECOPONTE",
+      "Data_Ultima_Assembleia": "2026-04-15",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 1,
       "Quantidade_Acionistas_PF": 0,
@@ -513,6 +552,7 @@
     },
     "PETR4": {
       "Nome_Companhia": "PETROLEO BRASILEIRO S.A. PETROBRAS",
+      "Data_Ultima_Assembleia": "2026-04-16",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 1183775,
       "Quantidade_Acionistas_PF": 1175160,
@@ -526,6 +566,7 @@
     },
     "PRIO3": {
       "Nome_Companhia": "PRIO S.A.",
+      "Data_Ultima_Assembleia": "2026-04-17",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 161783,
       "Quantidade_Acionistas_PF": 158586,
@@ -539,6 +580,7 @@
     },
     "PSSA3": {
       "Nome_Companhia": "PORTO SEGURO S.A.",
+      "Data_Ultima_Assembleia": "2026-03-31",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 140419,
       "Quantidade_Acionistas_PF": 139038,
@@ -552,6 +594,7 @@
     },
     "RADL3": {
       "Nome_Companhia": "RAIA DROGASIL S.A.",
+      "Data_Ultima_Assembleia": "2026-04-15",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 61765,
       "Quantidade_Acionistas_PF": 59973,
@@ -565,6 +608,7 @@
     },
     "RAIL3": {
       "Nome_Companhia": "RUMO S.A.",
+      "Data_Ultima_Assembleia": "2026-04-28",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 32818,
       "Quantidade_Acionistas_PF": 31504,
@@ -578,6 +622,7 @@
     },
     "ITSA4": {
       "Nome_Companhia": "ITAÚSA S.A.",
+      "Data_Ultima_Assembleia": "2026-04-30",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 965450,
       "Quantidade_Acionistas_PF": 961131,
@@ -591,6 +636,7 @@
     },
     "CVCB3": {
       "Nome_Companhia": "CVC BRASIL OPERADORA E AGÊNCIA DE VIAGENS S.A.",
+      "Data_Ultima_Assembleia": "2026-05-05",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 105312,
       "Quantidade_Acionistas_PF": 104554,
@@ -604,6 +650,7 @@
     },
     "SLCE3": {
       "Nome_Companhia": "SLC AGRICOLA S.A.",
+      "Data_Ultima_Assembleia": "2026-04-28",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 73122,
       "Quantidade_Acionistas_PF": 72045,
@@ -617,6 +664,7 @@
     },
     "EGIE3": {
       "Nome_Companhia": "ENGIE BRASIL ENERGIA S.A.",
+      "Data_Ultima_Assembleia": "2026-04-24",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 264564,
       "Quantidade_Acionistas_PF": 256355,
@@ -630,19 +678,21 @@
     },
     "ELET3": {
       "Nome_Companhia": "AXIA ENERGIA S.A.",
+      "Data_Ultima_Assembleia": "2026-08-28",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 275691,
       "Quantidade_Acionistas_PF": 228814,
       "Quantidade_Acionistas_PJ": 45101,
       "Quantidade_Acionistas_Investidores_Institucionais": 1776,
-      "Quantidade_Acoes_Ordinarias_Circulacao": 2297323798,
-      "Quantidade_Acoes_Preferenciais_Circulacao": 557140255,
-      "Quantidade_Total_Acoes_Circulacao": 2854464053,
-      "Percentual_Total_Acoes_Circulacao": 97.879,
-      "Media_Acoes_Por_Acionista": 10353.852875139195
+      "Quantidade_Acoes_Ordinarias_Circulacao": 2364888054,
+      "Quantidade_Acoes_Preferenciais_Circulacao": 447942145,
+      "Quantidade_Total_Acoes_Circulacao": 2812830199,
+      "Percentual_Total_Acoes_Circulacao": 97.544,
+      "Media_Acoes_Por_Acionista": 10202.836505362888
     },
     "TOTS3": {
       "Nome_Companhia": "TOTVS S.A.",
+      "Data_Ultima_Assembleia": "2026-04-24",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 46146,
       "Quantidade_Acionistas_PF": 44760,
@@ -656,6 +706,7 @@
     },
     "EMBR3": {
       "Nome_Companhia": "EMBRAER S.A.",
+      "Data_Ultima_Assembleia": "2026-05-06",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 92398,
       "Quantidade_Acionistas_PF": 77318,
@@ -669,6 +720,7 @@
     },
     "TIMS3": {
       "Nome_Companhia": "TIM S.A.",
+      "Data_Ultima_Assembleia": "2026-03-31",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 99143,
       "Quantidade_Acionistas_PF": 87162,
@@ -677,11 +729,12 @@
       "Quantidade_Acoes_Ordinarias_Circulacao": 776308601,
       "Quantidade_Acoes_Preferenciais_Circulacao": 0,
       "Quantidade_Total_Acoes_Circulacao": 776308601,
-      "Percentual_Total_Acoes_Circulacao": 32.453,
+      "Percentual_Total_Acoes_Circulacao": 32.633,
       "Media_Acoes_Por_Acionista": 7830.190744681924
     },
     "RDOR3": {
       "Nome_Companhia": "REDE D'OR SÃO LUIZ S.A.",
+      "Data_Ultima_Assembleia": "2026-07-13",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 56682,
       "Quantidade_Acionistas_PF": 54554,
@@ -695,6 +748,7 @@
     },
     "SUZB3": {
       "Nome_Companhia": "SUZANO S.A.",
+      "Data_Ultima_Assembleia": "2026-08-19",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 88909,
       "Quantidade_Acionistas_PF": 86623,
@@ -707,20 +761,22 @@
       "Media_Acoes_Por_Acionista": 6840.89148455162
     },
     "ENGI11": {
-      "Nome_Companhia": "ENERGISA S.A.",
+      "Nome_Companhia": "ENERGISA SUL-SUDESTE - DISTRIBUIDORA DE ENERGIA S/A",
+      "Data_Ultima_Assembleia": "2026-04-24",
       "Data_Referencia": "2026-12-31",
-      "Qtd_Acionistas_Total": 51432,
-      "Quantidade_Acionistas_PF": 49354,
-      "Quantidade_Acionistas_PJ": 532,
-      "Quantidade_Acionistas_Investidores_Institucionais": 1546,
-      "Quantidade_Acoes_Ordinarias_Circulacao": 359113663,
-      "Quantidade_Acoes_Preferenciais_Circulacao": 1432340843,
-      "Quantidade_Total_Acoes_Circulacao": 1791454506,
-      "Percentual_Total_Acoes_Circulacao": 68.323,
-      "Media_Acoes_Por_Acionista": 34831.515515632294
+      "Qtd_Acionistas_Total": 30,
+      "Quantidade_Acionistas_PF": 21,
+      "Quantidade_Acionistas_PJ": 9,
+      "Quantidade_Acionistas_Investidores_Institucionais": 0,
+      "Quantidade_Acoes_Ordinarias_Circulacao": 722,
+      "Quantidade_Acoes_Preferenciais_Circulacao": 0,
+      "Quantidade_Total_Acoes_Circulacao": 722,
+      "Percentual_Total_Acoes_Circulacao": 0.743,
+      "Media_Acoes_Por_Acionista": 24.066666666666666
     },
     "EQTL3": {
       "Nome_Companhia": "EQUATORIAL S.A.",
+      "Data_Ultima_Assembleia": "2026-04-30",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 82373,
       "Quantidade_Acionistas_PF": 80033,
@@ -734,6 +790,7 @@
     },
     "GGBR4": {
       "Nome_Companhia": "GERDAU S.A.",
+      "Data_Ultima_Assembleia": "2026-04-15",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 214168,
       "Quantidade_Acionistas_PF": 210311,
@@ -747,6 +804,7 @@
     },
     "GOAU4": {
       "Nome_Companhia": "METALURGICA GERDAU S.A.",
+      "Data_Ultima_Assembleia": "2026-04-17",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 168315,
       "Quantidade_Acionistas_PF": 166959,
@@ -760,6 +818,7 @@
     },
     "HAPV3": {
       "Nome_Companhia": "HAPVIDA PARTICIPAÇÕES E INVESTIMENTOS S.A.",
+      "Data_Ultima_Assembleia": "2026-04-30",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 33810,
       "Quantidade_Acionistas_PF": 32805,
@@ -773,6 +832,7 @@
     },
     "HYPE3": {
       "Nome_Companhia": "HYPERA S.A.",
+      "Data_Ultima_Assembleia": "2026-04-27",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 37858,
       "Quantidade_Acionistas_PF": 36950,
@@ -786,6 +846,7 @@
     },
     "IGTI11": {
       "Nome_Companhia": "IGUATEMI EMPRESA DE SHOPPING CENTERS S.A",
+      "Data_Ultima_Assembleia": "2025-04-17",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 1,
       "Quantidade_Acionistas_PF": 0,
@@ -799,6 +860,7 @@
     },
     "YDUQ3": {
       "Nome_Companhia": "YDUQS PARTICIPACOES S.A.",
+      "Data_Ultima_Assembleia": "2026-04-28",
       "Data_Referencia": "2026-12-31",
       "Qtd_Acionistas_Total": 19071,
       "Quantidade_Acionistas_PF": 18636,

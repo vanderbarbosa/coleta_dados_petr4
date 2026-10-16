@@ -49,6 +49,19 @@ própria companhia no FRE, replicado como está — não inventei correção.
 PETR4, todos os papéis). Reaproveitado depois em
 [[comparativo-top10-ibovespa]] para os 10 papéis do Ibovespa.
 
+**CORREÇÃO (15/10/2026), achado pelo Vanderlei:** a planilha mostrava
+`Data_Referencia` como se fosse a data da contagem (ex.: "31/12/2026", no
+futuro). **Não é** — é só o rótulo do exercício fiscal do formulário, mesmo
+enviado meses antes. A data real é `Data_Ultima_Assembleia` (PETR4:
+16/04/2026), que existia no dado bruto da CVM mas não tinha sido coletada
+pelo script 21. Corrigido: `21_coletar_distribuicao_capital.py` agora salva
+as duas colunas; as planilhas 16, 18 e 01 (ver [[comparativo-top10-ibovespa]]
+e `Mentorias/2026-10-12_Julio/`) foram regeradas. De quebra, documentei na
+planilha 16 duas anomalias do PRÓPRIO dado da CVM (não nossas, não
+corrigidas): o PJ impossível da ASAI3 em 2024, e uma assembleia da CYRE3
+registrada para 2026-12-31 (futuro) num exercício antigo — a leitura mais
+recente de ambos os papéis está correta.
+
 **Why:** fecha o item 1 do pedido do Prof. Julio de 30/09/2026, com dado
 público verificável, sem fabricar número algum.
 

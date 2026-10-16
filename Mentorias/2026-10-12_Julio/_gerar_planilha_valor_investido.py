@@ -65,7 +65,7 @@ def escreve(ws, df, linha0, destaque_top10=False):
         cel_tk = ws.cell(row=r, column=1, value=row["Ticker"])
         cel_tk.font = Font(name=FONTE_NOME, bold=True, size=10)
         ws.cell(row=r, column=2, value=row["Nome_Companhia"]).font = Font(name=FONTE_NOME, size=10)
-        ws.cell(row=r, column=3, value=row["Data_Referencia"]).font = Font(name=FONTE_NOME, size=10)
+        ws.cell(row=r, column=3, value=row["Data_Ultima_Assembleia"]).font = Font(name=FONTE_NOME, size=10)
 
         c4 = ws.cell(row=r, column=4, value=int(row["Qtd_Acionistas_Total"]))
         c4.number_format = "#,##0"
@@ -130,7 +130,7 @@ def nota(ws, linha, ncols=8):
         ws.row_dimensions[linha + i].height = 28
 
 
-titulos = ["Ticker", "Empresa", "Data-base\n(acionistas)", "Acionistas\n(total)",
+titulos = ["Ticker", "Empresa", "Data da\nassembleia", "Acionistas\n(total)",
            "Ações em\ncirculação", "1. Ações por\ninvestidor\n(média)",
            "Preço atual\n(fechamento)", "2. Valor médio\ninvestido\n(média)"]
 larg = [9, 32, 12, 12, 13, 13, 12, 14]

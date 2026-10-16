@@ -170,7 +170,7 @@ for tk, info in d["papeis"].items():
     campos = [
         ("Peso na carteira do Ibovespa", info["peso_ibovespa_pct"] / 100.0, "0.00%"),
         (f"Preço de fechamento em {info['data_preco']}", info["preco_atual"], '"R$" #,##0.00'),
-        (f"Investidores — total ({info['investidores']['data_referencia']})",
+        (f"Investidores — total (assembleia de {info['investidores']['data_assembleia']})",
          info["investidores"]["total"], "#,##0"),
         ("  dos quais pessoa física", info["investidores"]["pessoa_fisica"], "#,##0"),
         ("  dos quais pessoa jurídica", info["investidores"]["pessoa_juridica"], "#,##0"),
