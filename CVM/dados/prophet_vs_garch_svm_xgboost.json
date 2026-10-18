@@ -1,0 +1,1265 @@
+{
+  "protocolo": "GARCH(1,1) próprio por papel; SVM/XGBoost/HAR ajustados uma vez (treino+validação); Prophet reajustado a cada 21 pregões em janela expansiva, nunca prevendo mais que isso à frente sem se reancorar; split cronológico 60/15/25",
+  "papeis": {
+    "VALE3": {
+      "garch": {
+        "omega": 0.14783,
+        "alpha": 0.0748,
+        "beta": 0.8936
+      },
+      "direcao": {
+        "n_teste": 579,
+        "majoritaria": 0.506,
+        "melhor_classico": "SVM (preço)",
+        "arms": {
+          "SVM (preço)": {
+            "acuracia": 0.5078,
+            "auc": 0.5037,
+            "pct_previu_alta": 78.8,
+            "p_vs_majoritaria": 0.9668529437503984
+          },
+          "XGBoost (preço)": {
+            "acuracia": 0.4646,
+            "auc": 0.4766,
+            "pct_previu_alta": 49.6,
+            "p_vs_majoritaria": 0.05067882185427569
+          },
+          "SVM (preço+CVM)": {
+            "acuracia": 0.4888,
+            "auc": 0.511,
+            "pct_previu_alta": 75.1,
+            "p_vs_majoritaria": 0.40626098143585565
+          },
+          "XGBoost (preço+CVM)": {
+            "acuracia": 0.4905,
+            "auc": 0.4783,
+            "pct_previu_alta": 52.5,
+            "p_vs_majoritaria": 0.45480470828979436
+          },
+          "Prophet (preço)": {
+            "acuracia": 0.5026,
+            "auc": null,
+            "pct_previu_alta": 26.1,
+            "p_vs_majoritaria": 0.8680914430838248
+          },
+          "Prophet (preço+CVM)": {
+            "acuracia": 0.5026,
+            "auc": null,
+            "pct_previu_alta": 26.1,
+            "p_vs_majoritaria": 0.8680914430838248
+          }
+        },
+        "mcnemar": {
+          "Prophet(preço) supera o melhor entre SVM/XGB(preço)?": {
+            "ganhou_novo": 184,
+            "ganhou_antigo": 187,
+            "p": 0.9173188091723979
+          },
+          "CVM ajuda o Prophet na direção?": {
+            "ganhou_novo": 2,
+            "ganhou_antigo": 2,
+            "p": 1.0
+          }
+        }
+      },
+      "volatilidade": {
+        "n_teste": 579,
+        "arms": {
+          "HAR (GARCH, referência)": {
+            "mae": 0.0656,
+            "rmse": 0.0908,
+            "r2os_vs_HAR": 0.0,
+            "r2os_vs_ancorada": 88.88
+          },
+          "HAR + CVM": {
+            "mae": 0.0681,
+            "rmse": 0.0932,
+            "r2os_vs_HAR": -5.33,
+            "r2os_vs_ancorada": 88.29
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.1958,
+            "rmse": 0.2722,
+            "r2os_vs_HAR": -799.38,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (volatilidade)": {
+            "mae": 0.3106,
+            "rmse": 0.3807,
+            "r2os_vs_HAR": -1658.87,
+            "r2os_vs_ancorada": -95.56
+          },
+          "Prophet (volatilidade+CVM)": {
+            "mae": 0.3104,
+            "rmse": 0.3819,
+            "r2os_vs_HAR": -1669.97,
+            "r2os_vs_ancorada": -96.8
+          }
+        }
+      },
+      "preco": {
+        "n_teste": 579,
+        "arms": {
+          "Ingênua diária (fechamento de ontem)": {
+            "mae": 0.7048,
+            "rmse": 1.0097,
+            "r2os_vs_ingenua_diaria": 0.0,
+            "r2os_vs_ancorada": 91.68
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 2.5302,
+            "rmse": 3.4999,
+            "r2os_vs_ingenua_diaria": -1101.38,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (preço)": {
+            "mae": 6.5907,
+            "rmse": 9.3223,
+            "r2os_vs_ingenua_diaria": -8423.55,
+            "r2os_vs_ancorada": -609.48
+          },
+          "Prophet (preço+CVM)": {
+            "mae": 6.6105,
+            "rmse": 9.348,
+            "r2os_vs_ingenua_diaria": -8470.56,
+            "r2os_vs_ancorada": -613.39
+          }
+        }
+      }
+    },
+    "ITUB4": {
+      "garch": {
+        "omega": 0.04055,
+        "alpha": 0.0464,
+        "beta": 0.9402
+      },
+      "direcao": {
+        "n_teste": 579,
+        "majoritaria": 0.5337,
+        "melhor_classico": "XGBoost (preço)",
+        "arms": {
+          "SVM (preço)": {
+            "acuracia": 0.4819,
+            "auc": 0.4992,
+            "pct_previu_alta": 52.3,
+            "p_vs_majoritaria": 0.013919682780056989
+          },
+          "XGBoost (preço)": {
+            "acuracia": 0.487,
+            "auc": 0.4679,
+            "pct_previu_alta": 51.1,
+            "p_vs_majoritaria": 0.027184397547030923
+          },
+          "SVM (preço+CVM)": {
+            "acuracia": 0.4767,
+            "auc": 0.5102,
+            "pct_previu_alta": 56.6,
+            "p_vs_majoritaria": 0.006729784712245472
+          },
+          "XGBoost (preço+CVM)": {
+            "acuracia": 0.5043,
+            "auc": 0.496,
+            "pct_previu_alta": 47.3,
+            "p_vs_majoritaria": 0.1569969528224851
+          },
+          "Prophet (preço)": {
+            "acuracia": 0.4991,
+            "auc": null,
+            "pct_previu_alta": 42.3,
+            "p_vs_majoritaria": 0.09588708282560127
+          },
+          "Prophet (preço+CVM)": {
+            "acuracia": 0.4991,
+            "auc": null,
+            "pct_previu_alta": 42.3,
+            "p_vs_majoritaria": 0.09588708282560127
+          }
+        },
+        "mcnemar": {
+          "Prophet(preço) supera o melhor entre SVM/XGB(preço)?": {
+            "ganhou_novo": 148,
+            "ganhou_antigo": 141,
+            "p": 0.7241997172686474
+          },
+          "CVM ajuda o Prophet na direção?": {
+            "ganhou_novo": 0,
+            "ganhou_antigo": 0,
+            "p": 1.0
+          }
+        }
+      },
+      "volatilidade": {
+        "n_teste": 579,
+        "arms": {
+          "HAR (GARCH, referência)": {
+            "mae": 0.034,
+            "rmse": 0.048,
+            "r2os_vs_HAR": 0.0,
+            "r2os_vs_ancorada": 87.18
+          },
+          "HAR + CVM": {
+            "mae": 0.0339,
+            "rmse": 0.048,
+            "r2os_vs_HAR": 0.06,
+            "r2os_vs_ancorada": 87.19
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.1026,
+            "rmse": 0.1341,
+            "r2os_vs_HAR": -680.07,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (volatilidade)": {
+            "mae": 0.1932,
+            "rmse": 0.253,
+            "r2os_vs_HAR": -2675.95,
+            "r2os_vs_ancorada": -255.86
+          },
+          "Prophet (volatilidade+CVM)": {
+            "mae": 0.1931,
+            "rmse": 0.2529,
+            "r2os_vs_HAR": -2673.19,
+            "r2os_vs_ancorada": -255.51
+          }
+        }
+      },
+      "preco": {
+        "n_teste": 579,
+        "arms": {
+          "Ingênua diária (fechamento de ontem)": {
+            "mae": 0.3584,
+            "rmse": 0.4897,
+            "r2os_vs_ingenua_diaria": 0.0,
+            "r2os_vs_ancorada": 92.93
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 1.3571,
+            "rmse": 1.8414,
+            "r2os_vs_ingenua_diaria": -1313.65,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (preço)": {
+            "mae": 2.6348,
+            "rmse": 3.3073,
+            "r2os_vs_ingenua_diaria": -4460.52,
+            "r2os_vs_ancorada": -222.61
+          },
+          "Prophet (preço+CVM)": {
+            "mae": 2.6419,
+            "rmse": 3.311,
+            "r2os_vs_ingenua_diaria": -4470.85,
+            "r2os_vs_ancorada": -223.34
+          }
+        }
+      }
+    },
+    "PETR4": {
+      "garch": {
+        "omega": 0.14493,
+        "alpha": 0.0783,
+        "beta": 0.8991
+      },
+      "direcao": {
+        "n_teste": 579,
+        "majoritaria": 0.532,
+        "melhor_classico": "SVM (preço)",
+        "arms": {
+          "SVM (preço)": {
+            "acuracia": 0.5181,
+            "auc": 0.504,
+            "pct_previu_alta": 95.5,
+            "p_vs_majoritaria": 0.5055827433175946
+          },
+          "XGBoost (preço)": {
+            "acuracia": 0.5181,
+            "auc": 0.5157,
+            "pct_previu_alta": 52.3,
+            "p_vs_majoritaria": 0.5055827433175946
+          },
+          "SVM (preço+CVM)": {
+            "acuracia": 0.5216,
+            "auc": 0.474,
+            "pct_previu_alta": 95.9,
+            "p_vs_majoritaria": 0.6175764824043686
+          },
+          "XGBoost (preço+CVM)": {
+            "acuracia": 0.5164,
+            "auc": 0.5285,
+            "pct_previu_alta": 64.6,
+            "p_vs_majoritaria": 0.4538827915910094
+          },
+          "Prophet (preço)": {
+            "acuracia": 0.4767,
+            "auc": null,
+            "pct_previu_alta": 67.2,
+            "p_vs_majoritaria": 0.008645037225942467
+          },
+          "Prophet (preço+CVM)": {
+            "acuracia": 0.4784,
+            "auc": null,
+            "pct_previu_alta": 67.0,
+            "p_vs_majoritaria": 0.011013590223844474
+          }
+        },
+        "mcnemar": {
+          "Prophet(preço) supera o melhor entre SVM/XGB(preço)?": {
+            "ganhou_novo": 79,
+            "ganhou_antigo": 103,
+            "p": 0.08794001140445872
+          },
+          "CVM ajuda o Prophet na direção?": {
+            "ganhou_novo": 1,
+            "ganhou_antigo": 0,
+            "p": 1.0
+          }
+        }
+      },
+      "volatilidade": {
+        "n_teste": 579,
+        "arms": {
+          "HAR (GARCH, referência)": {
+            "mae": 0.0687,
+            "rmse": 0.0967,
+            "r2os_vs_HAR": 0.0,
+            "r2os_vs_ancorada": 87.76
+          },
+          "HAR + CVM": {
+            "mae": 0.0692,
+            "rmse": 0.0968,
+            "r2os_vs_HAR": -0.28,
+            "r2os_vs_ancorada": 87.73
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.1996,
+            "rmse": 0.2763,
+            "r2os_vs_HAR": -717.21,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (volatilidade)": {
+            "mae": 0.3641,
+            "rmse": 0.4458,
+            "r2os_vs_HAR": -2027.08,
+            "r2os_vs_ancorada": -160.29
+          },
+          "Prophet (volatilidade+CVM)": {
+            "mae": 0.3611,
+            "rmse": 0.445,
+            "r2os_vs_HAR": -2019.8,
+            "r2os_vs_ancorada": -159.4
+          }
+        }
+      },
+      "preco": {
+        "n_teste": 579,
+        "arms": {
+          "Ingênua diária (fechamento de ontem)": {
+            "mae": 0.384,
+            "rmse": 0.5384,
+            "r2os_vs_ingenua_diaria": 0.0,
+            "r2os_vs_ancorada": 93.32
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 1.4181,
+            "rmse": 2.0836,
+            "r2os_vs_ingenua_diaria": -1397.59,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (preço)": {
+            "mae": 3.9094,
+            "rmse": 5.2415,
+            "r2os_vs_ingenua_diaria": -9376.49,
+            "r2os_vs_ancorada": -532.78
+          },
+          "Prophet (preço+CVM)": {
+            "mae": 3.9175,
+            "rmse": 5.2445,
+            "r2os_vs_ingenua_diaria": -9387.31,
+            "r2os_vs_ancorada": -533.51
+          }
+        }
+      }
+    },
+    "SBSP3": {
+      "garch": {
+        "omega": 0.1317,
+        "alpha": 0.0475,
+        "beta": 0.9214
+      },
+      "direcao": {
+        "n_teste": 579,
+        "majoritaria": 0.5078,
+        "melhor_classico": "SVM (preço)",
+        "arms": {
+          "SVM (preço)": {
+            "acuracia": 0.4957,
+            "auc": 0.4967,
+            "pct_previu_alta": 70.1,
+            "p_vs_majoritaria": 0.5610067406020335
+          },
+          "XGBoost (preço)": {
+            "acuracia": 0.456,
+            "auc": 0.4635,
+            "pct_previu_alta": 59.9,
+            "p_vs_majoritaria": 0.01412657992025184
+          },
+          "SVM (preço+CVM)": {
+            "acuracia": 0.506,
+            "auc": 0.4997,
+            "pct_previu_alta": 71.5,
+            "p_vs_majoritaria": 0.9338150947068156
+          },
+          "XGBoost (preço+CVM)": {
+            "acuracia": 0.4525,
+            "auc": 0.4566,
+            "pct_previu_alta": 60.3,
+            "p_vs_majoritaria": 0.008774349529706505
+          },
+          "Prophet (preço)": {
+            "acuracia": 0.5026,
+            "auc": null,
+            "pct_previu_alta": 44.9,
+            "p_vs_majoritaria": 0.8032529856590791
+          },
+          "Prophet (preço+CVM)": {
+            "acuracia": 0.5026,
+            "auc": null,
+            "pct_previu_alta": 44.9,
+            "p_vs_majoritaria": 0.8032529856590791
+          }
+        },
+        "mcnemar": {
+          "Prophet(preço) supera o melhor entre SVM/XGB(preço)?": {
+            "ganhou_novo": 143,
+            "ganhou_antigo": 139,
+            "p": 0.85825491538995
+          },
+          "CVM ajuda o Prophet na direção?": {
+            "ganhou_novo": 1,
+            "ganhou_antigo": 1,
+            "p": 1.0
+          }
+        }
+      },
+      "volatilidade": {
+        "n_teste": 579,
+        "arms": {
+          "HAR (GARCH, referência)": {
+            "mae": 0.0401,
+            "rmse": 0.0717,
+            "r2os_vs_HAR": 0.0,
+            "r2os_vs_ancorada": 87.7
+          },
+          "HAR + CVM": {
+            "mae": 0.0403,
+            "rmse": 0.072,
+            "r2os_vs_HAR": -0.88,
+            "r2os_vs_ancorada": 87.6
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.136,
+            "rmse": 0.2045,
+            "r2os_vs_HAR": -713.32,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (volatilidade)": {
+            "mae": 0.2456,
+            "rmse": 0.3269,
+            "r2os_vs_HAR": -1978.34,
+            "r2os_vs_ancorada": -155.54
+          },
+          "Prophet (volatilidade+CVM)": {
+            "mae": 0.2445,
+            "rmse": 0.3265,
+            "r2os_vs_HAR": -1973.99,
+            "r2os_vs_ancorada": -155.0
+          }
+        }
+      },
+      "preco": {
+        "n_teste": 579,
+        "arms": {
+          "Ingênua diária (fechamento de ontem)": {
+            "mae": 0.2893,
+            "rmse": 0.3915,
+            "r2os_vs_ingenua_diaria": 0.0,
+            "r2os_vs_ancorada": 91.99
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.9932,
+            "rmse": 1.3834,
+            "r2os_vs_ingenua_diaria": -1148.82,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (preço)": {
+            "mae": 1.8711,
+            "rmse": 2.4304,
+            "r2os_vs_ingenua_diaria": -3754.34,
+            "r2os_vs_ancorada": -208.64
+          },
+          "Prophet (preço+CVM)": {
+            "mae": 1.869,
+            "rmse": 2.4285,
+            "r2os_vs_ingenua_diaria": -3748.26,
+            "r2os_vs_ancorada": -208.15
+          }
+        }
+      }
+    },
+    "BBDC4": {
+      "garch": {
+        "omega": 0.09615,
+        "alpha": 0.0464,
+        "beta": 0.9285
+      },
+      "direcao": {
+        "n_teste": 579,
+        "majoritaria": 0.5216,
+        "melhor_classico": "XGBoost (preço)",
+        "arms": {
+          "SVM (preço)": {
+            "acuracia": 0.4974,
+            "auc": 0.5055,
+            "pct_previu_alta": 28.5,
+            "p_vs_majoritaria": 0.24449384253008777
+          },
+          "XGBoost (preço)": {
+            "acuracia": 0.5095,
+            "auc": 0.4963,
+            "pct_previu_alta": 48.0,
+            "p_vs_majoritaria": 0.5606724186244296
+          },
+          "SVM (preço+CVM)": {
+            "acuracia": 0.4801,
+            "auc": 0.4982,
+            "pct_previu_alta": 4.3,
+            "p_vs_majoritaria": 0.05047982730308227
+          },
+          "XGBoost (preço+CVM)": {
+            "acuracia": 0.494,
+            "auc": 0.5051,
+            "pct_previu_alta": 47.5,
+            "p_vs_majoritaria": 0.1834672757460664
+          },
+          "Prophet (preço)": {
+            "acuracia": 0.4629,
+            "auc": null,
+            "pct_previu_alta": 39.9,
+            "p_vs_majoritaria": 0.00527492374695949
+          },
+          "Prophet (preço+CVM)": {
+            "acuracia": 0.4594,
+            "auc": null,
+            "pct_previu_alta": 39.6,
+            "p_vs_majoritaria": 0.003109462226554189
+          }
+        },
+        "mcnemar": {
+          "Prophet(preço) supera o melhor entre SVM/XGB(preço)?": {
+            "ganhou_novo": 116,
+            "ganhou_antigo": 143,
+            "p": 0.10600805049742426
+          },
+          "CVM ajuda o Prophet na direção?": {
+            "ganhou_novo": 0,
+            "ganhou_antigo": 2,
+            "p": 0.5
+          }
+        }
+      },
+      "volatilidade": {
+        "n_teste": 579,
+        "arms": {
+          "HAR (GARCH, referência)": {
+            "mae": 0.043,
+            "rmse": 0.0993,
+            "r2os_vs_HAR": 0.0,
+            "r2os_vs_ancorada": 86.29
+          },
+          "HAR + CVM": {
+            "mae": 0.043,
+            "rmse": 0.0993,
+            "r2os_vs_HAR": -0.0,
+            "r2os_vs_ancorada": 86.29
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.1566,
+            "rmse": 0.2683,
+            "r2os_vs_HAR": -629.62,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (volatilidade)": {
+            "mae": 0.2221,
+            "rmse": 0.3258,
+            "r2os_vs_HAR": -975.91,
+            "r2os_vs_ancorada": -47.46
+          },
+          "Prophet (volatilidade+CVM)": {
+            "mae": 0.2219,
+            "rmse": 0.3268,
+            "r2os_vs_HAR": -982.71,
+            "r2os_vs_ancorada": -48.39
+          }
+        }
+      },
+      "preco": {
+        "n_teste": 579,
+        "arms": {
+          "Ingênua diária (fechamento de ontem)": {
+            "mae": 0.1771,
+            "rmse": 0.2486,
+            "r2os_vs_ingenua_diaria": 0.0,
+            "r2os_vs_ancorada": 92.31
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.6276,
+            "rmse": 0.8963,
+            "r2os_vs_ingenua_diaria": -1200.27,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (preço)": {
+            "mae": 1.9771,
+            "rmse": 2.2233,
+            "r2os_vs_ingenua_diaria": -7900.24,
+            "r2os_vs_ancorada": -515.27
+          },
+          "Prophet (preço+CVM)": {
+            "mae": 1.9806,
+            "rmse": 2.227,
+            "r2os_vs_ingenua_diaria": -7926.65,
+            "r2os_vs_ancorada": -517.31
+          }
+        }
+      }
+    },
+    "B3SA3": {
+      "garch": {
+        "omega": 0.08871,
+        "alpha": 0.0417,
+        "beta": 0.9422
+      },
+      "direcao": {
+        "n_teste": 579,
+        "majoritaria": 0.506,
+        "melhor_classico": "XGBoost (preço)",
+        "arms": {
+          "SVM (preço)": {
+            "acuracia": 0.4922,
+            "auc": 0.4622,
+            "pct_previu_alta": 18.5,
+            "p_vs_majoritaria": 0.5064531578744189
+          },
+          "XGBoost (preço)": {
+            "acuracia": 0.5233,
+            "auc": 0.5277,
+            "pct_previu_alta": 42.3,
+            "p_vs_majoritaria": 0.42974521835737367
+          },
+          "SVM (preço+CVM)": {
+            "acuracia": 0.5026,
+            "auc": 0.4769,
+            "pct_previu_alta": 26.1,
+            "p_vs_majoritaria": 0.8680914430838248
+          },
+          "XGBoost (preço+CVM)": {
+            "acuracia": 0.5285,
+            "auc": 0.5208,
+            "pct_previu_alta": 39.0,
+            "p_vs_majoritaria": 0.2987805019659786
+          },
+          "Prophet (preço)": {
+            "acuracia": 0.4888,
+            "auc": null,
+            "pct_previu_alta": 37.8,
+            "p_vs_majoritaria": 0.40626098143585565
+          },
+          "Prophet (preço+CVM)": {
+            "acuracia": 0.4888,
+            "auc": null,
+            "pct_previu_alta": 37.5,
+            "p_vs_majoritaria": 0.40626098143585565
+          }
+        },
+        "mcnemar": {
+          "Prophet(preço) supera o melhor entre SVM/XGB(preço)?": {
+            "ganhou_novo": 117,
+            "ganhou_antigo": 137,
+            "p": 0.23313218968411803
+          },
+          "CVM ajuda o Prophet na direção?": {
+            "ganhou_novo": 1,
+            "ganhou_antigo": 1,
+            "p": 1.0
+          }
+        }
+      },
+      "volatilidade": {
+        "n_teste": 579,
+        "arms": {
+          "HAR (GARCH, referência)": {
+            "mae": 0.0478,
+            "rmse": 0.081,
+            "r2os_vs_HAR": 0.0,
+            "r2os_vs_ancorada": 88.09
+          },
+          "HAR + CVM": {
+            "mae": 0.0487,
+            "rmse": 0.0814,
+            "r2os_vs_HAR": -1.07,
+            "r2os_vs_ancorada": 87.97
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.1501,
+            "rmse": 0.2347,
+            "r2os_vs_HAR": -739.86,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (volatilidade)": {
+            "mae": 0.2656,
+            "rmse": 0.3224,
+            "r2os_vs_HAR": -1484.99,
+            "r2os_vs_ancorada": -88.72
+          },
+          "Prophet (volatilidade+CVM)": {
+            "mae": 0.2661,
+            "rmse": 0.3236,
+            "r2os_vs_HAR": -1497.06,
+            "r2os_vs_ancorada": -90.16
+          }
+        }
+      },
+      "preco": {
+        "n_teste": 579,
+        "arms": {
+          "Ingênua diária (fechamento de ontem)": {
+            "mae": 0.2052,
+            "rmse": 0.2837,
+            "r2os_vs_ingenua_diaria": 0.0,
+            "r2os_vs_ancorada": 90.48
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.7141,
+            "rmse": 0.9192,
+            "r2os_vs_ingenua_diaria": -950.24,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (preço)": {
+            "mae": 1.6583,
+            "rmse": 2.0158,
+            "r2os_vs_ingenua_diaria": -4950.15,
+            "r2os_vs_ancorada": -380.86
+          },
+          "Prophet (preço+CVM)": {
+            "mae": 1.656,
+            "rmse": 2.0138,
+            "r2os_vs_ingenua_diaria": -4940.18,
+            "r2os_vs_ancorada": -379.91
+          }
+        }
+      }
+    },
+    "ITSA4": {
+      "garch": {
+        "omega": 0.04123,
+        "alpha": 0.0504,
+        "beta": 0.9344
+      },
+      "direcao": {
+        "n_teste": 579,
+        "majoritaria": 0.5181,
+        "melhor_classico": "SVM (preço)",
+        "arms": {
+          "SVM (preço)": {
+            "acuracia": 0.5164,
+            "auc": 0.5215,
+            "pct_previu_alta": 33.9,
+            "p_vs_majoritaria": 0.9337773208860425
+          },
+          "XGBoost (preço)": {
+            "acuracia": 0.5043,
+            "auc": 0.5009,
+            "pct_previu_alta": 48.9,
+            "p_vs_majoritaria": 0.506189630018188
+          },
+          "SVM (preço+CVM)": {
+            "acuracia": 0.506,
+            "auc": 0.5413,
+            "pct_previu_alta": 21.8,
+            "p_vs_majoritaria": 0.560784116800981
+          },
+          "XGBoost (preço+CVM)": {
+            "acuracia": 0.5147,
+            "auc": 0.5088,
+            "pct_previu_alta": 44.7,
+            "p_vs_majoritaria": 0.8680097053790448
+          },
+          "Prophet (preço)": {
+            "acuracia": 0.5112,
+            "auc": null,
+            "pct_previu_alta": 39.2,
+            "p_vs_majoritaria": 0.7396041355833229
+          },
+          "Prophet (preço+CVM)": {
+            "acuracia": 0.513,
+            "auc": null,
+            "pct_previu_alta": 39.0,
+            "p_vs_majoritaria": 0.8031428665517124
+          }
+        },
+        "mcnemar": {
+          "Prophet(preço) supera o melhor entre SVM/XGB(preço)?": {
+            "ganhou_novo": 132,
+            "ganhou_antigo": 135,
+            "p": 0.9026137740803215
+          },
+          "CVM ajuda o Prophet na direção?": {
+            "ganhou_novo": 2,
+            "ganhou_antigo": 1,
+            "p": 1.0
+          }
+        }
+      },
+      "volatilidade": {
+        "n_teste": 579,
+        "arms": {
+          "HAR (GARCH, referência)": {
+            "mae": 0.0356,
+            "rmse": 0.0517,
+            "r2os_vs_HAR": 0.0,
+            "r2os_vs_ancorada": 85.56
+          },
+          "HAR + CVM": {
+            "mae": 0.0357,
+            "rmse": 0.0517,
+            "r2os_vs_HAR": 0.12,
+            "r2os_vs_ancorada": 85.58
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.1036,
+            "rmse": 0.1361,
+            "r2os_vs_HAR": -592.49,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (volatilidade)": {
+            "mae": 0.1895,
+            "rmse": 0.2563,
+            "r2os_vs_HAR": -2355.13,
+            "r2os_vs_ancorada": -254.53
+          },
+          "Prophet (volatilidade+CVM)": {
+            "mae": 0.1923,
+            "rmse": 0.26,
+            "r2os_vs_HAR": -2426.34,
+            "r2os_vs_ancorada": -264.82
+          }
+        }
+      },
+      "preco": {
+        "n_teste": 579,
+        "arms": {
+          "Ingênua diária (fechamento de ontem)": {
+            "mae": 0.1099,
+            "rmse": 0.152,
+            "r2os_vs_ingenua_diaria": 0.0,
+            "r2os_vs_ancorada": 92.07
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.3998,
+            "rmse": 0.5395,
+            "r2os_vs_ingenua_diaria": -1160.43,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (preço)": {
+            "mae": 0.834,
+            "rmse": 1.1193,
+            "r2os_vs_ingenua_diaria": -5325.61,
+            "r2os_vs_ancorada": -330.46
+          },
+          "Prophet (preço+CVM)": {
+            "mae": 0.8333,
+            "rmse": 1.1179,
+            "r2os_vs_ingenua_diaria": -5312.17,
+            "r2os_vs_ancorada": -329.39
+          }
+        }
+      }
+    },
+    "BPAC11": {
+      "garch": {
+        "omega": 0.16428,
+        "alpha": 0.0755,
+        "beta": 0.8976
+      },
+      "direcao": {
+        "n_teste": 579,
+        "majoritaria": 0.5268,
+        "melhor_classico": "XGBoost (preço)",
+        "arms": {
+          "SVM (preço)": {
+            "acuracia": 0.487,
+            "auc": 0.4637,
+            "pct_previu_alta": 7.9,
+            "p_vs_majoritaria": 0.06099880556872925
+          },
+          "XGBoost (preço)": {
+            "acuracia": 0.5216,
+            "auc": 0.5158,
+            "pct_previu_alta": 39.4,
+            "p_vs_majoritaria": 0.8029876230617932
+          },
+          "SVM (preço+CVM)": {
+            "acuracia": 0.4991,
+            "auc": 0.4672,
+            "pct_previu_alta": 12.6,
+            "p_vs_majoritaria": 0.1832440064441021
+          },
+          "XGBoost (preço+CVM)": {
+            "acuracia": 0.4957,
+            "auc": 0.5039,
+            "pct_previu_alta": 43.4,
+            "p_vs_majoritaria": 0.13432375887456474
+          },
+          "Prophet (preço)": {
+            "acuracia": 0.4646,
+            "auc": null,
+            "pct_previu_alta": 49.9,
+            "p_vs_majoritaria": 0.003094530563024398
+          },
+          "Prophet (preço+CVM)": {
+            "acuracia": 0.4663,
+            "auc": null,
+            "pct_previu_alta": 50.1,
+            "p_vs_majoritaria": 0.004044622180887569
+          }
+        },
+        "mcnemar": {
+          "Prophet(preço) supera o melhor entre SVM/XGB(preço)?": {
+            "ganhou_novo": 134,
+            "ganhou_antigo": 167,
+            "p": 0.06493880192656871
+          },
+          "CVM ajuda o Prophet na direção?": {
+            "ganhou_novo": 1,
+            "ganhou_antigo": 0,
+            "p": 1.0
+          }
+        }
+      },
+      "volatilidade": {
+        "n_teste": 579,
+        "arms": {
+          "HAR (GARCH, referência)": {
+            "mae": 0.0776,
+            "rmse": 0.1421,
+            "r2os_vs_HAR": 0.0,
+            "r2os_vs_ancorada": 83.01
+          },
+          "HAR + CVM": {
+            "mae": 0.0777,
+            "rmse": 0.1419,
+            "r2os_vs_HAR": 0.31,
+            "r2os_vs_ancorada": 83.06
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.2301,
+            "rmse": 0.3448,
+            "r2os_vs_HAR": -488.52,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (volatilidade)": {
+            "mae": 0.3419,
+            "rmse": 0.4545,
+            "r2os_vs_HAR": -922.51,
+            "r2os_vs_ancorada": -73.74
+          },
+          "Prophet (volatilidade+CVM)": {
+            "mae": 0.3448,
+            "rmse": 0.4548,
+            "r2os_vs_HAR": -923.84,
+            "r2os_vs_ancorada": -73.97
+          }
+        }
+      },
+      "preco": {
+        "n_teste": 579,
+        "arms": {
+          "Ingênua diária (fechamento de ontem)": {
+            "mae": 0.6179,
+            "rmse": 0.8712,
+            "r2os_vs_ingenua_diaria": 0.0,
+            "r2os_vs_ancorada": 91.2
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 2.1186,
+            "rmse": 2.9363,
+            "r2os_vs_ingenua_diaria": -1035.82,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (preço)": {
+            "mae": 6.3602,
+            "rmse": 7.0975,
+            "r2os_vs_ingenua_diaria": -6536.23,
+            "r2os_vs_ancorada": -484.27
+          },
+          "Prophet (preço+CVM)": {
+            "mae": 6.3433,
+            "rmse": 7.0791,
+            "r2os_vs_ingenua_diaria": -6501.87,
+            "r2os_vs_ancorada": -481.24
+          }
+        }
+      }
+    },
+    "BBAS3": {
+      "garch": {
+        "omega": 0.09,
+        "alpha": 0.078,
+        "beta": 0.9035
+      },
+      "direcao": {
+        "n_teste": 579,
+        "majoritaria": 0.5026,
+        "melhor_classico": "SVM (preço)",
+        "arms": {
+          "SVM (preço)": {
+            "acuracia": 0.506,
+            "auc": 0.5056,
+            "pct_previu_alta": 78.2,
+            "p_vs_majoritaria": 0.9007929566866
+          },
+          "XGBoost (preço)": {
+            "acuracia": 0.4767,
+            "auc": 0.4631,
+            "pct_previu_alta": 58.7,
+            "p_vs_majoritaria": 0.21283681709381183
+          },
+          "SVM (preço+CVM)": {
+            "acuracia": 0.513,
+            "auc": 0.5116,
+            "pct_previu_alta": 94.5,
+            "p_vs_majoritaria": 0.6476003758642055
+          },
+          "XGBoost (preço+CVM)": {
+            "acuracia": 0.4784,
+            "auc": 0.4658,
+            "pct_previu_alta": 60.3,
+            "p_vs_majoritaria": 0.24494455524671427
+          },
+          "Prophet (preço)": {
+            "acuracia": 0.5095,
+            "auc": null,
+            "pct_previu_alta": 73.1,
+            "p_vs_majoritaria": 0.7711465056343573
+          },
+          "Prophet (preço+CVM)": {
+            "acuracia": 0.5078,
+            "auc": null,
+            "pct_previu_alta": 73.2,
+            "p_vs_majoritaria": 0.8354108953230099
+          }
+        },
+        "mcnemar": {
+          "Prophet(preço) supera o melhor entre SVM/XGB(preço)?": {
+            "ganhou_novo": 84,
+            "ganhou_antigo": 82,
+            "p": 0.9381653419480136
+          },
+          "CVM ajuda o Prophet na direção?": {
+            "ganhou_novo": 0,
+            "ganhou_antigo": 1,
+            "p": 1.0
+          }
+        }
+      },
+      "volatilidade": {
+        "n_teste": 579,
+        "arms": {
+          "HAR (GARCH, referência)": {
+            "mae": 0.0676,
+            "rmse": 0.1499,
+            "r2os_vs_HAR": 0.0,
+            "r2os_vs_ancorada": 85.85
+          },
+          "HAR + CVM": {
+            "mae": 0.0672,
+            "rmse": 0.1493,
+            "r2os_vs_HAR": 0.78,
+            "r2os_vs_ancorada": 85.96
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.2334,
+            "rmse": 0.3986,
+            "r2os_vs_HAR": -606.84,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (volatilidade)": {
+            "mae": 0.405,
+            "rmse": 0.5295,
+            "r2os_vs_HAR": -1147.52,
+            "r2os_vs_ancorada": -76.49
+          },
+          "Prophet (volatilidade+CVM)": {
+            "mae": 0.4008,
+            "rmse": 0.5229,
+            "r2os_vs_HAR": -1116.32,
+            "r2os_vs_ancorada": -72.08
+          }
+        }
+      },
+      "preco": {
+        "n_teste": 579,
+        "arms": {
+          "Ingênua diária (fechamento de ontem)": {
+            "mae": 0.2673,
+            "rmse": 0.3786,
+            "r2os_vs_ingenua_diaria": 0.0,
+            "r2os_vs_ancorada": 91.35
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.956,
+            "rmse": 1.2874,
+            "r2os_vs_ingenua_diaria": -1056.55,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (preço)": {
+            "mae": 2.1314,
+            "rmse": 2.5943,
+            "r2os_vs_ingenua_diaria": -4596.45,
+            "r2os_vs_ancorada": -306.08
+          },
+          "Prophet (preço+CVM)": {
+            "mae": 2.1248,
+            "rmse": 2.584,
+            "r2os_vs_ingenua_diaria": -4559.37,
+            "r2os_vs_ancorada": -302.87
+          }
+        }
+      }
+    },
+    "ABEV3": {
+      "garch": {
+        "omega": 0.01675,
+        "alpha": 0.0312,
+        "beta": 0.9639
+      },
+      "direcao": {
+        "n_teste": 579,
+        "majoritaria": 0.5009,
+        "melhor_classico": "XGBoost (preço)",
+        "arms": {
+          "SVM (preço)": {
+            "acuracia": 0.5078,
+            "auc": 0.4525,
+            "pct_previu_alta": 3.5,
+            "p_vs_majoritaria": 0.7711491589535415
+          },
+          "XGBoost (preço)": {
+            "acuracia": 0.532,
+            "auc": 0.5462,
+            "pct_previu_alta": 35.9,
+            "p_vs_majoritaria": 0.1457285169171878
+          },
+          "SVM (preço+CVM)": {
+            "acuracia": 0.5026,
+            "auc": 0.4788,
+            "pct_previu_alta": 3.3,
+            "p_vs_majoritaria": 0.9668553141172593
+          },
+          "XGBoost (preço+CVM)": {
+            "acuracia": 0.525,
+            "auc": 0.5431,
+            "pct_previu_alta": 33.5,
+            "p_vs_majoritaria": 0.2618093382230402
+          },
+          "Prophet (preço)": {
+            "acuracia": 0.5009,
+            "auc": null,
+            "pct_previu_alta": 32.5,
+            "p_vs_majoritaria": 1.0
+          },
+          "Prophet (preço+CVM)": {
+            "acuracia": 0.5009,
+            "auc": null,
+            "pct_previu_alta": 32.5,
+            "p_vs_majoritaria": 1.0
+          }
+        },
+        "mcnemar": {
+          "Prophet(preço) supera o melhor entre SVM/XGB(preço)?": {
+            "ganhou_novo": 120,
+            "ganhou_antigo": 138,
+            "p": 0.28986710308621605
+          },
+          "CVM ajuda o Prophet na direção?": {
+            "ganhou_novo": 0,
+            "ganhou_antigo": 0,
+            "p": 1.0
+          }
+        }
+      },
+      "volatilidade": {
+        "n_teste": 579,
+        "arms": {
+          "HAR (GARCH, referência)": {
+            "mae": 0.0254,
+            "rmse": 0.071,
+            "r2os_vs_HAR": 0.0,
+            "r2os_vs_ancorada": 92.74
+          },
+          "HAR + CVM": {
+            "mae": 0.0254,
+            "rmse": 0.071,
+            "r2os_vs_HAR": -0.16,
+            "r2os_vs_ancorada": 92.73
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.1427,
+            "rmse": 0.2633,
+            "r2os_vs_HAR": -1277.14,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (volatilidade)": {
+            "mae": 0.2218,
+            "rmse": 0.3211,
+            "r2os_vs_HAR": -1947.59,
+            "r2os_vs_ancorada": -48.68
+          },
+          "Prophet (volatilidade+CVM)": {
+            "mae": 0.2212,
+            "rmse": 0.32,
+            "r2os_vs_HAR": -1934.65,
+            "r2os_vs_ancorada": -47.74
+          }
+        }
+      },
+      "preco": {
+        "n_teste": 579,
+        "arms": {
+          "Ingênua diária (fechamento de ontem)": {
+            "mae": 0.1302,
+            "rmse": 0.1947,
+            "r2os_vs_ingenua_diaria": 0.0,
+            "r2os_vs_ancorada": 93.93
+          },
+          "Ingênua ancorada (mesma info do Prophet)": {
+            "mae": 0.5464,
+            "rmse": 0.7903,
+            "r2os_vs_ingenua_diaria": -1547.91,
+            "r2os_vs_ancorada": 0.0
+          },
+          "Prophet (preço)": {
+            "mae": 1.0764,
+            "rmse": 1.3214,
+            "r2os_vs_ingenua_diaria": -4507.24,
+            "r2os_vs_ancorada": -179.58
+          },
+          "Prophet (preço+CVM)": {
+            "mae": 1.0765,
+            "rmse": 1.3224,
+            "r2os_vs_ingenua_diaria": -4514.13,
+            "r2os_vs_ancorada": -180.0
+          }
+        }
+      }
+    }
+  }
+}
