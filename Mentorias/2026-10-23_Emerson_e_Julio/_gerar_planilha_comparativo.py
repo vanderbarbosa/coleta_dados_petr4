@@ -19,7 +19,32 @@ FONTE, AZUL, AZUL_IN = "Arial", "1F3864", "0000FF"
 CINZA, AMARELO, VERDE, VERMELHO = "F2F2F2", "FFF2CC", "E2EFDA", "FCE4E4"
 BORDA = Border(bottom=Side(style="thin", color="BFBFBF"))
 
+import numpy as np
+import pandas as pd
+
 E = json.loads((RAIZ / "CVM" / "dados" / "prophet_vs_garch_svm_xgboost.json").read_text(encoding="utf-8"))["papeis"]
+
+
+def palpite_fixo_decidido_no_passado() -> dict:
+    """O palpite fixo HONESTO: escolhe o lado (alta ou baixa) olhando só o
+    TREINO — o que se saberia de verdade na época — e aplica daí em diante.
+    Diferente do palpite fixo 'com o gabarito na mão', que usa o lado mais
+    frequente do próprio teste, isto é, já sabendo como a história terminou."""
+    px = pd.read_csv(RAIZ / "CVM" / "dados" / "ohlcv_b3.csv", parse_dates=["Data"])
+    out = {}
+    for tk in E:
+        p = px[px["Ticker"] == tk].sort_values("Data").reset_index(drop=True)
+        p = p[p["Retorno"].notna()].reset_index(drop=True)
+        alvo = (p["Retorno"] > 0).astype(int).values[1:]
+        n = len(alvo)
+        atr, ate = alvo[:int(n * 0.60)], alvo[int(n * 0.75):]
+        lado = 1 if atr.mean() > 0.5 else 0
+        out[tk] = {"lado": "alta" if lado else "baixa",
+                   "acerto": float((ate == lado).mean())}
+    return out
+
+
+HONESTO = palpite_fixo_decidido_no_passado()
 TOP = json.loads((RAIZ / "CVM" / "dados" / "comparativo_top10_acoes.json").read_text(encoding="utf-8"))["papeis"]
 try:
     SIM = json.loads((RAIZ / "CVM" / "dados" / "simulacao_reais_por_investidor.json").read_text(encoding="utf-8"))
@@ -122,46 +147,73 @@ ws.row_dimensions[r].height = 48
 ws1 = wb.create_sheet("Direção")
 txt(ws1, 1, 1, "Acerto na direção do pregão seguinte — 579 pregões de teste por papel",
     bold=True, size=12, cor=AZUL)
-txt(ws1, 2, 1, "O adversário é o PALPITE FIXO: quem não lê nada e sempre chuta o lado mais "
-               "frequente. Verde = superou o palpite fixo. Nenhum caso teve significância estatística.",
+txt(ws1, 2, 1, "O adversário é o PALPITE FIXO: quem não lê nada, não calcula nada, e simplesmente "
+               "diz sempre o mesmo lado. Há duas versões dele, explicadas abaixo da tabela — e a "
+               "conclusão é a mesma nas duas. Verde = superou o palpite fixo com o gabarito na mão.",
     size=9, cor="595959", wrap=True)
-ws1.merge_cells("A2:H2"); ws1.row_dimensions[2].height = 28
-cab(ws1, ["Papel", "Palpite fixo\n(o adversário)", "GARCH+SVM\nsó preço", "GARCH+SVM\n+ FinBERT",
-          "GARCH+XGB\nsó preço", "GARCH+XGB\n+ FinBERT", "Prophet\nsó preço", "Prophet\n+ FinBERT"],
-    [9, 14, 13, 13, 13, 13, 12, 12], linha=4)
+ws1.merge_cells("A2:J2"); ws1.row_dimensions[2].height = 28
+cab(ws1, ["Papel", "Palpite fixo\nCOM GABARITO\n(o que usei)", "Palpite fixo\nDECIDIDO NO\nPASSADO",
+          "GARCH+SVM\nsó preço", "GARCH+SVM\n+ FinBERT", "GARCH+XGB\nsó preço", "GARCH+XGB\n+ FinBERT",
+          "Prophet\nsó preço", "Prophet\n+ FinBERT"],
+    [9, 15, 15, 13, 13, 13, 13, 12, 12], linha=4)
 ARMS = ["SVM (preço)", "SVM (preço+CVM)", "XGBoost (preço)", "XGBoost (preço+CVM)",
         "Prophet (preço)", "Prophet (preço+CVM)"]
 r, r0 = 5, 5
 for tk in TICKERS:
     p = E[tk]["direcao"]; maj = p["majoritaria"]
     txt(ws1, r, 1, tk, bold=True)
-    val(ws1, r, 2, maj, "0.0%", cor="000000")
+    val(ws1, r, 2, maj, "0.0%", cor="000000", fundo=AMARELO)
+    val(ws1, r, 3, HONESTO[tk]["acerto"], "0.0%", cor="000000")
     for i, arm in enumerate(ARMS):
         a = p["arms"][arm]
-        val(ws1, r, 3 + i, a["acuracia"], "0.0%",
+        val(ws1, r, 4 + i, a["acuracia"], "0.0%",
             fundo=VERDE if a["acuracia"] > maj else None)
-    for c in range(1, 9):
+    for c in range(1, 10):
         ws1.cell(row=r, column=c).border = BORDA
-    zebra(ws1, r, r0, 8)
+    zebra(ws1, r, r0, 9)
     r += 1
 r += 1
-txt(ws1, r, 1, "Supera o palpite fixo em:", bold=True)
+txt(ws1, r, 1, "Supera o palpite COM GABARITO:", bold=True)
 for i, arm in enumerate(ARMS):
     n = sum(E[tk]["direcao"]["arms"][arm]["acuracia"] > E[tk]["direcao"]["majoritaria"] for tk in TICKERS)
-    txt(ws1, r, 3 + i, f"{n} de 10", bold=True, align="center")
+    txt(ws1, r, 4 + i, f"{n} de 10", bold=True, align="center")
 r += 1
-txt(ws1, r, 1, "Com significância (p<0,05):", bold=True)
+txt(ws1, r, 1, "Supera o DECIDIDO NO PASSADO:", bold=True)
 for i, arm in enumerate(ARMS):
-    n = sum(E[tk]["direcao"]["arms"][arm]["p_vs_majoritaria"] < 0.05 and
-            E[tk]["direcao"]["arms"][arm]["acuracia"] > E[tk]["direcao"]["majoritaria"] for tk in TICKERS)
-    txt(ws1, r, 3 + i, f"{n} de 10", bold=True, align="center", cor="C00000")
+    n = sum(E[tk]["direcao"]["arms"][arm]["acuracia"] > HONESTO[tk]["acerto"] for tk in TICKERS)
+    txt(ws1, r, 4 + i, f"{n} de 10", bold=True, align="center")
+r += 1
+txt(ws1, r, 1, "…desses, com significância:", bold=True)
+from scipy.stats import binomtest
+for i, arm in enumerate(ARMS):
+    n = 0
+    for tk in TICKERS:
+        a = E[tk]["direcao"]["arms"][arm]; nt = E[tk]["direcao"]["n_teste"]
+        base = HONESTO[tk]["acerto"]
+        if a["acuracia"] > base and binomtest(round(a["acuracia"] * nt), nt, base).pvalue < 0.05:
+            n += 1
+    txt(ws1, r, 4 + i, f"{n} de 10", bold=True, align="center", cor="C00000")
 r += 2
-ws1.merge_cells(start_row=r, start_column=1, end_row=r, end_column=8)
-txt(ws1, r, 1, "Como ler: a linha de baixo é a que decide. ZERO modelos, em ZERO papéis, superaram "
-               "o palpite fixo de forma estatisticamente confiável. Os poucos casos em verde estão "
-               "dentro da margem de erro — com 579 pregões, qualquer diferença menor que ~4 pontos "
-               "percentuais é indistinguível de sorte.", wrap=True, size=9, cor="595959")
-ws1.row_dimensions[r].height = 48
+for titulo, corpo in [
+    ("Palpite fixo COM O GABARITO NA MÃO (a coluna amarela — foi o que usei)",
+     "Olha o próprio período de teste, vê qual lado foi mais frequente entre 2024 e 2026, e supõe "
+     "que o investidor já sabia disso lá atrás. É o adversário MAIS DIFÍCIL possível, porque "
+     "equivale a conhecer o futuro. Usei este de propósito: se o modelo vence ele, vence qualquer um."),
+    ("Palpite fixo DECIDIDO NO PASSADO (a coluna seguinte — o adversário realista)",
+     "Escolhe o lado olhando só o treino (até 2022) — o que se saberia de verdade na época — e "
+     "aplica daí em diante, sem mudar. Em 5 dos 10 papéis o treino apontava BAIXA e o teste veio "
+     "ALTA, então esse palpite errou o lado e ficou abaixo de 50%. Na média, é 2,1 pontos mais "
+     "fácil de vencer que o com gabarito."),
+    ("E a conclusão muda? Não.",
+     "Contra o adversário mais fácil, os modelos passam em 6 ou 7 dos 10 papéis — mas só UM caso "
+     "em 60 alcança significância estatística. Com 60 testes, o acaso sozinho produziria uns 3. "
+     "Ou seja: continua sendo ruído, e a conclusão vale nas duas réguas."),
+]:
+    txt(ws1, r, 1, titulo, bold=True, size=10, cor=AZUL)
+    ws1.merge_cells(start_row=r, start_column=1, end_row=r, end_column=9); r += 1
+    txt(ws1, r, 1, corpo, wrap=True, size=9, cor="595959")
+    ws1.merge_cells(start_row=r, start_column=1, end_row=r, end_column=9)
+    ws1.row_dimensions[r].height = 42; r += 2
 
 # ═══ ABA 3 — VOLATILIDADE ═══════════════════════════════════════════════════
 ws2 = wb.create_sheet("Volatilidade")
@@ -246,41 +298,72 @@ if SIM:
                    f"Sobre o valor médio investido por investidor de cada papel.",
         size=9, cor="595959", wrap=True)
     ws4.merge_cells("A2:H2"); ws4.row_dimensions[2].height = 28
-    cab(ws4, ["Papel", "Valor investido\n(médio por investidor)", "Comprar e segurar\n(%)",
-              "Comprar e segurar\n(R$)", "FinBERT+GARCH\n(%)", "FinBERT+GARCH\n(R$)",
-              "FinBERT+Prophet\n(%)", "FinBERT+Prophet\n(R$)"],
-        [9, 18, 14, 15, 14, 15, 14, 15], linha=4)
+    COLS = [("Comprar e segurar\n(sem modelo)", None),
+            ("GARCH+SVM\nsó preço", "SVM (preço)"),
+            ("GARCH+SVM\n+ FinBERT", "SVM (preço+CVM)"),
+            ("GARCH+XGB\nsó preço", "XGBoost (preço)"),
+            ("GARCH+XGB\n+ FinBERT", "XGBoost (preço+CVM)"),
+            ("Prophet\nsó preço", "Prophet (preço)"),
+            ("Prophet\n+ FinBERT", "Prophet (preço+CVM)")]
+    cab(ws4, ["Papel", "Valor investido\n(médio)"] + [c[0] for c in COLS],
+        [9, 15] + [15] * len(COLS), linha=4)
     r, r0 = 5, 5
     for tk in TICKERS:
         s = SIM["papeis"][tk]
-        cla = max(["SVM (preço+CVM)", "XGBoost (preço+CVM)"],
-                  key=lambda k: s["modelos"][k]["resultado_reais"])
-        pro = s["modelos"]["Prophet (preço+CVM)"]
         txt(ws4, r, 1, tk, bold=True)
         val(ws4, r, 2, s["valor_investido_medio"], '"R$" #,##0', cor="000000")
-        val(ws4, r, 3, s["buy_and_hold"]["retorno_pct"] / 100, "+0.0%;-0.0%", fundo=AMARELO)
-        val(ws4, r, 4, s["buy_and_hold"]["resultado_reais"], '"R$" #,##0;[Red]-"R$" #,##0', fundo=AMARELO)
-        val(ws4, r, 5, s["modelos"][cla]["retorno_pct"] / 100, "+0.0%;-0.0%")
-        val(ws4, r, 6, s["modelos"][cla]["resultado_reais"], '"R$" #,##0;[Red]-"R$" #,##0')
-        val(ws4, r, 7, pro["retorno_pct"] / 100, "+0.0%;-0.0%")
-        val(ws4, r, 8, pro["resultado_reais"], '"R$" #,##0;[Red]-"R$" #,##0')
-        for c in range(1, 9):
+        for i, (_, chave) in enumerate(COLS):
+            m = s["buy_and_hold"] if chave is None else s["modelos"][chave]
+            cel = ws4.cell(row=r, column=3 + i,
+                           value=f'{m["retorno_pct"]:+.1f}%  (R$ {m["resultado_reais"]:+,.0f})'
+                                 .replace(",", "."))
+            cel.font = Font(name=FONTE, size=9,
+                            color="C00000" if m["resultado_reais"] < 0 else "000000")
+            cel.alignment = Alignment(horizontal="right")
+            if chave is None:
+                cel.fill = PatternFill("solid", fgColor=AMARELO)
+        for c in range(1, 3 + len(COLS)):
             ws4.cell(row=r, column=c).border = BORDA
-        zebra(ws4, r, r0, 8)
+        zebra(ws4, r, r0, 2 + len(COLS))
         r += 1
-    n_bh = sum(SIM["papeis"][tk]["buy_and_hold"]["resultado_reais"]
-               > max(SIM["papeis"][tk]["modelos"][k]["resultado_reais"]
-                     for k in ["SVM (preço+CVM)", "XGBoost (preço+CVM)", "Prophet (preço+CVM)"])
-               for tk in TICKERS)
+    # totais
     r += 1
-    ws4.merge_cells(start_row=r, start_column=1, end_row=r, end_column=8)
-    txt(ws4, r, 1,
-        f"Como ler: a coluna amarela é o que o investidor faria SEM modelo algum — comprar e "
-        f"segurar. Ela venceu os dois modelos em {n_bh} dos 10 papéis. O motivo é simples: os "
-        f"modelos saem do mercado nos dias em que preveem queda, e acabam perdendo as altas. "
-        f"RESSALVA: não inclui corretagem, imposto de renda nem spread; e, com o acerto perto de "
-        f"cara-ou-coroa, o resultado em reais é em boa parte sorte.", wrap=True, size=9, cor="595959")
-    ws4.row_dimensions[r].height = 56
+    txt(ws4, r, 1, "TOTAL (10 papéis)", bold=True)
+    for i, (_, chave) in enumerate(COLS):
+        tot = sum((SIM["papeis"][tk]["buy_and_hold"] if chave is None
+                   else SIM["papeis"][tk]["modelos"][chave])["resultado_reais"] for tk in TICKERS)
+        cel = ws4.cell(row=r, column=3 + i, value=f'R$ {tot:+,.0f}'.replace(",", "."))
+        cel.font = Font(name=FONTE, size=10, bold=True, color=AZUL)
+        cel.alignment = Alignment(horizontal="right")
+        if chave is None:
+            cel.fill = PatternFill("solid", fgColor=AMARELO)
+    n_bh = sum(SIM["papeis"][tk]["buy_and_hold"]["resultado_reais"]
+               > max(SIM["papeis"][tk]["modelos"][k]["resultado_reais"] for _, k in COLS if k)
+               for tk in TICKERS)
+    r += 2
+    for titulo, corpo in [
+        ("Só preço histórico × com o FinBERT — a comparação que os senhores pediram",
+         "Cada família aparece duas vezes: usando SÓ o histórico de preço, e acrescentando o "
+         "sentimento do FinBERT. Comparando as duas colunas de cada par, o sentimento melhorou o "
+         "resultado em 5, 6 e 6 dos 10 papéis (SVM, XGBoost e Prophet) — de novo, o padrão de "
+         "cara-ou-coroa. O efeito médio fica entre −1,2 e +1,0 ponto percentual."),
+        ("E quem ganha de todos",
+         f"A coluna amarela: comprar e segurar, sem modelo algum, sem custo e sem trabalho. "
+         f"Venceu todos os seis modelos em {n_bh} dos 10 papéis, e no total soma mais que "
+         f"qualquer um deles. Os modelos saem do mercado nos dias em que preveem queda e, num "
+         f"período de bolsa em alta, perdem o que deixaram passar."),
+        ("Ressalva obrigatória",
+         "Esta conta não inclui corretagem, emolumentos, imposto de renda nem a diferença entre "
+         "preço de compra e de venda — e os modelos entram e saem do mercado dezenas de vezes, o "
+         "que na prática só pioraria o resultado deles. E, com o acerto direcional perto de "
+         "cara-ou-coroa, o resultado em reais é em boa parte SORTE, não habilidade. Serve para dar "
+         "ordem de grandeza; não é recomendação de investimento."),
+    ]:
+        txt(ws4, r, 1, titulo, bold=True, size=10, cor=AZUL)
+        ws4.merge_cells(start_row=r, start_column=1, end_row=r, end_column=2 + len(COLS)); r += 1
+        txt(ws4, r, 1, corpo, wrap=True, size=9, cor="595959")
+        ws4.merge_cells(start_row=r, start_column=1, end_row=r, end_column=2 + len(COLS))
+        ws4.row_dimensions[r].height = 42; r += 2
 else:
     txt(ws4, 3, 1, "Cálculo ainda em execução quando esta planilha foi gerada.", cor="C00000")
 

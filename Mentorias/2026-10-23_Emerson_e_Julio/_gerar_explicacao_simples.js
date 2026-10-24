@@ -97,8 +97,24 @@ K.push(par("Os dois times jogaram **o mesmo campeonato**: as 10 maiores ações 
 
 K.push(h1("Antes do resultado: contra quem eles jogam"));
 K.push(par("Este é o ponto que mais confunde, e sem ele o resultado não faz sentido."));
-K.push(caixa("**O adversário não é o acaso — é o palpite fixo.** Se uma ação sobe em 53 de cada 100 pregões, então quem simplesmente disser \"sobe\" todo santo dia acerta 53%. Sem ler nada, sem modelo nenhum, sem trabalho. Para o modelo ter valor, ele precisa acertar **mais que isso**."));
+K.push(caixa("**O adversário não é o acaso — é o palpite fixo.** Se uma ação sobe em 53 de cada 100 pregões, então quem simplesmente disser \"sobe\" todo santo dia acerta 53%. Sem ler nada, sem calcular nada, sem trabalho. Para o modelo ter valor, ele precisa acertar **mais que isso**."));
 K.push(par("É por isso que ver \"o modelo acertou 52%\" não quer dizer nada sozinho. Se o palpite fixo acerta 53%, o modelo de 52% **perdeu** — mesmo parecendo que acertou metade."));
+K.push(par("**Atenção para não confundir:** o palpite fixo **não** é \"o modelo que usa só o preço\". São coisas diferentes, e as duas aparecem nas tabelas:"));
+K.push(marc("**Palpite fixo** — não é modelo nenhum. Não olha preço, não olha nada. Só repete sempre o mesmo lado."));
+K.push(marc("**\"Só preço\"** — é um modelo de verdade: o SVM ou o XGBoost olhando o retorno de ontem e a agitação de ontem medida pelo GARCH. Ele calcula; o palpite fixo não."));
+
+K.push(h2("E há duas versões do palpite fixo — por isso dois números"));
+K.push(par("Esta distinção apareceu numa pergunta sua, e é justa — vale os senhores saberem dela:"));
+K.push(tab(["Versão", "Como escolhe o lado", "É justo?"],
+  [["Com o gabarito na mão\n(foi a que usei)",
+    "Olha o próprio período de teste, vê que lado foi mais frequente entre 2024 e 2026, e supõe que o investidor já sabia disso lá atrás.",
+    "É o adversário MAIS DIFÍCIL — equivale a conhecer o futuro. Usei de propósito."],
+   ["Decidido no passado\n(o realista)",
+    "Escolhe o lado olhando só até 2022 — o que se saberia de verdade — e aplica daí em diante, sem mudar.",
+    "É o adversário realista. Na média, 2,1 pontos mais fácil de vencer."]],
+  [2100, 4500, 3038]));
+K.push(par("Em 5 dos 10 papéis, o passado apontava **baixa** e o teste veio **alta** — quem seguisse o palpite realista teria apostado no lado errado e ficado abaixo de 50%."));
+K.push(caixa("**E a conclusão muda com o adversário mais fácil? Não.** Contra ele, os modelos passam em 6 ou 7 dos 10 papéis — mas só **um caso em sessenta** alcança significância estatística. Com sessenta testes, o acaso sozinho já produziria uns três. Ou seja: continua sendo ruído, e a resposta vale nas duas réguas."));
 
 K.push(h1("Resultado 1 — o lado (sobe ou desce)"));
 const tabDir = TICKERS.map((t) => {
@@ -158,6 +174,27 @@ if (SIM) {
   K.push(par("Para cada ação, tomamos o **valor médio que cada investidor tem investido nela** — calculado do número de acionistas e das ações em circulação, que a própria empresa declara à CVM — e aplicamos as decisões de cada time ao longo dos 579 pregões."));
   K.push(tab(["Ação", "Investido (médio)", "Comprar e segurar", "Time A", "Time B"], linhas, [1100, 1700, 2350, 2250, 2238]));
   K.push(nota("A regra dos times: comprado quando o modelo prevê alta, fora do mercado quando prevê baixa."));
+
+  // ── só preço histórico × com FinBERT, em reais ────────────────────────────
+  K.push(h2("E se usarmos SÓ o histórico de preço, sem o FinBERT?"));
+  K.push(par("Esta é a comparação direta que faltava. Cada família aparece duas vezes: com o FinBERT e sem ele, somando os 10 papéis."));
+  const FAM = [["Comprar e segurar (sem modelo nenhum)", null, null],
+               ["GARCH + SVM", "SVM (preço)", "SVM (preço+CVM)"],
+               ["GARCH + XGBoost", "XGBoost (preço)", "XGBoost (preço+CVM)"],
+               ["Prophet", "Prophet (preço)", "Prophet (preço+CVM)"]];
+  const somaR = (k) => TICKERS.reduce((s, t) => s + (k === null ? SIM.papeis[t].buy_and_hold.resultado_reais
+                                                                : SIM.papeis[t].modelos[k].resultado_reais), 0);
+  const fmtR = (x) => (x < 0 ? "−" : "+") + "R$ " + Math.abs(Math.round(x)).toLocaleString("pt-BR");
+  const linhasFam = FAM.map(([nome, sem, com]) => {
+    if (sem === null) return [nome, fmtR(somaR(null)), "—", "—"];
+    const melhorou = TICKERS.filter((t) => SIM.papeis[t].modelos[com].resultado_reais
+                                         > SIM.papeis[t].modelos[sem].resultado_reais).length;
+    return [nome, fmtR(somaR(sem)), fmtR(somaR(com)), `${melhorou} de 10`];
+  });
+  K.push(tab(["", "Só preço histórico", "Com o FinBERT", "O FinBERT melhorou em"],
+    linhasFam, [3100, 2300, 2200, 2038], { destaque: [0] }));
+  K.push(nota("Soma do resultado nos 10 papéis, sobre o valor médio investido por investidor de cada um."));
+  K.push(par("**Acrescentar o FinBERT melhorou em 5 e 6 de 10 papéis** — pela terceira vez, o mesmo padrão de moeda. E **nenhuma das seis combinações chega perto de comprar e segurar**, que não usa modelo, não usa preço, não usa texto, e não dá trabalho nenhum."));
   K.push(caixa(`**Comprar e segurar — não fazer nada — venceu os dois times em ${nBH} das 10 ações.** O motivo é simples: os modelos saem do mercado nos dias em que preveem queda, e com isso perdem as altas. Num período em que a bolsa subiu, ficar de fora custa caro.`));
   K.push(par("**E a ressalva, que precisa ser dita junto:** esta conta não inclui corretagem, imposto de renda nem a diferença entre preço de compra e venda. E, como o acerto dos modelos está perto de cara-ou-coroa, o resultado em reais é em boa parte **sorte**, não habilidade. O número serve para dar ordem de grandeza — não é recomendação de investimento."));
 } else {
