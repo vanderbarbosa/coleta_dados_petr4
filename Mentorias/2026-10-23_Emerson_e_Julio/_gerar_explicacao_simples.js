@@ -89,6 +89,27 @@ K.push(tab(["Programa", "O que ele faz", "Uma comparação do dia a dia"],
   [1700, 4800, 3138]));
 K.push(nota("O FinBERT é o único que lê texto. Os outros três só trabalham com números — é por isso que o Prophet não poderia \"classificar notícias\": ele não lê nada."));
 
+K.push(h2("Em detalhe: o que cada um recebe e o que devolve"));
+K.push(tab(["Programa", "O que ele RECEBE", "O que ele DEVOLVE", "Papel na nossa pesquisa"],
+  [["FinBERT", "o texto do comunicado da CVM", "um número de −1 a +1: quão positivo ou negativo é o tom",
+    "ingrediente — vira mais um número na mesa"],
+   ["GARCH", "o histórico de retornos do papel", "um número: o quanto o preço deve sacudir amanhã",
+    "ingrediente — NÃO diz se sobe ou desce, só o tamanho do tranco"],
+   ["SVM", "os números da véspera (retorno e agitação)", "uma decisão: SOBE ou DESCE",
+    "decisor — é ele quem aposta"],
+   ["XGBoost", "os mesmos números da véspera", "uma decisão: SOBE ou DESCE",
+    "decisor — aposta igual ao SVM, por outro caminho"],
+   ["Prophet", "a série inteira de preços, com as datas", "um valor previsto para o preço de amanhã",
+    "faz tudo sozinho — não precisa dos outros"]],
+  [1300, 2900, 2900, 2538]));
+
+K.push(h2("\"GARCH + SVM\" não são dois concorrentes — são duas peças encaixadas"));
+K.push(par("Esta é a confusão mais comum, e vale desfazer. **O GARCH não compete com o SVM. Ele alimenta o SVM.**"));
+K.push(caixa("Todo dia, o SVM recebe exatamente **dois números**: o retorno de ontem, e a agitação de ontem — e **essa segunda é o GARCH que calcula**. O SVM pega esses dois números e responde \"sobe\" ou \"desce\". Trocar SVM por XGBoost troca só quem decide; o GARCH continua sendo o mesmo ingrediente nos dois."));
+K.push(par("Por isso não existe \"GARCH sozinho\" prevendo direção nas tabelas — ele não faz isso. O GARCH sozinho aparece **só na previsão de volatilidade**, que é o que ele sabe fazer."));
+K.push(par("**A diferença entre SVM e XGBoost** está no jeito de decidir. O SVM traça uma fronteira separando os dias que subiram dos que caíram, e vê de que lado o dia de hoje cai. O XGBoost monta centenas de regrinhas simples (\"se o retorno de ontem foi acima de tanto, então…\"), cada uma corrigindo o erro da anterior, e faz todas votarem. Caminhos diferentes, mesma pergunta e mesma resposta."));
+K.push(par("**E o Prophet é de outra natureza.** Ele não recebe \"os números da véspera\" — ele recebe a série de preços inteira, separa o que é tendência do que é padrão de calendário, e prolonga. A direção, no caso dele, sai de comparar o preço que ele previu com o preço de ontem."));
+
 K.push(h1("O que foi comparado"));
 K.push(par("Dois times, com o mesmo leitor dos dois lados:"));
 K.push(marc("**Time A — o que a pesquisa já usava:** FinBERT lê os comunicados, o GARCH mede a agitação, e o SVM/XGBoost apostam."));
@@ -178,23 +199,26 @@ if (SIM) {
   // ── só preço histórico × com FinBERT, em reais ────────────────────────────
   K.push(h2("E se usarmos SÓ o histórico de preço, sem o FinBERT?"));
   K.push(par("Esta é a comparação direta que faltava. Cada família aparece duas vezes: com o FinBERT e sem ele, somando os 10 papéis."));
-  const FAM = [["Comprar e segurar (sem modelo nenhum)", null, null],
-               ["GARCH + SVM", "SVM (preço)", "SVM (preço+CVM)"],
+  const FAM = [["GARCH + SVM", "SVM (preço)", "SVM (preço+CVM)"],
                ["GARCH + XGBoost", "XGBoost (preço)", "XGBoost (preço+CVM)"],
                ["Prophet", "Prophet (preço)", "Prophet (preço+CVM)"]];
   const somaR = (k) => TICKERS.reduce((s, t) => s + (k === null ? SIM.papeis[t].buy_and_hold.resultado_reais
                                                                 : SIM.papeis[t].modelos[k].resultado_reais), 0);
   const fmtR = (x) => (x < 0 ? "−" : "+") + "R$ " + Math.abs(Math.round(x)).toLocaleString("pt-BR");
   const linhasFam = FAM.map(([nome, sem, com]) => {
-    if (sem === null) return [nome, fmtR(somaR(null)), "—", "—"];
     const melhorou = TICKERS.filter((t) => SIM.papeis[t].modelos[com].resultado_reais
                                          > SIM.papeis[t].modelos[sem].resultado_reais).length;
     return [nome, fmtR(somaR(sem)), fmtR(somaR(com)), `${melhorou} de 10`];
   });
-  K.push(tab(["", "Só preço histórico", "Com o FinBERT", "O FinBERT melhorou em"],
-    linhasFam, [3100, 2300, 2200, 2038], { destaque: [0] }));
+  K.push(tab(["Quem DECIDE todo dia", "Decidindo com\npreço histórico", "Decidindo com\npreço + FinBERT", "O FinBERT\nmelhorou em"],
+    linhasFam, [3100, 2300, 2200, 2038]));
   K.push(nota("Soma do resultado nos 10 papéis, sobre o valor médio investido por investidor de cada um."));
-  K.push(par("**Acrescentar o FinBERT melhorou em 5 e 6 de 10 papéis** — pela terceira vez, o mesmo padrão de moeda. E **nenhuma das seis combinações chega perto de comprar e segurar**, que não usa modelo, não usa preço, não usa texto, e não dá trabalho nenhum."));
+  K.push(par("**Acrescentar o FinBERT melhorou em 5 e 6 de 10 papéis** — pela terceira vez, o mesmo padrão de moeda."));
+
+  K.push(h2("E quem não decide nada?"));
+  K.push(caixa(`**Comprar e segurar: ${fmtR(somaR(null))}** — mais que qualquer um dos seis modelos acima.\n\nATENÇÃO para não ler errado: comprar e segurar **não analisa preço histórico, nem nada**. Ele compra no primeiro dia, não mexe em nenhum dia, e vende no último. Zero contas, zero decisões.`));
+  K.push(par("**Por que os modelos perdem para quem não faz nada?** Porque a única coisa que eles podem fazer é **tirar você do mercado** nos dias em que preveem queda. Como eles acertam quase o mesmo que cara-ou-coroa, acabam tirando você do mercado em dias bons e ruins na mesma proporção — e, num período em que a bolsa subiu, cada dia bom perdido é dinheiro que não volta."));
+  K.push(par("É como um porteiro que barra metade das pessoas na sorte: ele não melhora a festa, só esvazia."));
   K.push(caixa(`**Comprar e segurar — não fazer nada — venceu os dois times em ${nBH} das 10 ações.** O motivo é simples: os modelos saem do mercado nos dias em que preveem queda, e com isso perdem as altas. Num período em que a bolsa subiu, ficar de fora custa caro.`));
   K.push(par("**E a ressalva, que precisa ser dita junto:** esta conta não inclui corretagem, imposto de renda nem a diferença entre preço de compra e venda. E, como o acerto dos modelos está perto de cara-ou-coroa, o resultado em reais é em boa parte **sorte**, não habilidade. O número serve para dar ordem de grandeza — não é recomendação de investimento."));
 } else {

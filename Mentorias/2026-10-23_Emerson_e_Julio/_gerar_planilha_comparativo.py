@@ -298,7 +298,7 @@ if SIM:
                    f"Sobre o valor médio investido por investidor de cada papel.",
         size=9, cor="595959", wrap=True)
     ws4.merge_cells("A2:H2"); ws4.row_dimensions[2].height = 28
-    COLS = [("Comprar e segurar\n(sem modelo)", None),
+    COLS = [("NÃO DECIDE NADA\nComprar e segurar", None),
             ("GARCH+SVM\nsó preço", "SVM (preço)"),
             ("GARCH+SVM\n+ FinBERT", "SVM (preço+CVM)"),
             ("GARCH+XGB\nsó preço", "XGBoost (preço)"),
@@ -347,11 +347,14 @@ if SIM:
          "sentimento do FinBERT. Comparando as duas colunas de cada par, o sentimento melhorou o "
          "resultado em 5, 6 e 6 dos 10 papéis (SVM, XGBoost e Prophet) — de novo, o padrão de "
          "cara-ou-coroa. O efeito médio fica entre −1,2 e +1,0 ponto percentual."),
-        ("E quem ganha de todos",
-         f"A coluna amarela: comprar e segurar, sem modelo algum, sem custo e sem trabalho. "
-         f"Venceu todos os seis modelos em {n_bh} dos 10 papéis, e no total soma mais que "
-         f"qualquer um deles. Os modelos saem do mercado nos dias em que preveem queda e, num "
-         f"período de bolsa em alta, perdem o que deixaram passar."),
+        ("A coluna amarela NÃO analisa preço histórico — ela não analisa nada",
+         f"Comprar e segurar significa: comprar no primeiro dia, não mexer em nenhum dia, vender "
+         f"no último. Zero contas, zero decisões. É diferente das colunas 'só preço', que são "
+         f"modelos de verdade decidindo todo dia se ficam no mercado ou saem. Mesmo assim, a "
+         f"coluna amarela venceu os seis modelos em {n_bh} dos 10 papéis. O motivo: a única coisa "
+         f"que um modelo pode fazer aqui é TIRAR o investidor do mercado em alguns dias; como o "
+         f"acerto está perto de cara-ou-coroa, ele tira em dias bons e ruins por igual — e, num "
+         f"período de bolsa em alta, cada dia bom perdido é dinheiro que não volta."),
         ("Ressalva obrigatória",
          "Esta conta não inclui corretagem, emolumentos, imposto de renda nem a diferença entre "
          "preço de compra e de venda — e os modelos entram e saem do mercado dezenas de vezes, o "
