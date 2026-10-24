@@ -82,16 +82,25 @@ def corta(n):
     return slice(0, int(n * 0.60)), slice(int(n * 0.60), int(n * 0.75)), slice(int(n * 0.75), n)
 
 
-def prophet_direcao(d: pd.DataFrame, te: slice) -> np.ndarray:
+def prophet_direcao(d: pd.DataFrame, te: slice, usa_cvm: bool = False) -> np.ndarray:
+    """usa_cvm=True acrescenta o sentimento do FinBERT sobre os comunicados da
+    CVM como regressora — é o braço 'FinBERT + Prophet' que os professores
+    pediram para comparar com o 'FinBERT + GARCH/SVM/XGBoost'."""
     preds = np.full(te.stop - te.start, np.nan)
     pos = te.start
     while pos < te.stop:
         fim = min(pos + PASSO, te.stop)
         tr = d.iloc[:pos]
+        base = pd.DataFrame({"ds": tr["Data"], "y": tr["Fechamento"]})
         m = Prophet(daily_seasonality=False)
-        m.fit(pd.DataFrame({"ds": tr["Data"], "y": tr["Fechamento"]}))
-        preds[pos - te.start:fim - te.start] = m.predict(
-            pd.DataFrame({"ds": d["Data"].iloc[pos:fim]}))["yhat"].values
+        if usa_cvm:
+            base["cvm_sent"] = tr["CVM_Sentimento_Ontem"].values
+            m.add_regressor("cvm_sent")
+        m.fit(base)
+        fut = pd.DataFrame({"ds": d["Data"].iloc[pos:fim]})
+        if usa_cvm:
+            fut["cvm_sent"] = d["CVM_Sentimento_Ontem"].iloc[pos:fim].values
+        preds[pos - te.start:fim - te.start] = m.predict(fut)["yhat"].values
         pos = fim
     return (preds > d["Fechamento"].shift(1).iloc[te].values).astype(int)
 
@@ -129,32 +138,40 @@ def main() -> None:
             X = d[cols].fillna(0.0)
             mod.fit(X.iloc[fit], y.iloc[fit])
             sinais[nome] = mod.predict(X.iloc[te])
-        sinais["Prophet (preço)"] = prophet_direcao(d, te)
+        sinais["Prophet (preço)"] = prophet_direcao(d, te, usa_cvm=False)
+        sinais["Prophet (preço+CVM)"] = prophet_direcao(d, te, usa_cvm=True)
 
         melhor = max(sinais, key=lambda k: accuracy_score(yte, sinais[k]))
         valor = float(recente.loc[recente["Ticker"] == tk, "Media_Acoes_Por_Acionista"].iloc[0]) \
             * float(ult_px.loc[ult_px["Ticker"] == tk, "Fechamento"].iloc[0])
 
+        f_bh = simula(ret, np.ones_like(ret))
         papel = {"valor_investido_medio": round(valor, 2),
                  "melhor_modelo": melhor,
-                 "buy_and_hold": {"fator": round(simula(ret, np.ones_like(ret)), 4)},
+                 "buy_and_hold": {"fator": round(f_bh, 4),
+                                  "retorno_pct": round((f_bh - 1) * 100, 2),
+                                  "final_reais": round(valor * f_bh, 2),
+                                  "resultado_reais": round(valor * (f_bh - 1), 2)},
                  "modelos": {}}
-        papel["buy_and_hold"]["final_reais"] = round(valor * papel["buy_and_hold"]["fator"], 2)
-        papel["buy_and_hold"]["resultado_reais"] = round(
-            valor * (papel["buy_and_hold"]["fator"] - 1), 2)
         for nome, s in sinais.items():
             f = simula(ret, s)
             papel["modelos"][nome] = {
                 "acuracia": round(float(accuracy_score(yte, s)), 4),
                 "dias_comprado": int(s.sum()),
+                "pct_dias_comprado": round(float(s.mean()) * 100, 1),
                 "fator": round(f, 4),
+                "retorno_pct": round((f - 1) * 100, 2),
                 "final_reais": round(valor * f, 2),
                 "resultado_reais": round(valor * (f - 1), 2),
-                "vs_buy_and_hold_reais": round(valor * (f - papel["buy_and_hold"]["fator"]), 2)}
+                "vs_buy_and_hold_pct": round((f - f_bh) * 100, 2),
+                "vs_buy_and_hold_reais": round(valor * (f - f_bh), 2)}
         res["papeis"][tk] = papel
-        print(f"{tk}: investido R$ {valor:,.0f} | B&H R$ {papel['buy_and_hold']['resultado_reais']:+,.0f} | "
-              f"Prophet R$ {papel['modelos']['Prophet (preço)']['resultado_reais']:+,.0f} | "
-              f"{melhor} R$ {papel['modelos'][melhor]['resultado_reais']:+,.0f}", flush=True)
+        pc = papel["modelos"]["Prophet (preço+CVM)"]
+        gc = papel["modelos"][melhor]
+        print(f"{tk}: investido R$ {valor:,.0f} | B&H {papel['buy_and_hold']['retorno_pct']:+.1f}% "
+              f"| FinBERT+Prophet {pc['retorno_pct']:+.1f}% (R$ {pc['resultado_reais']:+,.0f}) "
+              f"| melhor clássico [{melhor}] {gc['retorno_pct']:+.1f}% (R$ {gc['resultado_reais']:+,.0f})",
+              flush=True)
 
     (DADOS / "simulacao_reais_por_investidor.json").write_text(
         json.dumps(res, indent=2, ensure_ascii=False), encoding="utf-8")

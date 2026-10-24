@@ -1,5 +1,7 @@
 # Memory Index
 
+- [Entregar pouco e compreensível](entregar-pouco-e-compreensivel.md) — "não consegui compreender para explicar": menos peças, adversário antes do número, analogia antes do jargão
+- [FinBERT não acrescenta nos dois times](finbert-nao-acrescenta-nos-dois-times.md) — nem ao GARCH+SVM/XGBoost nem ao Prophet (melhora em ~5/10 = moeda); GARCH vence o Prophet 10×0 na volatilidade
 - [Prophet é pior que não fazer nada](prophet-pior-que-nao-fazer-nada.md) — com a mesma informação, perde para segurar o último valor em 10/10 papéis; e reancorar todo dia vale +90% a +94%, mais que qualquer sofisticação
 - [Pendência: Prophet, mentoria 16/10](pendencia-prophet-mentoria-16out.md) — a incompatibilidade do pedido original (Prophet não classifica texto) e como foi resolvida; RESOLVIDO, ver memória acima
 - [Piso estatístico × custo computacional](piso-estatistico-custo-computacional.md) — ~4 pp é o piso estatístico (nosso n de teste); ~2-5 pp / R²-OS+5% é o piso de relevância já usado na pesquisa; TimesFM/Prophet pendente de confirmação

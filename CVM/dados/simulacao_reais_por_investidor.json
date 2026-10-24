@@ -7,49 +7,76 @@
       "melhor_modelo": "SVM (preço)",
       "buy_and_hold": {
         "fator": 1.2911,
-        "final_reais": 527784.12,
-        "resultado_reais": 118997.72
+        "retorno_pct": 29.11,
+        "final_reais": 527778.39,
+        "resultado_reais": 118991.99
       },
       "modelos": {
         "SVM (preço)": {
           "acuracia": 0.5078,
           "dias_comprado": 456,
+          "pct_dias_comprado": 78.8,
           "fator": 1.3609,
+          "retorno_pct": 36.09,
           "final_reais": 556314.67,
           "resultado_reais": 147528.27,
-          "vs_buy_and_hold_reais": 28530.55
+          "vs_buy_and_hold_pct": 6.98,
+          "vs_buy_and_hold_reais": 28536.28
         },
         "XGBoost (preço)": {
           "acuracia": 0.4646,
           "dias_comprado": 287,
+          "pct_dias_comprado": 49.6,
           "fator": 0.8548,
+          "retorno_pct": -14.52,
           "final_reais": 349426.13,
           "resultado_reais": -59360.27,
-          "vs_buy_and_hold_reais": -178358.0
+          "vs_buy_and_hold_pct": -43.63,
+          "vs_buy_and_hold_reais": -178352.27
         },
         "SVM (preço+CVM)": {
           "acuracia": 0.4888,
           "dias_comprado": 435,
+          "pct_dias_comprado": 75.1,
           "fator": 1.1875,
+          "retorno_pct": 18.75,
           "final_reais": 485418.73,
           "resultado_reais": 76632.33,
-          "vs_buy_and_hold_reais": -42365.39
+          "vs_buy_and_hold_pct": -10.36,
+          "vs_buy_and_hold_reais": -42359.66
         },
         "XGBoost (preço+CVM)": {
           "acuracia": 0.4905,
           "dias_comprado": 304,
+          "pct_dias_comprado": 52.5,
           "fator": 0.9387,
+          "retorno_pct": -6.13,
           "final_reais": 383715.89,
           "resultado_reais": -25070.51,
-          "vs_buy_and_hold_reais": -144068.24
+          "vs_buy_and_hold_pct": -35.24,
+          "vs_buy_and_hold_reais": -144062.5
         },
         "Prophet (preço)": {
           "acuracia": 0.5026,
           "dias_comprado": 151,
+          "pct_dias_comprado": 26.1,
           "fator": 1.1137,
+          "retorno_pct": 11.37,
           "final_reais": 455255.19,
           "resultado_reais": 46468.79,
-          "vs_buy_and_hold_reais": -72528.93
+          "vs_buy_and_hold_pct": -17.74,
+          "vs_buy_and_hold_reais": -72523.2
+        },
+        "Prophet (preço+CVM)": {
+          "acuracia": 0.5026,
+          "dias_comprado": 151,
+          "pct_dias_comprado": 26.1,
+          "fator": 1.1788,
+          "retorno_pct": 17.88,
+          "final_reais": 481871.89,
+          "resultado_reais": 73085.49,
+          "vs_buy_and_hold_pct": -11.23,
+          "vs_buy_and_hold_reais": -45906.51
         }
       }
     },
@@ -58,49 +85,76 @@
       "melhor_modelo": "XGBoost (preço+CVM)",
       "buy_and_hold": {
         "fator": 1.6834,
-        "final_reais": 623225.92,
-        "resultado_reais": 253007.36
+        "retorno_pct": 68.34,
+        "final_reais": 623207.45,
+        "resultado_reais": 252988.89
       },
       "modelos": {
         "SVM (preço)": {
           "acuracia": 0.4819,
           "dias_comprado": 303,
+          "pct_dias_comprado": 52.3,
           "fator": 1.5487,
+          "retorno_pct": 54.87,
           "final_reais": 573367.61,
           "resultado_reais": 203149.05,
-          "vs_buy_and_hold_reais": -49858.31
+          "vs_buy_and_hold_pct": -13.46,
+          "vs_buy_and_hold_reais": -49839.84
         },
         "XGBoost (preço)": {
           "acuracia": 0.487,
           "dias_comprado": 296,
+          "pct_dias_comprado": 51.1,
           "fator": 0.9335,
+          "retorno_pct": -6.65,
           "final_reais": 345610.05,
           "resultado_reais": -24608.51,
-          "vs_buy_and_hold_reais": -277615.87
+          "vs_buy_and_hold_pct": -74.98,
+          "vs_buy_and_hold_reais": -277597.4
         },
         "SVM (preço+CVM)": {
           "acuracia": 0.4767,
           "dias_comprado": 328,
+          "pct_dias_comprado": 56.6,
           "fator": 1.4527,
+          "retorno_pct": 45.27,
           "final_reais": 537827.85,
           "resultado_reais": 167609.29,
-          "vs_buy_and_hold_reais": -85398.07
+          "vs_buy_and_hold_pct": -23.06,
+          "vs_buy_and_hold_reais": -85379.6
         },
         "XGBoost (preço+CVM)": {
           "acuracia": 0.5043,
           "dias_comprado": 274,
+          "pct_dias_comprado": 47.3,
           "fator": 1.1104,
+          "retorno_pct": 11.04,
           "final_reais": 411073.04,
           "resultado_reais": 40854.48,
-          "vs_buy_and_hold_reais": -212152.89
+          "vs_buy_and_hold_pct": -57.3,
+          "vs_buy_and_hold_reais": -212134.41
         },
         "Prophet (preço)": {
           "acuracia": 0.4991,
           "dias_comprado": 245,
+          "pct_dias_comprado": 42.3,
           "fator": 1.2488,
+          "retorno_pct": 24.88,
           "final_reais": 462319.66,
           "resultado_reais": 92101.1,
-          "vs_buy_and_hold_reais": -160906.26
+          "vs_buy_and_hold_pct": -43.46,
+          "vs_buy_and_hold_reais": -160887.79
+        },
+        "Prophet (preço+CVM)": {
+          "acuracia": 0.4991,
+          "dias_comprado": 245,
+          "pct_dias_comprado": 42.3,
+          "fator": 1.2488,
+          "retorno_pct": 24.88,
+          "final_reais": 462319.66,
+          "resultado_reais": 92101.1,
+          "vs_buy_and_hold_pct": -43.46,
+          "vs_buy_and_hold_reais": -160887.79
         }
       }
     },
@@ -109,49 +163,76 @@
       "melhor_modelo": "SVM (preço+CVM)",
       "buy_and_hold": {
         "fator": 1.7099,
-        "final_reais": 574693.86,
-        "resultado_reais": 238595.93
+        "retorno_pct": 70.99,
+        "final_reais": 574691.84,
+        "resultado_reais": 238593.9
       },
       "modelos": {
         "SVM (preço)": {
           "acuracia": 0.5181,
           "dias_comprado": 553,
+          "pct_dias_comprado": 95.5,
           "fator": 1.6525,
+          "retorno_pct": 65.25,
           "final_reais": 555403.73,
           "resultado_reais": 219305.79,
-          "vs_buy_and_hold_reais": -19290.13
+          "vs_buy_and_hold_pct": -5.74,
+          "vs_buy_and_hold_reais": -19288.1
         },
         "XGBoost (preço)": {
           "acuracia": 0.5181,
           "dias_comprado": 303,
+          "pct_dias_comprado": 52.3,
           "fator": 1.6393,
+          "retorno_pct": 63.93,
           "final_reais": 550963.41,
           "resultado_reais": 214865.47,
-          "vs_buy_and_hold_reais": -23730.45
+          "vs_buy_and_hold_pct": -7.06,
+          "vs_buy_and_hold_reais": -23728.43
         },
         "SVM (preço+CVM)": {
           "acuracia": 0.5216,
           "dias_comprado": 555,
+          "pct_dias_comprado": 95.9,
           "fator": 1.6787,
+          "retorno_pct": 67.87,
           "final_reais": 564195.46,
           "resultado_reais": 228097.52,
-          "vs_buy_and_hold_reais": -10498.4
+          "vs_buy_and_hold_pct": -3.12,
+          "vs_buy_and_hold_reais": -10496.37
         },
         "XGBoost (preço+CVM)": {
           "acuracia": 0.5164,
           "dias_comprado": 374,
+          "pct_dias_comprado": 64.6,
           "fator": 1.4687,
+          "retorno_pct": 46.87,
           "final_reais": 493627.19,
           "resultado_reais": 157529.25,
-          "vs_buy_and_hold_reais": -81066.67
+          "vs_buy_and_hold_pct": -24.12,
+          "vs_buy_and_hold_reais": -81064.64
         },
         "Prophet (preço)": {
           "acuracia": 0.4767,
           "dias_comprado": 389,
+          "pct_dias_comprado": 67.2,
           "fator": 1.1149,
+          "retorno_pct": 11.49,
           "final_reais": 374709.36,
           "resultado_reais": 38611.42,
-          "vs_buy_and_hold_reais": -199984.51
+          "vs_buy_and_hold_pct": -59.5,
+          "vs_buy_and_hold_reais": -199982.48
+        },
+        "Prophet (preço+CVM)": {
+          "acuracia": 0.4784,
+          "dias_comprado": 388,
+          "pct_dias_comprado": 67.0,
+          "fator": 1.1189,
+          "retorno_pct": 11.89,
+          "final_reais": 376053.95,
+          "resultado_reais": 39956.01,
+          "vs_buy_and_hold_pct": -59.1,
+          "vs_buy_and_hold_reais": -198637.89
         }
       }
     },
@@ -160,49 +241,76 @@
       "melhor_modelo": "SVM (preço+CVM)",
       "buy_and_hold": {
         "fator": 1.8111,
-        "final_reais": 2836383.01,
-        "resultado_reais": 1270272.35
+        "retorno_pct": 81.11,
+        "final_reais": 2836347.62,
+        "resultado_reais": 1270236.96
       },
       "modelos": {
         "SVM (preço)": {
           "acuracia": 0.4957,
           "dias_comprado": 406,
+          "pct_dias_comprado": 70.1,
           "fator": 1.5771,
+          "retorno_pct": 57.71,
           "final_reais": 2469866.88,
           "resultado_reais": 903756.23,
-          "vs_buy_and_hold_reais": -366516.13
+          "vs_buy_and_hold_pct": -23.4,
+          "vs_buy_and_hold_reais": -366480.73
         },
         "XGBoost (preço)": {
           "acuracia": 0.456,
           "dias_comprado": 347,
+          "pct_dias_comprado": 59.9,
           "fator": 1.0859,
+          "retorno_pct": 8.59,
           "final_reais": 1700709.49,
           "resultado_reais": 134598.84,
-          "vs_buy_and_hold_reais": -1135673.51
+          "vs_buy_and_hold_pct": -72.51,
+          "vs_buy_and_hold_reais": -1135638.12
         },
         "SVM (preço+CVM)": {
           "acuracia": 0.506,
           "dias_comprado": 414,
+          "pct_dias_comprado": 71.5,
           "fator": 1.7166,
+          "retorno_pct": 71.66,
           "final_reais": 2688435.6,
           "resultado_reais": 1122324.95,
-          "vs_buy_and_hold_reais": -147947.4
+          "vs_buy_and_hold_pct": -9.44,
+          "vs_buy_and_hold_reais": -147912.01
         },
         "XGBoost (preço+CVM)": {
           "acuracia": 0.4525,
           "dias_comprado": 349,
+          "pct_dias_comprado": 60.3,
           "fator": 1.1066,
+          "retorno_pct": 10.66,
           "final_reais": 1733006.01,
           "resultado_reais": 166895.36,
-          "vs_buy_and_hold_reais": -1103377.0
+          "vs_buy_and_hold_pct": -70.45,
+          "vs_buy_and_hold_reais": -1103341.61
         },
         "Prophet (preço)": {
           "acuracia": 0.5026,
           "dias_comprado": 260,
+          "pct_dias_comprado": 44.9,
           "fator": 1.3832,
+          "retorno_pct": 38.32,
           "final_reais": 2166177.82,
           "resultado_reais": 600067.17,
-          "vs_buy_and_hold_reais": -670205.18
+          "vs_buy_and_hold_pct": -42.79,
+          "vs_buy_and_hold_reais": -670169.79
+        },
+        "Prophet (preço+CVM)": {
+          "acuracia": 0.5026,
+          "dias_comprado": 260,
+          "pct_dias_comprado": 44.9,
+          "fator": 1.386,
+          "retorno_pct": 38.6,
+          "final_reais": 2170587.83,
+          "resultado_reais": 604477.18,
+          "vs_buy_and_hold_pct": -42.51,
+          "vs_buy_and_hold_reais": -665759.78
         }
       }
     },
@@ -211,49 +319,76 @@
       "melhor_modelo": "XGBoost (preço)",
       "buy_and_hold": {
         "fator": 1.5885,
-        "final_reais": 215086.47,
-        "resultado_reais": 79684.22
+        "retorno_pct": 58.85,
+        "final_reais": 215091.91,
+        "resultado_reais": 79689.66
       },
       "modelos": {
         "SVM (preço)": {
           "acuracia": 0.4974,
           "dias_comprado": 165,
+          "pct_dias_comprado": 28.5,
           "fator": 1.0417,
+          "retorno_pct": 4.17,
           "final_reais": 141042.07,
           "resultado_reais": 5639.83,
-          "vs_buy_and_hold_reais": -74044.4
+          "vs_buy_and_hold_pct": -54.69,
+          "vs_buy_and_hold_reais": -74049.84
         },
         "XGBoost (preço)": {
           "acuracia": 0.5095,
           "dias_comprado": 278,
+          "pct_dias_comprado": 48.0,
           "fator": 0.9617,
+          "retorno_pct": -3.83,
           "final_reais": 130217.19,
           "resultado_reais": -5185.06,
-          "vs_buy_and_hold_reais": -84869.28
+          "vs_buy_and_hold_pct": -62.68,
+          "vs_buy_and_hold_reais": -84874.72
         },
         "SVM (preço+CVM)": {
           "acuracia": 0.4801,
           "dias_comprado": 25,
+          "pct_dias_comprado": 4.3,
           "fator": 0.9531,
+          "retorno_pct": -4.69,
           "final_reais": 129053.83,
           "resultado_reais": -6348.41,
-          "vs_buy_and_hold_reais": -86032.63
+          "vs_buy_and_hold_pct": -63.54,
+          "vs_buy_and_hold_reais": -86038.08
         },
         "XGBoost (preço+CVM)": {
           "acuracia": 0.494,
           "dias_comprado": 275,
+          "pct_dias_comprado": 47.5,
           "fator": 0.9792,
+          "retorno_pct": -2.08,
           "final_reais": 132586.29,
           "resultado_reais": -2815.95,
-          "vs_buy_and_hold_reais": -82500.17
+          "vs_buy_and_hold_pct": -60.93,
+          "vs_buy_and_hold_reais": -82505.61
         },
         "Prophet (preço)": {
           "acuracia": 0.4629,
           "dias_comprado": 231,
+          "pct_dias_comprado": 39.9,
           "fator": 0.9904,
+          "retorno_pct": -0.96,
           "final_reais": 134103.16,
           "resultado_reais": -1299.08,
-          "vs_buy_and_hold_reais": -80983.3
+          "vs_buy_and_hold_pct": -59.81,
+          "vs_buy_and_hold_reais": -80988.74
+        },
+        "Prophet (preço+CVM)": {
+          "acuracia": 0.4594,
+          "dias_comprado": 229,
+          "pct_dias_comprado": 39.6,
+          "fator": 0.9684,
+          "retorno_pct": -3.16,
+          "final_reais": 131127.08,
+          "resultado_reais": -4275.16,
+          "vs_buy_and_hold_pct": -62.01,
+          "vs_buy_and_hold_reais": -83964.83
         }
       }
     },
@@ -262,49 +397,76 @@
       "melhor_modelo": "XGBoost (preço+CVM)",
       "buy_and_hold": {
         "fator": 1.5111,
-        "final_reais": 444946.54,
-        "resultado_reais": 150494.46
+        "retorno_pct": 51.11,
+        "final_reais": 444957.99,
+        "resultado_reais": 150505.91
       },
       "modelos": {
         "SVM (preço)": {
           "acuracia": 0.4922,
           "dias_comprado": 107,
+          "pct_dias_comprado": 18.5,
           "fator": 1.1259,
+          "retorno_pct": 12.59,
           "final_reais": 331513.45,
           "resultado_reais": 37061.37,
-          "vs_buy_and_hold_reais": -113433.09
+          "vs_buy_and_hold_pct": -38.53,
+          "vs_buy_and_hold_reais": -113444.54
         },
         "XGBoost (preço)": {
           "acuracia": 0.5233,
           "dias_comprado": 245,
+          "pct_dias_comprado": 42.3,
           "fator": 1.6581,
+          "retorno_pct": 65.81,
           "final_reais": 488228.73,
           "resultado_reais": 193776.65,
-          "vs_buy_and_hold_reais": 43282.2
+          "vs_buy_and_hold_pct": 14.7,
+          "vs_buy_and_hold_reais": 43270.75
         },
         "SVM (preço+CVM)": {
           "acuracia": 0.5026,
           "dias_comprado": 151,
+          "pct_dias_comprado": 26.1,
           "fator": 1.0888,
+          "retorno_pct": 8.88,
           "final_reais": 320613.55,
           "resultado_reais": 26161.47,
-          "vs_buy_and_hold_reais": -124332.98
+          "vs_buy_and_hold_pct": -42.23,
+          "vs_buy_and_hold_reais": -124344.43
         },
         "XGBoost (preço+CVM)": {
           "acuracia": 0.5285,
           "dias_comprado": 226,
+          "pct_dias_comprado": 39.0,
           "fator": 1.635,
+          "retorno_pct": 63.5,
           "final_reais": 481436.38,
           "resultado_reais": 186984.3,
-          "vs_buy_and_hold_reais": 36489.85
+          "vs_buy_and_hold_pct": 12.39,
+          "vs_buy_and_hold_reais": 36478.4
         },
         "Prophet (preço)": {
           "acuracia": 0.4888,
           "dias_comprado": 219,
+          "pct_dias_comprado": 37.8,
           "fator": 1.2046,
+          "retorno_pct": 20.46,
           "final_reais": 354685.46,
           "resultado_reais": 60233.39,
-          "vs_buy_and_hold_reais": -90261.07
+          "vs_buy_and_hold_pct": -30.66,
+          "vs_buy_and_hold_reais": -90272.52
+        },
+        "Prophet (preço+CVM)": {
+          "acuracia": 0.4888,
+          "dias_comprado": 217,
+          "pct_dias_comprado": 37.5,
+          "fator": 1.2386,
+          "retorno_pct": 23.86,
+          "final_reais": 364718.37,
+          "resultado_reais": 70266.29,
+          "vs_buy_and_hold_pct": -27.25,
+          "vs_buy_and_hold_reais": -80239.62
         }
       }
     },
@@ -313,49 +475,76 @@
       "melhor_modelo": "SVM (preço)",
       "buy_and_hold": {
         "fator": 1.7667,
-        "final_reais": 190978.33,
-        "resultado_reais": 82879.43
+        "retorno_pct": 76.67,
+        "final_reais": 190977.16,
+        "resultado_reais": 82878.26
       },
       "modelos": {
         "SVM (preço)": {
           "acuracia": 0.5164,
           "dias_comprado": 196,
+          "pct_dias_comprado": 33.9,
           "fator": 1.1708,
+          "retorno_pct": 17.08,
           "final_reais": 126564.08,
           "resultado_reais": 18465.18,
-          "vs_buy_and_hold_reais": -64414.25
+          "vs_buy_and_hold_pct": -59.59,
+          "vs_buy_and_hold_reais": -64413.08
         },
         "XGBoost (preço)": {
           "acuracia": 0.5043,
           "dias_comprado": 283,
+          "pct_dias_comprado": 48.9,
           "fator": 1.153,
+          "retorno_pct": 15.3,
           "final_reais": 124636.94,
           "resultado_reais": 16538.03,
-          "vs_buy_and_hold_reais": -66341.39
+          "vs_buy_and_hold_pct": -61.37,
+          "vs_buy_and_hold_reais": -66340.22
         },
         "SVM (preço+CVM)": {
           "acuracia": 0.506,
           "dias_comprado": 126,
+          "pct_dias_comprado": 21.8,
           "fator": 1.1871,
+          "retorno_pct": 18.71,
           "final_reais": 128323.48,
           "resultado_reais": 20224.58,
-          "vs_buy_and_hold_reais": -62654.85
+          "vs_buy_and_hold_pct": -57.96,
+          "vs_buy_and_hold_reais": -62653.68
         },
         "XGBoost (preço+CVM)": {
           "acuracia": 0.5147,
           "dias_comprado": 259,
+          "pct_dias_comprado": 44.7,
           "fator": 1.2348,
+          "retorno_pct": 23.48,
           "final_reais": 133475.58,
           "resultado_reais": 25376.68,
-          "vs_buy_and_hold_reais": -57502.75
+          "vs_buy_and_hold_pct": -53.19,
+          "vs_buy_and_hold_reais": -57501.58
         },
         "Prophet (preço)": {
           "acuracia": 0.5112,
           "dias_comprado": 227,
+          "pct_dias_comprado": 39.2,
           "fator": 1.4249,
+          "retorno_pct": 42.49,
           "final_reais": 154032.11,
           "resultado_reais": 45933.21,
-          "vs_buy_and_hold_reais": -36946.22
+          "vs_buy_and_hold_pct": -34.18,
+          "vs_buy_and_hold_reais": -36945.05
+        },
+        "Prophet (preço+CVM)": {
+          "acuracia": 0.513,
+          "dias_comprado": 226,
+          "pct_dias_comprado": 39.0,
+          "fator": 1.4463,
+          "retorno_pct": 44.63,
+          "final_reais": 156344.04,
+          "resultado_reais": 48245.14,
+          "vs_buy_and_hold_pct": -32.04,
+          "vs_buy_and_hold_reais": -34633.12
         }
       }
     },
@@ -364,49 +553,76 @@
       "melhor_modelo": "XGBoost (preço)",
       "buy_and_hold": {
         "fator": 1.7541,
-        "final_reais": 3032616.35,
-        "resultado_reais": 1303743.22
+        "retorno_pct": 75.41,
+        "final_reais": 3032649.11,
+        "resultado_reais": 1303775.98
       },
       "modelos": {
         "SVM (preço)": {
           "acuracia": 0.487,
           "dias_comprado": 46,
+          "pct_dias_comprado": 7.9,
           "fator": 1.2228,
+          "retorno_pct": 22.28,
           "final_reais": 2113995.4,
           "resultado_reais": 385122.27,
-          "vs_buy_and_hold_reais": -918620.95
+          "vs_buy_and_hold_pct": -53.14,
+          "vs_buy_and_hold_reais": -918653.71
         },
         "XGBoost (preço)": {
           "acuracia": 0.5216,
           "dias_comprado": 228,
+          "pct_dias_comprado": 39.4,
           "fator": 1.4802,
+          "retorno_pct": 48.02,
           "final_reais": 2558992.25,
           "resultado_reais": 830119.13,
-          "vs_buy_and_hold_reais": -473624.1
+          "vs_buy_and_hold_pct": -27.4,
+          "vs_buy_and_hold_reais": -473656.86
         },
         "SVM (preço+CVM)": {
           "acuracia": 0.4991,
           "dias_comprado": 73,
+          "pct_dias_comprado": 12.6,
           "fator": 1.2566,
+          "retorno_pct": 25.66,
           "final_reais": 2172541.4,
           "resultado_reais": 443668.27,
-          "vs_buy_and_hold_reais": -860074.95
+          "vs_buy_and_hold_pct": -49.75,
+          "vs_buy_and_hold_reais": -860107.71
         },
         "XGBoost (preço+CVM)": {
           "acuracia": 0.4957,
           "dias_comprado": 251,
+          "pct_dias_comprado": 43.4,
           "fator": 1.3568,
+          "retorno_pct": 35.68,
           "final_reais": 2345649.44,
           "resultado_reais": 616776.32,
-          "vs_buy_and_hold_reais": -686966.91
+          "vs_buy_and_hold_pct": -39.74,
+          "vs_buy_and_hold_reais": -686999.67
         },
         "Prophet (preço)": {
           "acuracia": 0.4646,
           "dias_comprado": 289,
+          "pct_dias_comprado": 49.9,
           "fator": 1.0156,
+          "retorno_pct": 1.56,
           "final_reais": 1755821.35,
           "resultado_reais": 26948.23,
-          "vs_buy_and_hold_reais": -1276795.0
+          "vs_buy_and_hold_pct": -73.85,
+          "vs_buy_and_hold_reais": -1276827.76
+        },
+        "Prophet (preço+CVM)": {
+          "acuracia": 0.4663,
+          "dias_comprado": 290,
+          "pct_dias_comprado": 50.1,
+          "fator": 1.0282,
+          "retorno_pct": 2.82,
+          "final_reais": 1777680.83,
+          "resultado_reais": 48807.71,
+          "vs_buy_and_hold_pct": -72.59,
+          "vs_buy_and_hold_reais": -1254968.28
         }
       }
     },
@@ -415,49 +631,76 @@
       "melhor_modelo": "SVM (preço+CVM)",
       "buy_and_hold": {
         "fator": 0.8531,
-        "final_reais": 34456.33,
-        "resultado_reais": -5933.23
+        "retorno_pct": -14.69,
+        "final_reais": 34457.21,
+        "resultado_reais": -5932.35
       },
       "modelos": {
         "SVM (preço)": {
           "acuracia": 0.506,
           "dias_comprado": 453,
+          "pct_dias_comprado": 78.2,
           "fator": 0.8681,
+          "retorno_pct": -13.19,
           "final_reais": 35061.84,
           "resultado_reais": -5327.71,
-          "vs_buy_and_hold_reais": 605.51
+          "vs_buy_and_hold_pct": 1.5,
+          "vs_buy_and_hold_reais": 604.63
         },
         "XGBoost (preço)": {
           "acuracia": 0.4767,
           "dias_comprado": 340,
+          "pct_dias_comprado": 58.7,
           "fator": 0.7822,
+          "retorno_pct": -21.78,
           "final_reais": 31593.64,
           "resultado_reais": -8795.91,
-          "vs_buy_and_hold_reais": -2862.68
+          "vs_buy_and_hold_pct": -7.09,
+          "vs_buy_and_hold_reais": -2863.56
         },
         "SVM (preço+CVM)": {
           "acuracia": 0.513,
           "dias_comprado": 547,
+          "pct_dias_comprado": 94.5,
           "fator": 0.9831,
+          "retorno_pct": -1.69,
           "final_reais": 39708.39,
           "resultado_reais": -681.16,
-          "vs_buy_and_hold_reais": 5252.07
+          "vs_buy_and_hold_pct": 13.0,
+          "vs_buy_and_hold_reais": 5251.19
         },
         "XGBoost (preço+CVM)": {
           "acuracia": 0.4784,
           "dias_comprado": 349,
+          "pct_dias_comprado": 60.3,
           "fator": 0.8337,
+          "retorno_pct": -16.63,
           "final_reais": 33674.22,
           "resultado_reais": -6715.33,
-          "vs_buy_and_hold_reais": -782.11
+          "vs_buy_and_hold_pct": -1.94,
+          "vs_buy_and_hold_reais": -782.98
         },
         "Prophet (preço)": {
           "acuracia": 0.5095,
           "dias_comprado": 423,
+          "pct_dias_comprado": 73.1,
           "fator": 1.2389,
+          "retorno_pct": 23.89,
           "final_reais": 50038.67,
           "resultado_reais": 9649.12,
-          "vs_buy_and_hold_reais": 15582.34
+          "vs_buy_and_hold_pct": 38.58,
+          "vs_buy_and_hold_reais": 15581.46
+        },
+        "Prophet (preço+CVM)": {
+          "acuracia": 0.5078,
+          "dias_comprado": 424,
+          "pct_dias_comprado": 73.2,
+          "fator": 1.1916,
+          "retorno_pct": 19.16,
+          "final_reais": 48129.05,
+          "resultado_reais": 7739.49,
+          "vs_buy_and_hold_pct": 33.85,
+          "vs_buy_and_hold_reais": 13671.84
         }
       }
     },
@@ -466,49 +709,76 @@
       "melhor_modelo": "XGBoost (preço)",
       "buy_and_hold": {
         "fator": 1.4073,
-        "final_reais": 420048.74,
-        "resultado_reais": 121570.28
+        "retorno_pct": 40.73,
+        "final_reais": 420043.93,
+        "resultado_reais": 121565.47
       },
       "modelos": {
         "SVM (preço)": {
           "acuracia": 0.5078,
           "dias_comprado": 20,
+          "pct_dias_comprado": 3.5,
           "fator": 1.1206,
+          "retorno_pct": 12.06,
           "final_reais": 334462.36,
           "resultado_reais": 35983.89,
-          "vs_buy_and_hold_reais": -85586.39
+          "vs_buy_and_hold_pct": -28.67,
+          "vs_buy_and_hold_reais": -85581.57
         },
         "XGBoost (preço)": {
           "acuracia": 0.532,
           "dias_comprado": 208,
+          "pct_dias_comprado": 35.9,
           "fator": 1.2586,
+          "retorno_pct": 25.86,
           "final_reais": 375657.39,
           "resultado_reais": 77178.92,
-          "vs_buy_and_hold_reais": -44391.36
+          "vs_buy_and_hold_pct": -14.87,
+          "vs_buy_and_hold_reais": -44386.54
         },
         "SVM (preço+CVM)": {
           "acuracia": 0.5026,
           "dias_comprado": 19,
+          "pct_dias_comprado": 3.3,
           "fator": 1.0676,
+          "retorno_pct": 6.76,
           "final_reais": 318651.48,
           "resultado_reais": 20173.02,
-          "vs_buy_and_hold_reais": -101397.26
+          "vs_buy_and_hold_pct": -33.97,
+          "vs_buy_and_hold_reais": -101392.45
         },
         "XGBoost (preço+CVM)": {
           "acuracia": 0.525,
           "dias_comprado": 194,
+          "pct_dias_comprado": 33.5,
           "fator": 1.2403,
+          "retorno_pct": 24.03,
           "final_reais": 370215.11,
           "resultado_reais": 71736.64,
-          "vs_buy_and_hold_reais": -49833.64
+          "vs_buy_and_hold_pct": -16.69,
+          "vs_buy_and_hold_reais": -49828.82
         },
         "Prophet (preço)": {
           "acuracia": 0.5009,
           "dias_comprado": 188,
+          "pct_dias_comprado": 32.5,
           "fator": 1.1037,
+          "retorno_pct": 10.37,
           "final_reais": 329426.8,
           "resultado_reais": 30948.34,
-          "vs_buy_and_hold_reais": -90621.94
+          "vs_buy_and_hold_pct": -30.36,
+          "vs_buy_and_hold_reais": -90617.13
+        },
+        "Prophet (preço+CVM)": {
+          "acuracia": 0.5009,
+          "dias_comprado": 188,
+          "pct_dias_comprado": 32.5,
+          "fator": 1.1037,
+          "retorno_pct": 10.37,
+          "final_reais": 329426.8,
+          "resultado_reais": 30948.34,
+          "vs_buy_and_hold_pct": -30.36,
+          "vs_buy_and_hold_reais": -90617.13
         }
       }
     }
