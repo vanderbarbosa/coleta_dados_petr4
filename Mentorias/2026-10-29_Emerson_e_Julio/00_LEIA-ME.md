@@ -95,6 +95,57 @@ divulgação move o preço, com significância inequívoca, mas o movimento se
 concentra numa minoria de eventos. A regularidade que a previsão exigiria não
 está no caso típico.
 
+## O refinamento proposto depois: só os dias com tom declarado
+
+Surgiu uma segunda proposta, razoável: descartar também os pregões cujos
+comunicados são **todos neutros**, treinando e projetando só onde há tom
+declarado — positivo ou negativo. Começando pela PETR4.
+
+**Medi antes de rodar, e registrei a expectativa:**
+
+| PETR4 | Treino | Teste | Margem de erro |
+|---|---|---|---|
+| Todos os pregões | 1.389 | 579 | ±4,1 |
+| Com qualquer comunicado | 588 | 165 | ±7,6 |
+| **Só com tom declarado** | **290** | **56** | **±13,1** |
+
+O filtro vai na direção contrária da que precisamos: encolhe a amostra, e a
+amostra já era o gargalo.
+
+**O que aconteceu:** pior que o previsto. **Oito dos dez papéis não puderam
+nem ser avaliados** — ITUB4 ficou com 3 pregões de teste, ABEV3 com 1. Só
+PETR4 (56) e VALE3 (49) sobreviveram. Mesmo juntando as duas, são 105 pregões
+e margem de erro de ±9,6.
+
+| Agrupado (n=105) | Ganho | p |
+|---|---|---|
+| XGBoost — preço + tom, treinado em tudo | +5,71 pp | 0,282 |
+| SVM — preço + tom, treinado em tudo | −7,62 pp | 0,119 |
+| XGBoost — só preço, **treinado só nos dias com tom** | −11,43 pp | 0,024 |
+| SVM — só preço, **treinado só nos dias com tom** | −10,48 pp | 0,040 |
+
+O **+5,71 pp** parece animador e **não é**: está dentro da margem de ±9,6, tem
+p=0,282, e é um entre oito braços. O limiar de Bonferroni para as **132
+tentativas acumuladas do estudo** é de 0,000379 — nada chega perto.
+
+E repare nas duas últimas linhas: treinar **só** com dias de tom piorou muito,
+porque o modelo perdeu a maior parte dos dados de treino.
+
+### Duas ressalvas que esse resultado carrega
+
+1. **O filtro usa um rótulo que erra.** A validação contra o conjunto-ouro
+   humano desta própria pesquisa aferiu **58% de acurácia** no rótulo do
+   FinBERT. Filtrar por "não-neutro" descarta dias que não eram neutros e
+   mantém dias que eram.
+2. **Foi a quarta fatia testada.** Cada tentativa nova eleva a chance de um
+   achado fortuito — por isso o limiar de Bonferroni acumulado está reportado.
+
+### O padrão das quatro tentativas, dito sem rodeio
+
+**Cada filtro que aplicamos troca sinal por tamanho de amostra — e a amostra
+já era o fator limitante.** Não é falta de engenho na especificação; é um
+limite de informação da base disponível.
+
 ## Uma divergência corrigida entre o código e a dissertação
 
 Encontrei, ao verificar, que a dissertação e o código usavam **fórmulas

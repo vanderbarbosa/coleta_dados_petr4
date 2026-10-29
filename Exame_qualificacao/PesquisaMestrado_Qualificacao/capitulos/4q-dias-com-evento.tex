@@ -116,3 +116,36 @@ ampliação da base --- mais ativos, ou horizonte mais longo, ou ambos.
 Essa constatação é consistente com o que o Capítulo relatou a respeito do efeito de cauda: a
 divulgação move o preço, e isso foi medido com significância inequívoca; mas o movimento concentra-se
 numa minoria de eventos, e a regularidade necessária à previsão não se encontra no caso típico.
+
+\subsubsection{Um refinamento adicional: restringir aos pregões de tom declarado}
+
+A orientação propôs um refinamento da mesma ideia: descartar, além dos pregões sem divulgação,
+também aqueles cujos comunicados são todos rotulados neutros, treinando e avaliando apenas onde há
+tom declarado --- positivo ou negativo. O raciocínio é legítimo, pois o rótulo neutro predomina no
+corpus e poderia estar diluindo o sinal.
+
+Mediu-se a consequência do filtro \emph{antes} de executá-lo, e registrou-se a expectativa: na
+Petrobras, o conjunto de teste cairia de cento e sessenta e cinco para 56 pregões, e a
+meia-largura do intervalo de confiança subiria de 7{,}6 para 13{,}1 pontos percentuais.
+Antecipou-se, portanto, resultado inconclusivo no ativo isolado.
+
+A execução confirmou a antecipação, e de forma mais severa que a prevista. Oito dos dez ativos não
+alcançaram o mínimo de trinta pregões estabelecido para avaliação --- o Itaú Unibanco reteve três
+pregões, e a Ambev, um. Apenas a Petrobras e a Vale permaneceram avaliáveis, e mesmo o agrupamento
+das duas reúne 105 pregões, com intervalo de 9{,}6 pontos. Nenhum arranjo
+superou a classe majoritária com significância, e os dois arranjos treinados exclusivamente nos
+pregões de tom declarado --- privados, portanto, da maior parte dos dados de treino --- situaram-se
+mais de dez pontos \emph{abaixo} dela.
+
+Duas ressalvas acompanham esse resultado e constam do registro. A primeira é que o filtro opera
+sobre o rótulo produzido pelo codificador, cuja acurácia contra o conjunto-ouro humano foi aferida
+em cinquenta e oito por cento na Seção~\ref{sec:validacao_sentimento}: seleciona-se, portanto, com
+instrumento ruidoso, descartando pregões que não eram neutros e retendo pregões que o eram. A
+segunda é de natureza inferencial: esta é a quarta partição testada sobre o mesmo conjunto, e a
+acumulação de tentativas eleva a probabilidade de um achado fortuito. O limiar de Bonferroni para a
+família acumulada do estudo, com 132 testes, é de 0{,}000379 --- patamar que
+nenhum resultado desta seção se aproxima de alcançar.
+
+O padrão que emerge das quatro tentativas é coerente e merece ser dito sem rodeios: cada filtro
+aplicado troca sinal por tamanho de amostra, e a amostra já era o fator limitante. Não se trata de
+ausência de engenho na especificação, e sim de um limite informacional da base disponível.

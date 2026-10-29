@@ -7,12 +7,15 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[1]
 JSON = RAIZ / "CVM" / "dados" / "dias_com_evento.json"
+JSON_TOM = RAIZ / "CVM" / "dados" / "so_dias_com_tom.json"
 TEX = RAIZ / "Exame_qualificacao" / "PesquisaMestrado_Qualificacao" / "capitulos" / "4q-dias-com-evento.tex"
 DATA = "2026-10-29"
 
 d = json.loads(JSON.read_text(encoding="utf-8"))
 P, AG = d["papeis"], d["agrupado"]
 TICK = list(P.keys())
+TOM = json.loads(JSON_TOM.read_text(encoding="utf-8"))
+TOM_AG = TOM["agrupado"]
 
 
 def n(x, c=2, s=False):
@@ -145,6 +148,39 @@ ampliação da base --- mais ativos, ou horizonte mais longo, ou ambos.
 Essa constatação é consistente com o que o Capítulo relatou a respeito do efeito de cauda: a
 divulgação move o preço, e isso foi medido com significância inequívoca; mas o movimento concentra-se
 numa minoria de eventos, e a regularidade necessária à previsão não se encontra no caso típico.
+
+\subsubsection{Um refinamento adicional: restringir aos pregões de tom declarado}
+
+A orientação propôs um refinamento da mesma ideia: descartar, além dos pregões sem divulgação,
+também aqueles cujos comunicados são todos rotulados neutros, treinando e avaliando apenas onde há
+tom declarado --- positivo ou negativo. O raciocínio é legítimo, pois o rótulo neutro predomina no
+corpus e poderia estar diluindo o sinal.
+
+Mediu-se a consequência do filtro \emph{antes} de executá-lo, e registrou-se a expectativa: na
+Petrobras, o conjunto de teste cairia de cento e sessenta e cinco para """ + str(TOM["papeis"]["PETR4"]["n_teste_com_tom"]) + r""" pregões, e a
+meia-largura do intervalo de confiança subiria de """ + n(ic_min, 1) + r""" para """ + n(TOM["papeis"]["PETR4"]["arms"]["SVM — só preço, treinado em tudo"]["ic95_meia_largura_pp"], 1) + r""" pontos percentuais.
+Antecipou-se, portanto, resultado inconclusivo no ativo isolado.
+
+A execução confirmou a antecipação, e de forma mais severa que a prevista. Oito dos dez ativos não
+alcançaram o mínimo de trinta pregões estabelecido para avaliação --- o Itaú Unibanco reteve três
+pregões, e a Ambev, um. Apenas a Petrobras e a Vale permaneceram avaliáveis, e mesmo o agrupamento
+das duas reúne """ + str(TOM_AG[list(TOM_AG)[0]]["n"]) + r""" pregões, com intervalo de """ + n(TOM_AG[list(TOM_AG)[0]]["ic95_meia_largura_pp"], 1) + r""" pontos. Nenhum arranjo
+superou a classe majoritária com significância, e os dois arranjos treinados exclusivamente nos
+pregões de tom declarado --- privados, portanto, da maior parte dos dados de treino --- situaram-se
+mais de dez pontos \emph{abaixo} dela.
+
+Duas ressalvas acompanham esse resultado e constam do registro. A primeira é que o filtro opera
+sobre o rótulo produzido pelo codificador, cuja acurácia contra o conjunto-ouro humano foi aferida
+em cinquenta e oito por cento na Seção~\ref{sec:validacao_sentimento}: seleciona-se, portanto, com
+instrumento ruidoso, descartando pregões que não eram neutros e retendo pregões que o eram. A
+segunda é de natureza inferencial: esta é a quarta partição testada sobre o mesmo conjunto, e a
+acumulação de tentativas eleva a probabilidade de um achado fortuito. O limiar de Bonferroni para a
+família acumulada do estudo, com """ + str(TOM["bonferroni"]["testes_acumulados_no_estudo"]) + r""" testes, é de """ + f"{TOM['bonferroni']['limiar']:.6f}".replace(".", "{,}") + r""" --- patamar que
+nenhum resultado desta seção se aproxima de alcançar.
+
+O padrão que emerge das quatro tentativas é coerente e merece ser dito sem rodeios: cada filtro
+aplicado troca sinal por tamanho de amostra, e a amostra já era o fator limitante. Não se trata de
+ausência de engenho na especificação, e sim de um limite informacional da base disponível.
 """
 
 TEX.write_text(tex, encoding="utf-8")

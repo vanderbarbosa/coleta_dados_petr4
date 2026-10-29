@@ -64,6 +64,23 @@ escolher no escuro, rodei as DUAS como variantes (linhas A e B) e medi: o
 desvio-padrão agregado por pregão é 0,319 (A) contra 0,344 (B) — parecido, e
 a escolha não altera conclusão alguma. O Cap. 3 agora documenta as duas.
 
+**QUARTA TENTATIVA, também negativa — só dias com TOM declarado**
+(`CVM/26_so_dias_com_tom.py`, 29/10). Proposta: descartar os pregões cujos
+comunicados são todos neutros, treinando e projetando só onde há tom. Medi
+ANTES e registrei a expectativa: PETR4 cai de 165 para **56** pregões de
+teste, IC de ±7,6 para **±13,1**. Resultado pior que o previsto: **8 dos 10
+papéis não puderam ser avaliados** (ITUB4 com 3 pregões, ABEV3 com 1); só
+PETR4 (56) e VALE3 (49) sobreviveram, agrupadas em n=105, IC ±9,6. Melhor
+braço +5,71pp (p=0,282) — dentro da margem, 1 de 8 braços. Treinar SÓ com
+dias de tom piorou muito (−10,5 e −11,4pp, p=0,040 e 0,024) por perda de
+dados de treino. **Limiar de Bonferroni da família acumulada: 132 testes →
+0,000379.** Ressalva central: o filtro usa o rótulo do FinBERT, aferido em
+**58% de acurácia** contra o conjunto-ouro — filtro ruidoso.
+
+**O PADRÃO DAS QUATRO TENTATIVAS, e é a lição que fica:** cada filtro troca
+sinal por tamanho de amostra, e a amostra já era o gargalo. Não é falta de
+engenho na especificação — é limite de informação da base.
+
 **Escrito na dissertação:** Cap. 3 ganhou a subseção **"A cadeia de
 componentes"** (tabela de o que cada peça consome e entrega — era o que
 faltava para o Vanderlei conseguir explicar, ver

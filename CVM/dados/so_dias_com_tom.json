@@ -1,0 +1,293 @@
+{
+  "expectativa_registrada_antes": "o filtro reduz o teste da PETR4 de 165 para 56 pregões e alarga o IC95% de ±7,6 para ±13,1 pontos; espera-se resultado INCONCLUSIVO no papel isolado, com a resposta útil vindo do agrupamento",
+  "ressalvas": [
+    "o filtro usa o rótulo do FinBERT, aferido em 58% de acurácia contra o conjunto-ouro humano",
+    "esta é a quarta fatia testada; o limiar de Bonferroni acumulado é reportado ao fim"
+  ],
+  "papeis": {
+    "VALE3": {
+      "n_treino_com_tom": 116,
+      "n_teste_com_tom": 49,
+      "n_teste_total": 579,
+      "arms": {
+        "SVM — só preço, treinado em tudo": {
+          "n": 49,
+          "majoritaria": 0.5306,
+          "acuracia": 0.5714,
+          "ganho_pp": 4.08,
+          "ic95_meia_largura_pp": 14.0,
+          "p_vs_majoritaria": 0.6681006703709302,
+          "auc": 0.4716
+        },
+        "XGBoost — só preço, treinado em tudo": {
+          "n": 49,
+          "majoritaria": 0.5306,
+          "acuracia": 0.551,
+          "ganho_pp": 2.04,
+          "ic95_meia_largura_pp": 14.0,
+          "p_vs_majoritaria": 0.8863862833599383,
+          "auc": 0.5368
+        },
+        "SVM — preço + tom, treinado em tudo": {
+          "n": 49,
+          "majoritaria": 0.5306,
+          "acuracia": 0.449,
+          "ganho_pp": -8.16,
+          "ic95_meia_largura_pp": 14.0,
+          "p_vs_majoritaria": 0.2564672502166556,
+          "auc": 0.5502
+        },
+        "XGBoost — preço + tom, treinado em tudo": {
+          "n": 49,
+          "majoritaria": 0.5306,
+          "acuracia": 0.5714,
+          "ganho_pp": 4.08,
+          "ic95_meia_largura_pp": 14.0,
+          "p_vs_majoritaria": 0.6681006703709302,
+          "auc": 0.5334
+        },
+        "SVM — só preço, treinado só nos dias com tom": {
+          "n": 49,
+          "majoritaria": 0.5306,
+          "acuracia": 0.3469,
+          "ganho_pp": -18.37,
+          "ic95_meia_largura_pp": 14.0,
+          "p_vs_majoritaria": 0.014111843811991504,
+          "auc": 0.4164
+        },
+        "XGBoost — só preço, treinado só nos dias com tom": {
+          "n": 49,
+          "majoritaria": 0.5306,
+          "acuracia": 0.3265,
+          "ganho_pp": -20.41,
+          "ic95_meia_largura_pp": 14.0,
+          "p_vs_majoritaria": 0.005949531921230334,
+          "auc": 0.3319
+        },
+        "SVM — preço + tom, treinado só nos dias com tom": {
+          "n": 49,
+          "majoritaria": 0.5306,
+          "acuracia": 0.5306,
+          "ganho_pp": 0.0,
+          "ic95_meia_largura_pp": 14.0,
+          "p_vs_majoritaria": 1.0,
+          "auc": 0.561
+        },
+        "XGBoost — preço + tom, treinado só nos dias com tom": {
+          "n": 49,
+          "majoritaria": 0.5306,
+          "acuracia": 0.3878,
+          "ganho_pp": -14.29,
+          "ic95_meia_largura_pp": 14.0,
+          "p_vs_majoritaria": 0.0616733635652638,
+          "auc": 0.4114
+        }
+      }
+    },
+    "ITUB4": {
+      "n_treino_com_tom": 35,
+      "n_teste_com_tom": 3,
+      "n_teste_total": 579,
+      "arms": {},
+      "aviso": "treino com tom = 35 (mín. 100), teste com tom = 3 (mín. 30)"
+    },
+    "PETR4": {
+      "n_treino_com_tom": 290,
+      "n_teste_com_tom": 56,
+      "n_teste_total": 579,
+      "arms": {
+        "SVM — só preço, treinado em tudo": {
+          "n": 56,
+          "majoritaria": 0.5179,
+          "acuracia": 0.5,
+          "ganho_pp": -1.79,
+          "ic95_meia_largura_pp": 13.1,
+          "p_vs_majoritaria": 0.7911127449745653,
+          "auc": 0.5658
+        },
+        "XGBoost — só preço, treinado em tudo": {
+          "n": 56,
+          "majoritaria": 0.5179,
+          "acuracia": 0.5179,
+          "ganho_pp": 0.0,
+          "ic95_meia_largura_pp": 13.1,
+          "p_vs_majoritaria": 1.0,
+          "auc": 0.493
+        },
+        "SVM — preço + tom, treinado em tudo": {
+          "n": 56,
+          "majoritaria": 0.5179,
+          "acuracia": 0.4464,
+          "ganho_pp": -7.14,
+          "ic95_meia_largura_pp": 13.1,
+          "p_vs_majoritaria": 0.2887461611040026,
+          "auc": 0.4828
+        },
+        "XGBoost — preço + tom, treinado em tudo": {
+          "n": 56,
+          "majoritaria": 0.5179,
+          "acuracia": 0.5893,
+          "ganho_pp": 7.14,
+          "ic95_meia_largura_pp": 13.1,
+          "p_vs_majoritaria": 0.34937225903428604,
+          "auc": 0.5709
+        },
+        "SVM — só preço, treinado só nos dias com tom": {
+          "n": 56,
+          "majoritaria": 0.5179,
+          "acuracia": 0.4821,
+          "ganho_pp": -3.57,
+          "ic95_meia_largura_pp": 13.1,
+          "p_vs_majoritaria": 0.5962003138571431,
+          "auc": 0.5754
+        },
+        "XGBoost — só preço, treinado só nos dias com tom": {
+          "n": 56,
+          "majoritaria": 0.5179,
+          "acuracia": 0.4821,
+          "ganho_pp": -3.57,
+          "ic95_meia_largura_pp": 13.1,
+          "p_vs_majoritaria": 0.5962003138571431,
+          "auc": 0.5
+        },
+        "SVM — preço + tom, treinado só nos dias com tom": {
+          "n": 56,
+          "majoritaria": 0.5179,
+          "acuracia": 0.5,
+          "ganho_pp": -1.79,
+          "ic95_meia_largura_pp": 13.1,
+          "p_vs_majoritaria": 0.7911127449745653,
+          "auc": 0.4381
+        },
+        "XGBoost — preço + tom, treinado só nos dias com tom": {
+          "n": 56,
+          "majoritaria": 0.5179,
+          "acuracia": 0.4643,
+          "ganho_pp": -5.36,
+          "ic95_meia_largura_pp": 13.1,
+          "p_vs_majoritaria": 0.42651960574586417,
+          "auc": 0.553
+        }
+      }
+    },
+    "SBSP3": {
+      "n_treino_com_tom": 35,
+      "n_teste_com_tom": 16,
+      "n_teste_total": 579,
+      "arms": {},
+      "aviso": "treino com tom = 35 (mín. 100), teste com tom = 16 (mín. 30)"
+    },
+    "BBDC4": {
+      "n_treino_com_tom": 25,
+      "n_teste_com_tom": 5,
+      "n_teste_total": 579,
+      "arms": {},
+      "aviso": "treino com tom = 25 (mín. 100), teste com tom = 5 (mín. 30)"
+    },
+    "B3SA3": {
+      "n_treino_com_tom": 57,
+      "n_teste_com_tom": 13,
+      "n_teste_total": 579,
+      "arms": {},
+      "aviso": "treino com tom = 57 (mín. 100), teste com tom = 13 (mín. 30)"
+    },
+    "ITSA4": {
+      "n_treino_com_tom": 25,
+      "n_teste_com_tom": 9,
+      "n_teste_total": 579,
+      "arms": {},
+      "aviso": "treino com tom = 25 (mín. 100), teste com tom = 9 (mín. 30)"
+    },
+    "BPAC11": {
+      "n_treino_com_tom": 9,
+      "n_teste_com_tom": 4,
+      "n_teste_total": 579,
+      "arms": {},
+      "aviso": "treino com tom = 9 (mín. 100), teste com tom = 4 (mín. 30)"
+    },
+    "BBAS3": {
+      "n_treino_com_tom": 46,
+      "n_teste_com_tom": 4,
+      "n_teste_total": 579,
+      "arms": {},
+      "aviso": "treino com tom = 46 (mín. 100), teste com tom = 4 (mín. 30)"
+    },
+    "ABEV3": {
+      "n_treino_com_tom": 9,
+      "n_teste_com_tom": 1,
+      "n_teste_total": 579,
+      "arms": {},
+      "aviso": "treino com tom = 9 (mín. 100), teste com tom = 1 (mín. 30)"
+    }
+  },
+  "agrupado": {
+    "SVM — preço + tom, treinado em tudo": {
+      "n": 105,
+      "majoritaria": 0.5238,
+      "acuracia": 0.4476,
+      "ganho_pp": -7.62,
+      "ic95_meia_largura_pp": 9.56,
+      "p_vs_majoritaria": 0.1193056895781829
+    },
+    "SVM — preço + tom, treinado só nos dias com tom": {
+      "n": 105,
+      "majoritaria": 0.5238,
+      "acuracia": 0.5143,
+      "ganho_pp": -0.95,
+      "ic95_meia_largura_pp": 9.56,
+      "p_vs_majoritaria": 0.8458526126820436
+    },
+    "SVM — só preço, treinado em tudo": {
+      "n": 105,
+      "majoritaria": 0.5238,
+      "acuracia": 0.5333,
+      "ganho_pp": 0.95,
+      "ic95_meia_largura_pp": 9.56,
+      "p_vs_majoritaria": 0.9222319487404909
+    },
+    "SVM — só preço, treinado só nos dias com tom": {
+      "n": 105,
+      "majoritaria": 0.5238,
+      "acuracia": 0.419,
+      "ganho_pp": -10.48,
+      "ic95_meia_largura_pp": 9.56,
+      "p_vs_majoritaria": 0.039683505844778734
+    },
+    "XGBoost — preço + tom, treinado em tudo": {
+      "n": 105,
+      "majoritaria": 0.5238,
+      "acuracia": 0.581,
+      "ganho_pp": 5.71,
+      "ic95_meia_largura_pp": 9.56,
+      "p_vs_majoritaria": 0.28244802543624875
+    },
+    "XGBoost — preço + tom, treinado só nos dias com tom": {
+      "n": 105,
+      "majoritaria": 0.5238,
+      "acuracia": 0.4286,
+      "ganho_pp": -9.52,
+      "ic95_meia_largura_pp": 9.56,
+      "p_vs_majoritaria": 0.06288986937157728
+    },
+    "XGBoost — só preço, treinado em tudo": {
+      "n": 105,
+      "majoritaria": 0.5238,
+      "acuracia": 0.5333,
+      "ganho_pp": 0.95,
+      "ic95_meia_largura_pp": 9.56,
+      "p_vs_majoritaria": 0.9222319487404909
+    },
+    "XGBoost — só preço, treinado só nos dias com tom": {
+      "n": 105,
+      "majoritaria": 0.5238,
+      "acuracia": 0.4095,
+      "ganho_pp": -11.43,
+      "ic95_meia_largura_pp": 9.56,
+      "p_vs_majoritaria": 0.024166370493221068
+    }
+  },
+  "bonferroni": {
+    "testes_acumulados_no_estudo": 132,
+    "limiar": 0.000379
+  }
+}
