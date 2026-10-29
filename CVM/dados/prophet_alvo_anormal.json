@@ -1,0 +1,110 @@
+{
+  "previsao_registrada_antes": "o Prophet não deve ser salvo pela troca de alvo: o retorno anormal é quase estacionário e de média nula, sem tendência a extrapolar; espera-se amplitude muito menor que a real e acerto abaixo do palpite fixo",
+  "papeis": {
+    "VALE3": {
+      "n_teste": 570,
+      "desvio_previsto": 0.225,
+      "desvio_real": 1.3275,
+      "razao_amplitude": 0.17,
+      "pct_previu_alta": 30.7,
+      "acuracia": 0.5158,
+      "majoritaria": 0.5175,
+      "ganho_pp": -0.18
+    },
+    "ITUB4": {
+      "n_teste": 570,
+      "desvio_previsto": 0.0962,
+      "desvio_real": 0.8372,
+      "razao_amplitude": 0.115,
+      "pct_previu_alta": 87.2,
+      "acuracia": 0.4912,
+      "majoritaria": 0.5105,
+      "ganho_pp": -1.93
+    },
+    "PETR4": {
+      "n_teste": 570,
+      "desvio_previsto": 0.3121,
+      "desvio_real": 1.6504,
+      "razao_amplitude": 0.189,
+      "pct_previu_alta": 51.4,
+      "acuracia": 0.4947,
+      "majoritaria": 0.514,
+      "ganho_pp": -1.93
+    },
+    "SBSP3": {
+      "n_teste": 570,
+      "desvio_previsto": 0.1696,
+      "desvio_real": 1.2909,
+      "razao_amplitude": 0.131,
+      "pct_previu_alta": 73.7,
+      "acuracia": 0.4789,
+      "majoritaria": 0.5211,
+      "ganho_pp": -4.21
+    },
+    "BBDC4": {
+      "n_teste": 570,
+      "desvio_previsto": 0.1686,
+      "desvio_real": 1.1199,
+      "razao_amplitude": 0.151,
+      "pct_previu_alta": 57.2,
+      "acuracia": 0.5053,
+      "majoritaria": 0.5123,
+      "ganho_pp": -0.7
+    },
+    "B3SA3": {
+      "n_teste": 570,
+      "desvio_previsto": 0.2113,
+      "desvio_real": 1.4382,
+      "razao_amplitude": 0.147,
+      "pct_previu_alta": 44.9,
+      "acuracia": 0.486,
+      "majoritaria": 0.5211,
+      "ganho_pp": -3.51
+    },
+    "ITSA4": {
+      "n_teste": 570,
+      "desvio_previsto": 0.0803,
+      "desvio_real": 0.7847,
+      "razao_amplitude": 0.102,
+      "pct_previu_alta": 73.7,
+      "acuracia": 0.4947,
+      "majoritaria": 0.5088,
+      "ganho_pp": -1.4
+    },
+    "BPAC11": {
+      "n_teste": 570,
+      "desvio_previsto": 0.2786,
+      "desvio_real": 1.2676,
+      "razao_amplitude": 0.22,
+      "pct_previu_alta": 41.8,
+      "acuracia": 0.5175,
+      "majoritaria": 0.514,
+      "ganho_pp": 0.35
+    },
+    "BBAS3": {
+      "n_teste": 570,
+      "desvio_previsto": 0.1923,
+      "desvio_real": 1.2975,
+      "razao_amplitude": 0.148,
+      "pct_previu_alta": 43.3,
+      "acuracia": 0.5421,
+      "majoritaria": 0.5088,
+      "ganho_pp": 3.33
+    },
+    "ABEV3": {
+      "n_teste": 570,
+      "desvio_previsto": 0.1637,
+      "desvio_real": 1.2882,
+      "razao_amplitude": 0.127,
+      "pct_previu_alta": 58.2,
+      "acuracia": 0.5123,
+      "majoritaria": 0.5018,
+      "ganho_pp": 1.05
+    }
+  },
+  "resumo": {
+    "ganho_medio_pp": -0.91,
+    "papeis_positivos": 3,
+    "razao_amplitude_media": 0.15
+  }
+}

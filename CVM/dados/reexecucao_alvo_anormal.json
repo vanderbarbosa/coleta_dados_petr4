@@ -1,0 +1,103 @@
+{
+  "nota": "alvo ANORMAL = retorno descontado do Ibovespa pelo modelo de mercado, coeficientes estimados só no treino; inferência por bootstrap em blocos de data",
+  "volatilidade": {
+    "volatilidade BRUTA — todos os dias": {
+      "r2os_pct": 0.089,
+      "ic95_pct": [
+        -0.048,
+        0.271
+      ],
+      "p_bootstrap": 0.212
+    },
+    "volatilidade BRUTA — só dias com comunicado": {
+      "r2os_pct": -0.166,
+      "ic95_pct": [
+        -1.721,
+        0.755
+      ],
+      "p_bootstrap": 0.694
+    },
+    "volatilidade ANORMAL (idiossincrática) — todos os dias": {
+      "r2os_pct": 0.114,
+      "ic95_pct": [
+        -0.02,
+        0.357
+      ],
+      "p_bootstrap": 0.116
+    },
+    "volatilidade ANORMAL (idiossincrática) — só dias com comunicado": {
+      "r2os_pct": 0.32,
+      "ic95_pct": [
+        -2.122,
+        1.966
+      ],
+      "p_bootstrap": 0.812
+    }
+  },
+  "direcao_por_subconjunto": {
+    "alvo BRUTO — todos os dias": {
+      "n": 5700,
+      "n_datas": 570,
+      "valor": 0.4888,
+      "ic95": [
+        0.4754,
+        0.5028
+      ],
+      "majoritaria": 0.51,
+      "ganho_pp": -2.12,
+      "ic95_pp": [
+        -3.46,
+        -0.72
+      ],
+      "p_bootstrap": 0.0
+    },
+    "alvo BRUTO — só dias com comunicado": {
+      "n": 673,
+      "n_datas": 402,
+      "valor": 0.5245,
+      "ic95": [
+        0.4851,
+        0.5643
+      ],
+      "majoritaria": 0.5305,
+      "ganho_pp": -0.59,
+      "ic95_pp": [
+        -4.53,
+        3.38
+      ],
+      "p_bootstrap": 0.775
+    },
+    "alvo ANORMAL — todos os dias": {
+      "n": 5700,
+      "n_datas": 570,
+      "valor": 0.5047,
+      "ic95": [
+        0.4909,
+        0.5184
+      ],
+      "majoritaria": 0.5084,
+      "ganho_pp": -0.37,
+      "ic95_pp": [
+        -1.75,
+        1.0
+      ],
+      "p_bootstrap": 0.654
+    },
+    "alvo ANORMAL — só dias com comunicado": {
+      "n": 673,
+      "n_datas": 402,
+      "valor": 0.4874,
+      "ic95": [
+        0.4475,
+        0.5258
+      ],
+      "majoritaria": 0.5186,
+      "ganho_pp": -3.12,
+      "ic95_pp": [
+        -7.11,
+        0.72
+      ],
+      "p_bootstrap": 0.115
+    }
+  }
+}

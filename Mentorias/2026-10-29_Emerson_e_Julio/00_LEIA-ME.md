@@ -189,6 +189,68 @@ procedimento: PETR4 1,37 (agressiva), BPAC11 1,26, BBAS3 1,22, ITUB4 0,98,
 VALE3 0,92, **ABEV3 0,67** (defensiva, como se espera de uma empresa de
 bebidas).
 
+## Refazendo com o alvo anormal o que tinha dado nulo
+
+Se o alvo bruto contaminava a direção, poderia estar contaminando também a
+volatilidade e a restrição aos dias com evento. Refiz os dois.
+
+### Volatilidade — o sentimento acrescenta ao HAR?
+
+Aqui a troca de alvo é conceitualmente importante: a volatilidade do retorno
+anormal é a **volatilidade idiossincrática**, a parte do sacolejo que vem da
+própria empresa e não do mercado. É ela que um comunicado da empresa poderia
+explicar.
+
+| Alvo | Subconjunto | R²-OS | IC 95% | p |
+|---|---|---|---|---|
+| Volatilidade bruta | todos os dias | +0,089% | [−0,048; +0,271] | 0,212 |
+| Volatilidade bruta | só com comunicado | −0,166% | [−1,721; +0,755] | 0,694 |
+| **Volatilidade anormal** | **todos os dias** | **+0,114%** | **[−0,020; +0,357]** | **0,116** |
+| Volatilidade anormal | só com comunicado | +0,320% | [−2,122; +1,966] | 0,812 |
+
+**O alvo anormal melhora, mas pouco, e não resolve.** O +0,114% é o resultado
+que mais perto chegou de significância em todo o estudo — o limite inferior
+do intervalo é −0,020%, quase encostando no zero. Mas duas coisas o impedem
+de ser um achado:
+
+1. **p = 0,116** — não passa.
+2. **A magnitude é irrelevante.** A meta que a própria pesquisa estabeleceu
+   para volatilidade é **R²-OS acima de +5%**. Estamos falando de **+0,11%**
+   — duas ordens de grandeza abaixo.
+
+### Direção, por subconjunto e por alvo
+
+| Alvo | Subconjunto | n | Ganho | IC 95% | p |
+|---|---|---|---|---|---|
+| Bruto | todos os dias | 5.700 | **−2,12 pp** | [−3,46; −0,72] | **0,000** |
+| Bruto | só com comunicado | 673 | −0,59 pp | [−4,53; +3,38] | 0,775 |
+| **Anormal** | **todos os dias** | 5.700 | **−0,37 pp** | [−1,75; +1,00] | 0,654 |
+| Anormal | só com comunicado | 673 | −3,12 pp | [−7,11; +0,72] | 0,115 |
+
+Confirma o que o experimento anterior mostrou: **o alvo bruto era ativamente
+ruim** (−2,12 pp, p = 0,000 — significativamente *pior* que o palpite fixo) e
+**o alvo anormal corrige isso** (−0,37 pp, indistinguível do palpite fixo).
+
+**E a restrição aos dias com comunicado continua não ajudando**, com os dois
+alvos. Essa conclusão não mudou.
+
+### Prophet com alvo anormal
+
+Verifiquei primeiro na PETR4, antes de gastar tempo nos dez, e registrei a
+previsão: o Prophet não seria salvo, porque decompõe a série em tendência e
+sazonalidade, e o retorno anormal é quase estacionário — não há tendência a
+extrapolar.
+
+**Resultado nos 10 papéis:** não degenerou (prevê alta em 31% a 87% dos dias,
+varia), mas a **amplitude da previsão é 0,15× a realidade** — de 0,10 a 0,22
+conforme o papel. Ele produz uma versão alisada e quase nula da série:
+comportamento correto para um modelo de tendência sobre série sem tendência,
+e inútil para direção. **Ganho médio de −0,91 pp, positivo em 3 dos 10.**
+
+Registrei a previsão antes de rodar e ela se confirmou — o que vale mais que
+o resultado em si, porque mostra que o mecanismo do Prophet é compreendido, e
+não apenas constatado.
+
 ## Uma correção que preciso fazer no meu próprio alerta
 
 Na conversa anterior eu avisei que os intervalos de confiança agrupados

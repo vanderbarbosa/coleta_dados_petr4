@@ -59,11 +59,39 @@ para 56 papéis. **Não compra precisão** — o N efetivo satura em
 (nº de dias ÷ correlação), então só o HORIZONTE move o teto. Ampliar papéis
 ajuda o modelo a aprender, não a medir.
 
-**PRÓXIMO PASSO ÓBVIO, não executado:** refazer com alvo anormal os
-experimentos que deram nulo antes (volatilidade/HAR, dias com evento,
-Prophet). O alvo bruto contaminava todos eles. Ver
-[[restringir-a-dias-de-evento-nao-ajuda]] e
-[[finbert-nao-acrescenta-nos-dois-times]].
+**REEXECUÇÃO COM ALVO ANORMAL — feita** (`28_reexecucao_com_alvo_anormal.py`
+e `29_prophet_alvo_anormal.py`, 29/10). O alvo bruto contaminava os
+experimentos nulos; refeitos:
+
+*Volatilidade.* O alvo anormal é a volatilidade IDIOSSINCRÁTICA — a parte que
+um comunicado da empresa poderia explicar. R²-OS do HAR+sentimento sobre o
+HAR: bruta **+0,089%** (p=0,212) contra anormal **+0,114%** (p=0,116, IC
+[−0,020; +0,357]). **É o resultado que mais perto chegou de significância em
+todo o estudo** — o limite inferior quase encosta no zero. Mas não passa, e a
+magnitude é irrelevante: a meta da pesquisa é **R²-OS > +5%** e isto é
++0,11%, duas ordens de grandeza abaixo. Registrar o sinal, nunca o efeito.
+
+*Direção por subconjunto.* Alvo bruto, todos os dias: **−2,12pp, p=0,000** —
+significativamente PIOR que o palpite fixo. Alvo anormal: **−0,37pp,
+p=0,654** — indistinguível. Confirma que o alvo bruto era ativamente ruim. **A
+restrição a dias com comunicado continua não ajudando com nenhum dos dois
+alvos** (−0,59pp bruto, −3,12pp anormal) — a conclusão de
+[[restringir-a-dias-de-evento-nao-ajuda]] não muda.
+
+*Prophet.* Previsão registrada ANTES e confirmada: não é salvo pela troca de
+alvo. Amplitude da previsão = **0,15× a real** (de 0,10 a 0,22 entre os
+papéis) — ele produz versão alisada e quase nula da série, que é o correto
+para modelo de tendência sobre série sem tendência, e inútil para direção.
+Ganho médio **−0,91pp**, positivos em 3/10.
+
+**TRÊS ERROS MEUS corrigidos ao escrever a seção 4r, dois dos quais iriam
+para a dissertação:** (1) **inventei a citação `mackinlay_event_1997`**, que
+NÃO existe no bib — trocada por descrição sem atribuição falsa (a memória já
+registrava que MacKinlay foi arrolado no Artigo 1 "de conhecimento
+consolidado, não verificado na fonte"); (2) usei `\ac{CVM}`, macro não
+configurada neste projeto; (3) referenciei o rótulo inexistente
+`sec:metodologia`. Os três quebrariam a compilação. **Conferir chave de
+citação no bib ANTES de escrever, sempre.**
 
 **How to apply:** daqui em diante, **alvo padrão = retorno anormal**, não
 bruto. E toda inferência agrupada por bootstrap em blocos de data — não pela
