@@ -1,5 +1,6 @@
 # Memory Index
 
+- [Restringir a dias de evento não ajuda](restringir-a-dias-de-evento-nao-ajuda.md) — avaliar só nos pregões com comunicado PIORA; o limite é a raridade do evento, não o modelo. Inclui a divergência de fórmula do ISM, resolvida
 - [Entregar pouco e compreensível](entregar-pouco-e-compreensivel.md) — "não consegui compreender para explicar": menos peças, adversário antes do número, analogia antes do jargão
 - [FinBERT não acrescenta nos dois times](finbert-nao-acrescenta-nos-dois-times.md) — nem ao GARCH+SVM/XGBoost nem ao Prophet (melhora em ~5/10 = moeda); GARCH vence o Prophet 10×0 na volatilidade
 - [Prophet é pior que não fazer nada](prophet-pior-que-nao-fazer-nada.md) — com a mesma informação, perde para segurar o último valor em 10/10 papéis; e reancorar todo dia vale +90% a +94%, mais que qualquer sofisticação

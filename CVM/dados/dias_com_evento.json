@@ -1,0 +1,2873 @@
+{
+  "escopo": "'evento' = comunicado da CVM entregue após as 17h da véspera; notícia de jornal não entra (corpus ausente nesta máquina)",
+  "cuidado": "cada subconjunto é avaliado contra a SUA própria classe majoritária; o IC95% alarga no subconjunto menor, e isso é reportado",
+  "papeis": {
+    "VALE3": {
+      "n_teste": 579,
+      "n_com_evento": 127,
+      "pct_com_evento": 21.9,
+      "direcao": {
+        "SVM — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.506,
+            "acuracia": 0.5078,
+            "ganho_pp": 0.17,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.9668529437503984,
+            "auc": 0.5037
+          },
+          "so_dias_com_evento": {
+            "n": 127,
+            "majoritaria": 0.5354,
+            "acuracia": 0.5354,
+            "ganho_pp": 0.0,
+            "ic95_meia_largura_pp": 8.7,
+            "p_vs_majoritaria": 1.0,
+            "auc": 0.5304
+          },
+          "so_dias_sem_evento": {
+            "n": 452,
+            "majoritaria": 0.5022,
+            "acuracia": 0.5,
+            "ganho_pp": -0.22,
+            "ic95_meia_largura_pp": 4.61,
+            "p_vs_majoritaria": 0.9251466171789395,
+            "auc": 0.4945
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 127,
+            "majoritaria": 0.5354,
+            "acuracia": 0.4488,
+            "ganho_pp": -8.66,
+            "ic95_meia_largura_pp": 8.7,
+            "p_vs_majoritaria": 0.06130940948126284,
+            "auc": 0.537
+          },
+          "_n_treino_especialista": 286
+        },
+        "XGBoost — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.506,
+            "acuracia": 0.4646,
+            "ganho_pp": -4.15,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.05067882185427569,
+            "auc": 0.4766
+          },
+          "so_dias_com_evento": {
+            "n": 127,
+            "majoritaria": 0.5354,
+            "acuracia": 0.4803,
+            "ganho_pp": -5.51,
+            "ic95_meia_largura_pp": 8.7,
+            "p_vs_majoritaria": 0.2144898153464792,
+            "auc": 0.5077
+          },
+          "so_dias_sem_evento": {
+            "n": 452,
+            "majoritaria": 0.5022,
+            "acuracia": 0.4602,
+            "ganho_pp": -4.2,
+            "ic95_meia_largura_pp": 4.61,
+            "p_vs_majoritaria": 0.08168314535794306,
+            "auc": 0.4651
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 127,
+            "majoritaria": 0.5354,
+            "acuracia": 0.4646,
+            "ganho_pp": -7.09,
+            "ic95_meia_largura_pp": 8.7,
+            "p_vs_majoritaria": 0.11032415458973083,
+            "auc": 0.4344
+          },
+          "_n_treino_especialista": 286
+        },
+        "SVM — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.506,
+            "acuracia": 0.4888,
+            "ganho_pp": -1.73,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.40626098143585565,
+            "auc": 0.511
+          },
+          "so_dias_com_evento": {
+            "n": 127,
+            "majoritaria": 0.5354,
+            "acuracia": 0.4488,
+            "ganho_pp": -8.66,
+            "ic95_meia_largura_pp": 8.7,
+            "p_vs_majoritaria": 0.06130940948126284,
+            "auc": 0.4718
+          },
+          "so_dias_sem_evento": {
+            "n": 452,
+            "majoritaria": 0.5022,
+            "acuracia": 0.5,
+            "ganho_pp": -0.22,
+            "ic95_meia_largura_pp": 4.61,
+            "p_vs_majoritaria": 0.9251466171789395,
+            "auc": 0.4914
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 127,
+            "majoritaria": 0.5354,
+            "acuracia": 0.4882,
+            "ganho_pp": -4.72,
+            "ic95_meia_largura_pp": 8.7,
+            "p_vs_majoritaria": 0.28743015008509987,
+            "auc": 0.4763
+          },
+          "_n_treino_especialista": 286
+        },
+        "XGBoost — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.506,
+            "acuracia": 0.4905,
+            "ganho_pp": -1.55,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.45480470828979436,
+            "auc": 0.4783
+          },
+          "so_dias_com_evento": {
+            "n": 127,
+            "majoritaria": 0.5354,
+            "acuracia": 0.4646,
+            "ganho_pp": -7.09,
+            "ic95_meia_largura_pp": 8.7,
+            "p_vs_majoritaria": 0.11032415458973083,
+            "auc": 0.4811
+          },
+          "so_dias_sem_evento": {
+            "n": 452,
+            "majoritaria": 0.5022,
+            "acuracia": 0.4978,
+            "ganho_pp": -0.44,
+            "ic95_meia_largura_pp": 4.61,
+            "p_vs_majoritaria": 0.8509498811248409,
+            "auc": 0.4828
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 127,
+            "majoritaria": 0.5354,
+            "acuracia": 0.4646,
+            "ganho_pp": -7.09,
+            "ic95_meia_largura_pp": 8.7,
+            "p_vs_majoritaria": 0.11032415458973083,
+            "auc": 0.4305
+          },
+          "_n_treino_especialista": 286
+        },
+        "SVM — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.506,
+            "acuracia": 0.4922,
+            "ganho_pp": -1.38,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.5064531578744189,
+            "auc": 0.5046
+          },
+          "so_dias_com_evento": {
+            "n": 127,
+            "majoritaria": 0.5354,
+            "acuracia": 0.4567,
+            "ganho_pp": -7.87,
+            "ic95_meia_largura_pp": 8.7,
+            "p_vs_majoritaria": 0.09058362952967831,
+            "auc": 0.4808
+          },
+          "so_dias_sem_evento": {
+            "n": 452,
+            "majoritaria": 0.5022,
+            "acuracia": 0.5022,
+            "ganho_pp": -0.0,
+            "ic95_meia_largura_pp": 4.61,
+            "p_vs_majoritaria": 1.0,
+            "auc": 0.493
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 127,
+            "majoritaria": 0.5354,
+            "acuracia": 0.4567,
+            "ganho_pp": -7.87,
+            "ic95_meia_largura_pp": 8.7,
+            "p_vs_majoritaria": 0.09058362952967831,
+            "auc": 0.5072
+          },
+          "_n_treino_especialista": 286
+        },
+        "XGBoost — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.506,
+            "acuracia": 0.4974,
+            "ganho_pp": -0.86,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.6779835460916122,
+            "auc": 0.4884
+          },
+          "so_dias_com_evento": {
+            "n": 127,
+            "majoritaria": 0.5354,
+            "acuracia": 0.5039,
+            "ganho_pp": -3.15,
+            "ic95_meia_largura_pp": 8.7,
+            "p_vs_majoritaria": 0.4783424785329315,
+            "auc": 0.5021
+          },
+          "so_dias_sem_evento": {
+            "n": 452,
+            "majoritaria": 0.5022,
+            "acuracia": 0.4956,
+            "ganho_pp": -0.66,
+            "ic95_meia_largura_pp": 4.61,
+            "p_vs_majoritaria": 0.7780492324508994,
+            "auc": 0.4853
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 127,
+            "majoritaria": 0.5354,
+            "acuracia": 0.5197,
+            "ganho_pp": -1.57,
+            "ic95_meia_largura_pp": 8.7,
+            "p_vs_majoritaria": 0.7230230738706851,
+            "auc": 0.4406
+          },
+          "_n_treino_especialista": 286
+        }
+      },
+      "volatilidade": {
+        "HAR (referência)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0656,
+            "r2os_vs_HAR": 0.0
+          },
+          "so_dias_com_evento": {
+            "n": 127,
+            "mae": 0.0609,
+            "r2os_vs_HAR": 0.0
+          }
+        },
+        "HAR + sentimento (A)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0681,
+            "r2os_vs_HAR": -5.33
+          },
+          "so_dias_com_evento": {
+            "n": 127,
+            "mae": 0.0798,
+            "r2os_vs_HAR": -32.96
+          }
+        },
+        "HAR + sentimento (B)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0684,
+            "r2os_vs_HAR": -5.75
+          },
+          "so_dias_com_evento": {
+            "n": 127,
+            "mae": 0.081,
+            "r2os_vs_HAR": -34.99
+          }
+        }
+      },
+      "resumo": {
+        "ganho_medio_todos_pp": -1.58,
+        "ganho_medio_com_evento_pp": -5.38,
+        "ganho_medio_especialista_pp": -6.17,
+        "ic95_com_evento_pp": 8.7,
+        "bracos_significativos_com_evento": 0,
+        "bracos_significativos_especialista": 0
+      }
+    },
+    "ITUB4": {
+      "n_teste": 579,
+      "n_com_evento": 48,
+      "pct_com_evento": 8.3,
+      "direcao": {
+        "SVM — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5337,
+            "acuracia": 0.4819,
+            "ganho_pp": -5.18,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.013919682780056989,
+            "auc": 0.4992
+          },
+          "so_dias_com_evento": {
+            "n": 48,
+            "majoritaria": 0.5,
+            "acuracia": 0.4167,
+            "ganho_pp": -8.33,
+            "ic95_meia_largura_pp": 14.15,
+            "p_vs_majoritaria": 0.31232680747326935,
+            "auc": 0.5625
+          },
+          "so_dias_sem_evento": {
+            "n": 531,
+            "majoritaria": 0.5367,
+            "acuracia": 0.4878,
+            "ganho_pp": -4.9,
+            "ic95_meia_largura_pp": 4.25,
+            "p_vs_majoritaria": 0.02637906228540357,
+            "auc": 0.4938
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 48,
+            "majoritaria": 0.5,
+            "acuracia": 0.375,
+            "ganho_pp": -12.5,
+            "ic95_meia_largura_pp": 14.15,
+            "p_vs_majoritaria": 0.11140289106101878,
+            "auc": 0.3698
+          },
+          "_n_treino_especialista": 209
+        },
+        "XGBoost — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5337,
+            "acuracia": 0.487,
+            "ganho_pp": -4.66,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.027184397547030923,
+            "auc": 0.4679
+          },
+          "so_dias_com_evento": {
+            "n": 48,
+            "majoritaria": 0.5,
+            "acuracia": 0.5208,
+            "ganho_pp": 2.08,
+            "ic95_meia_largura_pp": 14.15,
+            "p_vs_majoritaria": 0.8854334972865135,
+            "auc": 0.4306
+          },
+          "so_dias_sem_evento": {
+            "n": 531,
+            "majoritaria": 0.5367,
+            "acuracia": 0.484,
+            "ganho_pp": -5.27,
+            "ic95_meia_largura_pp": 4.25,
+            "p_vs_majoritaria": 0.016618170613968475,
+            "auc": 0.4699
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 48,
+            "majoritaria": 0.5,
+            "acuracia": 0.4375,
+            "ganho_pp": -6.25,
+            "ic95_meia_largura_pp": 14.15,
+            "p_vs_majoritaria": 0.470879013621712,
+            "auc": 0.4115
+          },
+          "_n_treino_especialista": 209
+        },
+        "SVM — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5337,
+            "acuracia": 0.4767,
+            "ganho_pp": -5.7,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.006729784712245472,
+            "auc": 0.5102
+          },
+          "so_dias_com_evento": {
+            "n": 48,
+            "majoritaria": 0.5,
+            "acuracia": 0.5208,
+            "ganho_pp": 2.08,
+            "ic95_meia_largura_pp": 14.15,
+            "p_vs_majoritaria": 0.8854334972865135,
+            "auc": 0.559
+          },
+          "so_dias_sem_evento": {
+            "n": 531,
+            "majoritaria": 0.5367,
+            "acuracia": 0.4727,
+            "ganho_pp": -6.4,
+            "ic95_meia_largura_pp": 4.25,
+            "p_vs_majoritaria": 0.003513243895441446,
+            "auc": 0.5075
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 48,
+            "majoritaria": 0.5,
+            "acuracia": 0.5,
+            "ganho_pp": 0.0,
+            "ic95_meia_largura_pp": 14.15,
+            "p_vs_majoritaria": 1.0,
+            "auc": 0.5035
+          },
+          "_n_treino_especialista": 209
+        },
+        "XGBoost — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5337,
+            "acuracia": 0.5043,
+            "ganho_pp": -2.94,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.1569969528224851,
+            "auc": 0.496
+          },
+          "so_dias_com_evento": {
+            "n": 48,
+            "majoritaria": 0.5,
+            "acuracia": 0.5625,
+            "ganho_pp": 6.25,
+            "ic95_meia_largura_pp": 14.15,
+            "p_vs_majoritaria": 0.470879013621712,
+            "auc": 0.4965
+          },
+          "so_dias_sem_evento": {
+            "n": 531,
+            "majoritaria": 0.5367,
+            "acuracia": 0.4991,
+            "ganho_pp": -3.77,
+            "ic95_meia_largura_pp": 4.25,
+            "p_vs_majoritaria": 0.08959292542761513,
+            "auc": 0.4888
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 48,
+            "majoritaria": 0.5,
+            "acuracia": 0.5,
+            "ganho_pp": 0.0,
+            "ic95_meia_largura_pp": 14.15,
+            "p_vs_majoritaria": 1.0,
+            "auc": 0.5191
+          },
+          "_n_treino_especialista": 209
+        },
+        "SVM — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5337,
+            "acuracia": 0.4767,
+            "ganho_pp": -5.7,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.006729784712245472,
+            "auc": 0.5101
+          },
+          "so_dias_com_evento": {
+            "n": 48,
+            "majoritaria": 0.5,
+            "acuracia": 0.4583,
+            "ganho_pp": -4.17,
+            "ic95_meia_largura_pp": 14.15,
+            "p_vs_majoritaria": 0.6654658120766188,
+            "auc": 0.5425
+          },
+          "so_dias_sem_evento": {
+            "n": 531,
+            "majoritaria": 0.5367,
+            "acuracia": 0.4783,
+            "ganho_pp": -5.84,
+            "ic95_meia_largura_pp": 4.25,
+            "p_vs_majoritaria": 0.007887024736394133,
+            "auc": 0.5061
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 48,
+            "majoritaria": 0.5,
+            "acuracia": 0.5,
+            "ganho_pp": 0.0,
+            "ic95_meia_largura_pp": 14.15,
+            "p_vs_majoritaria": 1.0,
+            "auc": 0.5382
+          },
+          "_n_treino_especialista": 209
+        },
+        "XGBoost — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5337,
+            "acuracia": 0.5181,
+            "ganho_pp": -1.55,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.4537779388948666,
+            "auc": 0.4988
+          },
+          "so_dias_com_evento": {
+            "n": 48,
+            "majoritaria": 0.5,
+            "acuracia": 0.625,
+            "ganho_pp": 12.5,
+            "ic95_meia_largura_pp": 14.15,
+            "p_vs_majoritaria": 0.11140289106101878,
+            "auc": 0.5382
+          },
+          "so_dias_sem_evento": {
+            "n": 531,
+            "majoritaria": 0.5367,
+            "acuracia": 0.5085,
+            "ganho_pp": -2.82,
+            "ic95_meia_largura_pp": 4.25,
+            "p_vs_majoritaria": 0.19209500853609482,
+            "auc": 0.4945
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 48,
+            "majoritaria": 0.5,
+            "acuracia": 0.5625,
+            "ganho_pp": 6.25,
+            "ic95_meia_largura_pp": 14.15,
+            "p_vs_majoritaria": 0.470879013621712,
+            "auc": 0.5486
+          },
+          "_n_treino_especialista": 209
+        }
+      },
+      "volatilidade": {
+        "HAR (referência)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.034,
+            "r2os_vs_HAR": 0.0
+          },
+          "so_dias_com_evento": {
+            "n": 48,
+            "mae": 0.0379,
+            "r2os_vs_HAR": 0.0
+          }
+        },
+        "HAR + sentimento (A)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0339,
+            "r2os_vs_HAR": 0.06
+          },
+          "so_dias_com_evento": {
+            "n": 48,
+            "mae": 0.0375,
+            "r2os_vs_HAR": -0.12
+          }
+        },
+        "HAR + sentimento (B)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0339,
+            "r2os_vs_HAR": 0.04
+          },
+          "so_dias_com_evento": {
+            "n": 48,
+            "mae": 0.038,
+            "r2os_vs_HAR": -0.33
+          }
+        }
+      },
+      "resumo": {
+        "ganho_medio_todos_pp": -4.29,
+        "ganho_medio_com_evento_pp": 1.74,
+        "ganho_medio_especialista_pp": -2.08,
+        "ic95_com_evento_pp": 14.15,
+        "bracos_significativos_com_evento": 0,
+        "bracos_significativos_especialista": 0
+      }
+    },
+    "PETR4": {
+      "n_teste": 579,
+      "n_com_evento": 165,
+      "pct_com_evento": 28.5,
+      "direcao": {
+        "SVM — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.532,
+            "acuracia": 0.5181,
+            "ganho_pp": -1.38,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.5055827433175946,
+            "auc": 0.504
+          },
+          "so_dias_com_evento": {
+            "n": 165,
+            "majoritaria": 0.5576,
+            "acuracia": 0.5455,
+            "ganho_pp": -1.21,
+            "ic95_meia_largura_pp": 7.63,
+            "p_vs_majoritaria": 0.7545892953047864,
+            "auc": 0.5506
+          },
+          "so_dias_sem_evento": {
+            "n": 414,
+            "majoritaria": 0.5217,
+            "acuracia": 0.5072,
+            "ganho_pp": -1.45,
+            "ic95_meia_largura_pp": 4.82,
+            "p_vs_majoritaria": 0.5554654925279318,
+            "auc": 0.4859
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 165,
+            "majoritaria": 0.5576,
+            "acuracia": 0.5273,
+            "ganho_pp": -3.03,
+            "ic95_meia_largura_pp": 7.63,
+            "p_vs_majoritaria": 0.43444786944728164,
+            "auc": 0.5487
+          },
+          "_n_treino_especialista": 752
+        },
+        "XGBoost — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.532,
+            "acuracia": 0.5181,
+            "ganho_pp": -1.38,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.5055827433175946,
+            "auc": 0.5157
+          },
+          "so_dias_com_evento": {
+            "n": 165,
+            "majoritaria": 0.5576,
+            "acuracia": 0.5152,
+            "ganho_pp": -4.24,
+            "ic95_meia_largura_pp": 7.63,
+            "p_vs_majoritaria": 0.27376589377383814,
+            "auc": 0.5085
+          },
+          "so_dias_sem_evento": {
+            "n": 414,
+            "majoritaria": 0.5217,
+            "acuracia": 0.5193,
+            "ganho_pp": -0.24,
+            "ic95_meia_largura_pp": 4.82,
+            "p_vs_majoritaria": 0.9217262733908629,
+            "auc": 0.5174
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 165,
+            "majoritaria": 0.5576,
+            "acuracia": 0.5576,
+            "ganho_pp": 0.0,
+            "ic95_meia_largura_pp": 7.63,
+            "p_vs_majoritaria": 1.0,
+            "auc": 0.5182
+          },
+          "_n_treino_especialista": 752
+        },
+        "SVM — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.532,
+            "acuracia": 0.5216,
+            "ganho_pp": -1.04,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.6175764824043686,
+            "auc": 0.474
+          },
+          "so_dias_com_evento": {
+            "n": 165,
+            "majoritaria": 0.5576,
+            "acuracia": 0.5273,
+            "ganho_pp": -3.03,
+            "ic95_meia_largura_pp": 7.63,
+            "p_vs_majoritaria": 0.43444786944728164,
+            "auc": 0.5347
+          },
+          "so_dias_sem_evento": {
+            "n": 414,
+            "majoritaria": 0.5217,
+            "acuracia": 0.5193,
+            "ganho_pp": -0.24,
+            "ic95_meia_largura_pp": 4.82,
+            "p_vs_majoritaria": 0.9217262733908629,
+            "auc": 0.4459
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 165,
+            "majoritaria": 0.5576,
+            "acuracia": 0.5394,
+            "ganho_pp": -1.82,
+            "ic95_meia_largura_pp": 7.63,
+            "p_vs_majoritaria": 0.6391355952801285,
+            "auc": 0.4693
+          },
+          "_n_treino_especialista": 752
+        },
+        "XGBoost — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.532,
+            "acuracia": 0.5164,
+            "ganho_pp": -1.55,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.4538827915910094,
+            "auc": 0.5285
+          },
+          "so_dias_com_evento": {
+            "n": 165,
+            "majoritaria": 0.5576,
+            "acuracia": 0.5273,
+            "ganho_pp": -3.03,
+            "ic95_meia_largura_pp": 7.63,
+            "p_vs_majoritaria": 0.43444786944728164,
+            "auc": 0.5542
+          },
+          "so_dias_sem_evento": {
+            "n": 414,
+            "majoritaria": 0.5217,
+            "acuracia": 0.5121,
+            "ganho_pp": -0.97,
+            "ic95_meia_largura_pp": 4.82,
+            "p_vs_majoritaria": 0.694284507854188,
+            "auc": 0.5197
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 165,
+            "majoritaria": 0.5576,
+            "acuracia": 0.5152,
+            "ganho_pp": -4.24,
+            "ic95_meia_largura_pp": 7.63,
+            "p_vs_majoritaria": 0.27376589377383814,
+            "auc": 0.5429
+          },
+          "_n_treino_especialista": 752
+        },
+        "SVM — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.532,
+            "acuracia": 0.5233,
+            "ganho_pp": -0.86,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.6773588572124107,
+            "auc": 0.4817
+          },
+          "so_dias_com_evento": {
+            "n": 165,
+            "majoritaria": 0.5576,
+            "acuracia": 0.5333,
+            "ganho_pp": -2.42,
+            "ic95_meia_largura_pp": 7.63,
+            "p_vs_majoritaria": 0.5318122594109623,
+            "auc": 0.552
+          },
+          "so_dias_sem_evento": {
+            "n": 414,
+            "majoritaria": 0.5217,
+            "acuracia": 0.5193,
+            "ganho_pp": -0.24,
+            "ic95_meia_largura_pp": 4.82,
+            "p_vs_majoritaria": 0.9217262733908629,
+            "auc": 0.4429
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 165,
+            "majoritaria": 0.5576,
+            "acuracia": 0.5515,
+            "ganho_pp": -0.61,
+            "ic95_meia_largura_pp": 7.63,
+            "p_vs_majoritaria": 0.8758016956865793,
+            "auc": 0.4815
+          },
+          "_n_treino_especialista": 752
+        },
+        "XGBoost — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.532,
+            "acuracia": 0.5285,
+            "ganho_pp": -0.35,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.8678222574362258,
+            "auc": 0.5286
+          },
+          "so_dias_com_evento": {
+            "n": 165,
+            "majoritaria": 0.5576,
+            "acuracia": 0.5758,
+            "ganho_pp": 1.82,
+            "ic95_meia_largura_pp": 7.63,
+            "p_vs_majoritaria": 0.6952922315527956,
+            "auc": 0.5679
+          },
+          "so_dias_sem_evento": {
+            "n": 414,
+            "majoritaria": 0.5217,
+            "acuracia": 0.5097,
+            "ganho_pp": -1.21,
+            "ic95_meia_largura_pp": 4.82,
+            "p_vs_majoritaria": 0.623202723506789,
+            "auc": 0.5073
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 165,
+            "majoritaria": 0.5576,
+            "acuracia": 0.5394,
+            "ganho_pp": -1.82,
+            "ic95_meia_largura_pp": 7.63,
+            "p_vs_majoritaria": 0.6391355952801285,
+            "auc": 0.5313
+          },
+          "_n_treino_especialista": 752
+        }
+      },
+      "volatilidade": {
+        "HAR (referência)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0687,
+            "r2os_vs_HAR": 0.0
+          },
+          "so_dias_com_evento": {
+            "n": 165,
+            "mae": 0.0686,
+            "r2os_vs_HAR": 0.0
+          }
+        },
+        "HAR + sentimento (A)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0692,
+            "r2os_vs_HAR": -0.28
+          },
+          "so_dias_com_evento": {
+            "n": 165,
+            "mae": 0.0658,
+            "r2os_vs_HAR": 4.42
+          }
+        },
+        "HAR + sentimento (B)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0692,
+            "r2os_vs_HAR": -0.18
+          },
+          "so_dias_com_evento": {
+            "n": 165,
+            "mae": 0.0657,
+            "r2os_vs_HAR": 4.83
+          }
+        }
+      },
+      "resumo": {
+        "ganho_medio_todos_pp": -1.09,
+        "ganho_medio_com_evento_pp": -2.02,
+        "ganho_medio_especialista_pp": -1.92,
+        "ic95_com_evento_pp": 7.63,
+        "bracos_significativos_com_evento": 0,
+        "bracos_significativos_especialista": 0
+      }
+    },
+    "SBSP3": {
+      "n_teste": 579,
+      "n_com_evento": 75,
+      "pct_com_evento": 13.0,
+      "direcao": {
+        "SVM — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5078,
+            "acuracia": 0.4957,
+            "ganho_pp": -1.21,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.5610067406020335,
+            "auc": 0.4967
+          },
+          "so_dias_com_evento": {
+            "n": 75,
+            "majoritaria": 0.56,
+            "acuracia": 0.4267,
+            "ganho_pp": -13.33,
+            "ic95_meia_largura_pp": 11.32,
+            "p_vs_majoritaria": 0.02643080735162181,
+            "auc": 0.417
+          },
+          "so_dias_sem_evento": {
+            "n": 504,
+            "majoritaria": 0.5,
+            "acuracia": 0.506,
+            "ganho_pp": 0.6,
+            "ic95_meia_largura_pp": 4.37,
+            "p_vs_majoritaria": 0.8237825457845127,
+            "auc": 0.5084
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 75,
+            "majoritaria": 0.56,
+            "acuracia": 0.5467,
+            "ganho_pp": -1.33,
+            "ic95_meia_largura_pp": 11.32,
+            "p_vs_majoritaria": 0.8171757711376748,
+            "auc": 0.4423
+          },
+          "_n_treino_especialista": 275
+        },
+        "XGBoost — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5078,
+            "acuracia": 0.456,
+            "ganho_pp": -5.18,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.01412657992025184,
+            "auc": 0.4635
+          },
+          "so_dias_com_evento": {
+            "n": 75,
+            "majoritaria": 0.56,
+            "acuracia": 0.4133,
+            "ganho_pp": -14.67,
+            "ic95_meia_largura_pp": 11.32,
+            "p_vs_majoritaria": 0.014031416292234242,
+            "auc": 0.4123
+          },
+          "so_dias_sem_evento": {
+            "n": 504,
+            "majoritaria": 0.5,
+            "acuracia": 0.4623,
+            "ganho_pp": -3.77,
+            "ic95_meia_largura_pp": 4.37,
+            "p_vs_majoritaria": 0.09923391396041993,
+            "auc": 0.4695
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 75,
+            "majoritaria": 0.56,
+            "acuracia": 0.4,
+            "ganho_pp": -16.0,
+            "ic95_meia_largura_pp": 11.32,
+            "p_vs_majoritaria": 0.00706139154689157,
+            "auc": 0.4347
+          },
+          "_n_treino_especialista": 275
+        },
+        "SVM — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5078,
+            "acuracia": 0.506,
+            "ganho_pp": -0.17,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.9338150947068156,
+            "auc": 0.4997
+          },
+          "so_dias_com_evento": {
+            "n": 75,
+            "majoritaria": 0.56,
+            "acuracia": 0.4,
+            "ganho_pp": -16.0,
+            "ic95_meia_largura_pp": 11.32,
+            "p_vs_majoritaria": 0.00706139154689157,
+            "auc": 0.4048
+          },
+          "so_dias_sem_evento": {
+            "n": 504,
+            "majoritaria": 0.5,
+            "acuracia": 0.5218,
+            "ganho_pp": 2.18,
+            "ic95_meia_largura_pp": 4.37,
+            "p_vs_majoritaria": 0.34958498013246897,
+            "auc": 0.5135
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 75,
+            "majoritaria": 0.56,
+            "acuracia": 0.4667,
+            "ganho_pp": -9.33,
+            "ic95_meia_largura_pp": 11.32,
+            "p_vs_majoritaria": 0.10506221971410643,
+            "auc": 0.548
+          },
+          "_n_treino_especialista": 275
+        },
+        "XGBoost — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5078,
+            "acuracia": 0.4525,
+            "ganho_pp": -5.53,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.008774349529706505,
+            "auc": 0.4566
+          },
+          "so_dias_com_evento": {
+            "n": 75,
+            "majoritaria": 0.56,
+            "acuracia": 0.44,
+            "ganho_pp": -12.0,
+            "ic95_meia_largura_pp": 11.32,
+            "p_vs_majoritaria": 0.04725938469802716,
+            "auc": 0.4113
+          },
+          "so_dias_sem_evento": {
+            "n": 504,
+            "majoritaria": 0.5,
+            "acuracia": 0.4544,
+            "ganho_pp": -4.56,
+            "ic95_meia_largura_pp": 4.37,
+            "p_vs_majoritaria": 0.04491370444260842,
+            "auc": 0.4676
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 75,
+            "majoritaria": 0.56,
+            "acuracia": 0.4,
+            "ganho_pp": -16.0,
+            "ic95_meia_largura_pp": 11.32,
+            "p_vs_majoritaria": 0.00706139154689157,
+            "auc": 0.404
+          },
+          "_n_treino_especialista": 275
+        },
+        "SVM — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5078,
+            "acuracia": 0.5095,
+            "ganho_pp": 0.17,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.9668513632232894,
+            "auc": 0.5
+          },
+          "so_dias_com_evento": {
+            "n": 75,
+            "majoritaria": 0.56,
+            "acuracia": 0.44,
+            "ganho_pp": -12.0,
+            "ic95_meia_largura_pp": 11.32,
+            "p_vs_majoritaria": 0.04725938469802716,
+            "auc": 0.4152
+          },
+          "so_dias_sem_evento": {
+            "n": 504,
+            "majoritaria": 0.5,
+            "acuracia": 0.5198,
+            "ganho_pp": 1.98,
+            "ic95_meia_largura_pp": 4.37,
+            "p_vs_majoritaria": 0.39739256285674135,
+            "auc": 0.5134
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 75,
+            "majoritaria": 0.56,
+            "acuracia": 0.4533,
+            "ganho_pp": -10.67,
+            "ic95_meia_largura_pp": 11.32,
+            "p_vs_majoritaria": 0.08032094837571294,
+            "auc": 0.5563
+          },
+          "_n_treino_especialista": 275
+        },
+        "XGBoost — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5078,
+            "acuracia": 0.4732,
+            "ganho_pp": -3.45,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.09660625067444259,
+            "auc": 0.4582
+          },
+          "so_dias_com_evento": {
+            "n": 75,
+            "majoritaria": 0.56,
+            "acuracia": 0.4267,
+            "ganho_pp": -13.33,
+            "ic95_meia_largura_pp": 11.32,
+            "p_vs_majoritaria": 0.02643080735162181,
+            "auc": 0.4152
+          },
+          "so_dias_sem_evento": {
+            "n": 504,
+            "majoritaria": 0.5,
+            "acuracia": 0.4802,
+            "ganho_pp": -1.98,
+            "ic95_meia_largura_pp": 4.37,
+            "p_vs_majoritaria": 0.39739256285674135,
+            "auc": 0.4681
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 75,
+            "majoritaria": 0.56,
+            "acuracia": 0.48,
+            "ganho_pp": -8.0,
+            "ic95_meia_largura_pp": 11.32,
+            "p_vs_majoritaria": 0.16493104285946275,
+            "auc": 0.4693
+          },
+          "_n_treino_especialista": 275
+        }
+      },
+      "volatilidade": {
+        "HAR (referência)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0401,
+            "r2os_vs_HAR": 0.0
+          },
+          "so_dias_com_evento": {
+            "n": 75,
+            "mae": 0.0444,
+            "r2os_vs_HAR": 0.0
+          }
+        },
+        "HAR + sentimento (A)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0403,
+            "r2os_vs_HAR": -0.88
+          },
+          "so_dias_com_evento": {
+            "n": 75,
+            "mae": 0.0473,
+            "r2os_vs_HAR": -8.15
+          }
+        },
+        "HAR + sentimento (B)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0403,
+            "r2os_vs_HAR": -1.02
+          },
+          "so_dias_com_evento": {
+            "n": 75,
+            "mae": 0.0472,
+            "r2os_vs_HAR": -9.37
+          }
+        }
+      },
+      "resumo": {
+        "ganho_medio_todos_pp": -2.56,
+        "ganho_medio_com_evento_pp": -13.55,
+        "ganho_medio_especialista_pp": -10.22,
+        "ic95_com_evento_pp": 11.32,
+        "bracos_significativos_com_evento": 0,
+        "bracos_significativos_especialista": 0
+      }
+    },
+    "BBDC4": {
+      "n_teste": 579,
+      "n_com_evento": 33,
+      "pct_com_evento": 5.7,
+      "direcao": {
+        "SVM — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5216,
+            "acuracia": 0.4974,
+            "ganho_pp": -2.42,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.24449384253008777,
+            "auc": 0.5055
+          },
+          "so_dias_com_evento": {
+            "n": 33,
+            "majoritaria": 0.6061,
+            "acuracia": 0.5152,
+            "ganho_pp": -9.09,
+            "ic95_meia_largura_pp": 17.06,
+            "p_vs_majoritaria": 0.29044379510680224,
+            "auc": 0.3577
+          },
+          "so_dias_sem_evento": {
+            "n": 546,
+            "majoritaria": 0.5293,
+            "acuracia": 0.4963,
+            "ganho_pp": -3.3,
+            "ic95_meia_largura_pp": 4.19,
+            "p_vs_majoritaria": 0.12301122485197419,
+            "auc": 0.512
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 97 dias de evento no treino — insuficiente"
+          }
+        },
+        "XGBoost — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5216,
+            "acuracia": 0.5095,
+            "ganho_pp": -1.21,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.5606724186244296,
+            "auc": 0.4963
+          },
+          "so_dias_com_evento": {
+            "n": 33,
+            "majoritaria": 0.6061,
+            "acuracia": 0.4242,
+            "ganho_pp": -18.18,
+            "ic95_meia_largura_pp": 17.06,
+            "p_vs_majoritaria": 0.04820774740539864,
+            "auc": 0.3769
+          },
+          "so_dias_sem_evento": {
+            "n": 546,
+            "majoritaria": 0.5293,
+            "acuracia": 0.5147,
+            "ganho_pp": -1.47,
+            "ic95_meia_largura_pp": 4.19,
+            "p_vs_majoritaria": 0.493159048492142,
+            "auc": 0.5002
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 97 dias de evento no treino — insuficiente"
+          }
+        },
+        "SVM — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5216,
+            "acuracia": 0.4801,
+            "ganho_pp": -4.15,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.05047982730308227,
+            "auc": 0.4982
+          },
+          "so_dias_com_evento": {
+            "n": 33,
+            "majoritaria": 0.6061,
+            "acuracia": 0.5455,
+            "ganho_pp": -6.06,
+            "ic95_meia_largura_pp": 17.06,
+            "p_vs_majoritaria": 0.4811400770661539,
+            "auc": 0.5077
+          },
+          "so_dias_sem_evento": {
+            "n": 546,
+            "majoritaria": 0.5293,
+            "acuracia": 0.4762,
+            "ganho_pp": -5.31,
+            "ic95_meia_largura_pp": 4.19,
+            "p_vs_majoritaria": 0.014467606217098396,
+            "auc": 0.4905
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 97 dias de evento no treino — insuficiente"
+          }
+        },
+        "XGBoost — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5216,
+            "acuracia": 0.494,
+            "ganho_pp": -2.76,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.1834672757460664,
+            "auc": 0.5051
+          },
+          "so_dias_com_evento": {
+            "n": 33,
+            "majoritaria": 0.6061,
+            "acuracia": 0.5455,
+            "ganho_pp": -6.06,
+            "ic95_meia_largura_pp": 17.06,
+            "p_vs_majoritaria": 0.4811400770661539,
+            "auc": 0.5462
+          },
+          "so_dias_sem_evento": {
+            "n": 546,
+            "majoritaria": 0.5293,
+            "acuracia": 0.4908,
+            "ganho_pp": -3.85,
+            "ic95_meia_largura_pp": 4.19,
+            "p_vs_majoritaria": 0.07870905260248494,
+            "auc": 0.4999
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 97 dias de evento no treino — insuficiente"
+          }
+        },
+        "SVM — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5216,
+            "acuracia": 0.475,
+            "ganho_pp": -4.66,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.02739155754424158,
+            "auc": 0.5076
+          },
+          "so_dias_com_evento": {
+            "n": 33,
+            "majoritaria": 0.6061,
+            "acuracia": 0.4545,
+            "ganho_pp": -15.15,
+            "ic95_meia_largura_pp": 17.06,
+            "p_vs_majoritaria": 0.10724382347293246,
+            "auc": 0.5596
+          },
+          "so_dias_sem_evento": {
+            "n": 546,
+            "majoritaria": 0.5293,
+            "acuracia": 0.4762,
+            "ganho_pp": -5.31,
+            "ic95_meia_largura_pp": 4.19,
+            "p_vs_majoritaria": 0.014467606217098396,
+            "auc": 0.4974
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 97 dias de evento no treino — insuficiente"
+          }
+        },
+        "XGBoost — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5216,
+            "acuracia": 0.4974,
+            "ganho_pp": -2.42,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.24449384253008777,
+            "auc": 0.4978
+          },
+          "so_dias_com_evento": {
+            "n": 33,
+            "majoritaria": 0.6061,
+            "acuracia": 0.4242,
+            "ganho_pp": -18.18,
+            "ic95_meia_largura_pp": 17.06,
+            "p_vs_majoritaria": 0.04820774740539864,
+            "auc": 0.4346
+          },
+          "so_dias_sem_evento": {
+            "n": 546,
+            "majoritaria": 0.5293,
+            "acuracia": 0.5018,
+            "ganho_pp": -2.75,
+            "ic95_meia_largura_pp": 4.19,
+            "p_vs_majoritaria": 0.1987559500647208,
+            "auc": 0.5018
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 97 dias de evento no treino — insuficiente"
+          }
+        }
+      },
+      "volatilidade": {
+        "HAR (referência)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.043,
+            "r2os_vs_HAR": 0.0
+          },
+          "so_dias_com_evento": {
+            "n": 33,
+            "mae": 0.0398,
+            "r2os_vs_HAR": 0.0
+          }
+        },
+        "HAR + sentimento (A)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.043,
+            "r2os_vs_HAR": -0.0
+          },
+          "so_dias_com_evento": {
+            "n": 33,
+            "mae": 0.0377,
+            "r2os_vs_HAR": 2.16
+          }
+        },
+        "HAR + sentimento (B)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.043,
+            "r2os_vs_HAR": 0.03
+          },
+          "so_dias_com_evento": {
+            "n": 33,
+            "mae": 0.0374,
+            "r2os_vs_HAR": 3.89
+          }
+        }
+      },
+      "resumo": {
+        "ganho_medio_todos_pp": -2.94,
+        "ganho_medio_com_evento_pp": -12.12,
+        "ganho_medio_especialista_pp": null,
+        "ic95_com_evento_pp": 17.06,
+        "bracos_significativos_com_evento": 0,
+        "bracos_significativos_especialista": 0
+      }
+    },
+    "B3SA3": {
+      "n_teste": 579,
+      "n_com_evento": 76,
+      "pct_com_evento": 13.1,
+      "direcao": {
+        "SVM — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.506,
+            "acuracia": 0.4922,
+            "ganho_pp": -1.38,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.5064531578744189,
+            "auc": 0.4622
+          },
+          "so_dias_com_evento": {
+            "n": 76,
+            "majoritaria": 0.5658,
+            "acuracia": 0.4342,
+            "ganho_pp": -13.16,
+            "ic95_meia_largura_pp": 11.24,
+            "p_vs_majoritaria": 0.027228999926416267,
+            "auc": 0.4898
+          },
+          "so_dias_sem_evento": {
+            "n": 503,
+            "majoritaria": 0.503,
+            "acuracia": 0.501,
+            "ganho_pp": -0.2,
+            "ic95_meia_largura_pp": 4.37,
+            "p_vs_majoritaria": 0.9290222588494845,
+            "auc": 0.459
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 76,
+            "majoritaria": 0.5658,
+            "acuracia": 0.4342,
+            "ganho_pp": -13.16,
+            "ic95_meia_largura_pp": 11.24,
+            "p_vs_majoritaria": 0.027228999926416267,
+            "auc": 0.4482
+          },
+          "_n_treino_especialista": 174
+        },
+        "XGBoost — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.506,
+            "acuracia": 0.5233,
+            "ganho_pp": 1.73,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.42974521835737367,
+            "auc": 0.5277
+          },
+          "so_dias_com_evento": {
+            "n": 76,
+            "majoritaria": 0.5658,
+            "acuracia": 0.4474,
+            "ganho_pp": -11.84,
+            "ic95_meia_largura_pp": 11.24,
+            "p_vs_majoritaria": 0.04842096450737038,
+            "auc": 0.4362
+          },
+          "so_dias_sem_evento": {
+            "n": 503,
+            "majoritaria": 0.503,
+            "acuracia": 0.5348,
+            "ganho_pp": 3.18,
+            "ic95_meia_largura_pp": 4.37,
+            "p_vs_majoritaria": 0.16683216890142466,
+            "auc": 0.5375
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 76,
+            "majoritaria": 0.5658,
+            "acuracia": 0.5789,
+            "ganho_pp": 1.32,
+            "ic95_meia_largura_pp": 11.24,
+            "p_vs_majoritaria": 0.9079839574466404,
+            "auc": 0.5807
+          },
+          "_n_treino_especialista": 174
+        },
+        "SVM — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.506,
+            "acuracia": 0.5026,
+            "ganho_pp": -0.35,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.8680914430838248,
+            "auc": 0.4769
+          },
+          "so_dias_com_evento": {
+            "n": 76,
+            "majoritaria": 0.5658,
+            "acuracia": 0.4474,
+            "ganho_pp": -11.84,
+            "ic95_meia_largura_pp": 11.24,
+            "p_vs_majoritaria": 0.04842096450737038,
+            "auc": 0.463
+          },
+          "so_dias_sem_evento": {
+            "n": 503,
+            "majoritaria": 0.503,
+            "acuracia": 0.5109,
+            "ganho_pp": 0.8,
+            "ic95_meia_largura_pp": 4.37,
+            "p_vs_majoritaria": 0.7549848164275882,
+            "auc": 0.4636
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 76,
+            "majoritaria": 0.5658,
+            "acuracia": 0.4474,
+            "ganho_pp": -11.84,
+            "ic95_meia_largura_pp": 11.24,
+            "p_vs_majoritaria": 0.04842096450737038,
+            "auc": 0.4355
+          },
+          "_n_treino_especialista": 174
+        },
+        "XGBoost — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.506,
+            "acuracia": 0.5285,
+            "ganho_pp": 2.25,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.2987805019659786,
+            "auc": 0.5208
+          },
+          "so_dias_com_evento": {
+            "n": 76,
+            "majoritaria": 0.5658,
+            "acuracia": 0.4342,
+            "ganho_pp": -13.16,
+            "ic95_meia_largura_pp": 11.24,
+            "p_vs_majoritaria": 0.027228999926416267,
+            "auc": 0.4362
+          },
+          "so_dias_sem_evento": {
+            "n": 503,
+            "majoritaria": 0.503,
+            "acuracia": 0.5427,
+            "ganho_pp": 3.98,
+            "ic95_meia_largura_pp": 4.37,
+            "p_vs_majoritaria": 0.07468140401013629,
+            "auc": 0.5406
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 76,
+            "majoritaria": 0.5658,
+            "acuracia": 0.5395,
+            "ganho_pp": -2.63,
+            "ic95_meia_largura_pp": 11.24,
+            "p_vs_majoritaria": 0.6454252699577444,
+            "auc": 0.5088
+          },
+          "_n_treino_especialista": 174
+        },
+        "SVM — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.506,
+            "acuracia": 0.506,
+            "ganho_pp": 0.0,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 1.0,
+            "auc": 0.4805
+          },
+          "so_dias_com_evento": {
+            "n": 76,
+            "majoritaria": 0.5658,
+            "acuracia": 0.4474,
+            "ganho_pp": -11.84,
+            "ic95_meia_largura_pp": 11.24,
+            "p_vs_majoritaria": 0.04842096450737038,
+            "auc": 0.4531
+          },
+          "so_dias_sem_evento": {
+            "n": 503,
+            "majoritaria": 0.503,
+            "acuracia": 0.5149,
+            "ganho_pp": 1.19,
+            "ic95_meia_largura_pp": 4.37,
+            "p_vs_majoritaria": 0.6238420097301862,
+            "auc": 0.4663
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 76,
+            "majoritaria": 0.5658,
+            "acuracia": 0.4474,
+            "ganho_pp": -11.84,
+            "ic95_meia_largura_pp": 11.24,
+            "p_vs_majoritaria": 0.04842096450737038,
+            "auc": 0.4412
+          },
+          "_n_treino_especialista": 174
+        },
+        "XGBoost — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.506,
+            "acuracia": 0.532,
+            "ganho_pp": 2.59,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.22806232065026075,
+            "auc": 0.5313
+          },
+          "so_dias_com_evento": {
+            "n": 76,
+            "majoritaria": 0.5658,
+            "acuracia": 0.4474,
+            "ganho_pp": -11.84,
+            "ic95_meia_largura_pp": 11.24,
+            "p_vs_majoritaria": 0.04842096450737038,
+            "auc": 0.5053
+          },
+          "so_dias_sem_evento": {
+            "n": 503,
+            "majoritaria": 0.503,
+            "acuracia": 0.5447,
+            "ganho_pp": 4.17,
+            "ic95_meia_largura_pp": 4.37,
+            "p_vs_majoritaria": 0.061256370021893186,
+            "auc": 0.5352
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 76,
+            "majoritaria": 0.5658,
+            "acuracia": 0.5789,
+            "ganho_pp": 1.32,
+            "ic95_meia_largura_pp": 11.24,
+            "p_vs_majoritaria": 0.9079839574466404,
+            "auc": 0.6061
+          },
+          "_n_treino_especialista": 174
+        }
+      },
+      "volatilidade": {
+        "HAR (referência)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0478,
+            "r2os_vs_HAR": 0.0
+          },
+          "so_dias_com_evento": {
+            "n": 76,
+            "mae": 0.0555,
+            "r2os_vs_HAR": 0.0
+          }
+        },
+        "HAR + sentimento (A)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0487,
+            "r2os_vs_HAR": -1.07
+          },
+          "so_dias_com_evento": {
+            "n": 76,
+            "mae": 0.0682,
+            "r2os_vs_HAR": -4.13
+          }
+        },
+        "HAR + sentimento (B)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0488,
+            "r2os_vs_HAR": -0.72
+          },
+          "so_dias_com_evento": {
+            "n": 76,
+            "mae": 0.0687,
+            "r2os_vs_HAR": -3.0
+          }
+        }
+      },
+      "resumo": {
+        "ganho_medio_todos_pp": 0.81,
+        "ganho_medio_com_evento_pp": -12.28,
+        "ganho_medio_especialista_pp": -6.14,
+        "ic95_com_evento_pp": 11.24,
+        "bracos_significativos_com_evento": 0,
+        "bracos_significativos_especialista": 0
+      }
+    },
+    "ITSA4": {
+      "n_teste": 579,
+      "n_com_evento": 37,
+      "pct_com_evento": 6.4,
+      "direcao": {
+        "SVM — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5181,
+            "acuracia": 0.5164,
+            "ganho_pp": -0.17,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.9337773208860425,
+            "auc": 0.5215
+          },
+          "so_dias_com_evento": {
+            "n": 37,
+            "majoritaria": 0.5135,
+            "acuracia": 0.3784,
+            "ganho_pp": -13.51,
+            "ic95_meia_largura_pp": 16.11,
+            "p_vs_majoritaria": 0.10335651380071066,
+            "auc": 0.4386
+          },
+          "so_dias_sem_evento": {
+            "n": 542,
+            "majoritaria": 0.5185,
+            "acuracia": 0.5258,
+            "ganho_pp": 0.74,
+            "ic95_meia_largura_pp": 4.21,
+            "p_vs_majoritaria": 0.7635377524808529,
+            "auc": 0.5279
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 37,
+            "majoritaria": 0.5135,
+            "acuracia": 0.5135,
+            "ganho_pp": 0.0,
+            "ic95_meia_largura_pp": 16.11,
+            "p_vs_majoritaria": 1.0,
+            "auc": 0.5234
+          },
+          "_n_treino_especialista": 127
+        },
+        "XGBoost — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5181,
+            "acuracia": 0.5043,
+            "ganho_pp": -1.38,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.506189630018188,
+            "auc": 0.5009
+          },
+          "so_dias_com_evento": {
+            "n": 37,
+            "majoritaria": 0.5135,
+            "acuracia": 0.3243,
+            "ganho_pp": -18.92,
+            "ic95_meia_largura_pp": 16.11,
+            "p_vs_majoritaria": 0.03109415164517914,
+            "auc": 0.2456
+          },
+          "so_dias_sem_evento": {
+            "n": 542,
+            "majoritaria": 0.5185,
+            "acuracia": 0.5166,
+            "ganho_pp": -0.18,
+            "ic95_meia_largura_pp": 4.21,
+            "p_vs_majoritaria": 0.9315623800663131,
+            "auc": 0.5193
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 37,
+            "majoritaria": 0.5135,
+            "acuracia": 0.6216,
+            "ganho_pp": 10.81,
+            "ic95_meia_largura_pp": 16.11,
+            "p_vs_majoritaria": 0.24932815805974015,
+            "auc": 0.6374
+          },
+          "_n_treino_especialista": 127
+        },
+        "SVM — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5181,
+            "acuracia": 0.506,
+            "ganho_pp": -1.21,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.560784116800981,
+            "auc": 0.5413
+          },
+          "so_dias_com_evento": {
+            "n": 37,
+            "majoritaria": 0.5135,
+            "acuracia": 0.5946,
+            "ganho_pp": 8.11,
+            "ic95_meia_largura_pp": 16.11,
+            "p_vs_majoritaria": 0.4112903536386402,
+            "auc": 0.8158
+          },
+          "so_dias_sem_evento": {
+            "n": 542,
+            "majoritaria": 0.5185,
+            "acuracia": 0.5,
+            "ganho_pp": -1.85,
+            "ic95_meia_largura_pp": 4.21,
+            "p_vs_majoritaria": 0.390409252401843,
+            "auc": 0.5386
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 37,
+            "majoritaria": 0.5135,
+            "acuracia": 0.5676,
+            "ganho_pp": 5.41,
+            "ic95_meia_largura_pp": 16.11,
+            "p_vs_majoritaria": 0.6223715782150658,
+            "auc": 0.7515
+          },
+          "_n_treino_especialista": 127
+        },
+        "XGBoost — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5181,
+            "acuracia": 0.5147,
+            "ganho_pp": -0.35,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.8680097053790448,
+            "auc": 0.5088
+          },
+          "so_dias_com_evento": {
+            "n": 37,
+            "majoritaria": 0.5135,
+            "acuracia": 0.5676,
+            "ganho_pp": 5.41,
+            "ic95_meia_largura_pp": 16.11,
+            "p_vs_majoritaria": 0.6223715782150658,
+            "auc": 0.5468
+          },
+          "so_dias_sem_evento": {
+            "n": 542,
+            "majoritaria": 0.5185,
+            "acuracia": 0.5111,
+            "ganho_pp": -0.74,
+            "ic95_meia_largura_pp": 4.21,
+            "p_vs_majoritaria": 0.7312056875133872,
+            "auc": 0.5044
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 37,
+            "majoritaria": 0.5135,
+            "acuracia": 0.7568,
+            "ganho_pp": 24.32,
+            "ic95_meia_largura_pp": 16.11,
+            "p_vs_majoritaria": 0.0029008708957077144,
+            "auc": 0.7339
+          },
+          "_n_treino_especialista": 127
+        },
+        "SVM — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5181,
+            "acuracia": 0.5043,
+            "ganho_pp": -1.38,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.506189630018188,
+            "auc": 0.5363
+          },
+          "so_dias_com_evento": {
+            "n": 37,
+            "majoritaria": 0.5135,
+            "acuracia": 0.5676,
+            "ganho_pp": 5.41,
+            "ic95_meia_largura_pp": 16.11,
+            "p_vs_majoritaria": 0.6223715782150658,
+            "auc": 0.7135
+          },
+          "so_dias_sem_evento": {
+            "n": 542,
+            "majoritaria": 0.5185,
+            "acuracia": 0.5,
+            "ganho_pp": -1.85,
+            "ic95_meia_largura_pp": 4.21,
+            "p_vs_majoritaria": 0.390409252401843,
+            "auc": 0.5379
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 37,
+            "majoritaria": 0.5135,
+            "acuracia": 0.5676,
+            "ganho_pp": 5.41,
+            "ic95_meia_largura_pp": 16.11,
+            "p_vs_majoritaria": 0.6223715782150658,
+            "auc": 0.2924
+          },
+          "_n_treino_especialista": 127
+        },
+        "XGBoost — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5181,
+            "acuracia": 0.506,
+            "ganho_pp": -1.21,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.560784116800981,
+            "auc": 0.4998
+          },
+          "so_dias_com_evento": {
+            "n": 37,
+            "majoritaria": 0.5135,
+            "acuracia": 0.4054,
+            "ganho_pp": -10.81,
+            "ic95_meia_largura_pp": 16.11,
+            "p_vs_majoritaria": 0.1934144627469847,
+            "auc": 0.3216
+          },
+          "so_dias_sem_evento": {
+            "n": 542,
+            "majoritaria": 0.5185,
+            "acuracia": 0.5129,
+            "ganho_pp": -0.55,
+            "ic95_meia_largura_pp": 4.21,
+            "p_vs_majoritaria": 0.7966848694790309,
+            "auc": 0.5091
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 37,
+            "majoritaria": 0.5135,
+            "acuracia": 0.5946,
+            "ganho_pp": 8.11,
+            "ic95_meia_largura_pp": 16.11,
+            "p_vs_majoritaria": 0.4112903536386402,
+            "auc": 0.6813
+          },
+          "_n_treino_especialista": 127
+        }
+      },
+      "volatilidade": {
+        "HAR (referência)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0356,
+            "r2os_vs_HAR": 0.0
+          },
+          "so_dias_com_evento": {
+            "n": 37,
+            "mae": 0.0312,
+            "r2os_vs_HAR": 0.0
+          }
+        },
+        "HAR + sentimento (A)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0357,
+            "r2os_vs_HAR": 0.12
+          },
+          "so_dias_com_evento": {
+            "n": 37,
+            "mae": 0.0305,
+            "r2os_vs_HAR": 4.95
+          }
+        },
+        "HAR + sentimento (B)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0357,
+            "r2os_vs_HAR": 0.1
+          },
+          "so_dias_com_evento": {
+            "n": 37,
+            "mae": 0.0306,
+            "r2os_vs_HAR": 4.32
+          }
+        }
+      },
+      "resumo": {
+        "ganho_medio_todos_pp": -0.95,
+        "ganho_medio_com_evento_pp": -4.05,
+        "ganho_medio_especialista_pp": 9.01,
+        "ic95_com_evento_pp": 16.11,
+        "bracos_significativos_com_evento": 0,
+        "bracos_significativos_especialista": 1
+      }
+    },
+    "BPAC11": {
+      "n_teste": 579,
+      "n_com_evento": 45,
+      "pct_com_evento": 7.8,
+      "direcao": {
+        "SVM — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5268,
+            "acuracia": 0.487,
+            "ganho_pp": -3.97,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.06099880556872925,
+            "auc": 0.4637
+          },
+          "so_dias_com_evento": {
+            "n": 45,
+            "majoritaria": 0.6222,
+            "acuracia": 0.4889,
+            "ganho_pp": -13.33,
+            "ic95_meia_largura_pp": 14.61,
+            "p_vs_majoritaria": 0.08946957502674519,
+            "auc": 0.3424
+          },
+          "so_dias_sem_evento": {
+            "n": 534,
+            "majoritaria": 0.5187,
+            "acuracia": 0.4869,
+            "ganho_pp": -3.18,
+            "ic95_meia_largura_pp": 4.24,
+            "p_vs_majoritaria": 0.14121669905775802,
+            "auc": 0.4745
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 78 dias de evento no treino — insuficiente"
+          }
+        },
+        "XGBoost — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5268,
+            "acuracia": 0.5216,
+            "ganho_pp": -0.52,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.8029876230617932,
+            "auc": 0.5158
+          },
+          "so_dias_com_evento": {
+            "n": 45,
+            "majoritaria": 0.6222,
+            "acuracia": 0.5111,
+            "ganho_pp": -11.11,
+            "ic95_meia_largura_pp": 14.61,
+            "p_vs_majoritaria": 0.1270099590987023,
+            "auc": 0.4979
+          },
+          "so_dias_sem_evento": {
+            "n": 534,
+            "majoritaria": 0.5187,
+            "acuracia": 0.5225,
+            "ganho_pp": 0.37,
+            "ic95_meia_largura_pp": 4.24,
+            "p_vs_majoritaria": 0.8966504451605248,
+            "auc": 0.5167
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 78 dias de evento no treino — insuficiente"
+          }
+        },
+        "SVM — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5268,
+            "acuracia": 0.4991,
+            "ganho_pp": -2.76,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.1832440064441021,
+            "auc": 0.4672
+          },
+          "so_dias_com_evento": {
+            "n": 45,
+            "majoritaria": 0.6222,
+            "acuracia": 0.7111,
+            "ganho_pp": 8.89,
+            "ic95_meia_largura_pp": 14.61,
+            "p_vs_majoritaria": 0.28160793003483514,
+            "auc": 0.4496
+          },
+          "so_dias_sem_evento": {
+            "n": 534,
+            "majoritaria": 0.5187,
+            "acuracia": 0.4813,
+            "ganho_pp": -3.75,
+            "ic95_meia_largura_pp": 4.24,
+            "p_vs_majoritaria": 0.08343332787276678,
+            "auc": 0.4852
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 78 dias de evento no treino — insuficiente"
+          }
+        },
+        "XGBoost — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5268,
+            "acuracia": 0.4957,
+            "ganho_pp": -3.11,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.13432375887456474,
+            "auc": 0.5039
+          },
+          "so_dias_com_evento": {
+            "n": 45,
+            "majoritaria": 0.6222,
+            "acuracia": 0.4889,
+            "ganho_pp": -13.33,
+            "ic95_meia_largura_pp": 14.61,
+            "p_vs_majoritaria": 0.08946957502674519,
+            "auc": 0.4097
+          },
+          "so_dias_sem_evento": {
+            "n": 534,
+            "majoritaria": 0.5187,
+            "acuracia": 0.4963,
+            "ganho_pp": -2.25,
+            "ic95_meia_largura_pp": 4.24,
+            "p_vs_majoritaria": 0.29908521245224373,
+            "auc": 0.5033
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 78 dias de evento no treino — insuficiente"
+          }
+        },
+        "SVM — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5268,
+            "acuracia": 0.4991,
+            "ganho_pp": -2.76,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.1832440064441021,
+            "auc": 0.4626
+          },
+          "so_dias_com_evento": {
+            "n": 45,
+            "majoritaria": 0.6222,
+            "acuracia": 0.7111,
+            "ganho_pp": 8.89,
+            "ic95_meia_largura_pp": 14.61,
+            "p_vs_majoritaria": 0.28160793003483514,
+            "auc": 0.4139
+          },
+          "so_dias_sem_evento": {
+            "n": 534,
+            "majoritaria": 0.5187,
+            "acuracia": 0.4813,
+            "ganho_pp": -3.75,
+            "ic95_meia_largura_pp": 4.24,
+            "p_vs_majoritaria": 0.08343332787276678,
+            "auc": 0.483
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 78 dias de evento no treino — insuficiente"
+          }
+        },
+        "XGBoost — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5268,
+            "acuracia": 0.506,
+            "ganho_pp": -2.07,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.318261690661383,
+            "auc": 0.5189
+          },
+          "so_dias_com_evento": {
+            "n": 45,
+            "majoritaria": 0.6222,
+            "acuracia": 0.6667,
+            "ganho_pp": 4.44,
+            "ic95_meia_largura_pp": 14.61,
+            "p_vs_majoritaria": 0.6452003231284069,
+            "auc": 0.6029
+          },
+          "so_dias_sem_evento": {
+            "n": 534,
+            "majoritaria": 0.5187,
+            "acuracia": 0.4925,
+            "ganho_pp": -2.62,
+            "ic95_meia_largura_pp": 4.24,
+            "p_vs_majoritaria": 0.22569382857698145,
+            "auc": 0.5074
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 78 dias de evento no treino — insuficiente"
+          }
+        }
+      },
+      "volatilidade": {
+        "HAR (referência)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0776,
+            "r2os_vs_HAR": 0.0
+          },
+          "so_dias_com_evento": {
+            "n": 45,
+            "mae": 0.1159,
+            "r2os_vs_HAR": 0.0
+          }
+        },
+        "HAR + sentimento (A)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0777,
+            "r2os_vs_HAR": 0.31
+          },
+          "so_dias_com_evento": {
+            "n": 45,
+            "mae": 0.1157,
+            "r2os_vs_HAR": 2.44
+          }
+        },
+        "HAR + sentimento (B)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0778,
+            "r2os_vs_HAR": 0.29
+          },
+          "so_dias_com_evento": {
+            "n": 45,
+            "mae": 0.1173,
+            "r2os_vs_HAR": 2.24
+          }
+        }
+      },
+      "resumo": {
+        "ganho_medio_todos_pp": -2.53,
+        "ganho_medio_com_evento_pp": -2.59,
+        "ganho_medio_especialista_pp": null,
+        "ic95_com_evento_pp": 14.61,
+        "bracos_significativos_com_evento": 0,
+        "bracos_significativos_especialista": 0
+      }
+    },
+    "BBAS3": {
+      "n_teste": 579,
+      "n_com_evento": 59,
+      "pct_com_evento": 10.2,
+      "direcao": {
+        "SVM — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5026,
+            "acuracia": 0.506,
+            "ganho_pp": 0.35,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.9007929566866,
+            "auc": 0.5056
+          },
+          "so_dias_com_evento": {
+            "n": 59,
+            "majoritaria": 0.5932,
+            "acuracia": 0.4746,
+            "ganho_pp": -11.86,
+            "ic95_meia_largura_pp": 12.76,
+            "p_vs_majoritaria": 0.0839817316308924,
+            "auc": 0.5214
+          },
+          "so_dias_sem_evento": {
+            "n": 520,
+            "majoritaria": 0.5135,
+            "acuracia": 0.5096,
+            "ganho_pp": -0.38,
+            "ic95_meia_largura_pp": 4.3,
+            "p_vs_majoritaria": 0.8608531070059859,
+            "auc": 0.5052
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 59,
+            "majoritaria": 0.5932,
+            "acuracia": 0.4237,
+            "ganho_pp": -16.95,
+            "ic95_meia_largura_pp": 12.76,
+            "p_vs_majoritaria": 0.01116336604538716,
+            "auc": 0.4988
+          },
+          "_n_treino_especialista": 304
+        },
+        "XGBoost — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5026,
+            "acuracia": 0.4767,
+            "ganho_pp": -2.59,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.21283681709381183,
+            "auc": 0.4631
+          },
+          "so_dias_com_evento": {
+            "n": 59,
+            "majoritaria": 0.5932,
+            "acuracia": 0.4746,
+            "ganho_pp": -11.86,
+            "ic95_meia_largura_pp": 12.76,
+            "p_vs_majoritaria": 0.0839817316308924,
+            "auc": 0.5583
+          },
+          "so_dias_sem_evento": {
+            "n": 520,
+            "majoritaria": 0.5135,
+            "acuracia": 0.4769,
+            "ganho_pp": -3.65,
+            "ic95_meia_largura_pp": 4.3,
+            "p_vs_majoritaria": 0.09573469902145917,
+            "auc": 0.454
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 59,
+            "majoritaria": 0.5932,
+            "acuracia": 0.5424,
+            "ganho_pp": -5.08,
+            "ic95_meia_largura_pp": 12.76,
+            "p_vs_majoritaria": 0.42963953348964706,
+            "auc": 0.5762
+          },
+          "_n_treino_especialista": 304
+        },
+        "SVM — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5026,
+            "acuracia": 0.513,
+            "ganho_pp": 1.04,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.6476003758642055,
+            "auc": 0.5116
+          },
+          "so_dias_com_evento": {
+            "n": 59,
+            "majoritaria": 0.5932,
+            "acuracia": 0.5085,
+            "ganho_pp": -8.47,
+            "ic95_meia_largura_pp": 12.76,
+            "p_vs_majoritaria": 0.18782835720911983,
+            "auc": 0.5381
+          },
+          "so_dias_sem_evento": {
+            "n": 520,
+            "majoritaria": 0.5135,
+            "acuracia": 0.5135,
+            "ganho_pp": 0.0,
+            "ic95_meia_largura_pp": 4.3,
+            "p_vs_majoritaria": 1.0,
+            "auc": 0.5205
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 59,
+            "majoritaria": 0.5932,
+            "acuracia": 0.5593,
+            "ganho_pp": -3.39,
+            "ic95_meia_largura_pp": 12.76,
+            "p_vs_majoritaria": 0.5985791428866977,
+            "auc": 0.4905
+          },
+          "_n_treino_especialista": 304
+        },
+        "XGBoost — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5026,
+            "acuracia": 0.4784,
+            "ganho_pp": -2.42,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.24494455524671427,
+            "auc": 0.4658
+          },
+          "so_dias_com_evento": {
+            "n": 59,
+            "majoritaria": 0.5932,
+            "acuracia": 0.5085,
+            "ganho_pp": -8.47,
+            "ic95_meia_largura_pp": 12.76,
+            "p_vs_majoritaria": 0.18782835720911983,
+            "auc": 0.5071
+          },
+          "so_dias_sem_evento": {
+            "n": 520,
+            "majoritaria": 0.5135,
+            "acuracia": 0.475,
+            "ganho_pp": -3.85,
+            "ic95_meia_largura_pp": 4.3,
+            "p_vs_majoritaria": 0.08700482670672796,
+            "auc": 0.4599
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 59,
+            "majoritaria": 0.5932,
+            "acuracia": 0.5085,
+            "ganho_pp": -8.47,
+            "ic95_meia_largura_pp": 12.76,
+            "p_vs_majoritaria": 0.18782835720911983,
+            "auc": 0.5512
+          },
+          "_n_treino_especialista": 304
+        },
+        "SVM — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5026,
+            "acuracia": 0.513,
+            "ganho_pp": 1.04,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.6476003758642055,
+            "auc": 0.504
+          },
+          "so_dias_com_evento": {
+            "n": 59,
+            "majoritaria": 0.5932,
+            "acuracia": 0.5085,
+            "ganho_pp": -8.47,
+            "ic95_meia_largura_pp": 12.76,
+            "p_vs_majoritaria": 0.18782835720911983,
+            "auc": 0.5
+          },
+          "so_dias_sem_evento": {
+            "n": 520,
+            "majoritaria": 0.5135,
+            "acuracia": 0.5135,
+            "ganho_pp": 0.0,
+            "ic95_meia_largura_pp": 4.3,
+            "p_vs_majoritaria": 1.0,
+            "auc": 0.5084
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 59,
+            "majoritaria": 0.5932,
+            "acuracia": 0.5085,
+            "ganho_pp": -8.47,
+            "ic95_meia_largura_pp": 12.76,
+            "p_vs_majoritaria": 0.18782835720911983,
+            "auc": 0.5036
+          },
+          "_n_treino_especialista": 304
+        },
+        "XGBoost — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5026,
+            "acuracia": 0.487,
+            "ganho_pp": -1.55,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.45483595735281446,
+            "auc": 0.4719
+          },
+          "so_dias_com_evento": {
+            "n": 59,
+            "majoritaria": 0.5932,
+            "acuracia": 0.5085,
+            "ganho_pp": -8.47,
+            "ic95_meia_largura_pp": 12.76,
+            "p_vs_majoritaria": 0.18782835720911983,
+            "auc": 0.5655
+          },
+          "so_dias_sem_evento": {
+            "n": 520,
+            "majoritaria": 0.5135,
+            "acuracia": 0.4846,
+            "ganho_pp": -2.88,
+            "ic95_meia_largura_pp": 4.3,
+            "p_vs_majoritaria": 0.1885159613421759,
+            "auc": 0.4612
+          },
+          "especialista_treinado_so_em_eventos": {
+            "n": 59,
+            "majoritaria": 0.5932,
+            "acuracia": 0.5424,
+            "ganho_pp": -5.08,
+            "ic95_meia_largura_pp": 12.76,
+            "p_vs_majoritaria": 0.42963953348964706,
+            "auc": 0.5464
+          },
+          "_n_treino_especialista": 304
+        }
+      },
+      "volatilidade": {
+        "HAR (referência)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0676,
+            "r2os_vs_HAR": 0.0
+          },
+          "so_dias_com_evento": {
+            "n": 59,
+            "mae": 0.0875,
+            "r2os_vs_HAR": 0.0
+          }
+        },
+        "HAR + sentimento (A)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0672,
+            "r2os_vs_HAR": 0.78
+          },
+          "so_dias_com_evento": {
+            "n": 59,
+            "mae": 0.091,
+            "r2os_vs_HAR": 3.39
+          }
+        },
+        "HAR + sentimento (B)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0673,
+            "r2os_vs_HAR": 1.1
+          },
+          "so_dias_com_evento": {
+            "n": 59,
+            "mae": 0.0922,
+            "r2os_vs_HAR": 5.28
+          }
+        }
+      },
+      "resumo": {
+        "ganho_medio_todos_pp": -0.69,
+        "ganho_medio_com_evento_pp": -9.6,
+        "ganho_medio_especialista_pp": -7.91,
+        "ic95_com_evento_pp": 12.76,
+        "bracos_significativos_com_evento": 0,
+        "bracos_significativos_especialista": 0
+      }
+    },
+    "ABEV3": {
+      "n_teste": 579,
+      "n_com_evento": 5,
+      "pct_com_evento": 0.9,
+      "direcao": {
+        "SVM — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5009,
+            "acuracia": 0.5078,
+            "ganho_pp": 0.69,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.7711491589535415,
+            "auc": 0.4525
+          },
+          "so_dias_com_evento": {
+            "n": 5,
+            "aviso": "amostra pequena demais para avaliar"
+          },
+          "so_dias_sem_evento": {
+            "n": 574,
+            "majoritaria": 0.5017,
+            "acuracia": 0.5087,
+            "ganho_pp": 0.7,
+            "ic95_meia_largura_pp": 4.09,
+            "p_vs_majoritaria": 0.7701817067169695,
+            "auc": 0.4518
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 39 dias de evento no treino — insuficiente"
+          }
+        },
+        "XGBoost — só preço": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5009,
+            "acuracia": 0.532,
+            "ganho_pp": 3.11,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.1457285169171878,
+            "auc": 0.5462
+          },
+          "so_dias_com_evento": {
+            "n": 5,
+            "aviso": "amostra pequena demais para avaliar"
+          },
+          "so_dias_sem_evento": {
+            "n": 574,
+            "majoritaria": 0.5017,
+            "acuracia": 0.5296,
+            "ganho_pp": 2.79,
+            "ic95_meia_largura_pp": 4.09,
+            "p_vs_majoritaria": 0.19564840833688377,
+            "auc": 0.5442
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 39 dias de evento no treino — insuficiente"
+          }
+        },
+        "SVM — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5009,
+            "acuracia": 0.5026,
+            "ganho_pp": 0.17,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.9668553141172593,
+            "auc": 0.4788
+          },
+          "so_dias_com_evento": {
+            "n": 5,
+            "aviso": "amostra pequena demais para avaliar"
+          },
+          "so_dias_sem_evento": {
+            "n": 574,
+            "majoritaria": 0.5017,
+            "acuracia": 0.5017,
+            "ganho_pp": 0.0,
+            "ic95_meia_largura_pp": 4.09,
+            "p_vs_majoritaria": 1.0,
+            "auc": 0.4798
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 39 dias de evento no treino — insuficiente"
+          }
+        },
+        "XGBoost — preço + sentimento (A: p_pos − p_neg)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5009,
+            "acuracia": 0.525,
+            "ganho_pp": 2.42,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.2618093382230402,
+            "auc": 0.5431
+          },
+          "so_dias_com_evento": {
+            "n": 5,
+            "aviso": "amostra pequena demais para avaliar"
+          },
+          "so_dias_sem_evento": {
+            "n": 574,
+            "majoritaria": 0.5017,
+            "acuracia": 0.5244,
+            "ganho_pp": 2.26,
+            "ic95_meia_largura_pp": 4.09,
+            "p_vs_majoritaria": 0.29671710109773053,
+            "auc": 0.5433
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 39 dias de evento no treino — insuficiente"
+          }
+        },
+        "SVM — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5009,
+            "acuracia": 0.5009,
+            "ganho_pp": 0.0,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 1.0,
+            "auc": 0.4764
+          },
+          "so_dias_com_evento": {
+            "n": 5,
+            "aviso": "amostra pequena demais para avaliar"
+          },
+          "so_dias_sem_evento": {
+            "n": 574,
+            "majoritaria": 0.5017,
+            "acuracia": 0.5017,
+            "ganho_pp": 0.0,
+            "ic95_meia_largura_pp": 4.09,
+            "p_vs_majoritaria": 1.0,
+            "auc": 0.4795
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 39 dias de evento no treino — insuficiente"
+          }
+        },
+        "XGBoost — preço + sentimento (B: polaridade × confiança)": {
+          "todos_os_dias": {
+            "n": 579,
+            "majoritaria": 0.5009,
+            "acuracia": 0.544,
+            "ganho_pp": 4.32,
+            "ic95_meia_largura_pp": 4.07,
+            "p_vs_majoritaria": 0.03778933545380518,
+            "auc": 0.5433
+          },
+          "so_dias_com_evento": {
+            "n": 5,
+            "aviso": "amostra pequena demais para avaliar"
+          },
+          "so_dias_sem_evento": {
+            "n": 574,
+            "majoritaria": 0.5017,
+            "acuracia": 0.5436,
+            "ganho_pp": 4.18,
+            "ic95_meia_largura_pp": 4.09,
+            "p_vs_majoritaria": 0.04521715649691767,
+            "auc": 0.5424
+          },
+          "especialista_treinado_so_em_eventos": {
+            "aviso": "só 39 dias de evento no treino — insuficiente"
+          }
+        }
+      },
+      "volatilidade": {
+        "HAR (referência)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0254,
+            "r2os_vs_HAR": 0.0
+          },
+          "so_dias_com_evento": {
+            "n": 5,
+            "mae": 0.017,
+            "r2os_vs_HAR": 0.0
+          }
+        },
+        "HAR + sentimento (A)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0254,
+            "r2os_vs_HAR": -0.16
+          },
+          "so_dias_com_evento": {
+            "n": 5,
+            "mae": 0.0331,
+            "r2os_vs_HAR": -457.98
+          }
+        },
+        "HAR + sentimento (B)": {
+          "todos_os_dias": {
+            "n": 579,
+            "mae": 0.0254,
+            "r2os_vs_HAR": -0.16
+          },
+          "so_dias_com_evento": {
+            "n": 5,
+            "mae": 0.0329,
+            "r2os_vs_HAR": -443.64
+          }
+        }
+      },
+      "resumo": {
+        "aviso": "só 5 dias com evento no teste — abaixo do mínimo de 30 para avaliar"
+      }
+    }
+  },
+  "agrupado": {
+    "SVM — só preço": {
+      "todos_os_dias": {
+        "n": 5790,
+        "majoritaria": 0.5154,
+        "acuracia": 0.501,
+        "ganho_pp": -1.43,
+        "ic95_meia_largura_pp": 1.29,
+        "p_vs_majoritaria": 0.030039616113448235
+      },
+      "so_dias_com_evento": {
+        "n": 670,
+        "majoritaria": 0.5313,
+        "acuracia": 0.4866,
+        "ganho_pp": -4.48,
+        "ic95_meia_largura_pp": 3.79,
+        "p_vs_majoritaria": 0.022308958947968742
+      },
+      "so_dias_sem_evento": {
+        "n": 5120,
+        "majoritaria": 0.5133,
+        "acuracia": 0.5029,
+        "ganho_pp": -1.04,
+        "ic95_meia_largura_pp": 1.37,
+        "p_vs_majoritaria": 0.13839242758887227
+      }
+    },
+    "XGBoost — só preço": {
+      "todos_os_dias": {
+        "n": 5790,
+        "majoritaria": 0.5154,
+        "acuracia": 0.4993,
+        "ganho_pp": -1.61,
+        "ic95_meia_largura_pp": 1.29,
+        "p_vs_majoritaria": 0.014991355816697485
+      },
+      "so_dias_com_evento": {
+        "n": 670,
+        "majoritaria": 0.5313,
+        "acuracia": 0.4731,
+        "ganho_pp": -5.82,
+        "ic95_meia_largura_pp": 3.79,
+        "p_vs_majoritaria": 0.002849266483253699
+      },
+      "so_dias_sem_evento": {
+        "n": 5120,
+        "majoritaria": 0.5133,
+        "acuracia": 0.5027,
+        "ganho_pp": -1.05,
+        "ic95_meia_largura_pp": 1.37,
+        "p_vs_majoritaria": 0.1311035243515777
+      }
+    },
+    "SVM — preço + sentimento (A: p_pos − p_neg)": {
+      "todos_os_dias": {
+        "n": 5790,
+        "majoritaria": 0.5154,
+        "acuracia": 0.4997,
+        "ganho_pp": -1.57,
+        "ic95_meia_largura_pp": 1.29,
+        "p_vs_majoritaria": 0.017313452187522303
+      },
+      "so_dias_com_evento": {
+        "n": 670,
+        "majoritaria": 0.5313,
+        "acuracia": 0.5045,
+        "ganho_pp": -2.69,
+        "ic95_meia_largura_pp": 3.79,
+        "p_vs_majoritaria": 0.16370726779085543
+      },
+      "so_dias_sem_evento": {
+        "n": 5120,
+        "majoritaria": 0.5133,
+        "acuracia": 0.499,
+        "ganho_pp": -1.43,
+        "ic95_meia_largura_pp": 1.37,
+        "p_vs_majoritaria": 0.04263637910170473
+      }
+    },
+    "XGBoost — preço + sentimento (A: p_pos − p_neg)": {
+      "todos_os_dias": {
+        "n": 5790,
+        "majoritaria": 0.5154,
+        "acuracia": 0.5,
+        "ganho_pp": -1.54,
+        "ic95_meia_largura_pp": 1.29,
+        "p_vs_majoritaria": 0.019945150646461546
+      },
+      "so_dias_com_evento": {
+        "n": 670,
+        "majoritaria": 0.5313,
+        "acuracia": 0.497,
+        "ganho_pp": -3.43,
+        "ic95_meia_largura_pp": 3.79,
+        "p_vs_majoritaria": 0.08144304402751203
+      },
+      "so_dias_sem_evento": {
+        "n": 5120,
+        "majoritaria": 0.5133,
+        "acuracia": 0.5004,
+        "ganho_pp": -1.29,
+        "ic95_meia_largura_pp": 1.37,
+        "p_vs_majoritaria": 0.06702636822623873
+      }
+    },
+    "SVM — preço + sentimento (B: polaridade × confiança)": {
+      "todos_os_dias": {
+        "n": 5790,
+        "majoritaria": 0.5154,
+        "acuracia": 0.5,
+        "ganho_pp": -1.54,
+        "ic95_meia_largura_pp": 1.29,
+        "p_vs_majoritaria": 0.019945150646461546
+      },
+      "so_dias_com_evento": {
+        "n": 670,
+        "majoritaria": 0.5313,
+        "acuracia": 0.5,
+        "ganho_pp": -3.13,
+        "ic95_meia_largura_pp": 3.79,
+        "p_vs_majoritaria": 0.10417618516594424
+      },
+      "so_dias_sem_evento": {
+        "n": 5120,
+        "majoritaria": 0.5133,
+        "acuracia": 0.5,
+        "ganho_pp": -1.33,
+        "ic95_meia_largura_pp": 1.37,
+        "p_vs_majoritaria": 0.05910289634227628
+      }
+    },
+    "XGBoost — preço + sentimento (B: polaridade × confiança)": {
+      "todos_os_dias": {
+        "n": 5790,
+        "majoritaria": 0.5154,
+        "acuracia": 0.509,
+        "ganho_pp": -0.64,
+        "ic95_meia_largura_pp": 1.29,
+        "p_vs_majoritaria": 0.33061048924479797
+      },
+      "so_dias_com_evento": {
+        "n": 670,
+        "majoritaria": 0.5313,
+        "acuracia": 0.5179,
+        "ganho_pp": -1.34,
+        "ic95_meia_largura_pp": 3.79,
+        "p_vs_majoritaria": 0.48626620726777686
+      },
+      "so_dias_sem_evento": {
+        "n": 5120,
+        "majoritaria": 0.5133,
+        "acuracia": 0.5078,
+        "ganho_pp": -0.55,
+        "ic95_meia_largura_pp": 1.37,
+        "p_vs_majoritaria": 0.4337317402833723
+      }
+    }
+  }
+}

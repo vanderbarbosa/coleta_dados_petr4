@@ -86,6 +86,17 @@ A extração do sentimento emprega o FinBERT-PT-BR \cite{santos_finbert_2023}, o
 
 A banca indagou se o sentimento contínuo comporta intervalos de interpretação. A resposta é afirmativa. Embora a aplicação preditiva utilize o valor contínuo $s$, para fins de leitura qualitativa consideram-se três faixas: a faixa negativa, em $[-1, -0{,}05)$; a faixa neutra, em $[-0{,}05, +0{,}05]$; e a faixa positiva, em $(+0{,}05, +1]$. A faixa neutra estreita em torno de zero evita classificar como portadora de sinal uma notícia cuja polaridade é, na prática, indefinida.
 
+\subsubsection{Duas formas do índice, e por que ambas são reportadas}
+\label{sec:duas_formas_ism}
+
+A formulação $s = p \times c$ descrita acima governa o corpus de notícias de imprensa. O ramo dos comunicados oficiais da CVM, incorporado em etapa posterior da pesquisa, adota uma variante que convém explicitar, sob pena de a formalização não corresponder ao procedimento efetivamente executado. Nele, o índice é a diferença direta entre as probabilidades das classes extremas,
+\begin{equation}
+s' = \Pr(\text{positivo}) - \Pr(\text{negativo}),
+\end{equation}
+dispensando a conversão para polaridade discreta. A distinção não é cosmética. Em $s = p \times c$, todo documento cujo rótulo vencedor seja neutro recebe índice exatamente nulo, e a inclinação residual entre as classes extremas é descartada. Em $s'$, essa inclinação é preservada: um comunicado classificado como neutro, mas com probabilidade negativa superior à positiva, conserva valor levemente negativo.
+
+A escolha importa porque o corpus de comunicados é majoritariamente neutro. Na Petrobras, dos mil trezentos e quarenta e quatro comunicados entregues após o fechamento, novecentos e quarenta e sete são rotulados neutros, ou setenta por cento do total. Sob $s$, esses documentos seriam todos reduzidos a zero. Mediu-se o efeito da escolha: o desvio-padrão do índice agregado por pregão é de $0{,}319$ sob $s'$ e de $0{,}344$ sob $s$, de modo que nenhuma das duas formas exibe variabilidade substancialmente maior. Por essa razão, e para não arbitrar no escuro, as duas são reportadas como variantes nos experimentos da Seção~\ref{sec:dias_evento}, onde se verifica que a diferença entre elas não altera as conclusões.
+
 \subsection{Construção do Índice de Sentimento da Mídia}
 \label{sec:metodologia_ism}
 
@@ -134,6 +145,32 @@ Formalmente, a partir da matriz de confusão, composta pelos verdadeiros positiv
 \text{Revocação} = \frac{VP}{VP + FN}, \qquad F_1 = 2 \cdot \frac{\text{Precisão} \cdot \text{Revocação}}{\text{Precisão} + \text{Revocação}}.
 \end{equation}
 A acurácia resume o desempenho global; a precisão mede a confiabilidade das previsões de alta; a revocação mede a cobertura das altas efetivas; e o $F_1$ é a média harmônica das duas, penalizando o desequilíbrio entre elas. A AUC, por sua vez, corresponde à área sob a curva que relaciona a taxa de verdadeiros positivos à taxa de falsos positivos quando se varia o limiar de decisão, assumindo o valor $0{,}5$ para um classificador aleatório e $1$ para um classificador perfeito.
+
+\subsection{A cadeia de componentes: o que cada um consome e o que entrega}
+\label{sec:cadeia_componentes}
+
+As subseções anteriores descreveram individualmente os componentes do método. Convém, antes de passar à configuração, consolidar como eles se encadeiam, porque a leitura isolada de cada um induz a um equívoco recorrente: supor que o FinBERT-PT-BR, o GARCH e os classificadores sejam alternativas que competem pela mesma função. Não são. Ocupam posições distintas da cadeia, e dois deles jamais produzem previsão alguma.
+
+A Tabela~\ref{tab:cadeia} resume a arquitetura. Os dois primeiros componentes são \emph{produtores de atributo}: convertem matéria bruta --- texto, no caso do codificador; série de retornos, no caso do modelo de volatilidade --- em valores numéricos defasados. Os dois últimos são \emph{decisores}: consomem esses valores e emitem a previsão. O sentimento extraído pelo FinBERT-PT-BR nunca alimenta o GARCH, e o GARCH nunca recebe texto; ambos convergem apenas na matriz de atributos, que é onde a fusão precoce efetivamente ocorre.
+
+\begin{table}[htpb]
+\centering
+\caption{Encadeamento dos componentes do método. Os dois primeiros produzem atributos; os dois últimos decidem.}
+\label{tab:cadeia}
+\begin{tabular}{p{2.6cm} p{4.3cm} p{4.3cm} p{2.6cm}}
+\hline
+\textbf{Componente} & \textbf{Entrada} & \textbf{Saída} & \textbf{Função} \\ \hline
+FinBERT-PT-BR & o texto da notícia ou do comunicado & índice contínuo em $[-1,+1]$, agregado por pregão & produtor de atributo \\
+GARCH(1,1) & a série de retornos do ativo & volatilidade condicional estimada para o pregão & produtor de atributo \\
+SVM (RBF) & retorno e volatilidade da véspera, e o sentimento da véspera quando presente & rótulo binário de direção, com probabilidade associada & decisor \\
+XGBoost & os mesmos atributos, sob outra indução & rótulo binário de direção, com probabilidade associada & decisor \\
+\hline
+\end{tabular}
+\vspace{0.2cm}
+{\small \\ Fonte: Elaborado pelo autor (2026).}
+\end{table}
+
+Decorre da tabela uma consequência que percorre todo o Capítulo de resultados: não existe, nesta pesquisa, um arranjo denominado ``GARCH isolado'' para a previsão de direção, porque o GARCH não prevê direção --- estima magnitude. Quando se lê, nas tabelas de resultado, a expressão ``apenas preço'', entende-se o decisor alimentado por dois atributos, o retorno defasado e a volatilidade condicional defasada, sendo este último produzido pelo GARCH. A alternativa ``preço mais sentimento'' acrescenta a esses dois os atributos derivados do codificador. A diferença entre as duas colunas é, portanto, exatamente a contribuição marginal do texto, mantido tudo o mais constante.
 
 \subsection{Configuração concreta da modelagem}
 
