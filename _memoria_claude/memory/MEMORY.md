@@ -1,5 +1,6 @@
 # Memory Index
 
+- [Retorno anormal e inferência por data](retorno-anormal-e-inferencia-por-data.md) — trocar o alvo para retorno anormal inverte o sinal (0/8 → 5/8 braços positivos); e o alerta de 2,3x na inferência era meu erro: é 1,05x
 - [Restringir a dias de evento não ajuda](restringir-a-dias-de-evento-nao-ajuda.md) — avaliar só nos pregões com comunicado PIORA; o limite é a raridade do evento, não o modelo. Inclui a divergência de fórmula do ISM, resolvida
 - [Entregar pouco e compreensível](entregar-pouco-e-compreensivel.md) — "não consegui compreender para explicar": menos peças, adversário antes do número, analogia antes do jargão
 - [FinBERT não acrescenta nos dois times](finbert-nao-acrescenta-nos-dois-times.md) — nem ao GARCH+SVM/XGBoost nem ao Prophet (melhora em ~5/10 = moeda); GARCH vence o Prophet 10×0 na volatilidade

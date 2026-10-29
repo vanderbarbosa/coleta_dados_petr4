@@ -146,6 +146,93 @@ porque o modelo perdeu a maior parte dos dados de treino.
 já era o fator limitante.** Não é falta de engenho na especificação; é um
 limite de informação da base disponível.
 
+## O que mudou de verdade: trocar o ALVO
+
+Depois das quatro tentativas de fatiar a base, a pergunta virou outra: e se o
+problema não for *quais dias* olhamos, mas **o que estamos tentando prever?**
+
+**A incoerência que encontrei na pesquisa:**
+
+| | O que prevê ou mede |
+|---|---|
+| Estudo de evento (Artigo 1) | retorno **anormal** — desconta o Ibovespa pelo modelo de mercado |
+| Experimentos de ML (scripts 16 a 26) | retorno **bruto** |
+
+Os dez papéis sobem ou descem **juntos em 64,5% dos pregões** — quase metade
+do movimento diário de cada ação é o mercado, não a ação. **O lado de ML vinha
+tentando prever algo que é ~49% ruído de mercado**, que nenhum sentimento de
+uma empresa específica poderia explicar. O lado de estudo de evento já
+removia esse ruído corretamente.
+
+### O resultado da troca
+
+Refiz tudo com o alvo sendo o **retorno anormal** — quanto a ação andou *além
+do que o mercado explicaria*. Os coeficientes do modelo de mercado foram
+estimados **só no treino**, nunca no teste.
+
+| Alvo | Média dos 8 braços | Braços positivos | Melhor |
+|---|---|---|---|
+| Retorno **bruto** | −0,84 pp | **0 de 8** | −0,42 pp |
+| Retorno **anormal** | +0,32 pp | **5 de 8** | **+0,95 pp** |
+
+**O sinal inverteu.** Pela primeira vez em todos os experimentos, os modelos
+deixaram de ser *ativamente piores* que o palpite fixo. E, também pela
+primeira vez, o melhor braço é **preço + sentimento** (+0,95) acima de só
+preço (+0,64).
+
+**Mas atenção, e isto é importante: ainda não é vitória.** O melhor braço tem
+p = 0,203 e intervalo de confiança de [−0,40; +2,34] — o zero está dentro.
+O que mudou foi o **sinal e a direção**, não a significância.
+
+Os betas de mercado estimados saíram todos plausíveis, o que valida o
+procedimento: PETR4 1,37 (agressiva), BPAC11 1,26, BBAS3 1,22, ITUB4 0,98,
+VALE3 0,92, **ABEV3 0,67** (defensiva, como se espera de uma empresa de
+bebidas).
+
+## Uma correção que preciso fazer no meu próprio alerta
+
+Na conversa anterior eu avisei que os intervalos de confiança agrupados
+estavam otimistas em **2,3 vezes**, porque os papéis andam juntos. **Eu
+errei.** Calculei pela correlação dos *retornos* (0,486), mas o que importa
+para a inferência é a correlação do **acerto**, não a do retorno.
+
+Medido do jeito certo (bootstrap em blocos de data, 2.000 reamostras):
+
+| | |
+|---|---|
+| IC95% supondo independência | ±1,29 pontos |
+| IC95% por bootstrap em blocos de data | ±1,35 pontos |
+| **Inflação real** | **1,05×** |
+
+Faz sentido: um modelo que acerta perto de 50% erra de forma quase
+independente entre papéis, mesmo quando os retornos andam juntos. **Os
+intervalos que reportei antes estavam substancialmente corretos.** O
+bootstrap por data vira o padrão mesmo assim, porque é o método correto — e
+agora está medido, não suposto.
+
+## E a recomendação de ampliar para 56 papéis também estava errada
+
+| Cenário | Empilhado | N efetivo | IC correto |
+|---|---|---|---|
+| 10 papéis, todos os dias | 5.790 | 1.077 | ±3,0% |
+| **56 papéis**, todos os dias | 32.424 | **1.169** | **±2,9%** |
+
+**Ampliar de 10 para 56 papéis move a margem de ±3,0 para ±2,9.** O fator de
+mercado impõe um teto: o N efetivo satura em *número de dias ÷ correlação*, e
+**só o horizonte move esse teto**. Mais papéis ajudam o modelo a *aprender*;
+não ajudam a *medir*.
+
+## O modelo de painel
+
+Treinei também **um único modelo** com os 10 papéis empilhados e a identidade
+do papel como atributo (inclinação comum, intercepto por papel). A previsão
+continua individual: entram os atributos de um papel num dia, sai a resposta
+daquele papel.
+
+**Resultado equivalente a treinar um modelo por papel** — as diferenças ficam
+dentro do intervalo de confiança. Mais dados correlacionados não acrescentam
+informação proporcional.
+
 ## Uma divergência corrigida entre o código e a dissertação
 
 Encontrei, ao verificar, que a dissertação e o código usavam **fórmulas

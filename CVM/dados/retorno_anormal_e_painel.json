@@ -1,0 +1,228 @@
+{
+  "n_painel": 23010,
+  "n_datas": 2301,
+  "corte_treino": "2024-05-09",
+  "betas": {
+    "VALE3": 0.918,
+    "ITUB4": 0.9772,
+    "PETR4": 1.366,
+    "SBSP3": 0.9503,
+    "BBDC4": 1.1331,
+    "B3SA3": 1.1753,
+    "ITSA4": 0.9438,
+    "BPAC11": 1.2595,
+    "BBAS3": 1.2207,
+    "ABEV3": 0.6671
+  },
+  "nota_inferencia": "IC e p por bootstrap em blocos de DATA (2000 reamostras): sorteiam-se datas com reposição levando todos os papéis, preservando a correlação transversal de 0,486",
+  "arms": {
+    "SVM — só preço — por papel — retorno BRUTO": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.5017,
+      "majoritaria": 0.5108,
+      "ganho_pp": -0.9,
+      "ic95_pp": [
+        -2.24,
+        0.45
+      ],
+      "meia_largura_pp": 1.35,
+      "p_bootstrap": 0.213
+    },
+    "XGBoost — só preço — por papel — retorno BRUTO": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.5007,
+      "majoritaria": 0.5108,
+      "ganho_pp": -1.01,
+      "ic95_pp": [
+        -2.27,
+        0.28
+      ],
+      "meia_largura_pp": 1.28,
+      "p_bootstrap": 0.13
+    },
+    "SVM — só preço — painel (com efeito de ativo) — retorno BRUTO": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.5066,
+      "majoritaria": 0.5108,
+      "ganho_pp": -0.42,
+      "ic95_pp": [
+        -1.79,
+        1.01
+      ],
+      "meia_largura_pp": 1.4,
+      "p_bootstrap": 0.579
+    },
+    "XGBoost — só preço — painel (com efeito de ativo) — retorno BRUTO": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.5014,
+      "majoritaria": 0.5108,
+      "ganho_pp": -0.94,
+      "ic95_pp": [
+        -2.17,
+        0.33
+      ],
+      "meia_largura_pp": 1.25,
+      "p_bootstrap": 0.17
+    },
+    "SVM — preço + sentimento — por papel — retorno BRUTO": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.5031,
+      "majoritaria": 0.5108,
+      "ganho_pp": -0.76,
+      "ic95_pp": [
+        -2.15,
+        0.56
+      ],
+      "meia_largura_pp": 1.35,
+      "p_bootstrap": 0.272
+    },
+    "XGBoost — preço + sentimento — por papel — retorno BRUTO": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.5036,
+      "majoritaria": 0.5108,
+      "ganho_pp": -0.71,
+      "ic95_pp": [
+        -1.96,
+        0.54
+      ],
+      "meia_largura_pp": 1.25,
+      "p_bootstrap": 0.265
+    },
+    "SVM — preço + sentimento — painel (com efeito de ativo) — retorno BRUTO": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.5028,
+      "majoritaria": 0.5108,
+      "ganho_pp": -0.8,
+      "ic95_pp": [
+        -2.17,
+        0.54
+      ],
+      "meia_largura_pp": 1.35,
+      "p_bootstrap": 0.244
+    },
+    "XGBoost — preço + sentimento — painel (com efeito de ativo) — retorno BRUTO": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.4993,
+      "majoritaria": 0.5108,
+      "ganho_pp": -1.15,
+      "ic95_pp": [
+        -2.48,
+        0.23
+      ],
+      "meia_largura_pp": 1.35,
+      "p_bootstrap": 0.107
+    },
+    "SVM — só preço — por papel — retorno ANORMAL (desconta o Ibovespa)": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.5135,
+      "majoritaria": 0.5071,
+      "ganho_pp": 0.64,
+      "ic95_pp": [
+        -0.75,
+        2.0
+      ],
+      "meia_largura_pp": 1.37,
+      "p_bootstrap": 0.375
+    },
+    "XGBoost — só preço — por papel — retorno ANORMAL (desconta o Ibovespa)": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.5064,
+      "majoritaria": 0.5071,
+      "ganho_pp": -0.07,
+      "ic95_pp": [
+        -1.37,
+        1.32
+      ],
+      "meia_largura_pp": 1.35,
+      "p_bootstrap": 0.927
+    },
+    "SVM — só preço — painel (com efeito de ativo) — retorno ANORMAL (desconta o Ibovespa)": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.5068,
+      "majoritaria": 0.5071,
+      "ganho_pp": -0.03,
+      "ic95_pp": [
+        -1.22,
+        1.11
+      ],
+      "meia_largura_pp": 1.16,
+      "p_bootstrap": 0.977
+    },
+    "XGBoost — só preço — painel (com efeito de ativo) — retorno ANORMAL (desconta o Ibovespa)": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.5155,
+      "majoritaria": 0.5071,
+      "ganho_pp": 0.83,
+      "ic95_pp": [
+        -0.43,
+        2.15
+      ],
+      "meia_largura_pp": 1.29,
+      "p_bootstrap": 0.241
+    },
+    "SVM — preço + sentimento — por papel — retorno ANORMAL (desconta o Ibovespa)": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.5167,
+      "majoritaria": 0.5071,
+      "ganho_pp": 0.95,
+      "ic95_pp": [
+        -0.4,
+        2.34
+      ],
+      "meia_largura_pp": 1.37,
+      "p_bootstrap": 0.203
+    },
+    "XGBoost — preço + sentimento — por papel — retorno ANORMAL (desconta o Ibovespa)": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.508,
+      "majoritaria": 0.5071,
+      "ganho_pp": 0.09,
+      "ic95_pp": [
+        -1.23,
+        1.41
+      ],
+      "meia_largura_pp": 1.32,
+      "p_bootstrap": 0.885
+    },
+    "SVM — preço + sentimento — painel (com efeito de ativo) — retorno ANORMAL (desconta o Ibovespa)": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.5052,
+      "majoritaria": 0.5071,
+      "ganho_pp": -0.19,
+      "ic95_pp": [
+        -1.37,
+        0.94
+      ],
+      "meia_largura_pp": 1.15,
+      "p_bootstrap": 0.741
+    },
+    "XGBoost — preço + sentimento — painel (com efeito de ativo) — retorno ANORMAL (desconta o Ibovespa)": {
+      "n": 5760,
+      "n_datas": 576,
+      "acuracia": 0.5104,
+      "majoritaria": 0.5071,
+      "ganho_pp": 0.33,
+      "ic95_pp": [
+        -1.04,
+        1.67
+      ],
+      "meia_largura_pp": 1.35,
+      "p_bootstrap": 0.616
+    }
+  }
+}
